@@ -1,0 +1,202 @@
+# enhanced_hospitals.yaml - Structured hospital configuration
+# Save this in E:/ExecutiveSearchYaml/code/
+
+hospitals:
+  # Pattern 1: Separate H2 names + H3 titles (most common)
+  - FAC: "707" 
+    name: "Ross Memorial Hospital"
+    url: "https://rmh.org/about-ross-memorial/senior-leadership"
+    pattern: "h2_name_h3_title"
+    expected_executives: 6
+    html_structure:
+      name_element: "h2"
+      title_element: "h3" 
+      notes: "h2=Name, h3=Title - works well"
+    status: "working"
+    
+  - FAC: "624"
+    name: "Campbellford Memorial Hospital"  
+    url: "https://www.campbellfordmemorial.ca/about-us/administration/"
+    pattern: "h2_name_h3_title"
+    expected_executives: 6
+    html_structure:
+      name_element: "h2"
+      title_element: "h3"
+      notes: "h2=Name, h3=Title - same pattern as Ross"
+      missing_people: 
+        - name: "Dr. Dimitri Louvish"
+          title: "Chief of Staff"
+          reason: "Not in main h2/h3 structure"
+    status: "needs_fix"
+    
+  - FAC: "596"
+    name: "Alliston Stevenson Memorial Hospital"
+    url: "https://www.stevensonhospital.ca/about-us/leadership/"
+    pattern: "h2_name_h3_title"
+    expected_executives: 7
+    html_structure:
+      name_element: "h2"
+      title_element: "h3"
+      notes: "h2=Name, h3=Title - same pattern"
+      missing_people:
+        - name: "Dr. Roger Musa"
+          title: "Chief of Staff"
+          reason: "Not in main structure"
+        - name: "Carmine Stumpo"
+          title: "Supervisor"
+          reason: "Title mismatch in scraping"
+    status: "needs_fix"
+    
+  - FAC: "661"
+    name: "Hospital with Table Structure"
+    url: "https://hospital661.com/administrative-contacts"
+    pattern: "table_rows"
+    expected_executives: 5
+    html_structure:
+      structure_type: "table"
+      name_location: "td_column_1"
+      title_location: "td_column_2"
+      notes: "Clean table structure, names in col 1, titles in col 2"
+      data_issues:
+        - "Phone extensions need cleanup (ext.2301)"
+        - "Extra whitespace and formatting"
+    status: "needs_cleanup"
+
+# Pattern examples for other common structures
+pattern_templates:
+  
+  # Pattern 2: Combined name+title in single element
+  combined_h2_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/leadership" 
+      pattern: "combined_h2"
+      html_structure:
+        combined_element: "h2"
+        separator: " - "  # e.g., "John Smith - CEO"
+        notes: "Name and title together in h2, separated by ' - '"
+      
+  # Pattern 3: Names in h2, titles in following p
+  h2_name_p_title_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/team"
+      pattern: "h2_name_p_title"
+      html_structure:
+        name_element: "h2"
+        title_element: "p"
+        notes: "h2=Name, immediately followed by p=Title"
+        
+  # Pattern 4: Div/span class-based
+  div_class_example:
+    - FAC: "XXX"
+      name: "Example Hospital" 
+      url: "https://example.com/staff"
+      pattern: "div_classes"
+      html_structure:
+        name_class: "staff-name"
+        title_class: "staff-title"
+        container_class: "staff-member"
+        notes: "Names in .staff-name divs, titles in .staff-title divs"
+        
+  # Pattern 5: Table structure
+  table_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/admin"
+      pattern: "table_rows"
+      html_structure:
+        structure_type: "table"
+        name_location: "td_column_1"
+        title_location: "td_column_2" 
+        table_selector: "table"  # or specific class
+        notes: "Standard table with name/title columns"
+        
+  # Pattern 6: List items
+  li_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/leadership"
+      pattern: "list_items"
+      html_structure:
+        list_type: "ul"  # or ol
+        item_element: "li"
+        name_format: "first_part"  # or specific pattern
+        title_format: "after_dash"  # or specific pattern
+        notes: "Names and titles in li elements"
+
+# Common executive titles for identification
+executive_titles:
+  primary:
+    - "Chief Executive Officer"
+    - "CEO"
+    - "President" 
+    - "Chief Medical Officer"
+    - "CMO"
+    - "Chief of Staff"
+    - "Medical Director"
+    - "Chief Financial Officer"
+    - "CFO"
+    - "Chief Operating Officer"
+    - "COO"
+    - "Chief Nursing Officer"
+    - "CNO"
+    - "Administrator"
+    - "Vice President"
+    - "VP"
+    
+  secondary:
+    - "Director"
+    - "Manager"
+    - "Supervisor"
+    - "Coordinator"
+    - "Chief Information Officer"
+    - "CIO"
+    - "Chief Human Resources Officer"
+    - "CHRO"
+    - "Associate Administrator"
+    - "Assistant Administrator"
+    - "Department Head"
+    
+  medical_specific:
+    - "Chief of Medicine"
+    - "Chief of Surgery"
+    - "Chief of Emergency"
+    - "Department Chair"
+    - "Division Head"
+    - "Physician Lead"
+
+# Common name patterns for identification  
+name_patterns:
+  standard:
+    - "^[A-Z][a-z]+ [A-Z][a-z]+$"  # First Last
+    - "^[A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # First M. Last
+    - "^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$"  # First Middle Last
+    
+  with_titles:
+    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Last
+    - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # Dr. First M. Last
+    - "^[A-Z][a-z]+ [A-Z][a-z]+,? M\\.?D\\.?$"  # First Last, MD
+    - "^[A-Z][a-z]+ [A-Z][a-z]+,? Ph\\.?D\\.?$"  # First Last, PhD
+    - "^[A-Z][a-z]+ [A-Z][a-z]+,? R\\.?N\\.?$"  # First Last, RN
+
+# Pattern identification guide for manual review
+pattern_identification_guide:
+  questions_to_ask:
+    - "Where are the executive names located? (h1, h2, h3, p, div, span, td, li)"
+    - "Where are the titles located? (same or different element type)"
+    - "Are names and titles in the same element or separate?"
+    - "If separate, what's the relationship? (next sibling, same parent, table row)"
+    - "Are there any CSS classes that identify name/title elements?"
+    - "Are executives in a specific section/container?"
+    - "Are there any missing people not in the main structure?"
+    
+  common_patterns_to_look_for:
+    - "h2 followed by h3 (name then title)"
+    - "h2 followed by p (name then title)"
+    - "Combined in h2 or h3 with separator (John Smith - CEO)"
+    - "Table rows with name/title columns"
+    - "Div or span classes (.name, .title, .staff-name, etc.)"
+    - "List items with structured content"
+    - "Card layouts with consistent structure"
+    
