@@ -1,0 +1,1403 @@
+
+- FAC: '905'
+  name: OAK VALLEY HEALTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '777'
+  name: OTTAWA QUEENSWAY-CARLETON
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '606'
+  name: BARRIE ROYAL VICTORIA REG HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '979'
+  name: TORONTO SCARBOROUGH HEALTH NETWORK
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '837'
+  name: TORONTO HOSPITAL FOR SICK CHILDREN
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '976'
+  name: TORONTO SINAI HEALTH SYSTEM
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '793'
+  name: ST THOMAS ELGIN GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '596'
+  name: ALLISTON STEVENSON MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '975'
+  name: MISSISSAUGA TRILLIUM HEALTH PARTNER
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '947'
+  name: TORONTO UNIVERSITY HEALTH NETWORK
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '951'
+  name: BRAMPTON WILLIAM OSLER
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '695'
+  name: KINGSTON PROVIDENCE CARE HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '932'
+  name: OTTAWA BRUYERE CONTINUING CARE INC.
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '790'
+  name: ST CATHARINES HOTEL DIEU
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '781'
+  name: THUNDER BAY ST. JOSEPH'S
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '827'
+  name: TORONTO BAYCREST CTR GERIATRIC CARE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '939'
+  name: TORONTO HOLLAND BLOORVIEW KIDS
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '850'
+  name: TORONTO RUNNYMEDE HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '605'
+  name: TORONTO ST. JOSEPH'S INFIRMARY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '613'
+  name: TORONTO WEST PARK
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '927'
+  name: WINDSOR HOTEL DIEU GRACE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '970'
+  name: BRANTFORD BRANT COMMUNITY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '982'
+  name: BLANCHE RIVER HEALTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '619'
+  name: BROCKVILLE GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '718'
+  name: BURLINGTON JOSEPH BRANT HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '981'
+  name: CHATHAM CHATHAM-KENT HEALTH ALLIANC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '940'
+  name: COBOURG NORTHUMBERLAND HILLS
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '640'
+  name: COLLINGWOOD GENERAL AND MARINE HOSP
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '967'
+  name: CORNWALL COMMUNITY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '955'
+  name: GREY BRUCE HEALTH SERVICES
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '665'
+  name: GUELPH GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '968'
+  name: HUNTSVILLE MUSKOKA ALGONQUIN HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '983'
+  name: HURON PERTH HEALTHCARE ALLIANCE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '930'
+  name: KITCHENER GRAND RIVER
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '699'
+  name: KITCHENER ST MARY'S
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '726'
+  name: MIDLAND GEORGIAN BAY GEN HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '736'
+  name: NEWMARKET SOUTHLAKE REGIONAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '974'
+  name: NORTH BAY REGIONAL HEALTH CENTRE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '950'
+  name: OAKVILLE HALTON HEALTH CARE CORP
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '916'
+  name: ORANGEVILLE HEADWATERS HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '745'
+  name: ORILLIA SOLDIERS' MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '931'
+  name: PARRY SOUND WEST PARRY SOUND
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '763'
+  name: PEMBROKE REGIONAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '771'
+  name: PETERBOROUGH REGIONAL HEALTH CENTRE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '701'
+  name: RICHMOND HILL MACKENZIE HEALTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '966'
+  name: SARNIA BLUEWATER HEALTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '965'
+  name: SAULT STE MARIE SAULT AREA
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '804'
+  name: SIMCOE NORFOLK GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '928'
+  name: SMITHS FALLS PERTH & SMITHS FALLS
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '962'
+  name: ST CATHARINES NIAGARA HEALTH SYSTEM
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '813'
+  name: STRATFORD GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '814'
+  name: STRATHROY MIDDLESEX GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '907'
+  name: TIMMINS & DISTRICT GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '858'
+  name: TORONTO EAST GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '882'
+  name: WINCHESTER DISTRICT MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '933'
+  name: WINDSOR REGIONAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '890'
+  name: WOODSTOCK WOODSTOCK HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '855'
+  name: THORNHILL SHOULDICE HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '908'
+  name: TORONTO BELLWOOD HEALTH SERVICES
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '680'
+  name: TORONTO DON MILLS SURGICAL UNIT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '802'
+  name: ALEXANDRIA GLENGARRY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '597'
+  name: ALMONTE GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '599'
+  name: ARNPRIOR & DISTRICT MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '600'
+  name: ATIKOKAN GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '768'
+  name: BARRY'S BAY ST FRANCIS
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '611'
+  name: BLIND RIVER NORTH SHORE HN
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '626'
+  name: CARLETON PLACE & DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '627'
+  name: CHAPLEAU SER DE SANTÉ DE CHAPLEAU
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '633'
+  name: CLINTON PUBLIC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '638'
+  name: COCHRANE LADY MINTO
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '644'
+  name: CORNWALL HOTEL DIEU
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '646'
+  name: DEEP RIVER AND DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '647'
+  name: DRYDEN REGIONAL HEALTH CENTRE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '648'
+  name: DUNNVILLE HALDIMAND WAR MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '938'
+  name: DYSART ET AL HALIBURTON HEALTH SER
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '650'
+  name: ELLIOT LAKE ST JOSEPH'S
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '653'
+  name: ENGLEHART & DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '654'
+  name: ESPANOLA GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '655'
+  name: EXETER SOUTH HURON
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '656'
+  name: FERGUS GROVES MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '900'
+  name: FORT FRANCES RIVERSIDE HEALTH CARE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '662'
+  name: GERALDTON DISTRICT HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '663'
+  name: GODERICH ALEXANDRA MARINE & GEN
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '666'
+  name: GUELPH ST JOSEPH'S HEALTH CENTRE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '734'
+  name: HALDIMAND WEST HALDIMAND GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '676'
+  name: HANOVER & DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '800'
+  name: HAWKESBURY & DISTRICT GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '681'
+  name: HEARST NOTRE DAME
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '682'
+  name: HORNEPAYNE COMMUNITY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '684'
+  name: INGERSOLL ALEXANDRA
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '685'
+  name: IROQUOIS FALLS ANSON GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '687'
+  name: KAPUSKASING SENSENBRENNER
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '732'
+  name: KEMPTVILLE DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '826'
+  name: KENORA LAKE-OF-THE-WOODS DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '946'
+  name: KINCARDINE SOUTH BRUCE GREY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '696'
+  name: KIRKLAND & DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '704'
+  name: LEAMINGTON DISTRICT MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '709'
+  name: LISTOWEL MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '784'
+  name: LITTLE CURRENT MANITOULIN
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '719'
+  name: MANITOUWADGE SANTE MANITOUWADGE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '723'
+  name: MATHESON BINGHAM MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '724'
+  name: MATTAWA GENERAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '973'
+  name: MOOSE FACTORY WEENEEBAYKO AREA
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '963'
+  name: MOUNT FOREST NORTH WELLINGTON HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '592'
+  name: NAPANEE LENNOX & ADDINGTON
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '888'
+  name: NEW LISKEARD TEMISKAMING HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '593'
+  name: NEWBURY FOUR COUNTIES HEALTH SERV.
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '739'
+  name: NIPIGON DISTRICT MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '896'
+  name: RED LAKE MARG COCHENOUR MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '788'
+  name: RENFREW VICTORIA
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '801'
+  name: SEAFORTH COMMUNITY
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '964'
+  name: SIOUX LOOKOUT MENO-YA-WIN HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '809'
+  name: SMOOTH ROCK FALLS
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '792'
+  name: ST MARYS MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '881'
+  name: STURGEON FALLS WEST NIPISSING
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '971'
+  name: SUDBURY ST.JOSEPH'S CONTINUING CARE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '977'
+  name: TERRACE BAY NORTH OF SUPERIOR HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '824'
+  name: TILLSONBURG DISTRICT MEMORIAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '910'
+  name: TORONTO CASEY HOUSE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '854'
+  name: TORONTO SA GRACE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '686'
+  name: WAWA LADY DUNN HC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '889'
+  name: WINGHAM & DISTRICT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '751'
+  name: OTTAWA CHEO CTC
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '601'
+  name: GUELPH HOMEWOOD
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '651'
+  name: OTTAWA ROYAL OTTAWA (PSYCH)
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '972'
+  name: PENETANGUISHENE WAYPOINT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '948'
+  name: TORONTO ADDICTION & MENTAL HEALTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '969'
+  name: WHITBY ONT SHORES CENTRE MH SCIENCE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '942'
+  name: HAMILTON HEALTH SCIENCES CORP
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '674'
+  name: HAMILTON ST JOSEPH'S
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '978'
+  name: KINGSTON KINGSTON HEALTH SCIENCES
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '936'
+  name: LONDON HEALTH SCIENCES
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '714'
+  name: LONDON ST JOSEPH'S
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '961'
+  name: OTTAWA HEART INSTITUTE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '753'
+  name: OTTAWA MONTFORT
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '958'
+  name: OTTAWA THE OTTAWA HOSPITAL
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '959'
+  name: SUDBURY HEALTH SCIENCES NORTH
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '980'
+  name: TORONTO UNITY HEALTH TORONTO
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+- FAC: '862'
+  name: TORONTO WOMEN'S COLLEGE
+  url: '# TODO: Add leadership page URL'
+  pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+  expected_executives: 5.0
+  html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+  status: needs_configuration
+template_info:
+  created_date: 20357.0
+  source_file: E:/Public/ResourceFiles/LeadershipURLYAMLNotes.xlsx
+  total_hospitals: 148
+  status: template_generated
+  instructions:
+  - 1. Replace all TODO items with actual values
+  - 2. Add real leadership page URLs
+  - 3. Inspect HTML structure for each hospital
+  - 4. Update patterns based on HTML inspection
+  - 5. Test each hospital configuration
+  - 6. Remove this template_info section when ready

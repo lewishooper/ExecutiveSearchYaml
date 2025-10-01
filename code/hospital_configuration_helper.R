@@ -167,23 +167,43 @@ HospitalConfigHelper <- function() {
     cat("Updated enhanced_hospitals.yaml with", length(hospitals_info), "hospitals\n")
   }
   
-  # Test a hospital configuration before adding it
-  test_hospital_config <- function(fac, name, url, pattern = "h2_name_h3_title") {
+  # Test a hospital configuration - UPDATED to read from YAML
+  test_hospital_config <- function(fac, name, url, pattern = "h2_name_h3_title", config_file = "enhanced_hospitals.yaml") {
     cat("=== TESTING CONFIGURATION FOR", name, "===\n")
     
-    # Create temporary hospital info
-    hospital_info <- list(
-      FAC = sprintf("%03d", as.numeric(fac)),
-      name = name,
-      url = url,
-      pattern = pattern,
-      expected_executives = 5,
-      html_structure = list(
-        name_element = "h2",
-        title_element = "h3",
-        notes = "Test configuration"
+    # Try to read existing config from YAML first
+    hospital_info <- NULL
+    
+    if (file.exists(config_file)) {
+      config <- yaml::read_yaml(config_file)
+      if (!is.null(config$hospitals)) {
+        # Look for this hospital in the config
+        for (hospital in config$hospitals) {
+          if (hospital$FAC == sprintf("%03d", as.numeric(fac))) {
+            hospital_info <- hospital
+            cat("Found existing configuration in YAML\n")
+            break
+          }
+        }
+      }
+    }
+    
+    # If not found in YAML, create basic structure
+    if (is.null(hospital_info)) {
+      cat("No existing configuration found, creating basic test structure\n")
+      hospital_info <- list(
+        FAC = sprintf("%03d", as.numeric(fac)),
+        name = name,
+        url = url,
+        pattern = pattern,
+        expected_executives = 5,
+        html_structure = list(
+          name_element = "h2",
+          title_element = "h3",
+          notes = "Test configuration"
+        )
       )
-    )
+    }
     
     # Initialize scraper and test
     scraper <- PatternBasedScraper()
@@ -196,11 +216,11 @@ HospitalConfigHelper <- function() {
       }
       
       cat("\nSUCCESS: Found", nrow(result), "executives\n")
-      cat("RECOMMENDATION: Add this configuration to YAML\n")
+      cat("RECOMMENDATION: Configuration working correctly\n")
       
     } else {
       cat("  No valid results found\n")
-      cat("RECOMMENDATION: Try different pattern or custom configuration\n")
+      cat("RECOMMENDATION: Check pattern or add to YAML configuration\n")
     }
     
     return(result)
@@ -220,7 +240,8 @@ HospitalConfigHelper <- function() {
     cat("2. COMBINED_H2 (name and title together):\n")
     cat("   - Both name and title in same element\n")
     cat("   - Usually separated by ' - ' or ', '\n")
-    cat("   - Example: <h2>John Smith - CEO</h2>\n\n")
+    cat("   - Example: <h2>John Smith - CEO</h2>\n")
+    cat("   - Can also be h3: <h3>John Smith - CEO</h3>\n\n")
     
     cat("3. TABLE_ROWS (structured data):\n")
     cat("   - Names and titles in table columns\n")
@@ -231,7 +252,12 @@ HospitalConfigHelper <- function() {
     cat("   - Names in <h2>, titles in following <p>\n")
     cat("   - Example: <h2>John Smith</h2> <p>CEO</p>\n\n")
     
-    cat("5. DIV_CLASSES (CSS-based):\n")
+    cat("5. BOARDCARD_GALLERY (special pattern):\n")
+    cat("   - Names and titles in div.boardcard elements\n")
+    cat("   - Format: Name, Title separated by comma\n")
+    cat("   - Example: <div class='boardcard'>John Smith, CEO</div>\n\n")
+    
+    cat("6. DIV_CLASSES (CSS-based):\n")
     cat("   - Names/titles in divs with specific classes\n")
     cat("   - Example: <div class='name'>John</div><div class='title'>CEO</div>\n\n")
     
@@ -297,7 +323,7 @@ cat("=== HOSPITAL CONFIGURATION HELPER LOADED ===\n\n")
 
 cat("AVAILABLE FUNCTIONS:\n")
 cat("1. helper$analyze_hospital_structure(fac, name, url) - Analyze HTML structure\n")
-cat("2. helper$test_hospital_config(fac, name, url, pattern) - Test configuration\n")  
+cat("2. helper$test_hospital_config(fac, name, url, pattern) - Test configuration (reads from YAML)\n")  
 cat("3. helper$show_pattern_guide() - Show pattern identification guide\n")
 cat("4. helper$generate_batch_config('file.csv') - Generate config from CSV\n\n")
 
@@ -305,19 +331,14 @@ cat("WORKFLOW FOR ADDING NEW HOSPITALS:\n")
 cat("Step 1: Use browser to find leadership page URL\n")
 cat("Step 2: helper$analyze_hospital_structure(624, 'Hospital Name', 'URL')\n")
 cat("Step 3: Review suggested configuration and manually verify\n")
-cat("Step 4: helper$test_hospital_config(624, 'Hospital Name', 'URL', 'pattern')\n")
-cat("Step 5: If successful, add to enhanced_hospitals.yaml\n\n")
-
-cat("BATCH PROCESSING:\n")
-cat("1. Create CSV with columns: fac, name, url, expected\n")
-cat("2. helper$generate_batch_config('your_file.csv')\n")
-cat("3. Review and test generated configurations\n\n")
+cat("Step 4: Add to enhanced_hospitals.yaml with any missing_people\n")
+cat("Step 5: helper$test_hospital_config(624, 'Hospital Name', 'URL', 'pattern')\n\n")
 
 cat("EXAMPLE USAGE:\n")
 cat("# Analyze a hospital:\n")
-cat("helper$analyze_hospital_structure(625, 'New Hospital', 'https://newhospital.com/leadership')\n\n")
-cat("# Test configuration:\n")
-cat("helper$test_hospital_config(625, 'New Hospital', 'https://newhospital.com/leadership', 'h2_name_h3_title')\n\n")
+cat("helper$analyze_hospital_structure(935, 'Thunder Bay', 'URL')\n\n")
+cat("# Test configuration (now reads missing_people from YAML):\n")
+cat("helper$test_hospital_config(935, 'Thunder Bay', 'URL', 'boardcard_gallery')\n\n")
 
 cat("# Show pattern guide:\n")
 cat("helper$show_pattern_guide()\n\n")

@@ -3,66 +3,398 @@
 
 hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common)
-  - FAC: "707" 
-    name: "Ross Memorial Hospital"
-    url: "https://rmh.org/about-ross-memorial/senior-leadership"
-    pattern: "h2_name_h3_title"
-    expected_executives: 6
-    html_structure:
-      name_element: "h2"
-      title_element: "h3" 
-      notes: "h2=Name, h3=Title - works well"
+ - FAC: "707" 
+   name: "Ross Memorial Hospital"
+   url: "https://rmh.org/about-ross-memorial/senior-leadership"
+   pattern: "h2_name_h3_title"
+   expected_executives: 6
+   html_structure:
+    name_element: "h2"
+    title_element: "h3" 
+    notes: "h2=Name, h3=Title - works well"
     status: "working"
-    
-  - FAC: "624"
-    name: "Campbellford Memorial Hospital"  
-    url: "https://www.campbellfordmemorial.ca/about-us/administration/"
-    pattern: "h2_name_h3_title"
-    expected_executives: 6
-    html_structure:
-      name_element: "h2"
-      title_element: "h3"
-      notes: "h2=Name, h3=Title - same pattern as Ross"
-      missing_people: 
-        - name: "Dr. Dimitri Louvish"
-          title: "Chief of Staff"
-          reason: "Not in main h2/h3 structure"
-    status: "needs_fix"
-    
-  - FAC: "596"
-    name: "Alliston Stevenson Memorial Hospital"
-    url: "https://www.stevensonhospital.ca/about-us/leadership/"
-    pattern: "h2_name_h3_title"
-    expected_executives: 7
-    html_structure:
-      name_element: "h2"
-      title_element: "h3"
-      notes: "h2=Name, h3=Title - same pattern"
-      missing_people:
-        - name: "Dr. Roger Musa"
-          title: "Chief of Staff"
-          reason: "Not in main structure"
-        - name: "Carmine Stumpo"
-          title: "Supervisor"
-          reason: "Title mismatch in scraping"
-    status: "needs_fix"
-    
-  - FAC: "661"
-    name: "Hospital with Table Structure"
-    url: "https://hospital661.com/administrative-contacts"
-    pattern: "table_rows"
-    expected_executives: 5
-    html_structure:
-      structure_type: "table"
-      name_location: "td_column_1"
-      title_location: "td_column_2"
-      notes: "Clean table structure, names in col 1, titles in col 2"
-      data_issues:
-        - "Phone extensions need cleanup (ext.2301)"
-        - "Extra whitespace and formatting"
-    status: "needs_cleanup"
 
+ - FAC: "624"
+   name: "Campbellford Memorial Hospital"  
+   url: "https://cmh.ca/our-executive-leadership-team"
+   pattern: "h2_name_h3_title"
+   expected_executives: 6
+   html_structure:
+    name_element: "h2"
+    title_element: "h3"
+    notes: "h2=Name, h3=Title with title corrections"
+    missing_people:
+      - name: "Julia Swedak"
+        title: "Innovation and Transformation Officer"
+      - name: "Dr. Dimitri Louvish"
+        title: "Chief of Staff"
+   status: "Watch Me"
+    
+ - FAC: "596"
+   name: "Alliston Stevenson Memorial Hospital"
+   url: "https://www.stevensonhospital.ca/senior-leadership"
+   pattern: "h2_name_h3_title"
+   expected_executives: 7
+   html_structure:
+    name_element: "h2"
+    title_element: "h3"
+    notes: "h2=Name, h3=Title pattern with missing people"
+    #missing_people:
+     # - name: "Dr. Roger Musa"
+      #  title: "Chief of Staff"
+      #- name: "Carmine Stumpo"
+       # title: "Supervisor"
+   status: "configured"
+  
+ - FAC: "661"
+   name: "Cambridge Memorial Hospital"
+   url: "https://www.cmh.org/contacts"
+   pattern: "table_rows"
+   expected_executives: 5
+   html_structure:
+    structure_type: "table"
+    name_location: "td_column_1"
+    title_location: "td_column_2"
+    notes: "Table structure, names in col 1, titles in col 2, needs extension cleanup"
+    data_issues:
+      - "Phone extensions need cleanup (ext.2301)"
+      - "Extra whitespace and formatting"
+   status: "configured"    
+
+  #li_example:
+ - FAC: "957"
+   name: "BELLEVILLE QUINTE HEALTH CARE"
+   url: "https://quintehealth.ca/about-quinte-health/leadership/"
+   pattern: "list_items"
+   html_structure:
+        list_type: "ul"  # or ol
+        item_element: "li"
+        name_format: "first_part"  # or specific pattern
+        title_format: "after_dash"  # or specific pattern
+        notes: "Names and titles in li elements seperated by , " 
+
+ - FAC: "953"
+   name: "Sunnybrook Health Sciences Centre"
+   url: "https://sunnybrook.ca/content/?page=executive-leadership"
+   pattern: "h2_name_p_title"
+   expected_executives: 8
+   html_structure:
+    name_element: "h2"
+    title_element: "p"
+    notes: "h2=Name with credentials (Dr. Name, MD, MSc, etc.), p=Title"
+   status: "configured"
+
+ - FAC: "935"
+   name: "Thunder Bay Regional Health Sciences Centre"
+   url: "https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/"
+   pattern: "boardcard_gallery"
+   expected_executives: 8
+   html_structure:
+    container_class: "boardcard"
+    text_format: "name_comma_title"
+    separator: ","
+    notes: "Gallery of senior leaders, CEO needs manual addition"
+    missing_people:
+      - name: "Dr. Rhonda Crocker Ellacott"
+        title: "President and CEO"
+   status: "configured"
+ - FAC: "941"
+   name: "Humber River Hospital"
+   url: "https://www.hrh.ca/who-we-are/accountability/governance-leadership/"
+   pattern: "combined_h2"
+   expected_executives: 9
+   html_structure:
+    combined_element: "h3"
+    separator: " - "
+    notes: "Name and title combined in h3 elements, separated by ' - '"
+    missing_people:
+      - name: "Dr. S. Zaki Ahmed"
+        title: "Chief of Staff"
+      - name: "Maria-Cristina Cavicchia"
+        title: "Vice President, Human Resources and Employment Legal Counsel"
+    status: "configured"
+
+   
+ - FAC: "952"
+   name: "Lakeridge Health"
+   url: "https://www.lh.ca/about-us/leadership-team/"
+   pattern: "combined_h2"
+   expected_executives: 10
+   html_structure:
+    combined_element: "h3"
+    separator: ", "
+    notes: "Name and title combined in h3 elements, separated by ', '"
+    missing_people:
+      - name: "Petrina McGrath"
+        title: "Health System Executive, People, Quality and Practice and Chief Nursing Executive"
+      - name: "Trevor Stewart"
+        title: "Chief Development Officer"
+   status: "configured"
+ - FAC: '905'
+   name: OAK VALLEY HEALTH
+   url: 'https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/'
+   pattern: 'div-classes'
+   expected_executives: 5.0
+   html_structure:
+    name_element: "span class='dr-name board-member'"
+    title_class: "dr-degree"
+    container_class: "right-side"
+    notes: "names in div class 'right-side' titles in spaln class= dr. degrees"
+   status: needs_configuration
+ 
+ - FAC: "632"
+   name: "North York General Hospital"
+   url: "https://www.nygh.on.ca/about-us/leadership-team/"
+   pattern: "h2_name_h3_title"
+   expected_executives: 8
+   html_structure:
+    name_element: "h2"
+    title_element: "h3"
+    notes: "h2=Name, h3=Title with complex credentials"
+    missing_people:
+      - name: "Rudy Dahdal"
+        title: "Vice President, Planning, Redevelopment and Clinical Support"
+      - name: "Anne-Marie Flanagan"
+        title: "Interim Chief Communications & External Relations Officer"
+      - name: "Dr. Phil Shin"
+        title: "Chief Medical Information Officer"
+      - name: "Terri Stuart-McEwan"
+        title: "Vice President, Clinical Services and Chief Nursing Executive"
+   status: "configured"
+
+
+ - FAC: "777"
+   name: "Queensway Carleton Hospital"
+   url: "https://www.qch.on.ca/Leadership"  # Update with actual URL
+   pattern: "custom_table_nested"
+   expected_executives: 6
+   html_structure:
+    structure_type: "table_with_nested_elements"
+    name_selector: "td p[style*='text-align: left']"
+    title_selector: "td div[style*='text-align: left']"
+    container: "td"
+    notes: "Names in <p style='text-align: left'>, titles in <div style='text-align: left'> with <br> breaks"
+    data_cleaning:
+      - "Remove <br> tags from titles"
+      - "Combine multiple div elements for complete titles"
+   status: "needs_testing"
 # Pattern examples for other common structures
+
+ - FAC: '606'
+   name: "BARRIE ROYAL VICTORIA REG HC"
+   url: 'https://www.rvh.on.ca/about-rvh/senior-leadership-team/'
+   pattern: "div_classes"
+   html_structure:
+        name_class: "card-table"
+        title_class: "card-subtable"
+        container_class: "card-info"
+        notes: "Names in .staff-name divs, titles in .staff-title divs"
+ - FAC: '979'
+   name: "TORONTO SCARBOROUGH HEALTH NETWORK"
+   url: 'https://www.shn.ca/about-us/hospital-leadership/'
+   pattern: "div_classes"
+   html_structure:
+        name_class: "staff-name"
+        title_class: "staff-title"
+        container_class: "staff-member"
+        notes: "div class=staff-info"
+   status: needs_configuration
+ - FAC: '837'
+   name: "TORONTO HOSPITAL FOR SICK CHILDREN"
+   url: 'https://www.sickkids.ca/en/about/leadership/'
+   pattern: "div_classes"
+   html_structure:
+        name_class: "card-title"
+        title_class: "card-text"
+        container_class: "staff-member"
+   notes: " Overall <div class=card body Sub structure is div card=card-body, Nname <a href,class=stretched Link, title= <p class-card_text"
+   status: needs_configuration
+ - FAC: '976'
+   name: "TORONTO SINAI HEALTH SYSTEM"
+   url: 'https://www.sinaihealth.ca/about-sinai-health/sinai-health-leadership'
+   pattern: 'div-classes'
+   expected_executives: 5.0
+   html_structure:
+      name_element: 'bio-token--name'
+      title_element: 'bio-token--position'
+      notes: ""
+   status: needs_configuration
+ - FAC: '793'
+   name: "ST THOMAS ELGIN GENERAL"
+   url: '#https://www.stegh.on.ca/about-us/our-leadership/'
+   pattern: "combined_h2"
+   expected_executives: 5.0
+   html_structure:
+        combined_element: "p"
+        separator: " <br> "  # e.g., "John Smith - CEO"
+        notes: "Name and title together in p separated by ' - '"
+
+ - FAC: '975'
+   name: MISSISSAUGA TRILLIUM HEALTH PARTNER
+   url: 'https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx'
+   pattern: 'combined_h2'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  '
+    title_element: 'span'
+    notes: '<h2> <span>=name,title=<span class h4'
+   status: needs_configuration
+
+ - FAC: '947'
+   name: TORONTO UNIVERSITY HEALTH NETWORK
+   url: 'https://www.uhn.ca/corporate/AboutUHN/Governance_Leadership/Pages/Our_Leaders.aspx'
+   pattern: "h2_name_p_title"
+   html_structure:
+        name_element: "h5"
+        title_element: "p"
+        notes: "h5=Name, immediately followed by p=Title"
+   missing_people:
+      - name: "Dr. Kevin Smith"
+        title: "President and CEO"
+   status: NEEDS CHECKING
+ - FAC: '951'
+   name: BRAMPTON WILLIAM OSLER
+   url: 'https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146'
+   pattern: 'combined_h2'
+   expected_executives: 5.0
+   html_structure:
+        combined_element: "h3"
+        separator: ", "  # e.g., "John Smith - CEO"
+        notes: "Name and title together in h3 separated by ' , '"
+   status: needs_confirmation
+ - FAC: '695'
+   name: KINGSTON PROVIDENCE CARE HOSPITAL
+   url: '# TODO: Add leadership page URL'
+   pattern: "div_classes"
+   html_structure:
+        name_class: "mb-name"
+        title_class: "mb-position"
+        container_class: "mb-item"
+        notes: ""
+ - FAC: '932'
+   name: OTTAWA BRUYERE CONTINUING CARE INC.
+   url: 'https://www.bruyere.org/en/leadership-team'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+        name_element: "p"
+        title_element: "p"
+        notes: "h2=Name, immediately followed by p=Title"
+
+ - FAC: '790'
+   name: ST CATHARINES HOTEL DIEU
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '781'
+   name: THUNDER BAY ST. JOSEPH'S
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '827'
+   name: TORONTO BAYCREST CTR GERIATRIC CARE
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '939'
+   name: TORONTO HOLLAND BLOORVIEW KIDS
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ 
+ - FAC: '850'
+   name: TORONTO RUNNYMEDE HC
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '605'
+   name: TORONTO ST. JOSEPH'S INFIRMARY
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+
+ - FAC: '613'
+   name: TORONTO WEST PARK
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '927'
+   name: WINDSOR HOTEL DIEU GRACE
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '970'
+   name: BRANTFORD BRANT COMMUNITY
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '982'
+   name: BLANCHE RIVER HEALTH
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+ - FAC: '619'
+   name: BROCKVILLE GENERAL
+   url: '# TODO: Add leadership page URL'
+   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   expected_executives: 5.0
+   html_structure:
+    name_element: 'h2  # TODO: Update after HTML inspection'
+    title_element: 'h3  # TODO: Update after HTML inspection'
+    notes: '# TODO: Add notes about HTML structure'
+   status: needs_configuration
+   
+   
 pattern_templates:
   
   # Pattern 2: Combined name+title in single element
@@ -84,7 +416,7 @@ pattern_templates:
       pattern: "h2_name_p_title"
       html_structure:
         name_element: "h2"
-        title_element: "p"
+        title_element: "span"
         notes: "h2=Name, immediately followed by p=Title"
         
   # Pattern 4: Div/span class-based
@@ -144,11 +476,12 @@ executive_titles:
     - "Administrator"
     - "Vice President"
     - "VP"
+    - "Supervisor" 
+    - "Health System Executive"
     
   secondary:
     - "Director"
     - "Manager"
-    - "Supervisor"
     - "Coordinator"
     - "Chief Information Officer"
     - "CIO"
@@ -176,9 +509,21 @@ name_patterns:
   with_titles:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Last
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # Dr. First M. Last
-    - "^[A-Z][a-z]+ [A-Z][a-z]+,? M\\.?D\\.?$"  # First Last, MD
-    - "^[A-Z][a-z]+ [A-Z][a-z]+,? Ph\\.?D\\.?$"  # First Last, PhD
-    - "^[A-Z][a-z]+ [A-Z][a-z]+,? R\\.?N\\.?$"  # First Last, RN
+    
+  with_credentials:
+    - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
+    - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
+    
+  hyphenated_names:  # NEW SECTION
+    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
+    - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # First Last-Second
+    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Dr. First Last-Second
+    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First-Second Last, credentials
+    
+  complex_credentials:  # NEW SECTION
+    - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\\.[A-Z][a-z]+\\.,? [A-Z]{2,}.*$"  # Rudy Dahdal, B.Sc., MHSc, CHE
+    - "^Dr\\.? [A-Z]\\. [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. S. Zaki Ahmed
+    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Maria-Cristina Cavicchia
 
 # Pattern identification guide for manual review
 pattern_identification_guide:
@@ -199,4 +544,3 @@ pattern_identification_guide:
     - "Div or span classes (.name, .title, .staff-name, etc.)"
     - "List items with structured content"
     - "Card layouts with consistent structure"
-    
