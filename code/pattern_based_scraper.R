@@ -24,7 +24,8 @@ PatternBasedScraper <- function() {
       config$name_patterns$with_titles,
       config$name_patterns$with_credentials,
       config$name_patterns$hyphenated_names,      # ADD
-      config$name_patterns$complex_credentials    # ADD
+      config$name_patterns$complex_credentials,    # ADD
+      config$name_patterns$internal_capitals  # ADD THIS LINE
     )
     
     # Clean text first (but preserve hyphens in names)
@@ -140,8 +141,9 @@ PatternBasedScraper <- function() {
       pairs <- list()
       
       for (element_text in elements) {
+        element_text <- gsub("\u00A0", " ", element_text)_
         # Split by separator
-        parts <- strsplit(element_text, separator)[[1]]
+        parts <- strsplit(element_text, separator, fixed = TRUE)[[1]]
         
         if (length(parts) >= 2) {
           potential_name <- trimws(parts[1])
@@ -308,7 +310,86 @@ PatternBasedScraper <- function() {
   # Pattern for boardcard gallery (updated to include missing people)
   # test Lines
   #page="https://tbrhsc.net/about-us/leadership/"
-  
+ 
+  # Pattern 8: Custom table with nested elements (Queensway Carleton style)
+  scrape_custom_table_nested <- function(page, hospital_info, config) {
+    tryCatch({
+      # Get all table cells that contain both p and div elements
+      table_cells <- page %>% html_nodes("td")
+      
+      pairs <- list()
+      
+      for (cell in table_cells) {
+        # Look for name in p with text-align: left style
+        name_elements <- cell %>% html_nodes("p[style*='text-align: left'], p[style*='text-align:left']")
+        
+        # Look for title in div with text-align: left style  
+        title_elements <- cell %>% html_nodes("div[style*='text-align: left'], div[style*='text-align:left']")
+        
+        if (length(name_elements) > 0 && length(title_elements) > 0) {
+          # Extract name from first p element
+          potential_name <- name_elements %>% 
+            html_text(trim = TRUE) %>% 
+            first()
+          
+          # Extract and combine titles from all div elements
+          title_parts <- title_elements %>% 
+            html_text(trim = TRUE)
+          
+          # Combine multiple title parts and clean
+          potential_title <- paste(title_parts, collapse = " ")
+          potential_title <- str_replace_all(potential_title, "\\s+", " ")  # Clean extra spaces
+          potential_title <- trimws(potential_title)
+          
+          # Clean the extracted data
+          potential_name <- clean_text_data(potential_name)
+          potential_title <- clean_text_data(potential_title)
+          
+          # Validate name and title
+          if (is_executive_name(potential_name, config) && 
+              is_executive_title(potential_title, config)) {
+            
+            pairs[[length(pairs) + 1]] <- list(
+              name = potential_name,
+              title = potential_title
+            )
+          }
+        }
+      }
+      
+      # Remove duplicates
+      unique_pairs <- list()
+      for (pair in pairs) {
+        is_duplicate <- FALSE
+        for (existing in unique_pairs) {
+          if (existing$name == pair$name && existing$title == pair$title) {
+            is_duplicate <- TRUE
+            break
+          }
+        }
+        if (!is_duplicate) {
+          unique_pairs <- c(unique_pairs, list(pair))
+        }
+      }
+      
+      # Add any missing people from config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          unique_pairs[[length(unique_pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(unique_pairs)
+      
+    }, error = function(e) {
+      return(list())
+    })
+  }
+  #end Pattern 8 Scrape-custom_table_nested
+   
   scrape_boardcard_pattern <- function(page, hospital_info, config) {
     tryCatch({
       boardcard_elements <- page %>% html_nodes("div.boardcard") %>% html_text(trim = TRUE)
@@ -339,7 +420,7 @@ PatternBasedScraper <- function() {
           }
         }
       }
-      # pattern  9 
+      # pattern  8??
       # Pattern for custom table with nested elements (Queensway Carleton style)
       scrape_custom_table_nested <- function(page, hospital_info, config) {
         tryCatch({
@@ -426,8 +507,68 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  # test Lines
-  #
+
+  # Pattern 9: Sequential P elements with empty P spacers (for Bruyere FAC=932)
+  scrape_sequential_p_with_spacers <- function(page, hospital_info, config) {
+    tryCatch({
+      all_p <- page %>% html_nodes("p") %>% html_text(trim = TRUE)
+      
+      pairs <- list()
+      i <- 1
+      
+      while (i <= length(all_p)) {
+        current_text <- all_p[i]
+        
+        # Skip empty elements
+        if (nchar(current_text) == 0) {
+          i <- i + 1
+          next
+        }
+        
+        # Check if this looks like a name
+        if (is_executive_name(current_text, config)) {
+          # Look ahead for the title (should be next non-empty P)
+          j <- i + 1
+          while (j <= length(all_p) && nchar(all_p[j]) == 0) {
+            j <- j + 1
+          }
+          
+          if (j <= length(all_p)) {
+            potential_title <- all_p[j]
+            
+            if (is_executive_title(potential_title, config)) {
+              pairs[[length(pairs) + 1]] <- list(
+                name = clean_text_data(current_text),
+                title = clean_text_data(potential_title)
+              )
+              
+              # Skip to after the title
+              i <- j + 1
+              next
+            }
+          }
+        }
+        
+        i <- i + 1
+      }
+      
+      # Add any missing people from config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
+      
+    }, error = function(e) {
+      return(list())
+    })
+  }  
+  #end Pattern 9
   # Main scraper function
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
     config <- load_config(config_file)
@@ -447,8 +588,8 @@ PatternBasedScraper <- function() {
                       "div_classes" = scrape_div_classes(page, hospital_info, config),
                       "list_items" = scrape_list_items(page, hospital_info, config),
                       "boardcard_gallery" =scrape_boardcard_pattern(page, hospital_info, config),
-                      "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config), 
                       "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
+                      "sequential_p_with_spacers" = scrape_sequential_p_with_spacers(page, hospital_info, config),
                       # Default fallback
                       scrape_h2_name_h3_title(page, hospital_info, config)
       )

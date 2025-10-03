@@ -34,7 +34,7 @@ hospitals:
    name: "Alliston Stevenson Memorial Hospital"
    url: "https://www.stevensonhospital.ca/senior-leadership"
    pattern: "h2_name_h3_title"
-   expected_executives: 7
+   expected_executives: 5
    html_structure:
     name_element: "h2"
     title_element: "h3"
@@ -184,11 +184,13 @@ hospitals:
    name: "BARRIE ROYAL VICTORIA REG HC"
    url: 'https://www.rvh.on.ca/about-rvh/senior-leadership-team/'
    pattern: "div_classes"
+   expected_executives: 11
    html_structure:
-        name_class: "card-table"
-        title_class: "card-subtable"
-        container_class: "card-info"
-        notes: "Names in .staff-name divs, titles in .staff-title divs"
+    name_class: "card-title"
+    title_class: "card-subtitle"
+    container_class: "card-info"
+    notes: "Names in .card-title divs, titles in .card-subtitle divs, within .card-info containers"
+   status: "configured"
  - FAC: '979'
    name: "TORONTO SCARBOROUGH HEALTH NETWORK"
    url: 'https://www.shn.ca/about-us/hospital-leadership/'
@@ -271,16 +273,17 @@ hospitals:
         title_class: "mb-position"
         container_class: "mb-item"
         notes: ""
- - FAC: '932'
-   name: OTTAWA BRUYERE CONTINUING CARE INC.
-   url: 'https://www.bruyere.org/en/leadership-team'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+ - FAC: "932"
+   name: "Elizabeth Bruyere Hospital"
+   url: "https://www.bruyere.org/en/leadership-team?v=1"
+   pattern: "sequential_p_with_spacers"
+   expected_executives: 8
    html_structure:
-        name_element: "p"
-        title_element: "p"
-        notes: "h2=Name, immediately followed by p=Title"
-
+    name_element: "p"
+    title_element: "p"
+    notes: "Sequential P elements: name P, title P, empty P spacer, repeat"
+   status: "configured"
+   
  - FAC: '790'
    name: ST CATHARINES HOTEL DIEU
    url: '# TODO: Add leadership page URL'
@@ -293,106 +296,108 @@ hospitals:
    status: needs_configuration
  - FAC: '781'
    name: THUNDER BAY ST. JOSEPH'S
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
+   url: 'https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/'
+   pattern: 'custom_table_nested'
    expected_executives: 5.0
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
+    structure_type: "table_with_nested_elements"
+    name_selector: "th"# p[style*='text-align: left']"    # ← CUSTOMIZABLE
+    title_selector: "td"# div[style*='text-align: left']" # ← CUSTOMIZABLE
+    container: "tr"                                     # ← CUSTOMIZABLE
+          
+
     notes: '# TODO: Add notes about HTML structure'
    status: needs_configuration
+   
+   
  - FAC: '827'
    name: TORONTO BAYCREST CTR GERIATRIC CARE
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   url: 'https://www.baycrest.org/Baycrest-Pages/About-Baycrest/Leadership/Baycrest-Hospital-Executive-Team'
+   pattern: "div_classes"
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+        name_class: "t-2"
+        title_class: "d-2"
+        container_class: "bio-tote_content"
+        notes: "Names in .staff-name divs, titles in .staff-title divs"
+        
  - FAC: '939'
    name: TORONTO HOLLAND BLOORVIEW KIDS
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   url: 'https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team'
+   pattern: "div_classes"
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+        name_class: "view-field views-field-title"
+        title_class: "view-field views-field-field-job-title"
+        container_class: "Field content"
+        notes: "Names in .staff-name divs, titles in .staff-title divs"
  
  - FAC: '850'
    name: TORONTO RUNNYMEDE HC
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   url: 'https://runnymedehc.ca/runnymede-difference/about-runnymede/governance/'
+   pattern: 'list_items'
+   expected_executives: 3.0
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
- - FAC: '605'
-   name: TORONTO ST. JOSEPH'S INFIRMARY
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
-   html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
-
- - FAC: '613'
-   name: TORONTO WEST PARK
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
-   html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+        list_type: "ul"  # or ol
+        item_element: "li"
+        format: "combined"
+        separator: ", "
+# 605 and 613 are now part of other organizazitns
  - FAC: '927'
-   name: WINDSOR HOTEL DIEU GRACE
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   name: "Windsor Hotel Dieu Grace"
+   url: 'https://www.hdgh.org/leadership'
+   pattern: 'manual_entry_required'  # Site blocks automated access
+   expected_executives: 5
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+    n otes: "Website blocks automated scraping - may need manual entry or contact hospital"
+   status: "blocked_by_site"
+   known_executives:
+    - name: "Bill Marra"
+      title: "President and CEO"
+    - name: "Andrea Steen"
+      title: "Chief of Staff"
+    - name: "Sherri Laframboise"
+      title: "Chief Financial Officer"
+    - name: "Sheri McGeen"
+      title: "Chief Human Resources"
+    - name: "Tammy Kotyk"
+      title: "VP Of Mental Healht and Addictions"
+    - name: "Shannon Landry"
+      title: "VP of Restorative Care and Chief Nursing Officer"
+   
+   
  - FAC: '970'
-   name: BRANTFORD BRANT COMMUNITY
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   name: "Brantford Brant Community"
+   url: 'https://www.bchsys.org/en/about-us/senior-leadership-team.aspx'
+   pattern: 'combined_h2'
+   expected_executives: 8
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+    combined_element: w"h5.emphasis-Secondary"
+    separator: " | "
+    notes: "h5 elements with pipe separator: Name | Title"
+   status: "configured"
+   
+   
  - FAC: '982'
-   name: BLANCHE RIVER HEALTH
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   name: "Blanche River Health"
+   url: 'https://www.blancheriverhealth.ca/about-us/leadership'
+   pattern: 'div_classes'  # or whatever pattern you're currently using
+   expected_executives: 3  # Adjust based on actual senior leadership count
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+     name_class: "name"
+     title_class: "position"
+     container_class: "member-name"
+     notes: "Leadership page includes both executives and board members"
+   status: "needs_configuration"
+   
+   
  - FAC: '619'
    name: BROCKVILLE GENERAL
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   url: 'https://www.brockvillegeneralhospital.ca/who-we-are/executive-leadership-team/'
+   pattern: "combined_h2"
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+        combined_element: "p"
+        separator: ", "  # e.g., "John Smith - CEO"
+        notes: "Name and title together in h2, separated by ', '"
+   status: ok
    
    
 pattern_templates:
@@ -466,6 +471,11 @@ executive_titles:
     - "Chief Medical Officer"
     - "CMO"
     - "Chief of Staff"
+    - "Chair"  # ADD THIS
+    - "Vice-Chair"  # ADD THIS
+    - "Board Chair"  # ADD THIS
+    - "Secretary"  #
+    
     - "Medical Director"
     - "Chief Financial Officer"
     - "CFO"
@@ -477,6 +487,7 @@ executive_titles:
     - "Vice President"
     - "VP"
     - "Supervisor" 
+    - "Interim"
     - "Health System Executive"
     
   secondary:
@@ -514,16 +525,25 @@ name_patterns:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
     
-  hyphenated_names:  # NEW SECTION
+  hyphenated_names:
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
     - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # First Last-Second
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Dr. First Last-Second
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First-Second Last, credentials
     
-  complex_credentials:  # NEW SECTION
+  complex_credentials:
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\\.[A-Z][a-z]+\\.,? [A-Z]{2,}.*$"  # Rudy Dahdal, B.Sc., MHSc, CHE
     - "^Dr\\.? [A-Z]\\. [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. S. Zaki Ahmed
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Maria-Cristina Cavicchia
+  
+  # ADD THIS NEW SECTION:
+  internal_capitals:
+    - "^[A-Z][a-z]+ [A-Z][a-z]*[A-Z][a-z]+$"  # Jorge VanSlyke, John McDonald, Mary O'Brien
+    - "^[A-Z][a-z]+ Mc[A-Z][a-z]+$"  # John McDonald, Mary McGregor
+    - "^[A-Z][a-z]+ O'[A-Z][a-z]+$"  # Patrick O'Brien, Mary O'Connor
+    - "^[A-Z][a-z]+ De[A-Z][a-z]+$"  # Maria DeLuca, John DeMarco
+    - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
+    - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
 
 # Pattern identification guide for manual review
 pattern_identification_guide:
