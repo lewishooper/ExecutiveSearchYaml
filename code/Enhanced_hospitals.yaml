@@ -294,41 +294,44 @@ hospitals:
     title_element: 'h3  # TODO: Update after HTML inspection'
     notes: '# TODO: Add notes about HTML structure'
    status: needs_configuration
+   
+   
  - FAC: '781'
    name: THUNDER BAY ST. JOSEPH'S
-   url: 'https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/'
-   pattern: 'custom_table_nested'
-   expected_executives: 5.0
+   url: 'https://sjcg.net/aboutus/leadership.aspx'
+   pattern: 'table_rows'
+   expected_executives: 6
    html_structure:
-    structure_type: "table_with_nested_elements"
-    name_selector: "th"# p[style*='text-align: left']"    # ← CUSTOMIZABLE
-    title_selector: "td"# div[style*='text-align: left']" # ← CUSTOMIZABLE
-    container: "tr"                                     # ← CUSTOMIZABLE
-          
-
-    notes: '# TODO: Add notes about HTML structure'
+     structure_type: "table"
+     name_location: "th_column_1"
+     title_location: "td_column_2"
+     
+   notes: 
    status: needs_configuration
    
    
  - FAC: '827'
    name: TORONTO BAYCREST CTR GERIATRIC CARE
    url: 'https://www.baycrest.org/Baycrest-Pages/About-Baycrest/Leadership/Baycrest-Hospital-Executive-Team'
-   pattern: "div_classes"
+   pattern: "list_items"
    html_structure:
-        name_class: "t-2"
-        title_class: "d-2"
-        container_class: "bio-tote_content"
-        notes: "Names in .staff-name divs, titles in .staff-title divs"
-        
+    list_type: "ul"        # ← CUSTOMIZABLE (ul or ol)
+    item_element: "li"     # Fixed as li
+    format: "combined"     # ← CUSTOMIZABLE (combined or sequential)
+    separator: " - "       # ← CUSTOMIZABLE (if combined)
+   notes: "seems ok? Check Results"
+   
  - FAC: '939'
-   name: TORONTO HOLLAND BLOORVIEW KIDS
+   name: "TORONTO HOLLAND BLOORVIEW KIDS"
    url: 'https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team'
-   pattern: "div_classes"
+   pattern: "field_content_sequential"
+   expected_executives: 8
    html_structure:
-        name_class: "view-field views-field-title"
-        title_class: "view-field views-field-field-job-title"
-        container_class: "Field content"
-        notes: "Names in .staff-name divs, titles in .staff-title divs"
+    element_selector: ".field-content"
+    pattern_type: "sequential_every_3"
+    start_index: 3
+    notes: "All data in .field-content elements. Pattern: skip first 2, then Name (i), Title (i+1), Empty (i+2), repeat. Start at element 3."
+   status: "ok"        
  
  - FAC: '850'
    name: TORONTO RUNNYMEDE HC
@@ -340,6 +343,7 @@ hospitals:
         item_element: "li"
         format: "combined"
         separator: ", "
+   notes: "ok"
 # 605 and 613 are now part of other organizazitns
  - FAC: '927'
    name: "Windsor Hotel Dieu Grace"
@@ -368,12 +372,12 @@ hospitals:
    name: "Brantford Brant Community"
    url: 'https://www.bchsys.org/en/about-us/senior-leadership-team.aspx'
    pattern: 'combined_h2'
-   expected_executives: 8
+   expected_executives: 6
    html_structure:
-    combined_element: w"h5.emphasis-Secondary"
-    separator: " | "
-    notes: "h5 elements with pipe separator: Name | Title"
-   status: "configured"
+    combined_element: 'h5.emphasis-Secondary'
+    separator: ' | '
+    notes: "h5 elements with emphasis-Secondary class, pipe separator"
+   status: "ok"
    
    
  - FAC: '982'
@@ -386,7 +390,7 @@ hospitals:
      title_class: "position"
      container_class: "member-name"
      notes: "Leadership page includes both executives and board members"
-   status: "needs_configuration"
+   status: "need to filter out Board Members Chair,Vice-chair and Director"
    
    
  - FAC: '619'
@@ -544,6 +548,10 @@ name_patterns:
     - "^[A-Z][a-z]+ De[A-Z][a-z]+$"  # Maria DeLuca, John DeMarco
     - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
     - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
+
+  flexible:
+    - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"  # Matches any capitalized words
+    
 
 # Pattern identification guide for manual review
 pattern_identification_guide:
