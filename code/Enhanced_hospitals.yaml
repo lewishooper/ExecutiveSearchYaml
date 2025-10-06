@@ -61,17 +61,16 @@ hospitals:
       - "Extra whitespace and formatting"
    status: "configured"    
 
-  #li_example:
- - FAC: "957"
+
+ - FAC: '957'
    name: "BELLEVILLE QUINTE HEALTH CARE"
    url: "https://quintehealth.ca/about-quinte-health/leadership/"
    pattern: "list_items"
    html_structure:
-        list_type: "ul"  # or ol
-        item_element: "li"
-        name_format: "first_part"  # or specific pattern
-        title_format: "after_dash"  # or specific pattern
-        notes: "Names and titles in li elements seperated by , " 
+    list_type: "ul"
+    format: "combined"
+    separator: ", "  # ← Comma with space
+    notes: "Names and titles in li elements separated by ', '. Handles titles with multiple commas."
 
  - FAC: "953"
    name: "Sunnybrook Health Sciences Centre"
@@ -232,15 +231,16 @@ hospitals:
         notes: "Name and title together in p separated by ' - '"
 
  - FAC: '975'
-   name: MISSISSAUGA TRILLIUM HEALTH PARTNER
+   name: "MISSISSAUGA TRILLIUM HEALTH PARTNER"
    url: 'https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx'
-   pattern: 'combined_h2'
-   expected_executives: 5.0
+   pattern: "nested_list_with_ids"
+   expected_executives: 18
    html_structure:
-    name_element: 'h2  '
-    title_element: 'span'
-    notes: '<h2> <span>=name,title=<span class h4'
-   status: needs_configuration
+    name_selector: "h2 > span:not([class])"
+    title_selector: "h2 > span.h4"
+    container: "h2"
+    notes: "Names in first span (no class) within h2, titles in second span with class='h4'. 18 executives total."
+   status: "configured"
 
  - FAC: '947'
    name: TORONTO UNIVERSITY HEALTH NETWORK
@@ -285,15 +285,16 @@ hospitals:
    status: "configured"
    
  - FAC: '790'
-   name: ST CATHARINES HOTEL DIEU
-   url: '# TODO: Add leadership page URL'
-   pattern: 'h2_name_h3_title  # TODO: Update after HTML inspection'
-   expected_executives: 5.0
+   name: "ST CATHARINES HOTEL DIEU"
+   url: "https://www.hoteldieushaver.org/site/team"
+   pattern: "list_items"
+   expected_executives: 5
    html_structure:
-    name_element: 'h2  # TODO: Update after HTML inspection'
-    title_element: 'h3  # TODO: Update after HTML inspection'
-    notes: '# TODO: Add notes about HTML structure'
-   status: needs_configuration
+    list_type: "ul"
+    format: "combined"
+    separator: " | "
+    notes: "List items with pipe separator. Format: Name | Title | email. Clean spaces around pipe."
+   status: "configured"
    
    
  - FAC: '781'
@@ -313,13 +314,14 @@ hospitals:
  - FAC: '827'
    name: TORONTO BAYCREST CTR GERIATRIC CARE
    url: 'https://www.baycrest.org/Baycrest-Pages/About-Baycrest/Leadership/Baycrest-Hospital-Executive-Team'
-   pattern: "list_items"
+   pattern: "nested_list_with_ids"
+   expected_executives: 5
    html_structure:
-    list_type: "ul"        # ← CUSTOMIZABLE (ul or ol)
-    item_element: "li"     # Fixed as li
-    format: "combined"     # ← CUSTOMIZABLE (combined or sequential)
-    separator: " - "       # ← CUSTOMIZABLE (if combined)
-   notes: "seems ok? Check Results"
+    name_selector: "div[id^='t-']"
+    title_selector: "span[id^='d-']"
+    container: "li.column"
+    notes: "Names in div with IDs starting with 't-', titles in span with IDs starting with 'd-'. Sequential pairing."
+   status: "configured"
    
  - FAC: '939'
    name: "TORONTO HOLLAND BLOORVIEW KIDS"
@@ -404,7 +406,21 @@ hospitals:
    status: ok
    
    
+# Pattern templates section for enhanced_hospitals.yaml
+# Add or replace the pattern_templates section with this updated version
+
 pattern_templates:
+  
+  # Pattern 1: Sequential different elements (most common)
+  h2_name_h3_title_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/leadership"
+      pattern: "h2_name_h3_title"
+      html_structure:
+        name_element: "h2"
+        title_element: "h3"
+        notes: "h2=Name, h3=Title - most common pattern"
   
   # Pattern 2: Combined name+title in single element
   combined_h2_example:
@@ -416,8 +432,21 @@ pattern_templates:
         combined_element: "h2"
         separator: " - "  # e.g., "John Smith - CEO"
         notes: "Name and title together in h2, separated by ' - '"
+  
+  # Pattern 3: Table structure
+  table_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/admin"
+      pattern: "table_rows"
+      html_structure:
+        structure_type: "table"
+        name_location: "td_column_1"  # or th_column_1 for header cells
+        title_location: "td_column_2" 
+        table_selector: "table"  # or specific class
+        notes: "Standard table with name/title columns"
       
-  # Pattern 3: Names in h2, titles in following p
+  # Pattern 4: Names in h2, titles in following p
   h2_name_p_title_example:
     - FAC: "XXX"
       name: "Example Hospital"
@@ -425,10 +454,10 @@ pattern_templates:
       pattern: "h2_name_p_title"
       html_structure:
         name_element: "h2"
-        title_element: "span"
+        title_element: "p"
         notes: "h2=Name, immediately followed by p=Title"
         
-  # Pattern 4: Div/span class-based
+  # Pattern 5: Div/span class-based
   div_class_example:
     - FAC: "XXX"
       name: "Example Hospital" 
@@ -439,32 +468,77 @@ pattern_templates:
         title_class: "staff-title"
         container_class: "staff-member"
         notes: "Names in .staff-name divs, titles in .staff-title divs"
-        
-  # Pattern 5: Table structure
-  table_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/admin"
-      pattern: "table_rows"
-      html_structure:
-        structure_type: "table"
-        name_location: "td_column_1"
-        title_location: "td_column_2" 
-        table_selector: "table"  # or specific class
-        notes: "Standard table with name/title columns"
-        
-  # Pattern 6: List items
-  li_example:
+
+  # Pattern 6: List items with separator
+  list_items_example:
     - FAC: "XXX"
       name: "Example Hospital"
       url: "https://example.com/leadership"
       pattern: "list_items"
       html_structure:
         list_type: "ul"  # or ol
-        item_element: "li"
-        name_format: "first_part"  # or specific pattern
-        title_format: "after_dash"  # or specific pattern
-        notes: "Names and titles in li elements"
+        format: "combined"
+        separator: " | "  # Handles flexible whitespace automatically
+        notes: "Names and titles in li elements with separator. Handles non-breaking spaces."
+
+  # Pattern 7: Gallery/card layouts
+  boardcard_gallery_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/team"
+      pattern: "boardcard_gallery"
+      html_structure:
+        container_class: "boardcard"
+        text_format: "name_comma_title"
+        separator: ","
+        notes: "Gallery cards with combined name,title format"
+        missing_people:  # Optional: add people not in main structure
+          - name: "Dr. John Smith"
+            title: "President and CEO"
+
+  # Pattern 8: Complex nested tables
+  custom_table_nested_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/leadership"
+      pattern: "custom_table_nested"
+      html_structure:
+        structure_type: "table_with_nested_elements"
+        name_selector: "td p[style*='text-align: left']"
+        title_selector: "td div[style*='text-align: left']"
+        container: "td"
+        notes: "Complex table with nested p/div elements in cells"
+
+  # Pattern 9: Sequential same-class elements ⭐ NEW
+  field_content_sequential_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/leadership"
+      pattern: "field_content_sequential"
+      expected_executives: 8
+      html_structure:
+        element_selector: ".field-content"
+        pattern_type: "sequential_every_3"
+        start_index: 3
+        notes: "All data in same CSS class. Pattern: skip first N, then Name(i), Title(i+1), Empty(i+2), repeat"
+      # Real example: FAC 939 (Holland Bloorview)
+
+  # Pattern 10: ID-based or complex selectors ⭐ NEW
+  nested_list_with_ids_example:
+    - FAC: "XXX"
+      name: "Example Hospital"
+      url: "https://example.com/team"
+      pattern: "nested_list_with_ids"
+      expected_executives: 5
+      html_structure:
+        name_selector: "div[id^='t-']"    # CSS selector for names
+        title_selector: "span[id^='d-']"  # CSS selector for titles
+        container: "li.column"             # Optional parent container
+        notes: "Names and titles in separate elements with ID patterns or complex selectors. Sequential pairing."
+      # Real example: FAC 827 (Baycrest)
+      # Other selector examples:
+      # - "h3.executive-name" and "p.executive-title"
+      # - "div[data-type='name']" and "div[data-type='title']"
 
 # Common executive titles for identification
 executive_titles:
@@ -524,7 +598,7 @@ name_patterns:
   with_titles:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Last
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # Dr. First M. Last
-    
+    - "^Dr\\.? [A-Z][a-z]+ Ma?c[A-Z][a-z]+$"  # Dr. Colin MacPherson, Dr. John McDonald
   with_credentials:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.

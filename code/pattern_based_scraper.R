@@ -309,44 +309,107 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Pattern 6: List items
+  # Pattern 6: List items - FIXED VERSION with multiple separators support
+  # Pattern 6: List items - FIXED VERSION with robust separator handling
+  # Pattern 6: List items - FIXED for any separator with flexible whitespace
+  # Replace the existing scrape_list_items function in pattern_based_scraper.R
+  # Pattern 6: List items - PROPERLY FIXED for any separator
+  # Replace the existing scrape_list_items function in pattern_based_scraper.R
+  
   scrape_list_items <- function(page, hospital_info, config) {
     tryCatch({
       li_elements <- page %>% html_nodes("li") %>% html_text(trim = TRUE)
       
-      # Normalize text
-      li_elements <- sapply(li_elements, normalize_text)
-      
       pairs <- list()
       
+      # Get separator from config
+      separator <- hospital_info$html_structure$separator %||% " - "
+      
       for (li_text in li_elements) {
-        # Try to split combined name+title in list items
-        if (grepl(" - ", li_text) || grepl(", ", li_text)) {
-          separator <- if (grepl(" - ", li_text)) " - " else ", "
-          parts <- strsplit(li_text, separator, fixed = TRUE)[[1]]
-          
-          if (length(parts) >= 2) {
-            potential_name <- trimws(parts[1])
-            potential_title <- trimws(parts[2])
-            
-            if (is_executive_name(potential_name, config) && 
-                is_executive_title(potential_title, config)) {
-              
-              pairs[[length(pairs) + 1]] <- list(
-                name = clean_text_data(potential_name),
-                title = clean_text_data(potential_title)
-              )
-            }
+        # Clean out common noise (email links)
+        clean_li <- str_remove_all(li_text, "\\s*email\\s*$")
+        clean_li <- trimws(clean_li)
+        
+        # Build a simple regex pattern for the separator
+        # For "|" we need to escape it, for "," we don't
+        if (separator == " | ") {
+          sep_pattern <- "\\s*\\|\\s*"
+        } else if (separator == ", ") {
+          sep_pattern <- "\\s*,\\s*"
+        } else if (separator == " - ") {
+          sep_pattern <- "\\s*-\\s*"
+        } else {
+          # Generic: escape special regex chars and add flexible whitespace
+          sep_clean <- trimws(separator)
+          sep_escaped <- gsub("([\\|\\(\\)\\[\\]\\{\\}\\+\\*\\?\\.\\^\\$])", "\\\\\\1", sep_clean)
+          sep_pattern <- paste0("\\s*", sep_escaped, "\\s*")
+        }
+        
+        # Split using the pattern
+        parts <- strsplit(clean_li, sep_pattern, perl = TRUE)[[1]]
+        
+        # Skip if we don't have at least 2 parts
+        if (length(parts) < 2) {
+          next
+        }
+        
+        # Extract name and title
+        potential_name <- trimws(parts[1])
+        
+        # Handle multiple separators: combine all parts after first as title
+        if (length(parts) > 2) {
+          potential_title <- paste(parts[2:length(parts)], collapse = trimws(separator))
+        } else {
+          potential_title <- trimws(parts[2])
+        }
+        
+        # Clean the extracted data BEFORE validation
+        potential_name <- clean_text_data(potential_name)
+        potential_title <- clean_text_data(potential_title)
+        
+        # Skip empty strings or the word "email"
+        if (nchar(potential_name) < 3 || nchar(potential_title) < 3 ||
+            tolower(potential_title) == "email") {
+          next
+        }
+        
+        # Now validate the SEPARATED name and title
+        name_valid <- is_executive_name(potential_name, config)
+        title_valid <- is_executive_title(potential_title, config)
+        
+        if (name_valid && title_valid) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = potential_name,
+            title = potential_title
+          )
+        } else {
+          # Debug output only for likely executives (has title keywords)
+          if (title_valid || grepl("chief|president|officer|director|vice", potential_title, ignore.case = TRUE)) {
+            cat("DEBUG: Rejected - Name:", potential_name, 
+                "(valid:", name_valid, ") | Title:", potential_title,
+                "(valid:", title_valid, ")\n")
           }
+        }
+      }
+      
+      # Add any missing people from YAML config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
         }
       }
       
       return(pairs)
       
     }, error = function(e) {
+      cat("ERROR in scrape_list_items:", e$message, "\n")
       return(list())
     })
   }
+  #END pattern 6
   
   # Pattern 7: Boardcard gallery pattern
   scrape_boardcard_pattern <- function(page, hospital_info, config) {
@@ -529,7 +592,71 @@ PatternBasedScraper <- function() {
     })
   }
 #end pattern 9  
+  # Pattern 10: Nested list items with specific ID-based selectors (for Baycrest style)
+  # Add this function to pattern_based_scraper.R
   
+  scrape_nested_list_with_ids <- function(page, hospital_info, config) {
+    tryCatch({
+      # Get name and title selectors from config
+      name_selector <- hospital_info$html_structure$name_selector %||% "div[id^='t-']"
+      title_selector <- hospital_info$html_structure$title_selector %||% "span[id^='d-']"
+      
+      # Extract all names and titles
+      all_names <- page %>% html_nodes(name_selector) %>% html_text(trim = TRUE)
+      all_titles <- page %>% html_nodes(title_selector) %>% html_text(trim = TRUE)
+      
+      pairs <- list()
+      
+      # Pair up names and titles (they should be in same order)
+      max_pairs <- min(length(all_names), length(all_titles))
+      
+      for (i in 1:max_pairs) {
+        potential_name <- all_names[i]
+        potential_title <- all_titles[i]
+        
+        # Clean the data
+        potential_name <- clean_text_data(potential_name)
+        potential_title <- clean_text_data(potential_title)
+        
+        # Skip empty strings
+        if (nchar(potential_name) < 3 || nchar(potential_title) < 3) {
+          next
+        }
+        
+        # Validate
+        name_valid <- is_executive_name(potential_name, config)
+        title_valid <- is_executive_title(potential_title, config)
+        
+        if (name_valid && title_valid) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = potential_name,
+            title = potential_title
+          )
+        } else {
+          cat("DEBUG: Rejected - Name:", potential_name, 
+              "(valid:", name_valid, ") | Title:", potential_title,
+              "(valid:", title_valid, ")\n")
+        }
+      }
+      
+      # Add any missing people from YAML config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
+      
+    }, error = function(e) {
+      return(list())
+    })
+  }
+  
+  #end pattern 10
   # Main scraper function
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
     config <- load_config(config_file)
@@ -551,7 +678,8 @@ PatternBasedScraper <- function() {
                       "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
                       "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
                       "field_content_sequential" =  scrape_field_content_sequential(page, hospital_info, config),
-                      # Default fallback
+                      "nested_list_with_ids"=scrape_nested_list_with_ids(page, hospital_info, config),
+                      # Default fallback 
                       scrape_h2_name_h3_title(page, hospital_info, config)
       )
       
