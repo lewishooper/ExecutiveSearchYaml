@@ -135,7 +135,7 @@ hospitals:
    pattern: 'div-classes'
    expected_executives: 5.0
    html_structure:
-    name_element: "span class='dr-name board-member'"
+    name_element: 'dr-name board-member'
     title_class: "dr-degree"
     container_class: "right-side"
     notes: "names in div class 'right-side' titles in spaln class= dr. degrees"
@@ -144,11 +144,11 @@ hospitals:
  - FAC: "632"
    name: "North York General Hospital"
    url: "https://www.nygh.on.ca/about-us/leadership-team/"
-   pattern: "h2_name_h3_title"
+   pattern: "h2_name_p_title"
    expected_executives: 8
    html_structure:
     name_element: "h2"
-    title_element: "h3"
+    title_element: "p"
     notes: "h2=Name, h3=Title with complex credentials"
     missing_people:
       - name: "Rudy Dahdal"
@@ -166,11 +166,11 @@ hospitals:
    name: "Queensway Carleton Hospital"
    url: "https://www.qch.on.ca/Leadership"  # Update with actual URL
    pattern: "custom_table_nested"
-   expected_executives: 6
+   expected_executives: 8
    html_structure:
     structure_type: "table_with_nested_elements"
-    name_selector: "td p[style*='text-align: left']"
-    title_selector: "td div[style*='text-align: left']"
+    name_selector: "td p[style='text-align: left']"
+    title_selector: "td div[style='text-align: left']"
     container: "td"
     notes: "Names in <p style='text-align: left'>, titles in <div style='text-align: left'> with <br> breaks"
     data_cleaning:
@@ -266,13 +266,18 @@ hospitals:
    status: needs_confirmation
  - FAC: '695'
    name: KINGSTON PROVIDENCE CARE HOSPITAL
-   url: '# TODO: Add leadership page URL'
+   url: 'https://providencecare.ca/about-us/senior-leadership-team/'
    pattern: "div_classes"
    html_structure:
-        name_class: "mb-name"
-        title_class: "mb-position"
-        container_class: "mb-item"
-        notes: ""
+     name_class: "mb-name"
+     title_class: "mb-position"
+     container_class: "mb-item"
+     notes: ""
+     missing_people:
+       - name: "Dr. Simon O'Brien"
+         title: "Chair, Medical Advisory Committee"
+       - name: "Tamás Zsolnay"
+         title: "President & CEO, University Hospitals Kingston Foundation"
  - FAC: "932"
    name: "Elizabeth Bruyere Hospital"
    url: "https://www.bruyere.org/en/leadership-team?v=1"
@@ -282,6 +287,7 @@ hospitals:
     name_element: "p"
     title_element: "p"
     notes: "Sequential P elements: name P, title P, empty P spacer, repeat"
+    
    status: "configured"
    
  - FAC: '790'

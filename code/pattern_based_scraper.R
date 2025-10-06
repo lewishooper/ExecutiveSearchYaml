@@ -271,7 +271,6 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  
   # Pattern 5: Div classes
   scrape_div_classes <- function(page, hospital_info, config) {
     tryCatch({
@@ -280,10 +279,6 @@ PatternBasedScraper <- function() {
       
       name_elements <- page %>% html_nodes(paste0(".", name_class)) %>% html_text(trim = TRUE)
       title_elements <- page %>% html_nodes(paste0(".", title_class)) %>% html_text(trim = TRUE)
-      
-      # Normalize text
-      name_elements <- sapply(name_elements, normalize_text)
-      title_elements <- sapply(title_elements, normalize_text)
       
       pairs <- list()
       max_pairs <- min(length(name_elements), length(title_elements))
@@ -302,12 +297,23 @@ PatternBasedScraper <- function() {
         }
       }
       
+      # ADD THIS SECTION - Handle missing people from YAML config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
       return(pairs)
       
     }, error = function(e) {
       return(list())
     })
   }
+  # end pattern 5
   
   # Pattern 6: List items - FIXED VERSION with multiple separators support
   # Pattern 6: List items - FIXED VERSION with robust separator handling
