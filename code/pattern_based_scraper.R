@@ -1,8 +1,6 @@
-# pattern_based_scraper.R - Enhanced scraper with pattern-based approach
+# pattern_based_scraper.R - Enhanced scraper with 10 pattern-based approaches
 # Save this in E:/ExecutiveSearchYaml/code/
-
-# pattern_based_scraper.R - Enhanced scraper with pattern-based approach
-# Save this in E:/ExecutiveSearchYaml/code/
+# UPDATED: Added missing_people support to Patterns 5 & 8, fixed Pattern 8 for FAC 777
 
 library(rvest)
 library(dplyr)
@@ -28,7 +26,31 @@ PatternBasedScraper <- function() {
     return(text)
   }
   
+ ## nEW
+  
+  ## END nEW
+  
+  normalize_name_for_matching <- function(name) {
+    if (is.na(name)) return(name)
+    
+    name <- gsub("[àáâãäåÀÁÂÃÄÅ]", "a", name)
+    name <- gsub("[èéêëÈÉÊË]", "e", name)
+    name <- gsub("[ìíîïÌÍÎÏ]", "i", name)
+    name <- gsub("[òóôõöÒÓÔÕÖ]", "o", name)
+    name <- gsub("[ùúûüÙÚÛÜ]", "u", name)
+    name <- gsub("[çÇ]", "c", name)
+    name <- gsub("[ñÑ]", "n", name)
+    name <- gsub("[ýÝ]", "y", name)
+    name <- gsub("ß", "ss", name)
+    name <- gsub("[æÆ]", "ae", name)
+    name <- gsub("[œŒ]", "oe", name)
+    
+    return(name)
+  }
+  
+  
   # Check if text matches name patterns
+  # Check if text matches name patternsNew
   is_executive_name <- function(text, config) {
     if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
     
@@ -40,15 +62,26 @@ PatternBasedScraper <- function() {
       config$name_patterns$hyphenated_names,
       config$name_patterns$complex_credentials,
       config$name_patterns$internal_capitals,
-      config$name_patterns$flexible  # Added flexible patterns
+      config$name_patterns$accented_names,
+      config$name_patterns$flexible
     )
     
     # Clean text first (but preserve hyphens in names)
     clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
     clean_text <- trimws(clean_text)
     
-    # Check against patterns
+    # Check against patterns with original text
     matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, clean_text)))
+    
+    # If doesn't match, try normalized version (without accents)
+    if (!matches_pattern) {
+      normalized <- normalize_name_for_matching(clean_text)
+      matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, normalized)))
+      
+      if (matches_pattern) {
+        cat("DEBUG: Matched normalized name: '", text, "' (normalized: '", normalized, "')\n", sep = "")
+      }
+    }
     
     # Exclude obvious non-names
     non_names <- c(
@@ -59,45 +92,10 @@ PatternBasedScraper <- function() {
     
     is_non_name <- any(sapply(non_names, function(p) grepl(p, clean_text, ignore.case = TRUE)))
     
-    # Debug logging
-    if (!matches_pattern || is_non_name) {
-      cat("DEBUG: Rejected name: '", text, "'", 
-          " (matches_pattern=", matches_pattern, 
-          ", is_non_name=", is_non_name, ")\n", sep = "")
-    }
-    
     return(matches_pattern && !is_non_name)
   }
   
-  # Simplified title checking - just look for executive keywords
-  is_executive_title <- function(text, config) {
-    if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
     
-    # Clean text first
-    clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
-    clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
-    clean_text <- trimws(clean_text)
-    
-    # Simplified approach: Check if contains ANY executive keyword
-    executive_keywords <- c(
-      "CEO", "Chief", "President", "Vice President", "VP", 
-      "Director", "Officer", "Administrator", "Manager", 
-      "Chair", "Vice-Chair", "Vice Chair",
-      "Medical Staff", "Nursing Executive", "CNE",
-      "Supervisor", "Health System Executive"
-    )
-    
-    contains_keyword <- any(sapply(executive_keywords, function(k) 
-      grepl(k, clean_text, ignore.case = TRUE)))
-    
-    # Debug logging
-    if (!contains_keyword) {
-      cat("DEBUG: Rejected title: '", text, "' (no executive keyword found)\n", sep = "")
-    }
-    
-    return(contains_keyword)
-  }
-  
   # Clean and format text data
   clean_text_data <- function(text) {
     if (is.na(text)) return(text)
@@ -113,7 +111,9 @@ PatternBasedScraper <- function() {
     return(cleaned)
   }
   
-  # Pattern 1: H2 names + H3 titles
+  # ============================================================================
+  # PATTERN 1: H2 names + H3 titles (Sequential different elements)
+  # ============================================================================
   scrape_h2_name_h3_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get h2 and h3 elements
@@ -163,7 +163,9 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Pattern 2: Combined name+title in single element
+  # ============================================================================
+  # PATTERN 2: Combined name+title in single element
+  # ============================================================================
   scrape_combined_h2 <- function(page, hospital_info, config) {
     tryCatch({
       separator <- hospital_info$html_structure$separator %||% " - "
@@ -174,7 +176,6 @@ PatternBasedScraper <- function() {
       pairs <- list()
       
       for (element_text in elements) {
-        # Normalize text (handle non-breaking spaces, etc.)
         element_text <- normalize_text(element_text)
         
         # Split by separator (using fixed=TRUE to handle special chars like |)
@@ -195,6 +196,16 @@ PatternBasedScraper <- function() {
         }
       }
       
+      # Add missing people
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
       return(pairs)
       
     }, error = function(e) {
@@ -202,7 +213,9 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Pattern 3: Table rows
+  # ============================================================================
+  # PATTERN 3: Table rows
+  # ============================================================================
   scrape_table_rows <- function(page, hospital_info, config) {
     tryCatch({
       tables <- page %>% html_table(fill = TRUE)
@@ -231,6 +244,16 @@ PatternBasedScraper <- function() {
         }
       }
       
+      # Add missing people
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
       return(pairs)
       
     }, error = function(e) {
@@ -238,7 +261,9 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Pattern 4: H2 name + P title
+  # ============================================================================
+  # PATTERN 4: H2 name + P title (Specific sequential pattern)
+  # ============================================================================
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get all h2 and p elements in order
@@ -265,13 +290,26 @@ PatternBasedScraper <- function() {
         }
       }
       
+      # Add missing people
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
       return(pairs)
       
     }, error = function(e) {
       return(list())
     })
   }
-  # Pattern 5: Div classes
+  
+  # ============================================================================
+  # PATTERN 5: Div classes (CSS class-based) - UPDATED with missing_people
+  # ============================================================================
   scrape_div_classes <- function(page, hospital_info, config) {
     tryCatch({
       name_class <- hospital_info$html_structure$name_class
@@ -297,7 +335,7 @@ PatternBasedScraper <- function() {
         }
       }
       
-      # ADD THIS SECTION - Handle missing people from YAML config
+      # FIXED: Add missing people support
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -313,15 +351,10 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  # end pattern 5
   
-  # Pattern 6: List items - FIXED VERSION with multiple separators support
-  # Pattern 6: List items - FIXED VERSION with robust separator handling
-  # Pattern 6: List items - FIXED for any separator with flexible whitespace
-  # Replace the existing scrape_list_items function in pattern_based_scraper.R
-  # Pattern 6: List items - PROPERLY FIXED for any separator
-  # Replace the existing scrape_list_items function in pattern_based_scraper.R
-  
+  # ============================================================================
+  # PATTERN 6: List items with separator
+  # ============================================================================
   scrape_list_items <- function(page, hospital_info, config) {
     tryCatch({
       li_elements <- page %>% html_nodes("li") %>% html_text(trim = TRUE)
@@ -336,8 +369,7 @@ PatternBasedScraper <- function() {
         clean_li <- str_remove_all(li_text, "\\s*email\\s*$")
         clean_li <- trimws(clean_li)
         
-        # Build a simple regex pattern for the separator
-        # For "|" we need to escape it, for "," we don't
+        # Build regex pattern for separator
         if (separator == " | ") {
           sep_pattern <- "\\s*\\|\\s*"
         } else if (separator == ", ") {
@@ -345,7 +377,6 @@ PatternBasedScraper <- function() {
         } else if (separator == " - ") {
           sep_pattern <- "\\s*-\\s*"
         } else {
-          # Generic: escape special regex chars and add flexible whitespace
           sep_clean <- trimws(separator)
           sep_escaped <- gsub("([\\|\\(\\)\\[\\]\\{\\}\\+\\*\\?\\.\\^\\$])", "\\\\\\1", sep_clean)
           sep_pattern <- paste0("\\s*", sep_escaped, "\\s*")
@@ -354,10 +385,7 @@ PatternBasedScraper <- function() {
         # Split using the pattern
         parts <- strsplit(clean_li, sep_pattern, perl = TRUE)[[1]]
         
-        # Skip if we don't have at least 2 parts
-        if (length(parts) < 2) {
-          next
-        }
+        if (length(parts) < 2) next
         
         # Extract name and title
         potential_name <- trimws(parts[1])
@@ -369,17 +397,17 @@ PatternBasedScraper <- function() {
           potential_title <- trimws(parts[2])
         }
         
-        # Clean the extracted data BEFORE validation
+        # Clean the extracted data
         potential_name <- clean_text_data(potential_name)
         potential_title <- clean_text_data(potential_title)
         
-        # Skip empty strings or the word "email"
+        # Skip empty or invalid
         if (nchar(potential_name) < 3 || nchar(potential_title) < 3 ||
             tolower(potential_title) == "email") {
           next
         }
         
-        # Now validate the SEPARATED name and title
+        # Validate
         name_valid <- is_executive_name(potential_name, config)
         title_valid <- is_executive_title(potential_title, config)
         
@@ -388,17 +416,10 @@ PatternBasedScraper <- function() {
             name = potential_name,
             title = potential_title
           )
-        } else {
-          # Debug output only for likely executives (has title keywords)
-          if (title_valid || grepl("chief|president|officer|director|vice", potential_title, ignore.case = TRUE)) {
-            cat("DEBUG: Rejected - Name:", potential_name, 
-                "(valid:", name_valid, ") | Title:", potential_title,
-                "(valid:", title_valid, ")\n")
-          }
         }
       }
       
-      # Add any missing people from YAML config
+      # Add missing people
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -415,9 +436,10 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  #END pattern 6
   
-  # Pattern 7: Boardcard gallery pattern
+  # ============================================================================
+  # PATTERN 7: Boardcard gallery pattern
+  # ============================================================================
   scrape_boardcard_pattern <- function(page, hospital_info, config) {
     tryCatch({
       boardcard_elements <- page %>% html_nodes("div.boardcard") %>% html_text(trim = TRUE)
@@ -452,7 +474,7 @@ PatternBasedScraper <- function() {
         }
       }
       
-      # Add missing people from YAML config
+      # Add missing people
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -469,41 +491,78 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Pattern 8: Custom table with nested elements
+  # ============================================================================
+  # PATTERN 8: Custom table with nested elements - FIXED for FAC 777
+  # Only processes Senior Administration section, excludes Medical Leadership
+  # ============================================================================
   scrape_custom_table_nested <- function(page, hospital_info, config) {
     tryCatch({
-      # Get all table cells that contain both p and div elements
-      table_cells <- page %>% html_nodes("td")
+      # Get non-breadcrumb tables only
+      all_tables <- page %>% html_nodes("table:not([role='presentation'])")
+      
+      cat("  Found", length(all_tables), "content tables\n")
+      
+      # Process only first 3 tables (Senior Administration)
+      tables_to_process <- all_tables[1:min(3, length(all_tables))]
+      cat("  Processing first 3 tables (Senior Administration only)\n")
       
       pairs <- list()
       
-      for (cell in table_cells) {
-        # Look for name in p with text-align: left style
-        name_elements <- cell %>% html_nodes("p[style*='text-align: left'], p[style*='text-align:left']")
+      # Process each selected table
+      for (table_idx in seq_along(tables_to_process)) {
+        table <- tables_to_process[[table_idx]]
         
-        # Look for title in div with text-align: left style  
-        title_elements <- cell %>% html_nodes("div[style*='text-align: left'], div[style*='text-align:left']")
+        # Get all table cells in this table
+        table_cells <- table %>% html_nodes("td")
         
-        if (length(name_elements) > 0 && length(title_elements) > 0) {
-          # Extract name from first p element
+        for (cell in table_cells) {
+          # Look for name in p with strong tag (updated for FAC 777)
+          name_elements <- cell %>% html_nodes("p strong")
+          
+          if (length(name_elements) == 0) next
+          
+          # Extract name from strong element inside p
           potential_name <- name_elements %>% 
             html_text(trim = TRUE) %>% 
             first()
           
-          # Extract and combine titles from all div elements
-          title_parts <- title_elements %>% 
-            html_text(trim = TRUE)
+          # Look for title in BOTH div AND p elements with text-align styles
+          # QCH uses both formats
+          title_divs <- cell %>% html_nodes("div[style*='text-align']")
+          title_ps <- cell %>% html_nodes("p:not(:has(strong)):not(:has(img))")
           
-          # Combine multiple title parts and clean
+          # Combine both sources
+          all_title_elements <- c(
+            title_divs %>% html_text(trim = TRUE),
+            title_ps %>% html_text(trim = TRUE)
+          )
+          
+          # Remove empty strings and filter
+          title_parts <- all_title_elements[nchar(all_title_elements) > 0]
+          
+          # Remove image alt text and &nbsp;
+          title_parts <- title_parts[!grepl("^\\s*&nbsp;\\s*$", title_parts)]
+          
+          if (length(title_parts) == 0) next
+          
+          # Combine all title parts (handles multi-line titles)
           potential_title <- paste(title_parts, collapse = " ")
-          
-          # Normalize text
-          potential_name <- normalize_text(potential_name)
-          potential_title <- normalize_text(potential_title)
           
           # Clean the extracted data
           potential_name <- clean_text_data(potential_name)
           potential_title <- clean_text_data(potential_title)
+          
+          # Remove HTML entities like &nbsp;
+          potential_title <- gsub("&nbsp;", " ", potential_title)
+          potential_title <- gsub("&amp;", "&", potential_title)
+          potential_title <- gsub("\\s+", " ", potential_title)
+          potential_title <- trimws(potential_title)
+          
+          # Skip if name or title is empty
+          if (is.na(potential_name) || is.na(potential_title) ||
+              nchar(potential_name) < 3 || nchar(potential_title) < 3) {
+            next
+          }
           
           # Validate name and title
           if (is_executive_name(potential_name, config) && 
@@ -517,7 +576,7 @@ PatternBasedScraper <- function() {
         }
       }
       
-      # Remove duplicates
+      # Remove duplicates (in case someone appears in multiple tables)
       unique_pairs <- list()
       for (pair in pairs) {
         is_duplicate <- FALSE
@@ -532,15 +591,28 @@ PatternBasedScraper <- function() {
         }
       }
       
+      # Add missing_people support
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          unique_pairs[[length(unique_pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      cat("  Found", length(unique_pairs), "executives in Senior Administration\n")
+      
       return(unique_pairs)
       
     }, error = function(e) {
+      cat("  ERROR:", e$message, "\n")
       return(list())
     })
   }
-  # Pattern 9: Sequential field-content elements (for Holland Bloorview style)
-  # Add this function to pattern_based_scraper.R, before the main scrape_hospital function
-  
+  # ============================================================================
+  # PATTERN 9: Sequential field-content elements
+  # ============================================================================
   scrape_field_content_sequential <- function(page, hospital_info, config) {
     tryCatch({
       # Get ALL field-content elements
@@ -550,8 +622,7 @@ PatternBasedScraper <- function() {
       
       pairs <- list()
       
-      # The pattern is: skip first 2 elements, then Name, Title, Empty, Name, Title, Empty...
-      # Start at index 3 (element 3 is first name)
+      # Pattern: skip first 2 elements, then Name, Title, Empty, Name, Title, Empty...
       i <- 3
       
       while (i < length(all_field_content)) {
@@ -566,7 +637,7 @@ PatternBasedScraper <- function() {
         if (!is.na(potential_name) && !is.na(potential_title) && 
             nchar(potential_name) > 0 && nchar(potential_title) > 0) {
           
-          # Validate with our name/title patterns
+          # Validate
           if (is_executive_name(potential_name, config) && 
               is_executive_title(potential_title, config)) {
             
@@ -577,11 +648,11 @@ PatternBasedScraper <- function() {
           }
         }
         
-        # Move to next set (skip the empty element at i+2, next name is at i+3)
+        # Move to next set (skip the empty element at i+2)
         i <- i + 3
       }
       
-      # Add any missing people from YAML config
+      # Add missing people
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -597,10 +668,10 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-#end pattern 9  
-  # Pattern 10: Nested list items with specific ID-based selectors (for Baycrest style)
-  # Add this function to pattern_based_scraper.R
   
+  # ============================================================================
+  # PATTERN 10: Nested list with ID-based selectors
+  # ============================================================================
   scrape_nested_list_with_ids <- function(page, hospital_info, config) {
     tryCatch({
       # Get name and title selectors from config
@@ -638,14 +709,10 @@ PatternBasedScraper <- function() {
             name = potential_name,
             title = potential_title
           )
-        } else {
-          cat("DEBUG: Rejected - Name:", potential_name, 
-              "(valid:", name_valid, ") | Title:", potential_title,
-              "(valid:", title_valid, ")\n")
         }
       }
       
-      # Add any missing people from YAML config
+      # Add missing people
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -661,9 +728,166 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  
-  #end pattern 10
-  # Main scraper function
+  # ============================================================================
+  # PATTERN 11: QCH-style mixed table structure (for FAC 777)
+  # Tables use different formats - some use divs, some use p tags for titles
+  # ============================================================================
+  scrape_qch_mixed_tables <- function(page, hospital_info, config) {
+    tryCatch({
+      # Get non-breadcrumb tables only
+      all_tables <- page %>% html_nodes("table:not([role='presentation'])")
+      
+      cat("  Found", length(all_tables), "content tables\n")
+      
+      # Process only first 3 tables (Senior Administration)
+      tables_to_process <- all_tables[1:min(3, length(all_tables))]
+      cat("  Processing first 3 tables for Senior Administration\n")
+      
+      pairs <- list()
+      
+      # Process each table
+      for (table_idx in seq_along(tables_to_process)) {
+        table <- tables_to_process[[table_idx]]
+        
+        cat("  Scanning table", table_idx, "...\n")
+        
+        # Get all rows
+        rows <- table %>% html_nodes("tr")
+        
+        for (row in rows) {
+          # Get all cells in this row
+          cells <- row %>% html_nodes("td")
+          
+          for (cell_idx in seq_along(cells)) {
+            cell <- cells[[cell_idx]]
+            
+            # STEP 1: Find name in <strong> tag
+            strong_elements <- cell %>% html_nodes("strong")
+            
+            if (length(strong_elements) == 0) next
+            
+            potential_name <- strong_elements %>% 
+              html_text(trim = TRUE) %>% 
+              first()
+            
+            # STEP 2: Find title - try multiple strategies
+            potential_title <- NA
+            
+            # Strategy A: Look for divs with text-align style (Table 1 format)
+            title_divs <- cell %>% 
+              html_nodes("div[style*='text-align']") %>% 
+              html_text(trim = TRUE)
+            
+            title_divs <- title_divs[nchar(trimws(title_divs)) > 0]
+            
+            if (length(title_divs) > 0) {
+              # Found title in divs - combine them
+              potential_title <- paste(title_divs, collapse = " ")
+              cat("    Cell", cell_idx, "- Found name in strong, title in divs\n")
+            } else {
+              # Strategy B: Look in <p> tags that don't have strong or img (Tables 2-3 format)
+              all_p_tags <- cell %>% html_nodes("p")
+              
+              title_parts <- c()
+              for (p_tag in all_p_tags) {
+                # Skip if this p contains the strong tag (the name)
+                has_strong <- length(p_tag %>% html_nodes("strong")) > 0
+                # Skip if this p contains an img
+                has_img <- length(p_tag %>% html_nodes("img")) > 0
+                
+                if (!has_strong && !has_img) {
+                  p_text <- p_tag %>% html_text(trim = TRUE)
+                  if (nchar(p_text) > 0 && !grepl("^\\s*&nbsp;\\s*$", p_text)) {
+                    title_parts <- c(title_parts, p_text)
+                  }
+                }
+              }
+              
+              if (length(title_parts) > 0) {
+                potential_title <- paste(title_parts, collapse = " ")
+                cat("    Cell", cell_idx, "- Found name in strong, title in p tags\n")
+              }
+            }
+            
+            # STEP 3: Validate and clean
+            if (is.na(potential_title)) {
+              cat("    Cell", cell_idx, "- Name found but no title, skipping\n")
+              next
+            }
+            
+            # Clean the data
+            potential_name <- clean_text_data(potential_name)
+            potential_title <- clean_text_data(potential_title)
+            
+            # Remove HTML entities
+            potential_title <- gsub("&nbsp;", " ", potential_title)
+            potential_title <- gsub("&amp;", "&", potential_title)
+            potential_title <- gsub("\\s+", " ", potential_title)
+            potential_title <- trimws(potential_title)
+            potential_name <- trimws(potential_name)
+            
+            # Skip if too short
+            if (nchar(potential_name) < 3 || nchar(potential_title) < 3) {
+              cat("    Cell", cell_idx, "- Name or title too short, skipping\n")
+              next
+            }
+            
+            # Validate with pattern matching
+            name_valid <- is_executive_name(potential_name, config)
+            title_valid <- is_executive_title(potential_title, config)
+            
+            if (name_valid && title_valid) {
+              cat("    Cell", cell_idx, "- VALID: ", potential_name, " -> ", potential_title, "\n")
+              
+              pairs[[length(pairs) + 1]] <- list(
+                name = potential_name,
+                title = potential_title
+              )
+            } else {
+              cat("    Cell", cell_idx, "- Invalid (name_valid:", name_valid, 
+                  ", title_valid:", title_valid, ") - ", potential_name, " / ", potential_title, "\n")
+            }
+          }
+        }
+      }
+      
+      # Remove duplicates
+      unique_pairs <- list()
+      for (pair in pairs) {
+        is_duplicate <- FALSE
+        for (existing in unique_pairs) {
+          if (existing$name == pair$name && existing$title == pair$title) {
+            is_duplicate <- TRUE
+            break
+          }
+        }
+        if (!is_duplicate) {
+          unique_pairs <- c(unique_pairs, list(pair))
+        }
+      }
+      
+      # Add missing_people support
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          unique_pairs[[length(unique_pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      cat("  Total executives found:", length(unique_pairs), "\n")
+      
+      return(unique_pairs)
+      
+    }, error = function(e) {
+      cat("  ERROR:", e$message, "\n")
+      return(list())
+    })
+  }
+  # ============================================================================
+  # MAIN SCRAPER FUNCTION
+  # ============================================================================
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
     config <- load_config(config_file)
     
@@ -683,8 +907,9 @@ PatternBasedScraper <- function() {
                       "list_items" = scrape_list_items(page, hospital_info, config),
                       "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
                       "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
-                      "field_content_sequential" =  scrape_field_content_sequential(page, hospital_info, config),
-                      "nested_list_with_ids"=scrape_nested_list_with_ids(page, hospital_info, config),
+                      "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
+                      "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
+                      "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
                       # Default fallback 
                       scrape_h2_name_h3_title(page, hospital_info, config)
       )
@@ -729,7 +954,9 @@ PatternBasedScraper <- function() {
     })
   }
   
-  # Batch processing
+  # ============================================================================
+  # BATCH PROCESSING
+  # ============================================================================
   scrape_batch <- function(hospitals_list, config_file = "enhanced_hospitals.yaml", 
                            output_folder = "E:/ExecutiveSearchYaml/output") {
     
@@ -766,7 +993,9 @@ PatternBasedScraper <- function() {
     return(final_results)
   }
   
-  # Test a single hospital configuration
+  # ============================================================================
+  # TEST FUNCTION
+  # ============================================================================
   test_hospital <- function(fac, name, url, pattern = "h2_name_h3_title", config_file = "enhanced_hospitals.yaml") {
     
     hospital_info <- list(

@@ -10,7 +10,14 @@ source("quick_test_single.R")
 #quick_test(790)
 quick_test(777)
  
-WorkingURL<-'https://www.qch.on.ca/Leadership'
+WorkingURL<-'https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/ '
 FAC<-
 helper$analyze_hospital_structure(777,"test",URL)
 results <- test_all_hospitals_from_yaml()
+source("pattern_based_scraper.R")
+
+# Test FAC 777 (Queensway Carleton)
+quick_test(777)
+
+# Test FAC 695 (Kingston Providence Care)  
+quick_test(695)

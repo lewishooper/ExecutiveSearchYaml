@@ -132,11 +132,11 @@ hospitals:
  - FAC: '905'
    name: OAK VALLEY HEALTH
    url: 'https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/'
-   pattern: 'div-classes'
+   pattern: 'div_classes'
    expected_executives: 5.0
    html_structure:
-    name_element: 'dr-name board-member'
-    title_class: "dr-degree"
+    name_class: 'dr-name board-member'
+    title_class: 'd-degrees'
     container_class: "right-side"
     notes: "names in div class 'right-side' titles in spaln class= dr. degrees"
    status: needs_configuration
@@ -161,22 +161,15 @@ hospitals:
         title: "Vice President, Clinical Services and Chief Nursing Executive"
    status: "configured"
 
-
  - FAC: "777"
    name: "Queensway Carleton Hospital"
-   url: "https://www.qch.on.ca/Leadership"  # Update with actual URL
-   pattern: "custom_table_nested"
-   expected_executives: 8
+   url: "https://www.qch.on.ca/Leadership"
+   pattern: "qch_mixed_tables"
+   expected_executives: 9
    html_structure:
-    structure_type: "table_with_nested_elements"
-    name_selector: "td p[style='text-align: left']"
-    title_selector: "td div[style='text-align: left']"
-    container: "td"
-    notes: "Names in <p style='text-align: left'>, titles in <div style='text-align: left'> with <br> breaks"
-    data_cleaning:
-      - "Remove <br> tags from titles"
-      - "Combine multiple div elements for complete titles"
-   status: "needs_testing"
+    notes: "Mixed table structure - Table 1 uses divs, Tables 2-3 use p tags for titles"
+   status: "configured"
+
 # Pattern examples for other common structures
 
  - FAC: '606'
@@ -264,30 +257,34 @@ hospitals:
         separator: ", "  # e.g., "John Smith - CEO"
         notes: "Name and title together in h3 separated by ' , '"
    status: needs_confirmation
+
+
  - FAC: '695'
    name: KINGSTON PROVIDENCE CARE HOSPITAL
    url: 'https://providencecare.ca/about-us/senior-leadership-team/'
    pattern: "div_classes"
    html_structure:
-     name_class: "mb-name"
-     title_class: "mb-position"
-     container_class: "mb-item"
-     notes: ""
-     missing_people:
-       - name: "Dr. Simon O'Brien"
-         title: "Chair, Medical Advisory Committee"
-       - name: "Tamás Zsolnay"
-         title: "President & CEO, University Hospitals Kingston Foundation"
+    name_class: "mb-name"
+    title_class: "mb-position"
+    container_class: "mb-item"
+    notes: "Standard div class pattern with missing people support"
+    missing_people:
+      - name: "Dr. Simon O'Brien"
+        title: "Chair, Medical Advisory Committee"
+      - name: "Tamás Zsolnay"
+        title: "President & CEO, University Hospitals Kingston Foundation"
+   status: "configured"
+
+
  - FAC: "932"
    name: "Elizabeth Bruyere Hospital"
    url: "https://www.bruyere.org/en/leadership-team?v=1"
    pattern: "sequential_p_with_spacers"
    expected_executives: 8
    html_structure:
-    name_element: "p"
-    title_element: "p"
-    notes: "Sequential P elements: name P, title P, empty P spacer, repeat"
-    
+      name_element: "p"
+      title_element: "p"
+   notes: "Sequential P elements: name P, title P, empty P spacer, repeat"
    status: "configured"
    
  - FAC: '790'
@@ -628,6 +625,13 @@ name_patterns:
     - "^[A-Z][a-z]+ De[A-Z][a-z]+$"  # Maria DeLuca, John DeMarco
     - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
     - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
+    
+  accented_names:
+    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Gisèle Larocque
+    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # José M. García
+    - "^Dr\\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Dr. François Dubois
+    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # André Martin-López
+    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Marie-Claire Beaumont
 
   flexible:
     - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"  # Matches any capitalized words
