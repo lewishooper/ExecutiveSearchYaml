@@ -11,8 +11,8 @@ hospitals:
    html_structure:
     name_element: "h2"
     title_element: "h3" 
-    notes: "h2=Name, h3=Title - works well"
-    status: "working"
+    notes: ""
+    status: "ok"
 
  - FAC: "624"
    name: "Campbellford Memorial Hospital"  
@@ -22,13 +22,8 @@ hospitals:
    html_structure:
     name_element: "h2"
     title_element: "h3"
-    notes: "h2=Name, h3=Title with title corrections"
-    missing_people:
-      - name: "Julia Swedak"
-        title: "Innovation and Transformation Officer"
-      - name: "Dr. Dimitri Louvish"
-        title: "Chief of Staff"
-   status: "Watch Me"
+    notes: ""
+   status: "ok"
     
  - FAC: "596"
    name: "Alliston Stevenson Memorial Hospital"
@@ -38,28 +33,21 @@ hospitals:
    html_structure:
     name_element: "h2"
     title_element: "h3"
-    notes: "h2=Name, h3=Title pattern with missing people"
-    #missing_people:
-     # - name: "Dr. Roger Musa"
-      #  title: "Chief of Staff"
-      #- name: "Carmine Stumpo"
-       # title: "Supervisor"
-   status: "configured"
+    notes: ""
+   status: "ok"
   
  - FAC: "661"
    name: "Cambridge Memorial Hospital"
    url: "https://www.cmh.org/contacts"
    pattern: "table_rows"
-   expected_executives: 5
+   expected_executives: 5 # includes directors
    html_structure:
     structure_type: "table"
     name_location: "td_column_1"
     title_location: "td_column_2"
-    notes: "Table structure, names in col 1, titles in col 2, needs extension cleanup"
-    data_issues:
-      - "Phone extensions need cleanup (ext.2301)"
-      - "Extra whitespace and formatting"
-   status: "configured"    
+    notes: "Drop Managers in Post"
+
+   status: "ok"    
 
 
  - FAC: '957'
@@ -70,33 +58,40 @@ hospitals:
     list_type: "ul"
     format: "combined"
     separator: ", "  # ← Comma with space
-    notes: "Names and titles in li elements separated by ', '. Handles titles with multiple commas."
+    notes: ""
+   status: "ok"
 
  - FAC: "953"
    name: "Sunnybrook Health Sciences Centre"
    url: "https://sunnybrook.ca/content/?page=executive-leadership"
    pattern: "h2_name_p_title"
-   expected_executives: 8
+   expected_executives: 13
    html_structure:
     name_element: "h2"
     title_element: "p"
-    notes: "h2=Name with credentials (Dr. Name, MD, MSc, etc.), p=Title"
-   status: "configured"
+    missing_people:
+      - name: "Dr. Calvin Law, MD, FRCSC, MPH"
+        title: "Vice President, Education"
+      - name: "Kullervo Hynynen, Ph.D."
+        title: "Vice President, Research and Innovation"
+      - name: "Dr. Dan Cass B.Sc., MD, MSc, FRCPC"
+        title: "Executive Vice President and Chief Medical Executive"
+    notes: ""
+   status: "ok"
 
  - FAC: "935"
    name: "Thunder Bay Regional Health Sciences Centre"
    url: "https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/"
    pattern: "boardcard_gallery"
-   expected_executives: 8
+   expected_executives: 10
    html_structure:
     container_class: "boardcard"
     text_format: "name_comma_title"
     separator: ","
-    notes: "Gallery of senior leaders, CEO needs manual addition"
-    missing_people:
-      - name: "Dr. Rhonda Crocker Ellacott"
-        title: "President and CEO"
-   status: "configured"
+    notes: "Gallery of senior leaders"
+
+   status: "ok "
+
  - FAC: "941"
    name: "Humber River Hospital"
    url: "https://www.hrh.ca/who-we-are/accountability/governance-leadership/"
@@ -105,13 +100,8 @@ hospitals:
    html_structure:
     combined_element: "h3"
     separator: " - "
-    notes: "Name and title combined in h3 elements, separated by ' - '"
-    missing_people:
-      - name: "Dr. S. Zaki Ahmed"
-        title: "Chief of Staff"
-      - name: "Maria-Cristina Cavicchia"
-        title: "Vice President, Human Resources and Employment Legal Counsel"
-    status: "configured"
+    notes: ""
+    status: "ok"
 
    
  - FAC: "952"
@@ -122,44 +112,31 @@ hospitals:
    html_structure:
     combined_element: "h3"
     separator: ", "
-    notes: "Name and title combined in h3 elements, separated by ', '"
-    missing_people:
-      - name: "Petrina McGrath"
-        title: "Health System Executive, People, Quality and Practice and Chief Nursing Executive"
-      - name: "Trevor Stewart"
-        title: "Chief Development Officer"
-   status: "configured"
+    notes: ""   
+   status: "ok"
+
  - FAC: '905'
    name: OAK VALLEY HEALTH
    url: 'https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/'
    pattern: 'div_classes'
-   expected_executives: 5.0
+   expected_executives: 11
    html_structure:
-    name_class: 'dr-name board-member'
-    title_class: 'd-degrees'
+    name_class: "dr-name"           # Changed from 'dr-name board-member'
+    title_class: "dr-degrees"       # Changed from "dr-degree" (was missing the 's')
     container_class: "right-side"
-    notes: "names in div class 'right-side' titles in spaln class= dr. degrees"
-   status: needs_configuration
- 
+    notes: "Names in span.dr-name, titles in span.dr-degrees within div.right-side"
+   status: "ok"
  - FAC: "632"
    name: "North York General Hospital"
    url: "https://www.nygh.on.ca/about-us/leadership-team/"
    pattern: "h2_name_p_title"
-   expected_executives: 8
+   expected_executives: 11  # Changed from 8 - we found 11 executives
    html_structure:
-    name_element: "h2"
-    title_element: "p"
-    notes: "h2=Name, h3=Title with complex credentials"
-    missing_people:
-      - name: "Rudy Dahdal"
-        title: "Vice President, Planning, Redevelopment and Clinical Support"
-      - name: "Anne-Marie Flanagan"
-        title: "Interim Chief Communications & External Relations Officer"
-      - name: "Dr. Phil Shin"
-        title: "Chief Medical Information Officer"
-      - name: "Terri Stuart-McEwan"
-        title: "Vice President, Clinical Services and Chief Nursing Executive"
-   status: "configured"
+     name_element: "h2"
+     title_element: "p"
+     notes: "h2=Name, p=Title. Terri Stuart-McEwan has hyphenated name that needs pattern fix"
+    # missing_people: Currently all found via scraping
+   status: "ok" 
 
  - FAC: "777"
    name: "Queensway Carleton Hospital"
@@ -167,8 +144,8 @@ hospitals:
    pattern: "qch_mixed_tables"
    expected_executives: 9
    html_structure:
-    notes: "Mixed table structure - Table 1 uses divs, Tables 2-3 use p tags for titles"
-   status: "configured"
+    notes: ""
+   status: "ok"
 
 # Pattern examples for other common structures
 
@@ -182,17 +159,21 @@ hospitals:
     title_class: "card-subtitle"
     container_class: "card-info"
     notes: "Names in .card-title divs, titles in .card-subtitle divs, within .card-info containers"
-   status: "configured"
+   status: "ok"
+
  - FAC: '979'
    name: "TORONTO SCARBOROUGH HEALTH NETWORK"
    url: 'https://www.shn.ca/about-us/hospital-leadership/'
    pattern: "div_classes"
+   expected_executives: 18
    html_structure:
         name_class: "staff-name"
         title_class: "staff-title"
         container_class: "staff-member"
         notes: "div class=staff-info"
-   status: needs_configuration
+   status: needs_configuration Names are duplicated 
+
+
  - FAC: '837'
    name: "TORONTO HOSPITAL FOR SICK CHILDREN"
    url: 'https://www.sickkids.ca/en/about/leadership/'
@@ -202,26 +183,34 @@ hospitals:
         title_class: "card-text"
         container_class: "staff-member"
    notes: " Overall <div class=card body Sub structure is div card=card-body, Nname <a href,class=stretched Link, title= <p class-card_text"
-   status: needs_configuration
+   status: 'needs reconfigured: includes all board members and is missing the hospital ceo Titles are off by one'  
+
  - FAC: '976'
    name: "TORONTO SINAI HEALTH SYSTEM"
    url: 'https://www.sinaihealth.ca/about-sinai-health/sinai-health-leadership'
-   pattern: 'div-classes'
-   expected_executives: 5.0
+   pattern: 'div_classes'
+   expected_executives: 16
    html_structure:
-      name_element: 'bio-token--name'
-      title_element: 'bio-token--position'
+      name_class: 'bio-token--name'
+      title_class: 'bio-token--position'
+      container_class: 'bio-token--inner'
+      missing_people:
+      - name: "Louis de Melo"
+        title: "President and Chief Executive Officer (CEO), Sinai Health Foundation and Executive Vice President, Academic Advancement, Sinai Health SYSTEM"
+      - name:  "Dr. Anne-Claude Gingras"
+        title: "Director, Lunenfeld-Tanenbaum Research Institute, and Vice President, Research for Sinai Health"
       notes: ""
-   status: needs_configuration
+   status: ok
+   
  - FAC: '793'
    name: "ST THOMAS ELGIN GENERAL"
-   url: '#https://www.stegh.on.ca/about-us/our-leadership/'
-   pattern: "combined_h2"
-   expected_executives: 5.0
+   url: 'https://www.stegh.on.ca/about-us/our-leadership/'
+   pattern: "p_with_bold_and_br"
+   expected_executives: 6
    html_structure:
-        combined_element: "p"
-        separator: " <br> "  # e.g., "John Smith - CEO"
-        notes: "Name and title together in p separated by ' - '"
+      notes: ""
+      
+   status: "ok"
 
  - FAC: '975'
    name: "MISSISSAUGA TRILLIUM HEALTH PARTNER"
@@ -232,21 +221,82 @@ hospitals:
     name_selector: "h2 > span:not([class])"
     title_selector: "h2 > span.h4"
     container: "h2"
-    notes: "Names in first span (no class) within h2, titles in second span with class='h4'. 18 executives total."
-   status: "configured"
+    notes: ""
+   status: "ok"
 
  - FAC: '947'
    name: TORONTO UNIVERSITY HEALTH NETWORK
    url: 'https://www.uhn.ca/corporate/AboutUHN/Governance_Leadership/Pages/Our_Leaders.aspx'
-   pattern: "h2_name_p_title"
+   pattern: "manual_entry_required"
+   expected_executives: 30
    html_structure:
-        name_element: "h5"
-        title_element: "p"
-        notes: "h5=Name, immediately followed by p=Title"
+    notes: "Content loaded by JavaScript - cannot be scraped with rvest"
+   status: "javascript_blocked"
    missing_people:
-      - name: "Dr. Kevin Smith"
-        title: "President and CEO"
-   status: NEEDS CHECKING
+    - name: "Dr. Kevin Smith"
+      title: "President and CEO"
+    - name: "Andrew Boozary"
+      title: "Executive Director, Social Medicine and Population Health"
+    - name: "Michael Caesar"
+      title: "Chief Data and Analytics Officer"
+    - name: "Lucas Chartier"
+      title: "Vice President, Quality and Safety"
+    - name: "Anil Chopra"
+      title: "Vice President, Medical Affairs"
+    - name: "Darlene Dasent"
+      title: "Executive Vice President & Chief Financial Officer"
+    - name: "Doug Earle"
+      title: "CEO, West Park Healthcare Centre Foundation"
+    - name: "Marnie Escaf"
+      title: "Vice President, Clinical"
+    - name: "Thomas Forbes"
+      title: "Surgeon-in-Chief"
+    - name: "Carolyn Gosse"
+      title: "Vice President, Clinical"
+    - name: "Brian Hodges"
+      title: "Executive Vice President, Education & Chief Medical Officer"
+    - name: "Pam Hubley"
+      title: "Vice President & Chief Nurse Executive"
+    - name: "Shiran Isaacksz"
+      title: "Vice President, Clinical"
+    - name: "Shaf Keshavjee"
+      title: "Chief of Innovation"
+    - name: "Kyla Kumar"
+      title: "Vice President, Communications & Brand Strategy"
+    - name: "Aimée Langan"
+      title: "Vice President, Clinical"
+    - name: "Joel Montesanti"
+      title: "Chief Strategy Officer"
+    - name: "Sarah Muttitt"
+      title: "Vice President & Chief Information Officer"
+    - name: "Janet Newton"
+      title: "Vice President, Clinical"
+    - name: "Michael O'Leary"
+      title: "Principal of the Michener Institute of Education"
+    - name: "Julie Quenneville"
+      title: "CEO, UHN Foundation"
+    - name: "Rebecca Repa"
+      title: "Executive Vice President, Clinical, Performance and Real Estate"
+    - name: "Mark Spencer"
+      title: "Executive Vice President, People & Culture"
+    - name: "Keith Stewart"
+      title: "Vice President, Clinical and Lab Medicine"
+    - name: "Kathryn Tinckam"
+      title: "Physician-in-Chief"
+    - name: "Marc Toppings"
+      title: "Vice President & Chief Legal Officer"
+    - name: "Jake Tran"
+      title: "Vice President, Clinical"
+    - name: "Aristotle Voineskos"
+      title: "Vice President, UHN-CAMH Partnership"
+    - name: "Bo Wang"
+      title: "Chief Artificial Intelligence Scientist"
+    - name: "Brad Wouters"
+      title: "Executive Vice President, Science & Research"
+    - name: "Miyo Yamashita"
+      title: "President & CEO, The Princess Margaret Cancer Foundation"
+
+
  - FAC: '951'
    name: BRAMPTON WILLIAM OSLER
    url: 'https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146'
@@ -255,8 +305,8 @@ hospitals:
    html_structure:
         combined_element: "h3"
         separator: ", "  # e.g., "John Smith - CEO"
-        notes: "Name and title together in h3 separated by ' , '"
-   status: needs_confirmation
+        notes: ""
+   status: ok
 
 
  - FAC: '695'
@@ -267,25 +317,24 @@ hospitals:
     name_class: "mb-name"
     title_class: "mb-position"
     container_class: "mb-item"
-    notes: "Standard div class pattern with missing people support"
+    notes: ""
     missing_people:
       - name: "Dr. Simon O'Brien"
         title: "Chair, Medical Advisory Committee"
       - name: "Tamás Zsolnay"
         title: "President & CEO, University Hospitals Kingston Foundation"
-   status: "configured"
-
+   status: "ok"
 
  - FAC: "932"
    name: "Elizabeth Bruyere Hospital"
    url: "https://www.bruyere.org/en/leadership-team?v=1"
-   pattern: "sequential_p_with_spacers"
-   expected_executives: 8
+   pattern: "h2_name_p_title"
+   expected_executives: 10
    html_structure:
-      name_element: "p"
-      title_element: "p"
-   notes: "Sequential P elements: name P, title P, empty P spacer, repeat"
-   status: "configured"
+    name_element: "p"    # ← Changed from h2 to p
+    title_element: "p"   # ← Both are p elements now
+    notes: ""
+   status: "ok"
    
  - FAC: '790'
    name: "ST CATHARINES HOTEL DIEU"
@@ -296,8 +345,8 @@ hospitals:
     list_type: "ul"
     format: "combined"
     separator: " | "
-    notes: "List items with pipe separator. Format: Name | Title | email. Clean spaces around pipe."
-   status: "configured"
+    notes: " But includes non executive... Clean in full database: List items with pipe separator. Format: Name | Title | email. Clean spaces around pipe."
+   status: "ok"
    
    
  - FAC: '781'
@@ -311,7 +360,7 @@ hospitals:
      title_location: "td_column_2"
      
    notes: 
-   status: needs_configuration
+   status: ok
    
    
  - FAC: '827'
@@ -323,19 +372,22 @@ hospitals:
     name_selector: "div[id^='t-']"
     title_selector: "span[id^='d-']"
     container: "li.column"
-    notes: "Names in div with IDs starting with 't-', titles in span with IDs starting with 'd-'. Sequential pairing."
-   status: "configured"
+    notes: ""
+   status: "ok"
    
  - FAC: '939'
    name: "TORONTO HOLLAND BLOORVIEW KIDS"
    url: 'https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team'
    pattern: "field_content_sequential"
-   expected_executives: 8
+   expected_executives: 9
    html_structure:
     element_selector: ".field-content"
     pattern_type: "sequential_every_3"
     start_index: 3
-    notes: "All data in .field-content elements. Pattern: skip first 2, then Name (i), Title (i+1), Empty (i+2), repeat. Start at element 3."
+    missing_people:
+      - name: "Golda Milo-Manson, MD, FRCPC"
+        title: "Vice-President, Medicine and Academic Affairs"
+    notes: ""
    status: "ok"        
  
  - FAC: '850'
@@ -348,7 +400,8 @@ hospitals:
         item_element: "li"
         format: "combined"
         separator: ", "
-   notes: "ok"
+   notes: "need to strip out board chair"
+   status: ok
 # 605 and 613 are now part of other organizazitns
  - FAC: '927'
    name: "Windsor Hotel Dieu Grace"
@@ -371,6 +424,7 @@ hospitals:
       title: "VP Of Mental Healht and Addictions"
     - name: "Shannon Landry"
       title: "VP of Restorative Care and Chief Nursing Officer"
+  
    
    
  - FAC: '970'
@@ -381,7 +435,7 @@ hospitals:
    html_structure:
     combined_element: 'h5.emphasis-Secondary'
     separator: ' | '
-    notes: "h5 elements with emphasis-Secondary class, pipe separator"
+    notes: ""
    status: "ok"
    
    
@@ -395,7 +449,7 @@ hospitals:
      title_class: "position"
      container_class: "member-name"
      notes: "Leadership page includes both executives and board members"
-   status: "need to filter out Board Members Chair,Vice-chair and Director"
+   status: "ok"
    
    
  - FAC: '619'
@@ -405,7 +459,7 @@ hospitals:
    html_structure:
         combined_element: "p"
         separator: ", "  # e.g., "John Smith - CEO"
-        notes: "Name and title together in h2, separated by ', '"
+        notes: "Sean PLant title is incomplete.  Name and title together in h2, separated by ', '"
    status: ok
    
    
@@ -602,13 +656,16 @@ name_patterns:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Last
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # Dr. First M. Last
     - "^Dr\\.? [A-Z][a-z]+ Ma?c[A-Z][a-z]+$"  # Dr. Colin MacPherson, Dr. John McDonald
+    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Middle Last (THREE WORDS) - ADD THIS
+    - "^Dr\\.? [A-Z][a-z]+ Van[A-Z][a-z]+$"  # Dr. Erica VanDaalen - ADD THIS LINE TOO
+    
   with_credentials:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
     
   hyphenated_names:
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
-    - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # First Last-Second
+    - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$"  # First Last-McName (allows McEwan, O'Brien style)
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Dr. First Last-Second
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First-Second Last, credentials
     
@@ -636,7 +693,6 @@ name_patterns:
   flexible:
     - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"  # Matches any capitalized words
     
-
 # Pattern identification guide for manual review
 pattern_identification_guide:
   questions_to_ask:

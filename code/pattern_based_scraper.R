@@ -51,6 +51,7 @@ PatternBasedScraper <- function() {
   
   # Check if text matches name patterns
   # Check if text matches name patternsNew
+  # add in debug language
   is_executive_name <- function(text, config) {
     if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
     
@@ -62,7 +63,6 @@ PatternBasedScraper <- function() {
       config$name_patterns$hyphenated_names,
       config$name_patterns$complex_credentials,
       config$name_patterns$internal_capitals,
-      config$name_patterns$accented_names,
       config$name_patterns$flexible
     )
     
@@ -70,18 +70,27 @@ PatternBasedScraper <- function() {
     clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
     clean_text <- trimws(clean_text)
     
-    # Check against patterns with original text
-    matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, clean_text)))
-    
-    # If doesn't match, try normalized version (without accents)
-    if (!matches_pattern) {
-      normalized <- normalize_name_for_matching(clean_text)
-      matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, normalized)))
+    # ADD SPECIFIC DEBUG FOR VAN DAALEN
+    if (grepl("Van Daalen|Erica", text, ignore.case = TRUE)) {
+      cat("\n=== DEBUGGING VAN DAALEN ===\n")
+      cat("Original text: '", text, "'\n", sep = "")
+      cat("Clean text: '", clean_text, "'\n", sep = "")
+      cat("Number of patterns loaded: ", length(name_patterns), "\n", sep = "")
       
-      if (matches_pattern) {
-        cat("DEBUG: Matched normalized name: '", text, "' (normalized: '", normalized, "')\n", sep = "")
+      # Test each pattern
+      for (i in seq_along(name_patterns)) {
+        if (!is.null(name_patterns[i]) && !is.na(name_patterns[i])) {
+          pattern_match <- grepl(name_patterns[i], clean_text)
+          if (pattern_match) {
+            cat("✓ MATCHED pattern [", i, "]: ", name_patterns[i], "\n", sep = "")
+          }
+        }
       }
+      cat("=== END DEBUG ===\n\n")
     }
+    
+    # Check against patterns
+    matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, clean_text)))
     
     # Exclude obvious non-names
     non_names <- c(
@@ -92,9 +101,40 @@ PatternBasedScraper <- function() {
     
     is_non_name <- any(sapply(non_names, function(p) grepl(p, clean_text, ignore.case = TRUE)))
     
+    # Debug logging
+    if (!matches_pattern || is_non_name) {
+      cat("DEBUG: Rejected name: '", text, "'", 
+          " (matches_pattern=", matches_pattern, 
+          ", is_non_name=", is_non_name, ")\n", sep = "")
+    }
+    
     return(matches_pattern && !is_non_name)
   }
   
+  
+  # Simplified title checking - just look for executive keywords
+  is_executive_title <- function(text, config) {
+    if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
+    
+    # Clean text first
+    clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
+    clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
+    clean_text <- trimws(clean_text)
+    
+    # Simplified approach: Check if contains ANY executive keyword
+    executive_keywords <- c(
+      "CEO", "Chief", "President", "Vice President", "VP", 
+      "Director", "Officer", "Administrator", "Manager", 
+      "Chair", "Vice-Chair", "Vice Chair",
+      "Medical Staff", "Nursing Executive", "CNE",
+      "Supervisor", "Health System Executive"
+    )
+    
+    contains_keyword <- any(sapply(executive_keywords, function(k) 
+      grepl(k, clean_text, ignore.case = TRUE)))
+    
+    return(contains_keyword)
+  }
     
   # Clean and format text data
   clean_text_data <- function(text) {
@@ -264,10 +304,19 @@ PatternBasedScraper <- function() {
   # ============================================================================
   # PATTERN 4: H2 name + P title (Specific sequential pattern)
   # ============================================================================
+  # ============================================================================
+  # PATTERN 4: Sequential name + title (Flexible version)
+  # UPDATED: Now supports h2→p OR p(with strong)→p patterns or <a>
+  # ============================================================================
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
-      # Get all h2 and p elements in order
-      all_elements <- page %>% html_nodes("h2, p")
+      # Get configuration for which elements to use
+      name_element <- hospital_info$html_structure$name_element %||% "h2"
+      title_element <- hospital_info$html_structure$title_element %||% "p"
+      
+      # Build selector for elements we're looking for
+      selector <- paste(name_element, title_element, sep = ", ")
+      all_elements <- page %>% html_nodes(selector)
       
       pairs <- list()
       
@@ -275,10 +324,32 @@ PatternBasedScraper <- function() {
         current_element <- all_elements[[i]]
         next_element <- all_elements[[i + 1]]
         
-        if (html_name(current_element) == "h2" && html_name(next_element) == "p") {
+        # Check if current element is the name type and next is title type
+        current_is_name <- html_name(current_element) == name_element
+        next_is_title <- html_name(next_element) == title_element
+        
+        if (current_is_name && next_is_title) {
           current_text <- normalize_text(html_text(current_element, trim = TRUE))
           next_text <- normalize_text(html_text(next_element, trim = TRUE))
           
+          # Additional filter for p→p pattern: name must contain <strong> or <a>
+          if (name_element == "p" && title_element == "p") {
+            # Check if current element has strong or a tag
+            has_strong <- length(current_element %>% html_nodes("strong")) > 0
+            has_link <- length(current_element %>% html_nodes("a")) > 0
+            
+            # Next element should NOT have strong (to avoid matching two names in a row)
+            next_has_strong <- length(next_element %>% html_nodes("strong")) > 0
+            
+            # Skip if current doesn't have strong/link, or if next does have strong
+            if (!has_strong && !has_link) next
+            if (next_has_strong) next
+            
+            # Skip empty spacers (just &nbsp; or whitespace)
+            if (grepl("^\\s*(&nbsp;)?\\s*$", next_text)) next
+          }
+          
+          # Validate name and title
           if (is_executive_name(current_text, config) && 
               is_executive_title(next_text, config)) {
             
@@ -345,7 +416,22 @@ PatternBasedScraper <- function() {
         }
       }
       
-      return(pairs)
+      if (length(pairs) > 0) {
+        df <- data.frame(
+          name = sapply(pairs, function(p) p$name),
+          title = sapply(pairs, function(p) p$title),
+          stringsAsFactors = FALSE
+        )
+        df_unique <- df[!duplicated(df), ]
+        
+        unique_pairs <- list()
+        for (i in 1:nrow(df_unique)) {
+          unique_pairs[[i]] <- list(name = df_unique$name[i], title = df_unique$title[i])
+        }
+        return(unique_pairs)
+      } else {
+        return(pairs)
+      }
       
     }, error = function(e) {
       return(list())
@@ -440,6 +526,7 @@ PatternBasedScraper <- function() {
   # ============================================================================
   # PATTERN 7: Boardcard gallery pattern
   # ============================================================================
+  # Pattern 7: Boardcard gallery pattern - UPDATED VERSION
   scrape_boardcard_pattern <- function(page, hospital_info, config) {
     tryCatch({
       boardcard_elements <- page %>% html_nodes("div.boardcard") %>% html_text(trim = TRUE)
@@ -457,7 +544,9 @@ PatternBasedScraper <- function() {
           
           if (length(parts) >= 2) {
             potential_name <- trimws(parts[1])
-            potential_title <- trimws(parts[2])
+            
+            # CHANGED: Take ALL parts after the name, not just parts[2]
+            potential_title <- trimws(paste(parts[2:length(parts)], collapse = ","))
             
             # Take only the first sentence/phrase of the title
             potential_title <- trimws(strsplit(potential_title, "\\.")[[1]][1])
@@ -474,7 +563,7 @@ PatternBasedScraper <- function() {
         }
       }
       
-      # Add missing people
+      # Add missing people from YAML config
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -490,6 +579,7 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
+  
   
   # ============================================================================
   # PATTERN 8: Custom table with nested elements - FIXED for FAC 777
@@ -885,6 +975,83 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
+  #___+++++++++________++++++++_________
+  # pattern 12
+  #++++++++++=============
+  
+  
+  # Pattern 11: P elements with bold name and br separator
+  scrape_p_with_bold_and_br <- function(page, hospital_info, config) {
+    tryCatch({
+      # Get all p elements from the description divs
+      p_elements <- page %>% 
+        html_nodes("div.description p") %>% 
+        html_nodes("xpath")
+      
+      # Alternative approach: get the HTML of each p and parse it
+      all_p <- page %>% html_nodes("div.description p")
+      
+      pairs <- list()
+      
+      for (p_elem in all_p) {
+        # Get the HTML content of the p element
+        p_html <- html_children(p_elem)
+        
+        # Extract name from <b> tag
+        name_elem <- p_elem %>% html_node("b")
+        if (length(name_elem) == 0) next
+        
+        potential_name <- name_elem %>% html_text(trim = TRUE)
+        
+        # Get full text and remove the name part to get title
+        full_text <- p_elem %>% html_text(trim = TRUE)
+        
+        # Split by newline or remove name to get title
+        text_parts <- strsplit(full_text, "\n")[[1]]
+        if (length(text_parts) >= 2) {
+          potential_title <- trimws(text_parts[2])
+        } else {
+          # Fallback: remove the name from full text
+          potential_title <- gsub(potential_name, "", full_text, fixed = TRUE)
+          potential_title <- trimws(potential_title)
+        }
+        
+        # Clean the data
+        potential_name <- clean_text_data(potential_name)
+        potential_title <- clean_text_data(potential_title)
+        
+        # Validate
+        if (nchar(potential_name) >= 3 && nchar(potential_title) >= 3 &&
+            is_executive_name(potential_name, config) && 
+            is_executive_title(potential_title, config)) {
+          
+          pairs[[length(pairs) + 1]] <- list(
+            name = potential_name,
+            title = potential_title
+          )
+        }
+      }
+      
+      # Add any missing people from YAML config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
+      
+    }, error = function(e) {
+      cat("ERROR in scrape_p_with_bold_and_br:", e$message, "\n")
+      return(list())
+    })
+  }
+  
+  
+  
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
@@ -910,6 +1077,7 @@ PatternBasedScraper <- function() {
                       "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
                       "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
                       "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
+                      "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
                       # Default fallback 
                       scrape_h2_name_h3_title(page, hospital_info, config)
       )
