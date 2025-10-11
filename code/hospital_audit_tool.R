@@ -1,6 +1,6 @@
 # hospital_audit_tool.R - Audit and track hospital processing
 # Save this in E:/ExecutiveSearchYaml/code/
-
+rm(list=ls())
 library(dplyr)
 library(yaml)
 
@@ -162,3 +162,5 @@ cat("=== HOSPITAL AUDIT TOOL LOADED ===\n")
 cat("USAGE:\n")
 cat("auditor$audit_hospital_progress('master_list.xlsx')\n")
 cat("auditor$get_next_batch('master_list.xlsx', 10)\n")
+
+next_batch <- auditor$get_next_batch("E:/Public/ResourceFiles/LeadershipURLYAMLNotes.xlsx", batch_size = 30)

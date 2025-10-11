@@ -54,6 +54,7 @@ hospitals:
    name: "BELLEVILLE QUINTE HEALTH CARE"
    url: "https://quintehealth.ca/about-quinte-health/leadership/"
    pattern: "list_items"
+   expected_executives: 5 # includes directors
    html_structure:
     list_type: "ul"
     format: "combined"
@@ -173,17 +174,18 @@ hospitals:
         notes: "div class=staff-info"
    status: needs_configuration Names are duplicated 
 
-
+ 
  - FAC: '837'
    name: "TORONTO HOSPITAL FOR SICK CHILDREN"
-   url: 'https://www.sickkids.ca/en/about/leadership/'
+   url: "https://www.sickkids.ca/en/about/leadership/"
    pattern: "div_classes"
+   expected_executives: 14
    html_structure:
-        name_class: "card-title"
-        title_class: "card-text"
-        container_class: "staff-member"
-   notes: " Overall <div class=card body Sub structure is div card=card-body, Nname <a href,class=stretched Link, title= <p class-card_text"
-   status: 'needs reconfigured: includes all board members and is missing the hospital ceo Titles are off by one'  
+    container_class: "card"  # Changed from "staff-member" to "card"
+    name_class: "card-title"
+    title_class: "card-text"
+    notes: "Card 1 is news article. Board members included - clean in post."
+   status: "ok" 
 
  - FAC: '976'
    name: "TORONTO SINAI HEALTH SYSTEM"
@@ -402,7 +404,7 @@ hospitals:
         separator: ", "
    notes: "need to strip out board chair"
    status: ok
-# 605 and 613 are now part of other organizazitns
+
  - FAC: '927'
    name: "Windsor Hotel Dieu Grace"
    url: 'https://www.hdgh.org/leadership'
@@ -452,15 +454,17 @@ hospitals:
    status: "ok"
    
    
+   
  - FAC: '619'
-   name: BROCKVILLE GENERAL
-   url: 'https://www.brockvillegeneralhospital.ca/who-we-are/executive-leadership-team/'
+   name: "BROCKVILLE GENERAL"
+   url: "https://www.brockvillegeneralhospital.ca/who-we-are/executive-leadership-team/"
    pattern: "combined_h2"
+   expected_executives: 6
    html_structure:
-        combined_element: "p"
-        separator: ", "  # e.g., "John Smith - CEO"
-        notes: "Sean PLant title is incomplete.  Name and title together in h2, separated by ', '"
-   status: ok
+    combined_element: "p"
+    separator: ","
+    notes: "Format: Name, Title in P elements with comma separator"
+   status: "ok"
    
    
 # Pattern templates section for enhanced_hospitals.yaml

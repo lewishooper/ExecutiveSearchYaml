@@ -1,0 +1,369 @@
+# NEXT BATCH TEMPLATE - Generated on
+2025-10-10 10:49:32
+# Instructions:
+#   1. Fill in the 'url' field with the leadership page URL (or verify existing URL)
+#   2. Update 'pattern' to match the HTML structure (see pattern guide)
+#   3. Set 'expected_executives' based on website inspection
+#   4. Update 'status' from 'needs_url' to 'needs_testing' once URL is added
+#   5. Add any notes about the hospital's structure
+#   6. For closed hospitals, see separate section at bottom
+
+# Common patterns:
+#   - h2_name_h3_title (names in h2, titles in h3)
+#   - combined_h2 (name and title together with separator)
+#   - div_classes (CSS class-based)
+#   - table_rows (table structure)
+#   - list_items (list with separators)
+
+hospitals:
+
+ - FAC: "605"
+   name: "TORONTO ST. JOSEPH'S INFIRMARY"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "613"
+   name: "TORONTO WEST PARK"
+   url: "https://www.gghorg.ca/about-ggh/leadership-team/""
+   pattern: "combined_h2"
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "640"
+   name: "COLLINGWOOD GENERAL AND MARINE HOSP"
+   url: "https://cgmh.on.ca/team/senior-leadership-team"
+   pattern: "div_classes"
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_class: "title"
+     title_class: "job_title"
+   status: "needs testing "  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "665"
+   name: "GUELPH GENERAL"
+   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
+   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6
+   html_structure:
+     format:  "combined"
+     separator: ","
+     notes: "might also be div_classes"  # ← OPTIONAL: Add any special notes
+   status: "needs testing"
+
+ - FAC: "699"
+   name: "KITCHENER ST MARY'S"
+   url: "https://www.smgh.ca/about-us/our-leadership-team""
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 17
+   html_structure:
+     name_class: "name"     # ← CUSTOMIZABLE 
+     title_class: "position"   # ← CUSTOMIZABLE 
+     container_class: "staff-member"  # ← OPTIONAL
+   status: "needs testing" 
+
+ - FAC: "701"
+   name: "RICHMOND HILL MACKENZIE HEALTH"
+   url: "https://www.mackenziehealth.ca/about-us/executive-leadership-team"
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 8  # ← UPDATE: Change based on website
+   html_structure:
+     name_class: "name h2"     # ← CUSTOMIZABLE 
+     title_class: "position"   # ← CUSTOMIZABLE 
+     container_class: "person-listing small-list
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "718"
+   name: "BURLINGTON JOSEPH BRANT HOSPITAL"
+   url: "https://www.josephbranthospital.ca/about-us/our-team/senior-leadership"
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+     name_class: "name"     # ← CUSTOMIZABLE 
+     title_class: "title"   # ← CUSTOMIZABLE 
+     container_class: "listrow listrow_1751"
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  
+
+ - FAC: "726"
+   name: "MIDLAND GEORGIAN BAY GEN HOSPITAL"
+   url: "https://gbgh.on.ca/about-us/senior-leadership-team/"  
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h3"  # ← UPDATE if using different pattern
+     title_element: "h4"  # ← UPDATE if using different pattern
+     notes: "includes directors which need to be fixed in post"
+   status: "needs testing "  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "736"
+   name: "NEWMARKET SOUTHLAKE REGIONAL"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 10  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h3"  # ← UPDATE if using different pattern
+     title_element: "h6"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "745"
+   name: "ORILLIA SOLDIERS' MEMORIAL"
+   url: "https://www.osmh.on.ca/senior-leadership-team/"  # ← REQUIRED: Add leadership page URL
+   pattern: "div-classes"  # maybe UL list 
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_class: "name"     # ← CUSTOMIZABLE 
+     title_class: "position"   # ← CUSTOMIZABLE 
+     container_class: "listrow listrow_1751"
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "763"
+   name: "PEMBROKE REGIONAL"
+   url: "https://www.pembrokeregionalhospital.ca/slt"
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "p"  # ← UPDATE if using different pattern
+     notes: "This one doesn't really have titles as a separate item. They are buried in the first paragraph of the bio"  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "771"
+   name: "PETERBOROUGH REGIONAL HEALTH CENTRE"
+   url: "https://www.prhc.on.ca/about-us/senior-leadership/"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 9  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "span"
+     separator: ","
+     status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "804"
+   name: "SIMCOE NORFOLK GENERAL"
+   url: "https://www.ngh.on.ca/senior-leadership-team/"
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "h2"  # ← CUSTOMIZABLE
+     separator: " b "   
+     
+     notes: "embeded into a p in <strong> groups. cEO title is multiple lines"  # ← OPTIONAL: Add any special notes
+   status: "needs testing"
+
+ - FAC: "813"
+   name: "STRATFORD GENERAL"
+   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # May need to strip out Sue Davey Executive assistant
+   html_structure:
+     combined_element: "a"  # ← CUSTOMIZABLE
+     separator: ", "   
+     notes: "may need to strip out sue davey executive assistant"  # ← OPTIONAL: Add any special notes
+   status: "needs testing " 
+ - FAC: "814"
+   name: "STRATHROY MIDDLESEX GENERAL"
+   url: "https://mhalliance.on.ca/about/administration/"
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "h3"   # ← CUSTOMIZABLE
+     separator: ", "  
+     notes: "will need to strip out directors in post"  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "916"
+   name: "ORANGEVILLE HEADWATERS HC"
+   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # Could also be 
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "928"
+   name: "SMITHS FALLS PERTH & SMITHS FALLS"
+   url: "https://psfdh.on.ca/leadershipteam"  # 
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "p"  # ← CUSTOMIZABLE 
+     separator: ", "    
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "930"
+   name: "KITCHENER GRAND RIVER"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "931"
+   name: "PARRY SOUND WEST PARRY SOUND"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "940"
+   name: "COBOURG NORTHUMBERLAND HILLS"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "950"
+   name: "OAKVILLE HALTON HEALTH CARE CORP"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "955"
+   name: "GREY BRUCE HEALTH SERVICES"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "962"
+   name: "ST CATHARINES NIAGARA HEALTH SYSTEM"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "965"
+   name: "SAULT STE MARIE SAULT AREA"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "966"
+   name: "SARNIA BLUEWATER HEALTH"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "967"
+   name: "CORNWALL COMMUNITY"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "968"
+   name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "974"
+   name: "NORTH BAY REGIONAL HEALTH CENTRE"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "981"
+   name: "CHATHAM CHATHAM-KENT HEALTH ALLIANC"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "983"
+   name: "HURON PERTH HEALTHCARE ALLIANCE"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_url"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+# ============================================================================
+# BATCH SUMMARY
+# ============================================================================
+# Total active hospitals in this batch: 30
+# Remaining after this batch: 87
+#
+# WORKFLOW:
+# 1. For each hospital, verify/find the leadership page URL
+# 2. Use: helper$analyze_hospital_structure(FAC, 'Name', 'URL')
+# 3. Update pattern, expected_executives, and html_structure
+# 4. Change status to 'needs_testing'
+# 5. Test with: quick_test(FAC)
+# 6. If successful, change status to 'configured' or 'ok'
+# 7. Copy completed entries to enhanced_hospitals.yaml
+# 8. Mark as done='y' in the master Excel file
+#
+# PATTERN REFERENCE:
+# See PATTERN_REGISTRY.md for detailed examples of all 11 patterns
+# ============================================================================

@@ -223,7 +223,7 @@ PatternBasedScraper <- function() {
         
         if (length(parts) >= 2) {
           potential_name <- trimws(parts[1])
-          potential_title <- trimws(parts[2])
+          potential_title <- trimws(paste(parts[2:length(parts)], collapse = separator))
           
           if (is_executive_name(potential_name, config) && 
               is_executive_title(potential_title, config)) {
