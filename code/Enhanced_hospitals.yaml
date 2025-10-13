@@ -2,7 +2,64 @@
 # Save this in E:/ExecutiveSearchYaml/code/
 
 hospitals:
-  # Pattern 1: Separate H2 names + H3 titles (most common)
+  # Pattern 1: Separate H2 names + H3 titles (most common) 
+ - FAC: "983"
+   name: "HURON PERTH HEALTHCARE ALLIANCE"
+   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
+   pattern: "p_with_bold_and_br"
+   expected_executives: 5
+   html_structure:
+    notes: "Names in <strong> within <p>, titles after <br>"
+   status: "needs_testing"
+
+
+ - FAC: "974"
+   name: "NORTH BAY NORTH BAY REGIONAL HC"
+   url: "https://nbrhc.on.ca/about-nbrhc/senior-leadership-team/"
+   pattern: "manual_entry_required"
+   expected_executives: 5
+   html_structure:
+    notes: "Content loaded by JavaScript - cannot be scraped with rvest"
+   status: "javascript_blocked"
+   known_executives:
+    - name: "Paul Heinrich"
+      title: "President & CEO"
+    - name: "Lise St. Marseille"
+      title: "Vice President, Mental Health & Addictions"
+    - name: "Joanne Laplante"
+      title: "Vice President, Clinical and Chief Nursing Executive"
+    - name: "Ryan Jeffers"
+      title: "Vice President of Corporate Services & CFO"
+    - name: "Dr. Scott Kerrigan"
+      title: "Chief of Staff"
+
+   
+ - FAC: "981"
+   name: "CHATHAM CHATHAM-KENT HEALTH ALLIANC"
+   url: "https://www.ckha.on.ca/senior-team/"
+   pattern: "manual_entry_required"
+   expected_executives: 8
+   html_structure:
+    notes: "Website blocks automated scraping - HTTP 403 Forbidden"
+   status: "blocked_by_site"
+   known_executives:
+    - name: "Adam Topp"
+      title: "President & CEO"
+    - name: "Aaron Ryan"
+      title: "Vice President, Performance & Chief Financial Officer"
+    - name: "Natalie Clark"
+      title: "Chief Nursing Executive"
+    - name: "Caen Suni"
+      title: "Vice President, Clinical Programs & Operations"
+    - name: "Dr. Zeke Milkovic"
+      title: "Chief of Staff"
+    - name: "Justin Turkington"
+      title: "Chief Human Resources Officer"
+    - name: "Fannie Vavoulis"
+      title: "Director, Communications & Patient Experience"
+    - name: "Christine Mitchell"
+      title: "CKHA Foundation, President & CEO"
+
  - FAC: "707" 
    name: "Ross Memorial Hospital"
    url: "https://rmh.org/about-ross-memorial/senior-leadership"
@@ -54,7 +111,7 @@ hospitals:
    name: "BELLEVILLE QUINTE HEALTH CARE"
    url: "https://quintehealth.ca/about-quinte-health/leadership/"
    pattern: "list_items"
-   expected_executives: 5 # includes directors
+   expected_executives: 6 
    html_structure:
     list_type: "ul"
     format: "combined"
@@ -166,7 +223,7 @@ hospitals:
    name: "TORONTO SCARBOROUGH HEALTH NETWORK"
    url: 'https://www.shn.ca/about-us/hospital-leadership/'
    pattern: "div_classes"
-   expected_executives: 18
+   expected_executives: 14
    html_structure:
         name_class: "staff-name"
         title_class: "staff-title"
@@ -214,17 +271,14 @@ hospitals:
       
    status: "ok"
 
- - FAC: '975'
+ - FAC: "975"
    name: "MISSISSAUGA TRILLIUM HEALTH PARTNER"
-   url: 'https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx'
-   pattern: "nested_list_with_ids"
+   url: "https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx"
+   pattern: "h2_combined_complex"
    expected_executives: 18
    html_structure:
-    name_selector: "h2 > span:not([class])"
-    title_selector: "h2 > span.h4"
-    container: "h2"
-    notes: ""
-   status: "ok"
+    notes: "Complex H2 elements with names, credentials, and titles all combined"
+   status: "needs_testing"
 
  - FAC: '947'
    name: TORONTO UNIVERSITY HEALTH NETWORK
@@ -234,7 +288,7 @@ hospitals:
    html_structure:
     notes: "Content loaded by JavaScript - cannot be scraped with rvest"
    status: "javascript_blocked"
-   missing_people:
+   known_executives:
     - name: "Dr. Kevin Smith"
       title: "President and CEO"
     - name: "Andrew Boozary"
@@ -336,7 +390,10 @@ hospitals:
     name_element: "p"    # ← Changed from h2 to p
     title_element: "p"   # ← Both are p elements now
     notes: ""
-   status: "ok"
+    #missing_people:
+    #  - name: "Mélanie Dubé"
+    #    title: "Chief Financial Officer, Vice-President Corporate Services, Planning and Redevelopment"
+   status: "needs testing"
    
  - FAC: '790'
    name: "ST CATHARINES HOTEL DIEU"
@@ -695,7 +752,8 @@ name_patterns:
     - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Marie-Claire Beaumont
 
   flexible:
-    - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"  # Matches any capitalized words
+    - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"
+    - "^[A-ZÀ-ÖØ-Ýà-öø-ýĀ-žḀ-ỿ][a-zà-öø-ýĀ-žḀ-ỿ'-]+ [A-ZÀ-ÖØ-Ýà-öø-ýĀ-žḀ-ỿ][a-zà-öø-ýĀ-žḀ-ỿ'-]+$"
     
 # Pattern identification guide for manual review
 pattern_identification_guide:

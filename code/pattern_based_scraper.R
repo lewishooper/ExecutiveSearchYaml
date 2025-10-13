@@ -975,83 +975,179 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
-  #___+++++++++________++++++++_________
-  # pattern 12
-  #++++++++++=============
-  
-  
-  # Pattern 11: P elements with bold name and br separator
+  # ============================================================================
+  # PATTERN 12: P elements with bold/strong name and br separator
+  # ============================================================================
   scrape_p_with_bold_and_br <- function(page, hospital_info, config) {
-    tryCatch({
-      # Get all p elements from the description divs
-      p_elements <- page %>% 
-        html_nodes("div.description p") %>% 
-        html_nodes("xpath")
+    pairs <- list()
+    
+    # Make it flexible - use custom selector if provided in YAML
+    if (!is.null(hospital_info$html_structure$container_selector)) {
+      p_elements <- page %>% html_nodes(hospital_info$html_structure$container_selector)
+    } else {
+      # Default: find all p elements
+      p_elements <- page %>% html_nodes("p")
+    }
+    
+    for (p in p_elements) {
+      # Look for strong OR b tag for the name
+      name_node <- p %>% html_node("strong, b")
       
-      # Alternative approach: get the HTML of each p and parse it
-      all_p <- page %>% html_nodes("div.description p")
+      # Skip if no name found
+      if (length(name_node) == 0 || is.na(name_node)) next
       
-      pairs <- list()
+      name <- html_text(name_node, trim = TRUE)
       
-      for (p_elem in all_p) {
-        # Get the HTML content of the p element
-        p_html <- html_children(p_elem)
+      # Skip if name is empty
+      if (nchar(name) == 0) next
+      
+      # Get all text from the p element
+      full_text <- html_text(p, trim = TRUE)
+      
+      # Split by newlines (handles both \n and \r\n)
+      lines <- strsplit(full_text, "\r?\n")[[1]]
+      lines <- trimws(lines)
+      
+      # Remove empty lines
+      lines <- lines[nchar(lines) > 0]
+      
+      # If only one line, try splitting on the name
+      if (length(lines) == 1) {
+        # Try to split: "NameTitleContactInfo" -> separate parts
+        text_after_name <- sub(paste0("^", gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", name)), "", full_text)
+        text_after_name <- trimws(text_after_name)
         
-        # Extract name from <b> tag
-        name_elem <- p_elem %>% html_node("b")
-        if (length(name_elem) == 0) next
+        # Split remaining text by common separators
+        parts <- strsplit(text_after_name, "(?<=\\w)(\\d{3}[-\\s]|[0-9]{3}\\-)", perl = TRUE)[[1]]
         
-        potential_name <- name_elem %>% html_text(trim = TRUE)
-        
-        # Get full text and remove the name part to get title
-        full_text <- p_elem %>% html_text(trim = TRUE)
-        
-        # Split by newline or remove name to get title
-        text_parts <- strsplit(full_text, "\n")[[1]]
-        if (length(text_parts) >= 2) {
-          potential_title <- trimws(text_parts[2])
-        } else {
-          # Fallback: remove the name from full text
-          potential_title <- gsub(potential_name, "", full_text, fixed = TRUE)
-          potential_title <- trimws(potential_title)
+        if (length(parts) > 0 && nchar(parts[1]) > 0) {
+          lines <- c(name, parts[1])
         }
+      }
+      
+      # Title is typically the second line (first line is the name)
+      if (length(lines) >= 2) {
+        title <- lines[2]
         
-        # Clean the data
-        potential_name <- clean_text_data(potential_name)
-        potential_title <- clean_text_data(potential_title)
+        # Clean up title - remove emails and phone numbers that might be concatenated
+        title <- gsub("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}", "", title)
+        title <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}", "", title)
+        title <- gsub("\\s+ext\\.?\\s*\\d+", "", title, ignore.case = TRUE)
+        title <- trimws(title)
         
-        # Validate
-        if (nchar(potential_name) >= 3 && nchar(potential_title) >= 3 &&
-            is_executive_name(potential_name, config) && 
-            is_executive_title(potential_title, config)) {
+        # Filter out non-executive titles
+        # Skip: pure phone numbers, emails, or administrative assistants
+        if (nchar(title) > 0 &&
+            !grepl("^[0-9\\-\\(\\)\\s\\.]+$", title) &&  # Not just a phone number
+            !grepl("^[a-zA-Z0-9._%+-]+@", title) &&  # Not starting with email
+            !grepl("^(Executive Assistant|Administrative Assistant|Assistant to|Secretary)$", title, ignore.case = TRUE)) {  # Not pure assistant role
           
           pairs[[length(pairs) + 1]] <- list(
-            name = potential_name,
-            title = potential_title
+            name = name,
+            title = title
           )
         }
       }
-      
-      # Add any missing people from YAML config
-      if (!is.null(hospital_info$html_structure$missing_people)) {
-        for (missing in hospital_info$html_structure$missing_people) {
-          pairs[[length(pairs) + 1]] <- list(
-            name = missing$name,
-            title = missing$title
-          )
-        }
-      }
-      
-      return(pairs)
-      
-    }, error = function(e) {
-      cat("ERROR in scrape_p_with_bold_and_br:", e$message, "\n")
-      return(list())
-    })
+    }
+    
+    return(pairs)
   }
-  
-  
-  
+  # ============================================================================
+  # PATTERN 13: Manual Entry (for blocked sites)
+  # ============================================================================
+  scrape_manual_entry <- function(page, hospital_info, config) {
+    # Don't actually scrape - just return the known_executives from YAML
+    pairs <- list()
+    
+    if (!is.null(hospital_info$known_executives)) {
+      for (exec in hospital_info$known_executives) {
+        pairs[[length(pairs) + 1]] <- list(
+          name = exec$name,
+          title = exec$title
+        )
+      }
+    }
+    
+    return(pairs)
+  } 
+  # ============================================================================
+  # PATTERN 13: H2 with complex combined name/title requiring smart parsing
+  # ============================================================================
+  scrape_h2_combined_complex <- function(page, hospital_info, config) {
+    pairs <- list()
+    
+    h2_elements <- page %>% html_nodes("h2") %>% html_text(trim = TRUE)
+    
+    for (text in h2_elements) {
+      # Skip if empty or too short
+      if (nchar(text) < 5) next
+      
+      # Clean up whitespace
+      text <- gsub("\\s+", " ", text)
+      text <- trimws(text)
+      
+      # List of title keywords to search for
+      title_keywords <- c(
+        "Executive Vice President",
+        "Senior Vice President", 
+        "Vice President",
+        "Chief Operating Officer",
+        "Chief Nursing Executive",
+        "Chief Financial Officer",
+        "Chief Information Officer",
+        "Chief Health Information Officer",
+        "Chief People Officer",
+        "Chief of Staff",
+        "Chief Scientist",
+        "President & CEO",
+        "President & Chief Executive Officer",
+        "General Counsel"
+      )
+      
+      # Find the EARLIEST occurrence of any title keyword
+      earliest_position <- nchar(text) + 1  # Start with position beyond text
+      earliest_keyword <- NULL
+      
+      for (keyword in title_keywords) {
+        match_result <- regexpr(keyword, text, ignore.case = FALSE)
+        
+        if (match_result[1] != -1 && match_result[1] < earliest_position) {
+          earliest_position <- match_result[1]
+          earliest_keyword <- keyword
+        }
+      }
+      
+      # If we found a title keyword
+      if (!is.null(earliest_keyword)) {
+        # Everything before is the name (possibly with credentials)
+        name_part <- substr(text, 1, earliest_position - 1)
+        name_part <- trimws(name_part)
+        
+        # Remove credentials from name (B.Sc., MBA, MLT, LL.B., etc.)
+        # First remove degree abbreviations with periods
+        name_part <- gsub("\\s*,?\\s*[A-Z]\\.[A-Za-z\\.]+", "", name_part, perl = TRUE)
+        # Then remove trailing acronyms (2+ capital letters at end)
+        name_part <- gsub("\\s*,?\\s*[A-Z]{2,}\\s*$", "", name_part, perl = TRUE)
+        # Remove any trailing commas
+        name_part <- gsub("\\s*,\\s*$", "", name_part)
+        name_part <- trimws(name_part)
+        
+        # Everything from earliest match onwards is the title (capture ALL of it)
+        title_part <- substr(text, earliest_position, nchar(text))
+        title_part <- trimws(title_part)
+        
+        # Skip if name is too short or looks wrong
+        if (nchar(name_part) >= 3 && !grepl("^(The|A|An)\\s", name_part)) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = name_part,
+            title = title_part
+          )
+        }
+      }
+    }
+    
+    return(pairs)
+  }
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
@@ -1062,7 +1158,14 @@ PatternBasedScraper <- function() {
     cat(" - Pattern:", hospital_info$pattern, "\n")
     
     tryCatch({
-      page <- read_html(hospital_info$url)
+      # Special handling for manual entry - skip URL reading
+      if (hospital_info$pattern == "manual_entry_required") {
+        pairs <- scrape_manual_entry(NULL, hospital_info, config)
+      } else {
+        # Normal scraping for all other patterns
+        page <- read_html(hospital_info$url)
+        
+       
       
       # Dispatch to appropriate pattern scraper
       pairs <- switch(hospital_info$pattern,
@@ -1078,10 +1181,12 @@ PatternBasedScraper <- function() {
                       "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
                       "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
                       "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
+                      "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # ← ADD THIS
+                      "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
                       # Default fallback 
                       scrape_h2_name_h3_title(page, hospital_info, config)
       )
-      
+      }
       # Create consistent output data frame
       if (length(pairs) > 0) {
         result_df <- data.frame(
