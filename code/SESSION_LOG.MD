@@ -270,3 +270,80 @@
 
 **Last Updated:** 2025-10-13, 11:50 AM
 **Next Review:** Start of next session (batch 2 configuration)
+
+### Session: 2025-10-13 PM - Workflow Simplification
+
+**What We Accomplished:**
+- ✅ Identified issue with FAC-665 (Guelph General) - names rejected due to missing name_patterns in next_batch
+- ✅ Discovered root cause: test_next_batch.R only reads next_batch_template.yaml (missing global patterns)
+- ✅ **KEY INSIGHT:** Realized two-file workflow is unnecessarily complex
+- ✅ Simplified workflow: Work directly in enhanced_hospitals.yaml
+- ✅ Updated all workflow documentation to reflect simpler approach
+- ✅ Deprecated merge scripts (test_next_batch.R, merge_tested_to_enhanced.R)
+
+**Major Workflow Change:**
+
+**OLD (Complex):**
+1. Configure in next_batch_template.yaml
+2. Test with test_next_batch.R (missing patterns)
+3. Merge to enhanced_hospitals.yaml
+4. Sync name_patterns between files
+5. Hope nothing breaks
+
+**NEW (Simple):**
+1. Use next_batch_template.yaml as reference list only
+2. Configure directly in enhanced_hospitals.yaml
+3. Test with quick_test(FAC) - all patterns available
+4. Mark done in Excel
+5. Done!
+
+**Files Updated:**
+- SIMPLIFIED_WORKFLOW.md (complete rewrite)
+- QUICK_REFERENCE.md (updated for new workflow)
+
+**Files Deprecated (but kept for reference):**
+- test_next_batch.R (not needed)
+- merge_tested_to_enhanced.R (not needed)
+- compare_yaml_status.R (not needed)
+- Next Batch Testing Workflow.md (outdated)
+
+**FAC-665 Resolution:**
+- Issue: Separator was "," not "-", and name_patterns missing from next_batch
+- Solution: Add to enhanced_hospitals.yaml with correct separator
+- Pattern: combined_h2 with separator: ", "
+
+**Current Status:**
+- Total configured hospitals: 34 in enhanced_hospitals.yaml
+- FAC-665: Ready to configure using simplified workflow
+- Batch approach: Use next_batch as TODO list, work in enhanced file
+
+**Key Learning:**
+Don't maintain configs in two places! Use next_batch_template.yaml as a reference/tracking list, but do all configuration and testing directly in enhanced_hospitals.yaml.
+
+**Benefits of New Workflow:**
+- Single source of truth
+- All name_patterns available immediately
+- No syncing issues
+- Simpler, faster, fewer errors
+- Familiar commands (quick_test)
+
+**Next Steps:**
+1. Add FAC-665 to enhanced_hospitals.yaml
+2. Test with quick_test(665)
+3. Continue with remaining hospitals using simplified workflow
+4. Use next_batch_template.yaml as reference only
+
+**Issues/Blockers:**
+- None - workflow simplified and clearer
+
+**Time Spent:** ~1.5 hours
+
+---
+
+**Updated Documentation:**
+- SIMPLIFIED_WORKFLOW.md - Complete guide to new workflow
+- QUICK_REFERENCE.md - Updated commands and process
+- Session log updated with workflow change rationale
+
+**User Feedback:**
+User correctly identified that maintaining configs in two files was inefficient and error-prone. The suggestion to work directly in enhanced_hospitals.yaml was adopted as the new standard workflow.

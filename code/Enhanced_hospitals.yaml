@@ -3,6 +3,50 @@
 
 hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common) 
+  
+ - FAC: "665"
+   name: "GUELPH GENERAL"
+   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
+   pattern: "combined_h2"
+   expected_executives: 6
+   html_structure:
+     combined_element: "h2"
+     separator: ", "  # COMMA + SPACE, not dash!
+   status: "needs_testing"
+   
+ - FAC: "640"
+   name: "COLLINGWOOD GENERAL AND MARINE HOSP"
+   url: "https://cgmh.on.ca/team/senior-leadership-team"
+   pattern: "div_classes"
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_class: "title"
+     title_class: "job_title"
+   status: "needs testing "  # ← UPDATE: Change to 'needs_testing' once URL added
+
+
+ - FAC: "605"
+   name: "TORONTO ST. JOSEPH'S INFIRMARY"
+   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "613"
+   name: "TORONTO WEST PARK"
+   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
+   pattern: "combined_h2"
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
+  
  - FAC: "983"
    name: "HURON PERTH HEALTHCARE ALLIANCE"
    url: "https://www.hpha.ca/ourorganization#accordion-38-2"
