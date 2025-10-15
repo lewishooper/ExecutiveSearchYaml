@@ -347,3 +347,83 @@ Don't maintain configs in two places! Use next_batch_template.yaml as a referenc
 
 **User Feedback:**
 User correctly identified that maintaining configs in two files was inefficient and error-prone. The suggestion to work directly in enhanced_hospitals.yaml was adopted as the new standard workflow.
+
+╔════════════════════════════════════════════════════════════════╗
+║          HOSPITAL SCRAPER PROJECT - SESSION SHUTDOWN           ║
+╚════════════════════════════════════════════════════════════════╝
+
+Session duration: 1.95 hours
+
+═══════════════════════════════════════════════════════════════
+                    SESSION SUMMARY                             
+═══════════════════════════════════════════════════════════════
+
+Total configured hospitals: 43 
+  Complete: 27 
+  Needs testing: 2 
+
+Batch progress:
+  Completed: 0 of 19 
+  Remaining: 19 
+
+═══════════════════════════════════════════════════════════════
+                    END OF SESSION CHECKLIST                    
+═══════════════════════════════════════════════════════════════
+
+[ ] Save all modified files 
+[ ] Commit to Git (if using) 
+[ ] Update SESSION_LOG.md with today's progress 
+[ ] Mark completed hospitals in Excel (done='y') 
+[ ] Upload updated files to Claude project 
+[ ] Note any issues/blockers for next session 
+[ ] Identify next 3-5 hospitals to tackle 
+
+═══════════════════════════════════════════════════════════════
+                    FILES TO UPLOAD TO CLAUDE                   
+═══════════════════════════════════════════════════════════════
+
+Before next session, upload these files to Claude:
+
+CRITICAL FILES (always upload):
+  ✓ enhanced_hospitals.yaml 
+    Last modified: 2025-10-15 10:57:36 
+  ✓ next_batch_template.yaml 
+    Last modified: 2025-10-15 10:05:06 
+  ✓ SESSION_LOG.md 
+    Last modified: 2025-10-13 20:27:19 
+  ✓ pattern_based_scraper.R 
+    Last modified: 2025-10-12 11:02:03 
+  ✓ hospital_configuration_helper.R 
+    Last modified: 2025-09-26 17:32:47 
+  ✓ quick_test_single.R 
+    Last modified: 2025-10-04 11:43:04 
+
+RECENT OUTPUT FILES:
+  • test_summary_20251011_152753.csv 
+  • test_summary_20251013_105201.csv 
+  • all_hospitals_20251013_105201.csv 
+  (Upload if you want Claude to analyze test results)
+
+═══════════════════════════════════════════════════════════════
+                    NEXT SESSION PREPARATION                    
+═══════════════════════════════════════════════════════════════
+
+TO START NEXT SESSION:
+  1. Upload updated files to Claude (see list above)
+  2. Tell Claude: 'Let's resume the hospital scraper project'
+  3. Run: source('session_startup.R')
+  4. Review SESSION_LOG.md for context
+  5. Continue with next hospital in batch
+
+SUGGESTED NEXT HOSPITALS TO WORK ON:
+  1. FAC-726: MIDLAND GEORGIAN BAY GEN HOSPITAL
+     URL: Available ✓
+  2. FAC-736: NEWMARKET SOUTHLAKE REGIONAL
+     URL: Needs adding ⚠
+  3. FAC-745: ORILLIA SOLDIERS' MEMORIAL
+     URL: Available ✓
+  4. FAC-763: PEMBROKE REGIONAL
+     URL: Available ✓
+  5. FAC-771: PETERBOROUGH REGIONAL HEALTH CENTRE
+     URL: Available ✓
+

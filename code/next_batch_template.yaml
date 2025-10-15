@@ -18,50 +18,10 @@
 hospitals:
 
 
- - FAC: "665"
-   name: "GUELPH GENERAL"
-   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
-   pattern: "combined_h2"
-   expected_executives: 6
-   html_structure:
-     combined_element: "h2"
-     separator: ", "  # COMMA + SPACE, not dash!
-   status: "needs_testing"
 
- - FAC: "699"
-   name: "KITCHENER ST MARY'S  WRHN"
-   url: "https://www.smgh.ca/about-us/our-leadership-team"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 17
-   html_structure:
-     name_class: "name"     # ← CUSTOMIZABLE 
-     title_class: "position"   # ← CUSTOMIZABLE 
-     container_class: "staff-member"  # ← OPTIONAL
-   status: "needs testing" 
+ 
 
- - FAC: "701"
-   name: "RICHMOND HILL MACKENZIE HEALTH"
-   url: "https://www.mackenziehealth.ca/about-us/executive-leadership-team"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 8  # ← UPDATE: Change based on website
-   html_structure:
-     name_class: "name h2"     # ← CUSTOMIZABLE 
-     title_class: "position"   # ← CUSTOMIZABLE 
-     container_class: "person-listing small-list"
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "718"
-   name: "BURLINGTON JOSEPH BRANT HOSPITAL"
-   url: "https://www.josephbranthospital.ca/about-us/our-team/senior-leadership"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-     name_class: "name"     # ← CUSTOMIZABLE 
-     title_class: "title"   # ← CUSTOMIZABLE 
-     container_class: "listrow listrow_1751"
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  
 
  - FAC: "726"
    name: "MIDLAND GEORGIAN BAY GEN HOSPITAL"
@@ -173,17 +133,6 @@ hospitals:
      notes: ""  # ← OPTIONAL: Add any special notes
    status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "930"
-   name: "KITCHENER GRAND RIVER WRHN"
-   url: "https://www.grhosp.on.ca/about/senior-leadership-team"
-   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 17  # ← UPDATE: Change based on website
-   html_structure:
-     list_type: "ul"  # ← UPDATE if using different pattern
-     format: "combined"  # ← UPDATE if using different pattern
-     separator: ", "
-     notes: "Combined with St.Marys Kitchner, Has multiple commas in title"  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  #multiple comma 
 
  - FAC: "931"
    name: "PARRY SOUND WEST PARRY SOUND"
@@ -286,38 +235,6 @@ hospitals:
      notes: "title is proceeded by 'EMAIL' can we do this in the code or in post"  # ← OPTIONAL: Add any special notes
    status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "974"
-   name: "NORTH BAY REGIONAL HEALTH CENTRE"
-   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "p"  # ← CUSTOMIZABLE 
-     separator: "br" 
-     notes: " WE NEED TO ENSURE THAT THERE IS A GOOD PATTERN FOR THIS STYLE"  # ← OPTIONAL: Add any special notes
-   status: "needs_testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "981"
-   name: "CHATHAM CHATHAM-KENT HEALTH ALLIANC"
-   url: "https://www.ckha.on.ca/senior-team/"
-   pattern: "combined_h2"# ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "p"  # ← CUSTOMIZABLE 
-     separator: "br" 
-     notes: " WE NEED TO ENSURE THAT THERE IS A GOOD PATTERN FOR THIS STYLE" 
-   status: "needs_testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "983"
-   name: "HURON PERTH HEALTHCARE ALLIANCE duplicate with 813 Stratford general"
-   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # May need to strip out Sue Davey Executive assistant
-   html_structure:
-     combined_element: "a"  # ← CUSTOMIZABLE
-     separator: ", "   
-     notes: "may need to strip out sue davey executive assistant"  # ← OPTIONAL: Add any special notes
-   status: "needs testing Duplicate with:" 
 # ============================================================================
 # BATCH SUMMARY
 # ============================================================================

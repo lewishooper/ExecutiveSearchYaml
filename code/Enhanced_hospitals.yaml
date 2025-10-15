@@ -4,6 +4,69 @@
 hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common) 
   
+
+ - FAC: "726"
+   name: "MIDLAND GEORGIAN BAY"
+   url: "https://gbgh.on.ca/about-us/senior-leadership-team/"
+   pattern: "h2_name_p_title"
+   expected_executives: 5
+   html_structure:
+    name_element: "h3"
+    title_element: "h4"
+    missing_people:
+      - name: "Dr. Vikram Ralhan"
+        title: "Chief of Staff"
+      - name: "Linda Gravel"
+        title: "Vice President, Clinical Services and Chief Nursing Executive"
+   status: "ok"
+  
+   
+ - FAC: "718"
+   name: "BURLINGTON JOSEPH BRANT HOSPITAL"
+   url: "https://www.josephbranthospital.ca/about-us/our-team/senior-leadership"
+   pattern: "nested_list_with_ids"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+    name_selector: "span.name"
+    title_selector: "span.title"
+    container_class: ""
+    notes: ""  # ← OPTIONAL: Add any special notes
+   status: "ok"  
+  
+ - FAC: "701"
+   name: "RICHMOND HILL MACKENZIE HEALTH"
+   url: "https://www.mackenziehealth.ca/about-us/executive-leadership-team"
+   pattern: "nested_list_with_ids"
+   expected_executives: 8
+   html_structure:
+    name_selector: "span.name"
+    title_selector: "span.position"
+   status: "ok"
+  
+  
+ - FAC: "699"
+   name: "WRHN-KITCHENER ST MARY'S"
+   url: "https://www.smgh.ca/about-us/our-leadership-team"
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 17
+   html_structure:
+     name_class: "name"     # ← CUSTOMIZABLE 
+     title_class: "position"   # ← CUSTOMIZABLE 
+     container_class: "staff-member"  # ← OPTIONAL
+   status: "OK" 
+
+ - FAC: "930"
+   name: "WRHN-KITCHENER GRAND RIVER"
+   url: "https://www.grhosp.on.ca/about/senior-leadership-team"
+   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 17  # ← UPDATE: Change based on website
+   html_structure:
+     list_type: "ul"  # ← UPDATE if using different pattern
+     format: "combined"  # ← UPDATE if using different pattern
+     separator: ", "
+     notes: "Combined with St.Marys Kitchner, Has multiple commas in title"  # ← OPTIONAL: Add any special notes
+   status: "OK"  #multiple comma 
+  
  - FAC: "665"
    name: "GUELPH GENERAL"
    url: "https://www.gghorg.ca/about-ggh/leadership-team/"
@@ -12,7 +75,7 @@ hospitals:
    html_structure:
      combined_element: "h2"
      separator: ", "  # COMMA + SPACE, not dash!
-   status: "needs_testing"
+   status: "ok"
    
  - FAC: "640"
    name: "COLLINGWOOD GENERAL AND MARINE HOSP"
@@ -76,6 +139,7 @@ hospitals:
       title: "Vice President of Corporate Services & CFO"
     - name: "Dr. Scott Kerrigan"
       title: "Chief of Staff"
+      
 
    
  - FAC: "981"
@@ -767,6 +831,7 @@ name_patterns:
   with_credentials:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
+    - "^Dr\\.?\\s+[A-Z][a-z]+\\s+[A-Z][a-z]+,?\\s+[A-Z]{2,},?\\s+[A-Z]{2,}.*$"
     
   hyphenated_names:
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
@@ -785,6 +850,7 @@ name_patterns:
     - "^[A-Z][a-z]+ Mc[A-Z][a-z]+$"  # John McDonald, Mary McGregor
     - "^[A-Z][a-z]+ O'[A-Z][a-z]+$"  # Patrick O'Brien, Mary O'Connor
     - "^[A-Z][a-z]+ De[A-Z][a-z]+$"  # Maria DeLuca, John DeMarco
+    - "^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$"  
     - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
     - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
     
