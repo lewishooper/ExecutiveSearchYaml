@@ -19,76 +19,9 @@ hospitals:
 
 
 
- 
 
 
 
- - FAC: "726"
-   name: "MIDLAND GEORGIAN BAY GEN HOSPITAL"
-   url: "https://gbgh.on.ca/about-us/senior-leadership-team/"  
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 4  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h3"  # ← UPDATE if using different pattern
-     title_element: "h4"  # ← UPDATE if using different pattern
-     notes: "includes directors which need to be fixed in post"
-   status: "needs testing "  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "736"
-   name: "NEWMARKET SOUTHLAKE REGIONAL"
-   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 10  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h3"  # ← UPDATE if using different pattern
-     title_element: "h6"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "745"
-   name: "ORILLIA SOLDIERS' MEMORIAL"
-   url: "https://www.osmh.on.ca/senior-leadership-team/"  # ← REQUIRED: Add leadership page URL
-   pattern: "div-classes"  # maybe UL list 
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     name_class: "name"     # ← CUSTOMIZABLE 
-     title_class: "position"   # ← CUSTOMIZABLE 
-     container_class: "listrow listrow_1751"
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "763"
-   name: "PEMBROKE REGIONAL"
-   url: "https://www.pembrokeregionalhospital.ca/slt"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "p"  # ← UPDATE if using different pattern
-     notes: "This one doesn't really have titles as a separate item. They are buried in the first paragraph of the bio"  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "771"
-   name: "PETERBOROUGH REGIONAL HEALTH CENTRE"
-   url: "https://www.prhc.on.ca/about-us/senior-leadership/"  # ← REQUIRED: Add leadership page URL
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 9  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "span"
-     separator: ","
-     status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "804"
-   name: "SIMCOE NORFOLK GENERAL"
-   url: "https://www.ngh.on.ca/senior-leadership-team/"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "h2"  # ← CUSTOMIZABLE
-     separator: " b "   
-     
-     notes: "embeded into a p in <strong> groups. cEO title is multiple lines"  # ← OPTIONAL: Add any special notes
-   status: "needs testing"
 
  - FAC: "813"
    name: "STRATFORD GENERAL HPHA duplicate FAC=983"

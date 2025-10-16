@@ -427,3 +427,49 @@ SUGGESTED NEXT HOSPITALS TO WORK ON:
   5. FAC-771: PETERBOROUGH REGIONAL HEALTH CENTRE
      URL: Available ✓
 
+---
+
+### Session: 2025-10-16 PM - FAC-736, 745, 763 Configuration
+
+**What We Accomplished:**
+- ✅ Configured FAC-736 (Southlake) - div_classes with tm-name/tm-primary-title
+- ✅ Fixed "Charmaine van Schaik, MD" name pattern issue
+- ✅ Added pattern for lowercase "van" with credentials
+- ✅ Configured FAC-745 (Orillia) - div_classes with name/position classes
+- ✅ Configured FAC-763 (Pembroke) - manual_entry_required (prose titles)
+- ✅ Clarified `missing_people` vs `manual_entry_required` usage
+- ✅ Created comprehensive FUTURE_WORK.md documentation
+- ✅ Created tracking spreadsheet structure
+
+**Files Modified:**
+- enhanced_hospitals.yaml - Added FAC-736, 745, 763
+- name_patterns - Added `^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$`
+- Created FUTURE_WORK.md
+
+**Current Status:**
+- Total configured hospitals: 38 (35 + 3 new)
+- Pattern distribution: All 13 patterns in use
+- Manual entry hospitals: 4 (acceptable threshold)
+
+**Key Learnings:**
+1. **Container_class in div_classes:** Start without it, only add if mis-pairing occurs
+2. **CSS class names:** Always verify actual class names (e.g., "position" not "title")
+3. **missing_people vs manual_entry:** Use missing_people when pattern works but misses a few; use manual_entry when pattern completely fails
+4. **Pattern development threshold:** Need 5+ hospitals before justifying new pattern
+
+**Pattern Issues Documented:**
+- Category 1 (Name patterns): ~7 hospitals - HIGH priority
+- Category 2 (Prose titles): 1 hospital - LOW priority  
+- Category 3 (JavaScript): 4 hospitals - MEDIUM priority
+- Category 4 (New structures): 0 hospitals - OK
+
+**Next Steps:**
+1. Continue with next batch hospitals
+2. Review name_patterns at 50 hospital milestone
+3. Quarterly review of manual entry hospitals
+4. Track similar patterns for future development
+
+**Issues/Blockers:**
+- None currently
+
+**Time Spent:** ~2 hours

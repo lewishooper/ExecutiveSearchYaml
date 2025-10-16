@@ -3,7 +3,74 @@
 
 hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common) 
+
+
+ - FAC: "804"
+   name: "SIMCOE NORFOLK GENERAL"
+   url: "https://www.ngh.on.ca/senior-leadership-team/"
+   pattern: "p_with_bold_and_br"
+   expected_executives: 5
+   html_structure:
+     notes: "Names and titles in <strong> within <p>, separated by <br> tags"
+   status: "ok"
+
+
+ - FAC: "771"
+   name: "PETERBOROUGH REGIONAL HEALTH CENTRE"
+   url: "https://www.prhc.on.ca/about-us/senior-leadership/"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 9  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "span"
+     separator: ","
+     status: "ok"  #  
   
+  
+ - FAC: "763"
+   name: "PEMBROKE REGIONAL"
+   url: "https://www.pemreghos.org/slt?m=1"
+   pattern: "manual_entry_required"
+   expected_executives: 5
+   html_structure:
+     notes: "Titles embedded in prose paragraphs - not extractable by standard patterns"
+   status: "manual_entry"
+   known_executives:
+     - name: "Sabine Mersmann"
+       title: "President and CEO"
+     - name: "Dr. Declan Rowan"
+       title: "Chief of Staff"
+     - name: "Beth Brownlee"
+       title: "Vice President Clinical & Support Services and Chief Nursing Executive"
+     - name: "Brent McIntyre"
+       title: "Vice President Human Resources"
+     - name: "Scott Coombes"
+       title: "Vice President Finance and Corporate Services and Chief Financial Officer"
+       
+       
+       
+ - FAC: "745"
+   name: "ORILLIA SOLDIERS' MEMORIAL"
+   url: "https://www.osmh.on.ca/senior-leadership-team/"
+   pattern: "div_classes"
+   expected_executives: 5
+   html_structure:
+     name_class: "name"
+     title_class: "position"
+     container_class: ""
+     notes: "Names in .name, titles in .position (not .title which is used for navigation)"
+   status: "ok"
+
+ - FAC: "736"
+   name: "NEWMARKET SOUTHLAKE REGIONAL"
+   url: "https://southlake.ca/about-southlake/leadership-team/"
+   pattern: "div_classes"
+   expected_executives: 10
+   html_structure:
+     name_class: "tm-name"
+     title_class: "tm-primary-title"
+     container_class: "team-member"
+     notes: "Names in h3.tm-name, titles in p.tm-primary-title"
+   status: "ok"
 
  - FAC: "726"
    name: "MIDLAND GEORGIAN BAY"
@@ -85,7 +152,7 @@ hospitals:
    html_structure:
      name_class: "title"
      title_class: "job_title"
-   status: "needs testing "  # ← UPDATE: Change to 'needs_testing' once URL added
+   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
 
 
  - FAC: "605"
@@ -117,7 +184,7 @@ hospitals:
    expected_executives: 5
    html_structure:
     notes: "Names in <strong> within <p>, titles after <br>"
-   status: "needs_testing"
+   status: "ok"
 
 
  - FAC: "974"
@@ -126,7 +193,7 @@ hospitals:
    pattern: "manual_entry_required"
    expected_executives: 5
    html_structure:
-    notes: "Content loaded by JavaScript - cannot be scraped with rvest"
+    notes: "Content loaded by JavaScript - cannot be scr"
    status: "javascript_blocked"
    known_executives:
     - name: "Paul Heinrich"
@@ -337,7 +404,7 @@ hospitals:
         title_class: "staff-title"
         container_class: "staff-member"
         notes: "div class=staff-info"
-   status: needs_configuration Names are duplicated 
+   status: "ok"
 
  
  - FAC: '837'
@@ -386,7 +453,7 @@ hospitals:
    expected_executives: 18
    html_structure:
     notes: "Complex H2 elements with names, credentials, and titles all combined"
-   status: "needs_testing"
+   status: "ok"
 
  - FAC: '947'
    name: TORONTO UNIVERSITY HEALTH NETWORK
@@ -501,8 +568,7 @@ hospitals:
     #missing_people:
     #  - name: "Mélanie Dubé"
     #    title: "Chief Financial Officer, Vice-President Corporate Services, Planning and Redevelopment"
-   status: "needs testing"
-   
+   status: "ok"
  - FAC: '790'
    name: "ST CATHARINES HOTEL DIEU"
    url: "https://www.hoteldieushaver.org/site/team"
@@ -827,6 +893,8 @@ name_patterns:
     - "^Dr\\.? [A-Z][a-z]+ Ma?c[A-Z][a-z]+$"  # Dr. Colin MacPherson, Dr. John McDonald
     - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Middle Last (THREE WORDS) - ADD THIS
     - "^Dr\\.? [A-Z][a-z]+ Van[A-Z][a-z]+$"  # Dr. Erica VanDaalen - ADD THIS LINE TOO
+    #- "^Dr\\.? [A-Z][a-z]+ van [A-Z][a-z]+$"  # Dr. Charmaine van Schaik
+    - "^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$"  # Charmaine van Schaik, MD <- ADD THIS LINE
     
   with_credentials:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
@@ -853,6 +921,7 @@ name_patterns:
     - "^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$"  
     - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
     - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
+    - "^Dr\\.? [A-Z][a-z]+ van [A-Z][a-z]+$"  # Dr. Charmaine van Schaik 
     
   accented_names:
     - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Gisèle Larocque

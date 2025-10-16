@@ -13,15 +13,8 @@ source("project_status.R")
 # Next batch specific status
 source("test_next_batch.R")
 status_next()
-quick_test(726)
-FAC<-726
-Name<-"tesst"
-url<-"https://gbgh.on.ca/about-us/senior-leadership-team/"
-helper$analyze_hospital_structure(FAC, "Name",url)
-helper$test_hospital_config(FAC, 'Hospital Name', 'URL', 'pattern')
-
-helper$analyze_hospital_structure(
-  701, 
-  "RICHMOND HILL MACKENZIE HEALTH", 
-  "https://www.mackenziehealth.ca/about-us/executive-leadership-team"
-)
+quick_test(932)
+FAC <- 804
+Name <- "Norfolk General"
+url <- "https://www.ngh.on.ca/senior-leadership-team/"
+helper$analyze_hospital_structure(FAC, Name, url)
