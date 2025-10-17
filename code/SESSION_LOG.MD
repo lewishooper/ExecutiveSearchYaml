@@ -468,6 +468,7 @@ SUGGESTED NEXT HOSPITALS TO WORK ON:
 2. Review name_patterns at 50 hospital milestone
 3. Quarterly review of manual entry hospitals
 4. Track similar patterns for future development
+5. created a future issues document (future work.md) to look at next steps with missing and java blocked hospitals
 
 **Issues/Blockers:**
 - None currently

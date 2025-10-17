@@ -23,60 +23,7 @@ hospitals:
 
 
 
- - FAC: "813"
-   name: "STRATFORD GENERAL HPHA duplicate FAC=983"
-   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # May need to strip out Sue Davey Executive assistant
-   html_structure:
-     combined_element: "a"  # ← CUSTOMIZABLE
-     separator: ", "   
-     notes: "may need to strip out sue davey executive assistant"  # ← OPTIONAL: Add any special notes
-   status: "DUPLICATE?? " 
- - FAC: "814"
-   name: "STRATHROY MIDDLESEX GENERAL"
-   url: "https://mhalliance.on.ca/about/administration/"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 4  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "h3"   # ← CUSTOMIZABLE
-     separator: ", "  
-     notes: "will need to strip out directors in post"  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "916"
-   name: "ORANGEVILLE HEADWATERS HC"
-   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "h3"  # ← UPDATE if using different pattern
-     notes: ""  # Could also be 
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "928"
-   name: "SMITHS FALLS PERTH & SMITHS FALLS"
-   url: "https://psfdh.on.ca/leadershipteam"  # 
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "p"  # ← CUSTOMIZABLE 
-     separator: ", "    
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
-
- - FAC: "931"
-   name: "PARRY SOUND WEST PARRY SOUND"
-   url: "https://www.wpshc.com/about-us/our-senior-leadership-team/"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 10  # Directors actually seem like senior execs. 
-   html_structure:
-    name_class: "expand-tiles_tile-title" 
-    title_class: "expand-tiles__tile-meta expand-tiles__tile-meta--position"
-    notes: "Likely that some DIRECTORS are actually part of the senior Team"  
-   status: "needs tessting"  
 
  - FAC: "940"
    name: "COBOURG NORTHUMBERLAND HILLS"

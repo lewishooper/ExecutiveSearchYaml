@@ -1,344 +1,530 @@
-# hospital_configuration_helper.R - Tools to help configure hospitals
+# hospital_configuration_helper.R - ENHANCED with Pattern Intelligence
 # Save this in E:/ExecutiveSearchYaml/code/
+# Version 2.0 - Added intelligent pattern prediction
 
-setwd("E:/ExecutiveSearchYaml/code/")
 library(rvest)
+library(dplyr)
 library(yaml)
-source("pattern_based_scraper.R")
+library(stringr)
 
 HospitalConfigHelper <- function() {
   
-  # Analyze a hospital's HTML structure to suggest configuration
+  # NEW: Load pattern intelligence database
+  load_pattern_database <- function() {
+    db_file <- "pattern_intelligence_database.yaml"
+    if (file.exists(db_file)) {
+      tryCatch({
+        pattern_db <- yaml::read_yaml(db_file)
+        return(pattern_db)
+      }, error = function(e) {
+        cat("Warning: Could not load pattern database:", e$message, "\n")
+        cat("Pattern suggestions will be limited.\n")
+        return(NULL)
+      })
+    } else {
+      cat("Note: pattern_intelligence_database.yaml not found.\n")
+      cat("Pattern suggestions will be limited.\n")
+      cat("To enable full intelligence, save the pattern database YAML file.\n\n")
+      return(NULL)
+    }
+  }
+  
+  # NEW: Analyze HTML and suggest patterns using intelligence database
+  suggest_pattern_intelligent <- function(html_snippet, pattern_db = NULL) {
+    
+    if (is.null(pattern_db)) {
+      pattern_db <- load_pattern_database()
+    }
+    
+    if (is.null(pattern_db)) {
+      # Fallback to basic pattern detection
+      return(suggest_pattern_basic(html_snippet))
+    }
+    
+    html_lower <- tolower(as.character(html_snippet))
+    matches <- list()
+    
+    # Check each pattern from database
+    for (pattern_name in names(pattern_db$pattern_intelligence)) {
+      pattern <- pattern_db$pattern_intelligence[[pattern_name]]
+      score <- 0
+      matched_indicators <- character()
+      
+      # Check key indicators
+      for (indicator in pattern$key_indicators) {
+        indicator_lower <- tolower(indicator)
+        
+        # Check for element types
+        if (grepl("h2", indicator_lower) && grepl("<h2", html_lower)) {
+          score <- score + 20
+          matched_indicators <- c(matched_indicators, "h2 elements found")
+        }
+        if (grepl("h3", indicator_lower) && grepl("<h3", html_lower)) {
+          score <- score + 20
+          matched_indicators <- c(matched_indicators, "h3 elements found")
+        }
+        if (grepl("table", indicator_lower) && grepl("<table", html_lower)) {
+          score <- score + 25
+          matched_indicators <- c(matched_indicators, "table structure found")
+        }
+        if (grepl("class", indicator_lower) && grepl('class="', html_lower)) {
+          # Check for semantic class names
+          if (grepl('class="[^"]*name', html_lower) || 
+              grepl('class="[^"]*title', html_lower) ||
+              grepl('class="[^"]*staff', html_lower)) {
+            score <- score + 30
+            matched_indicators <- c(matched_indicators, "semantic CSS classes found")
+          }
+        }
+        if (grepl("separator", indicator_lower) || grepl(" - ", indicator_lower)) {
+          if (grepl(" - ", html_lower) || grepl(", ", html_lower) || grepl(" \\| ", html_lower)) {
+            score <- score + 25
+            matched_indicators <- c(matched_indicators, "separator characters found")
+          }
+        }
+        if (grepl("list", indicator_lower) && (grepl("<ul", html_lower) || grepl("<li", html_lower))) {
+          score <- score + 20
+          matched_indicators <- c(matched_indicators, "list structure found")
+        }
+        if (grepl("id", indicator_lower) && grepl('id="[a-z]-\\d', html_lower)) {
+          score <- score + 25
+          matched_indicators <- c(matched_indicators, "ID patterns found")
+        }
+      }
+      
+      if (score > 0) {
+        matches[[pattern_name]] <- list(
+          pattern_name = pattern_name,
+          display_name = pattern$pattern_name,
+          score = score,
+          confidence = if(score > 50) "HIGH" else if(score > 30) "MEDIUM" else "LOW",
+          success_rate = pattern$success_rate,
+          hospital_count = pattern$hospital_count,
+          matched_indicators = unique(matched_indicators)
+        )
+      }
+    }
+    
+    # Sort by score
+    if (length(matches) > 0) {
+      matches <- matches[order(sapply(matches, function(x) x$score), decreasing = TRUE)]
+    }
+    
+    return(matches)
+  }
+  
+  # Fallback basic pattern detection (if database not available)
+  suggest_pattern_basic <- function(html_snippet) {
+    html_lower <- tolower(as.character(html_snippet))
+    suggestions <- list()
+    
+    if (grepl("<h2", html_lower) && grepl("<h3", html_lower)) {
+      suggestions[["h2_name_h3_title"]] <- list(
+        pattern_name = "h2_name_h3_title",
+        display_name = "Sequential h2→h3",
+        confidence = "MEDIUM",
+        note = "h2 and h3 elements detected"
+      )
+    }
+    
+    if (grepl('class="[^"]*name', html_lower) || grepl('class="[^"]*title', html_lower)) {
+      suggestions[["div_classes"]] <- list(
+        pattern_name = "div_classes",
+        display_name = "CSS Class-Based",
+        confidence = "HIGH",
+        note = "Semantic CSS classes detected"
+      )
+    }
+    
+    if (grepl(" - ", html_lower) || grepl(", ", html_lower)) {
+      suggestions[["combined_h2"]] <- list(
+        pattern_name = "combined_h2",
+        display_name = "Combined with Separator",
+        confidence = "MEDIUM",
+        note = "Separator characters detected"
+      )
+    }
+    
+    if (grepl("<table", html_lower)) {
+      suggestions[["table_rows"]] <- list(
+        pattern_name = "table_rows",
+        display_name = "Table Structure",
+        confidence = "MEDIUM",
+        note = "Table structure detected"
+      )
+    }
+    
+    return(suggestions)
+  }
+  
+  # ENHANCED: Analyze hospital structure with intelligent pattern suggestions
   analyze_hospital_structure <- function(fac, name, url) {
-    cat("=== ANALYZING", name, "(FAC-", fac, ") ===\n")
+    cat("\n")
+    cat("═══════════════════════════════════════════════════════════════\n")
+    cat("  HOSPITAL STRUCTURE ANALYSIS - WITH PATTERN INTELLIGENCE\n")
+    cat("═══════════════════════════════════════════════════════════════\n\n")
+    
+    cat("FAC:", fac, "\n")
+    cat("Name:", name, "\n")
     cat("URL:", url, "\n\n")
     
     tryCatch({
+      # Read the page
+      cat("Fetching page...\n")
       page <- read_html(url)
+      cat("✓ Page loaded successfully\n\n")
       
-      # 1. Count different element types
-      cat("ELEMENT COUNTS:\n")
-      cat("  H1:", length(page %>% html_nodes("h1")), "\n")
-      cat("  H2:", length(page %>% html_nodes("h2")), "\n")
-      cat("  H3:", length(page %>% html_nodes("h3")), "\n")
-      cat("  H4:", length(page %>% html_nodes("h4")), "\n")
-      cat("  P:", length(page %>% html_nodes("p")), "\n")
-      cat("  Tables:", length(page %>% html_nodes("table")), "\n")
-      cat("  Lists (UL/OL):", length(page %>% html_nodes("ul, ol")), "\n\n")
+      # Extract HTML body
+      body_html <- page %>% html_node("body") %>% as.character()
       
-      # 2. Sample H2 content (potential names)
+      # 1. Check for common HTML elements
+      cat("───────────────────────────────────────────────────────────────\n")
+      cat("HTML ELEMENT ANALYSIS:\n")
+      cat("───────────────────────────────────────────────────────────────\n")
+      
+      h1_elements <- page %>% html_nodes("h1") %>% html_text(trim = TRUE)
       h2_elements <- page %>% html_nodes("h2") %>% html_text(trim = TRUE)
-      cat("SAMPLE H2 ELEMENTS (first 10):\n")
-      for (i in 1:min(10, length(h2_elements))) {
-        looks_like_name <- grepl("^(Dr\\.?\\s+)?[A-Z][a-z]+\\s+[A-Z][a-z]+$", h2_elements[i])
-        cat(sprintf("  %2d: %s %s\n", i, h2_elements[i], 
-                    ifelse(looks_like_name, "← LOOKS LIKE NAME", "")))
-      }
-      cat("\n")
-      
-      # 3. Sample H3 content (potential titles)
       h3_elements <- page %>% html_nodes("h3") %>% html_text(trim = TRUE)
-      cat("SAMPLE H3 ELEMENTS (first 10):\n")
-      for (i in 1:min(10, length(h3_elements))) {
-        looks_like_title <- grepl("(CEO|Chief|President|Director|Officer|Administrator|Manager|VP)", 
-                                  h3_elements[i], ignore.case = TRUE)
-        cat(sprintf("  %2d: %s %s\n", i, h3_elements[i], 
-                    ifelse(looks_like_title, "← LOOKS LIKE TITLE", "")))
-      }
-      cat("\n")
+      p_elements <- page %>% html_nodes("p") %>% html_text(trim = TRUE)
       
-      # 4. Check for common class patterns
-      cat("COMMON CSS CLASSES FOUND:\n")
-      all_classes <- page %>% html_nodes("*") %>% html_attr("class")
-      all_classes <- all_classes[!is.na(all_classes)]
+      cat("H1 elements:", length(h1_elements), "\n")
+      cat("H2 elements:", length(h2_elements), "\n")
+      cat("H3 elements:", length(h3_elements), "\n")
+      cat("P elements:", length(p_elements), "\n\n")
+      
+      # Sample outputs
+      if (length(h2_elements) > 0) {
+        cat("Sample H2 elements (first 3):\n")
+        for (i in 1:min(3, length(h2_elements))) {
+          cat("  ", i, ". ", substr(h2_elements[i], 1, 60), "\n", sep = "")
+        }
+        cat("\n")
+      }
+      
+      if (length(h3_elements) > 0) {
+        cat("Sample H3 elements (first 3):\n")
+        for (i in 1:min(3, length(h3_elements))) {
+          cat("  ", i, ". ", substr(h3_elements[i], 1, 60), "\n", sep = "")
+        }
+        cat("\n")
+      }
+      
+      # 2. Check for CSS classes
+      cat("───────────────────────────────────────────────────────────────\n")
+      cat("CSS CLASS ANALYSIS:\n")
+      cat("───────────────────────────────────────────────────────────────\n")
+      
+      all_classes <- page %>% html_nodes("[class]") %>% html_attr("class")
+      all_classes <- unlist(strsplit(all_classes, "\\s+"))
       
       # Look for leadership-related classes
-      leadership_classes <- grep("(name|title|executive|leader|staff|team|bio|card)", 
-                                 all_classes, ignore.case = TRUE, value = TRUE)
+      leadership_keywords <- c("name", "title", "staff", "leader", "exec", "admin", 
+                               "position", "role", "board", "team", "member", "field")
       
-      unique_leadership_classes <- unique(leadership_classes)[1:min(10, length(unique(leadership_classes)))]
+      leadership_classes <- all_classes[grepl(paste(leadership_keywords, collapse = "|"), 
+                                              all_classes, ignore.case = TRUE)]
+      unique_leadership_classes <- unique(leadership_classes)
       
       if (length(unique_leadership_classes) > 0) {
-        for (class_name in unique_leadership_classes) {
-          cat("  ", class_name, "\n")
+        cat("Leadership-related CSS classes found:\n")
+        for (cls in unique_leadership_classes[1:min(10, length(unique_leadership_classes))]) {
+          cat("  • class=\"", cls, "\"\n", sep = "")
         }
+        cat("\n")
       } else {
-        cat("  No obvious leadership-related classes found\n")
+        cat("No obvious leadership-related classes found\n\n")
+      }
+      
+      # 3. Check for tables
+      cat("───────────────────────────────────────────────────────────────\n")
+      cat("TABLE STRUCTURE ANALYSIS:\n")
+      cat("───────────────────────────────────────────────────────────────\n")
+      
+      tables <- page %>% html_nodes("table")
+      cat("Tables found:", length(tables), "\n")
+      
+      if (length(tables) > 0) {
+        cat("First table structure:\n")
+        first_table <- tables[[1]]
+        rows <- first_table %>% html_nodes("tr")
+        cat("  Rows:", length(rows), "\n")
+        if (length(rows) > 0) {
+          first_row <- rows[[1]] %>% html_nodes("td, th") %>% html_text(trim = TRUE)
+          cat("  Columns:", length(first_row), "\n")
+          cat("  First row sample:", paste(substr(first_row, 1, 30), collapse = " | "), "\n")
+        }
+        cat("\n")
+      } else {
+        cat("No tables found\n\n")
+      }
+      
+      # 4. Check for lists
+      cat("───────────────────────────────────────────────────────────────\n")
+      cat("LIST STRUCTURE ANALYSIS:\n")
+      cat("───────────────────────────────────────────────────────────────\n")
+      
+      ul_count <- length(page %>% html_nodes("ul"))
+      ol_count <- length(page %>% html_nodes("ol"))
+      li_elements <- page %>% html_nodes("li") %>% html_text(trim = TRUE)
+      
+      cat("Unordered lists (ul):", ul_count, "\n")
+      cat("Ordered lists (ol):", ol_count, "\n")
+      cat("List items (li):", length(li_elements), "\n")
+      
+      if (length(li_elements) > 0) {
+        cat("\nSample list items (first 3):\n")
+        for (i in 1:min(3, length(li_elements))) {
+          cat("  ", i, ". ", substr(li_elements[i], 1, 60), "\n", sep = "")
+        }
       }
       cat("\n")
       
-      # 5. Suggest pattern based on analysis
-      cat("SUGGESTED PATTERN:\n")
+      # 5. NEW: INTELLIGENT PATTERN SUGGESTIONS
+      cat("═══════════════════════════════════════════════════════════════\n")
+      cat("  🤖 INTELLIGENT PATTERN PREDICTIONS\n")
+      cat("═══════════════════════════════════════════════════════════════\n\n")
       
-      name_h2_count <- sum(sapply(h2_elements, function(x) 
-        grepl("^(Dr\\.?\\s+)?[A-Z][a-z]+\\s+[A-Z][a-z]+$", x)))
-      title_h3_count <- sum(sapply(h3_elements, function(x) 
-        grepl("(CEO|Chief|President|Director|Officer|Administrator)", x, ignore.case = TRUE)))
+      # Load pattern database
+      pattern_db <- load_pattern_database()
       
-      if (name_h2_count >= 3 && title_h3_count >= 3) {
-        cat("  RECOMMENDED: h2_name_h3_title\n")
-        cat("  REASON: Found", name_h2_count, "name-like H2s and", title_h3_count, "title-like H3s\n")
-        suggested_pattern <- "h2_name_h3_title"
+      # Get pattern suggestions
+      suggestions <- suggest_pattern_intelligent(body_html, pattern_db)
+      
+      if (length(suggestions) > 0) {
+        cat("Based on analysis of 38 successful hospitals:\n\n")
+        
+        for (i in 1:min(3, length(suggestions))) {
+          suggestion <- suggestions[[i]]
+          cat("PREDICTION #", i, ": ", suggestion$display_name, "\n", sep = "")
+          cat("  Pattern Code: ", suggestion$pattern_name, "\n", sep = "")
+          cat("  Confidence: ", suggestion$confidence, "\n", sep = "")
+          
+          if (!is.null(suggestion$success_rate)) {
+            cat("  Success Rate: ", suggestion$success_rate, " (", 
+                suggestion$hospital_count, " hospitals)\n", sep = "")
+          }
+          
+          if (length(suggestion$matched_indicators) > 0) {
+            cat("  Why: ", paste(suggestion$matched_indicators, collapse = ", "), "\n", sep = "")
+          }
+          
+          # Show example hospitals if available
+          if (!is.null(pattern_db) && !is.null(pattern_db$pattern_intelligence[[suggestion$pattern_name]])) {
+            pattern_info <- pattern_db$pattern_intelligence[[suggestion$pattern_name]]
+            if (!is.null(pattern_info$successful_hospitals) && length(pattern_info$successful_hospitals) > 0) {
+              cat("  Similar to: ")
+              example_hospitals <- sapply(pattern_info$successful_hospitals[1:min(3, length(pattern_info$successful_hospitals))], 
+                                          function(h) paste0("FAC-", h$fac))
+              cat(paste(example_hospitals, collapse = ", "), "\n")
+            }
+          }
+          
+          cat("\n")
+        }
+        
+        # Show YAML template for top suggestion
+        top_suggestion <- suggestions[[1]]
+        cat("───────────────────────────────────────────────────────────────\n")
+        cat("RECOMMENDED YAML CONFIGURATION:\n")
+        cat("───────────────────────────────────────────────────────────────\n\n")
+        
+        if (!is.null(pattern_db) && !is.null(pattern_db$pattern_intelligence[[top_suggestion$pattern_name]])) {
+          yaml_template <- pattern_db$pattern_intelligence[[top_suggestion$pattern_name]]$yaml_template
+          
+          cat("- FAC: \"", sprintf("%03d", as.numeric(fac)), "\"\n", sep = "")
+          cat("  name: \"", name, "\"\n", sep = "")
+          cat("  url: \"", url, "\"\n", sep = "")
+          cat("  expected_executives: 6  # UPDATE based on actual count\n")
+          cat(yaml_template, "\n")
+          cat("  status: \"needs_testing\"\n\n")
+        }
+        
+        cat("📖 For detailed examples, see:\n")
+        cat("   - Published web tool (bookmarked)\n")
+        cat("   - Hospital_Scraper_Pattern_Intelligence_Reference.md\n")
+        cat("   - pattern_intelligence_database.yaml\n\n")
+        
+        return(list(
+          suggested_pattern = top_suggestion$pattern_name,
+          confidence = top_suggestion$confidence,
+          all_suggestions = suggestions,
+          h2_count = length(h2_elements),
+          h3_count = length(h3_elements),
+          leadership_classes = unique_leadership_classes
+        ))
+        
       } else {
-        cat("  RECOMMENDED: Needs further analysis\n")
-        cat("  REASON: H2/H3 pattern not clear (", name_h2_count, "names,", title_h3_count, "titles)\n")
-        suggested_pattern <- "custom"
+        # Fallback if no matches
+        cat("No strong pattern match detected.\n")
+        cat("Manual inspection recommended.\n")
+        cat("Common patterns to check:\n")
+        cat("  1. div_classes - if you see CSS classes like .name or .title\n")
+        cat("  2. combined_h2 - if name and title are together with separator\n")
+        cat("  3. h2_name_h3_title - if h2 for names, h3 for titles\n\n")
+        
+        return(list(
+          suggested_pattern = "needs_manual_inspection",
+          h2_count = length(h2_elements),
+          h3_count = length(h3_elements),
+          leadership_classes = unique_leadership_classes
+        ))
       }
-      
-      cat("\n")
-      
-      # 6. Generate YAML configuration
-      cat("SUGGESTED YAML CONFIGURATION:\n")
-      cat("---\n")
-      cat("- FAC: \"", sprintf("%03d", as.numeric(fac)), "\"\n", sep = "")
-      cat("  name: \"", name, "\"\n", sep = "")
-      cat("  url: \"", url, "\"\n", sep = "")
-      cat("  pattern: \"", suggested_pattern, "\"\n", sep = "")
-      cat("  expected_executives: ", max(3, min(name_h2_count, title_h3_count, 8)), "\n", sep = "")
-      cat("  html_structure:\n")
-      
-      if (suggested_pattern == "h2_name_h3_title") {
-        cat("    name_element: \"h2\"\n")
-        cat("    title_element: \"h3\"\n")
-        cat("    notes: \"h2=Name, h3=Title pattern detected\"\n")
-      } else {
-        cat("    name_element: \"TBD\"  # Specify after manual inspection\n")
-        cat("    title_element: \"TBD\"  # Specify after manual inspection\n") 
-        cat("    notes: \"Needs custom configuration\"\n")
-      }
-      
-      cat("  status: \"needs_testing\"\n")
-      cat("---\n\n")
-      
-      return(list(
-        pattern = suggested_pattern,
-        name_h2_count = name_h2_count,
-        title_h3_count = title_h3_count,
-        leadership_classes = unique_leadership_classes
-      ))
       
     }, error = function(e) {
-      cat("Error analyzing", url, ":", e$message, "\n")
+      cat("❌ ERROR analyzing ", url, ": ", e$message, "\n", sep = "")
       return(NULL)
     })
   }
   
-  # Add multiple hospitals to configuration at once
-  add_hospital_batch <- function(hospitals_info) {
-    cat("=== ADDING BATCH OF", length(hospitals_info), "HOSPITALS ===\n\n")
-    
-    # Read existing config
-    if (file.exists("enhanced_hospitals.yaml")) {
-      config <- yaml::read_yaml("enhanced_hospitals.yaml")
-    } else {
-      config <- list(hospitals = list())
-    }
-    
-    for (hospital in hospitals_info) {
-      cat("Analyzing", hospital$name, "(FAC-", hospital$fac, ")...\n")
-      
-      # Analyze structure
-      analysis <- analyze_hospital_structure(hospital$fac, hospital$name, hospital$url)
-      
-      # Create hospital entry
-      new_hospital <- list(
-        FAC = sprintf("%03d", as.numeric(hospital$fac)),
-        name = hospital$name,
-        url = hospital$url,
-        pattern = if(!is.null(analysis)) analysis$pattern else "h2_name_h3_title",
-        expected_executives = hospital$expected %||% 5,
-        html_structure = list(
-          name_element = "h2",
-          title_element = "h3", 
-          notes = "Auto-generated configuration - verify manually"
-        ),
-        status = "needs_testing"
-      )
-      
-      # Add to config
-      config$hospitals <- c(config$hospitals, list(new_hospital))
-      
-      pattern_used <- if(!is.null(analysis)) analysis$pattern else "h2_name_h3_title"
-      cat("  → Added with pattern:", pattern_used, "\n\n")
-    }
-    
-    # Write updated config
-    yaml::write_yaml(config, "enhanced_hospitals.yaml")
-    cat("Updated enhanced_hospitals.yaml with", length(hospitals_info), "hospitals\n")
-  }
-  
-  # Test a hospital configuration - UPDATED to read from YAML
-  test_hospital_config <- function(fac, name, url, pattern = "h2_name_h3_title", config_file = "enhanced_hospitals.yaml") {
-    cat("=== TESTING CONFIGURATION FOR", name, "===\n")
-    
-    # Try to read existing config from YAML first
-    hospital_info <- NULL
-    
-    if (file.exists(config_file)) {
-      config <- yaml::read_yaml(config_file)
-      if (!is.null(config$hospitals)) {
-        # Look for this hospital in the config
-        for (hospital in config$hospitals) {
-          if (hospital$FAC == sprintf("%03d", as.numeric(fac))) {
-            hospital_info <- hospital
-            cat("Found existing configuration in YAML\n")
-            break
-          }
-        }
-      }
-    }
-    
-    # If not found in YAML, create basic structure
-    if (is.null(hospital_info)) {
-      cat("No existing configuration found, creating basic test structure\n")
-      hospital_info <- list(
-        FAC = sprintf("%03d", as.numeric(fac)),
-        name = name,
-        url = url,
-        pattern = pattern,
-        expected_executives = 5,
-        html_structure = list(
-          name_element = "h2",
-          title_element = "h3",
-          notes = "Test configuration"
-        )
-      )
-    }
-    
-    # Initialize scraper and test
-    scraper <- PatternBasedScraper()
-    result <- scraper$scrape_hospital(hospital_info)
-    
-    cat("TEST RESULTS:\n")
-    if (nrow(result) > 0 && !is.na(result$executive_name[1])) {
-      for (i in 1:nrow(result)) {
-        cat(sprintf("  %d. %s → %s\n", i, result$executive_name[i], result$executive_title[i]))
-      }
-      
-      cat("\nSUCCESS: Found", nrow(result), "executives\n")
-      cat("RECOMMENDATION: Configuration working correctly\n")
-      
-    } else {
-      cat("  No valid results found\n")
-      cat("RECOMMENDATION: Check pattern or add to YAML configuration\n")
-    }
-    
-    return(result)
-  }
-  
-  # Quick pattern identification guide
+  # Show pattern guide (existing function)
   show_pattern_guide <- function() {
-    cat("=== HOSPITAL PATTERN IDENTIFICATION GUIDE ===\n\n")
+    cat("\n=== HOSPITAL SCRAPER PATTERN GUIDE ===\n\n")
     
-    cat("COMMON PATTERNS TO LOOK FOR:\n\n")
+    cat("COMMON PATTERNS (in order of frequency):\n\n")
     
-    cat("1. H2_NAME_H3_TITLE (most common):\n")
-    cat("   - Executive names in <h2> elements\n")
-    cat("   - Titles in <h3> elements immediately following\n")
-    cat("   - Example: <h2>John Smith</h2> <h3>CEO</h3>\n\n")
-    
-    cat("2. COMBINED_H2 (name and title together):\n")
-    cat("   - Both name and title in same element\n")
-    cat("   - Usually separated by ' - ' or ', '\n")
-    cat("   - Example: <h2>John Smith - CEO</h2>\n")
-    cat("   - Can also be h3: <h3>John Smith - CEO</h3>\n\n")
-    
-    cat("3. TABLE_ROWS (structured data):\n")
-    cat("   - Names and titles in table columns\n")
-    cat("   - Usually column 1 = name, column 2 = title\n")
-    cat("   - Example: <td>John Smith</td><td>CEO</td>\n\n")
-    
-    cat("4. H2_NAME_P_TITLE:\n")
-    cat("   - Names in <h2>, titles in following <p>\n")
-    cat("   - Example: <h2>John Smith</h2> <p>CEO</p>\n\n")
-    
-    cat("5. BOARDCARD_GALLERY (special pattern):\n")
-    cat("   - Names and titles in div.boardcard elements\n")
-    cat("   - Format: Name, Title separated by comma\n")
-    cat("   - Example: <div class='boardcard'>John Smith, CEO</div>\n\n")
-    
-    cat("6. DIV_CLASSES (CSS-based):\n")
-    cat("   - Names/titles in divs with specific classes\n")
+    cat("1. DIV_CLASSES (21% - MOST COMMON):\n")
+    cat("   - Names/titles in divs with semantic CSS classes\n")
+    cat("   - Classes like: .name, .title, .staff-name, .position\n")
     cat("   - Example: <div class='name'>John</div><div class='title'>CEO</div>\n\n")
     
-    cat("INSPECTION CHECKLIST:\n")
-    cat("□ Right-click → Inspect Element on executive names\n")
-    cat("□ Note the HTML tag (h1, h2, h3, p, div, span, td, li)\n")
-    cat("□ Check for CSS classes or IDs\n")
-    cat("□ See if names and titles are in same or different elements\n")
-    cat("□ Look for consistent patterns across all executives\n")
-    cat("□ Note any missing people not in main structure\n\n")
+    cat("2. COMBINED_H2 (11% - VERY HIGH SUCCESS):\n")
+    cat("   - Name and title together in same element\n")
+    cat("   - Separated by: ' - ', ', ', ' | '\n")
+    cat("   - Example: <h2>John Smith - CEO</h2>\n\n")
+    
+    cat("3. H2_NAME_H3_TITLE (8%):\n")
+    cat("   - Names in H2, titles in H3\n")
+    cat("   - Sequential pairs\n")
+    cat("   - Example: <h2>John Smith</h2><h3>CEO</h3>\n\n")
+    
+    cat("4. H2_NAME_P_TITLE (8%):\n")
+    cat("   - Names in H2, titles in P\n")
+    cat("   - Example: <h2>John Smith</h2><p>CEO</p>\n\n")
+    
+    cat("5. TABLE_ROWS (5%):\n")
+    cat("   - Tabular structure\n")
+    cat("   - Example: <td>John Smith</td><td>CEO</td>\n\n")
+    
+    cat("6. LIST_ITEMS (8%):\n")
+    cat("   - List with separators\n")
+    cat("   - Example: <li>John Smith | CEO</li>\n\n")
+    
+    cat("For complete details, see:\n")
+    cat("  • Published pattern intelligence web tool\n")
+    cat("  • Hospital_Scraper_Pattern_Intelligence_Reference.md\n")
+    cat("  • pattern_intelligence_database.yaml\n\n")
   }
   
-  # Generate batch configuration from a list
-  generate_batch_config <- function(hospital_list_file = "hospital_batch.csv") {
-    cat("=== GENERATING BATCH CONFIGURATION ===\n")
+  # Test hospital configuration (existing function - reads from YAML)
+  test_hospital_config <- function(fac, name, url, pattern) {
+    cat("\n=== TESTING HOSPITAL CONFIGURATION ===\n\n")
+    cat("FAC:", fac, "\n")
+    cat("Name:", name, "\n")
+    cat("Pattern:", pattern, "\n\n")
     
-    if (!file.exists(hospital_list_file)) {
-      cat("Creating template file:", hospital_list_file, "\n")
-      template <- data.frame(
-        fac = c("001", "002", "003"),
-        name = c("Example Hospital 1", "Example Hospital 2", "Example Hospital 3"),
-        url = c("https://example1.com/leadership", "https://example2.com/team", "https://example3.com/admin"),
-        expected = c(5, 6, 4)
-      )
-      write.csv(template, hospital_list_file, row.names = FALSE)
-      cat("Please fill out", hospital_list_file, "with your hospital information\n")
-      return()
+    # Source the scraper
+    if (file.exists("pattern_based_scraper.R")) {
+      source("pattern_based_scraper.R")
+    } else {
+      cat("ERROR: pattern_based_scraper.R not found\n")
+      return(NULL)
     }
     
-    # Read hospital list
-    hospitals <- read.csv(hospital_list_file, stringsAsFactors = FALSE)
+    # Initialize scraper
+    scraper <- PatternBasedScraper()
     
-    cat("Found", nrow(hospitals), "hospitals in", hospital_list_file, "\n\n")
-    
-    # Convert to list format for batch processing
-    hospitals_info <- list()
-    for (i in 1:nrow(hospitals)) {
-      hospitals_info[[i]] <- list(
-        fac = hospitals$fac[i],
-        name = hospitals$name[i], 
-        url = hospitals$url[i],
-        expected = if(!is.na(hospitals$expected[i])) hospitals$expected[i] else 5
-      )
+    # Read config from YAML
+    if (file.exists("enhanced_hospitals.yaml")) {
+      config <- yaml::read_yaml("enhanced_hospitals.yaml")
+      
+      # Find hospital in config
+      fac_formatted <- sprintf("%03d", as.numeric(fac))
+      hospital_info <- NULL
+      
+      for (h in config$hospitals) {
+        if (h$FAC == fac_formatted) {
+          hospital_info <- h
+          break
+        }
+      }
+      
+      if (!is.null(hospital_info)) {
+        cat("Found configuration in enhanced_hospitals.yaml\n")
+        cat("Testing with actual YAML configuration...\n\n")
+        
+        result <- scraper$scrape_hospital(hospital_info)
+        
+        cat("\n=== TEST RESULTS ===\n")
+        valid_count <- sum(!is.na(result$executive_name) & !is.na(result$executive_title))
+        cat("Executives found:", valid_count, "\n")
+        
+        if (valid_count > 0) {
+          cat("\nExecutives:\n")
+          for (i in 1:nrow(result)) {
+            if (!is.na(result$executive_name[i])) {
+              cat(sprintf("  %d. %s - %s\n", i, result$executive_name[i], result$executive_title[i]))
+            }
+          }
+        }
+        
+        return(result)
+        
+      } else {
+        cat("Hospital not found in enhanced_hospitals.yaml\n")
+        cat("Please add configuration first.\n")
+        return(NULL)
+      }
+    } else {
+      cat("ERROR: enhanced_hospitals.yaml not found\n")
+      return(NULL)
     }
-    
-    # Process batch
-    add_hospital_batch(hospitals_info)
   }
   
+  # Return helper functions
   return(list(
     analyze_hospital_structure = analyze_hospital_structure,
-    add_hospital_batch = add_hospital_batch,
     test_hospital_config = test_hospital_config,
     show_pattern_guide = show_pattern_guide,
-    generate_batch_config = generate_batch_config
+    load_pattern_database = load_pattern_database,
+    suggest_pattern_intelligent = suggest_pattern_intelligent
   ))
 }
 
 # Initialize helper
 helper <- HospitalConfigHelper()
 
-cat("=== HOSPITAL CONFIGURATION HELPER LOADED ===\n\n")
+cat("═══════════════════════════════════════════════════════════════\n")
+cat("  HOSPITAL CONFIGURATION HELPER v2.0 - WITH AI INTELLIGENCE\n")
+cat("═══════════════════════════════════════════════════════════════\n\n")
+
+cat("✨ NEW: Intelligent pattern prediction based on 38 hospitals!\n\n")
 
 cat("AVAILABLE FUNCTIONS:\n")
-cat("1. helper$analyze_hospital_structure(fac, name, url) - Analyze HTML structure\n")
-cat("2. helper$test_hospital_config(fac, name, url, pattern) - Test configuration (reads from YAML)\n")  
-cat("3. helper$show_pattern_guide() - Show pattern identification guide\n")
-cat("4. helper$generate_batch_config('file.csv') - Generate config from CSV\n\n")
+cat("1. helper$analyze_hospital_structure(fac, name, url)\n")
+cat("   → Analyzes HTML + suggests best patterns with AI\n\n")
+cat("2. helper$test_hospital_config(fac, name, url, pattern)\n")
+cat("   → Tests configuration from enhanced_hospitals.yaml\n\n")
+cat("3. helper$show_pattern_guide()\n")
+cat("   → Quick pattern reference\n\n")
+cat("4. helper$load_pattern_database()\n")
+cat("   → Load pattern intelligence database\n\n")
 
-cat("WORKFLOW FOR ADDING NEW HOSPITALS:\n")
-cat("Step 1: Use browser to find leadership page URL\n")
-cat("Step 2: helper$analyze_hospital_structure(624, 'Hospital Name', 'URL')\n")
-cat("Step 3: Review suggested configuration and manually verify\n")
-cat("Step 4: Add to enhanced_hospitals.yaml with any missing_people\n")
-cat("Step 5: helper$test_hospital_config(624, 'Hospital Name', 'URL', 'pattern')\n\n")
+cat("INTELLIGENT WORKFLOW:\n")
+cat("Step 1: helper$analyze_hospital_structure(FAC, 'Name', 'URL')\n")
+cat("        → Gets AI predictions based on 38 successful hospitals\n")
+cat("Step 2: Use suggested YAML configuration\n")
+cat("Step 3: Add to enhanced_hospitals.yaml\n")
+cat("Step 4: Test with quick_test(FAC)\n\n")
 
-cat("EXAMPLE USAGE:\n")
-cat("# Analyze a hospital:\n")
-cat("helper$analyze_hospital_structure(935, 'Thunder Bay', 'URL')\n\n")
-cat("# Test configuration (now reads missing_people from YAML):\n")
-cat("helper$test_hospital_config(935, 'Thunder Bay', 'URL', 'boardcard_gallery')\n\n")
+cat("EXAMPLE:\n")
+cat("helper$analyze_hospital_structure(726, 'Midland Hospital', 'URL')\n")
+cat("# Shows: Top 3 pattern predictions with confidence scores\n")
+cat("# Explains: Why each pattern matches (indicators found)\n")
+cat("# Suggests: Ready-to-use YAML configuration\n\n")
 
-cat("# Show pattern guide:\n")
-cat("helper$show_pattern_guide()\n\n")
+cat("📚 REFERENCE MATERIALS:\n")
+cat("  • Published web tool (bookmarked) - interactive predictor\n")
+cat("  • Hospital_Scraper_Pattern_Intelligence_Reference.md\n")
+cat("  • pattern_intelligence_database.yaml\n\n")
+
+cat("Ready to configure hospitals with AI assistance! 🚀\n\n")
