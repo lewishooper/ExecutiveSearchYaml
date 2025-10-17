@@ -5,6 +5,98 @@ hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common) 
 
 
+ - FAC: "940"
+   name: "COBOURG NORTHUMBERLAND HILLS"
+   url: "https://nhh.ca/AboutNHH/senior-leadership-team"
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 7  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"  # ← UPDATE if using different pattern
+     title_element: "h3"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
+  
+  
+  
+ - FAC: "931"
+   name: "PARRY SOUND WEST PARRY SOUND"
+   url: "https://www.wpshc.com/about-us/our-senior-leadership-team/"
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 10  # Directors actually seem like senior execs. 
+   html_structure:
+    name_class: "-title" 
+    title_class: "meta--position"
+  #  container_class: "site-content"
+    notes: "Likely that some DIRECTORS are actually part of the senior Team"  
+   status: "needs tessting"  
+
+
+ - FAC: "916"
+   name: "HEADWATERS"
+   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
+   pattern: "manual_entry_required"
+   expected_executives: 5
+   html_structure:
+     notes: "Titles appear BEFORE names (reversed order), causing pairing issues with div_classes pattern"
+   status: "ok"
+   known_executives:
+    - name: "Kim Delahunt"
+      title: "President & Chief Executive Officer"
+    - name: "Dr. Grace Wang, MD, FRSC"
+      title: "Chief of Staff & Vice President, Medical Affairs"
+    - name: "Cathy van Leipsig"
+      title: "Vice President, Corporate Services & Chief Financial Officer"
+    - name: "Annette Jones"
+      title: "Vice President Patient Experience, Health Integration, Chief Nursing and Health Disciplines Executive (CNE)"
+    - name: "Frances Duiker"
+      title: "Vice President, People and Culture"
+
+
+ - FAC: "928"
+   name: "PERTH SMITHS FALLS"
+   url: "https://psfdh.on.ca/leadershipteam"
+   pattern: "combined_h2"
+   expected_executives: 5  # Count them on the website and update if different
+   html_structure:
+    combined_element: "p"  # It's p, not h2
+    separator: ", "  # Comma with space
+    notes: "AI predicted combined_h2 with HIGH confidence - confirmed via inspection"
+   status: "ok"
+
+ - FAC: "916"
+   name: "ORANGEVILLE HEADWATERS HC"
+   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+    name_class: "c3-heading" 
+    title_class: "secondary_heading"
+    notes: ""  # Could also be 
+   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+
+ - FAC: "814"
+   name: "STRATHROY MIDDLESEX GENERAL"
+   url: "https://mhalliance.on.ca/about/administration/"
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "h3"   # ← CUSTOMIZABLE
+     separator: ", "  
+     notes: "will need to strip out directors in post"  # ← OPTIONAL: Add any special notes
+   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+
+
+ - FAC: "813"
+   name: "STRATFORD GENERAL HPHA duplicate FAC=983"
+   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
+   pattern: "p_with_bold_and_br"
+   expected_executives: 5
+   html_structure:
+    notes: "Names in <strong> within <p>, titles after <br>"
+   status: "ok"
+
  - FAC: "804"
    name: "SIMCOE NORFOLK GENERAL"
    url: "https://www.ngh.on.ca/senior-leadership-team/"
@@ -895,11 +987,13 @@ name_patterns:
     - "^Dr\\.? [A-Z][a-z]+ Van[A-Z][a-z]+$"  # Dr. Erica VanDaalen - ADD THIS LINE TOO
     #- "^Dr\\.? [A-Z][a-z]+ van [A-Z][a-z]+$"  # Dr. Charmaine van Schaik
     - "^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$"  # Charmaine van Schaik, MD <- ADD THIS LINE
+    - "^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$"  # Cathy van Leipsig
     
   with_credentials:
     - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
     - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
     - "^Dr\\.?\\s+[A-Z][a-z]+\\s+[A-Z][a-z]+,?\\s+[A-Z]{2,},?\\s+[A-Z]{2,}.*$"
+    - "^[A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+, [A-Z]{2,}.*$"  # First M. Last, credentials
     
   hyphenated_names:
     - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
@@ -930,9 +1024,15 @@ name_patterns:
     - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # André Martin-López
     - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Marie-Claire Beaumont
 
+  parenthetical_names:
+    - "^Dr\\.? [A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$"  # Dr. Pavel (Paul) Ketov
+    - "^[A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$"  # Pavel (Paul) Ketov (without Dr.)
+
   flexible:
+    - "^Dr\\.? [A-Z][a-z]+ \\\\([A-Z][a-z]+\\\\) [A-Z][a-z]+$"
+    - "^[A-Z][a-z]+ \\\\([A-Z][a-z]+\\\\) [A-Z][a-z]+$"
     - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"
-    - "^[A-ZÀ-ÖØ-Ýà-öø-ýĀ-žḀ-ỿ][a-zà-öø-ýĀ-žḀ-ỿ'-]+ [A-ZÀ-ÖØ-Ýà-öø-ýĀ-žḀ-ỿ][a-zà-öø-ýĀ-žḀ-ỿ'-]+$"
+    - "^(Dr\\.?\\s+)?[A-Z][a-z]+\\s+.+\\s+[A-Z][a-z]+$"  # Add this one
     
 # Pattern identification guide for manual review
 pattern_identification_guide:
