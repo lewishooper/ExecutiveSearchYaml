@@ -3,7 +3,120 @@
 
 hospitals:
   # Pattern 1: Separate H2 names + H3 titles (most common) 
+  
+  
+ - FAC: "967"
+   name: "CORNWALL COMMUNITY"
+   url: "https://www.cornwallhospital.ca/en/SeniorAdmin"
+   pattern: "manual_entry_required"
+   expected_executives: 5
+   html_structure:
+     notes: "Reversed Titles new pattern??"
+   status: "ok"
+   known_executives:
+     - name: "Jeanette Despatie"
+       title: "President & Chief Executive Officer"
+     - name: "Dr. Anastasios Boubalos"
+       title: "Chief of Staff"
+     - name: "Kelly Shaw"
+       title: "Vice President of Patient Services & Chief Nursing Officer"
+     - name: "Ann Zeran"
+       title: "Vice President of Community Programs"
+     - name: "Karin Hagen"
+       title: "Chief Finance Officer"
+     - name: "vacant"
+       title: "Chief Information Officer"
+ - FAC: "966"
+   name: "SARNIA BLUEWATER HEALTH"
+   url: "https://www.bluewaterhealth.ca/executive-team"
+   pattern: "manual_entry_required"
+   expected_executives: 6
+   html_structure:
+     notes: "Site blocks automated scraping - connection refused in R"
+   status: "ok"
+   known_executives:
+     - name: "Paula Reaume-Zimmer"
+       title: "President & CEO"
+     - name: "Dr. Michel Haddad"
+       title: "Chief of Staff"
+     - name: "Bob DeRaad"
+       title: "Vice-President, Clinical Services"
+     - name: "Marlene Kerwin"
+       title: "Vice-President, Corporate Services and Chief Financial Officer"
+     - name: "Jane Mathews"
+       title: "Vice-President Clinical Support Services and Chief Nursing Executive"
+     - name: "Lisa Regan"
+       title: "Vice-President, Care Transitions"
 
+ - FAC: "965"
+   name: "SAULT STE MARIE SAULT AREA"
+   url: "https://sah.on.ca/about/hospital-leadership/senior-leadership-team/"
+   pattern: "h2_name_p_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h3"  # ← UPDATE if using different pattern
+     title_element: "p"  # ← UPDATE if using different pattern
+     notes: ""  # ← OPTIONAL: Add any special notes
+     
+   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added  
+ - FAC: "962"
+   name: "ST CATHARINES NIAGARA HEALTH SYSTEM"
+   url: "https://www.niagarahealth.on.ca/site/leadership-team"
+   pattern: "h2_name_p_title"
+   expected_executives: 9
+   html_structure:
+     name_element: "h3"       # ← Fixed: removed extra space
+     title_element: "p"
+     notes: "H3 for names, P with strong tags for titles"
+   status: "ok"
+
+
+ - FAC: "955"
+   name: "GREY BRUCE HEALTH SERVICES  Brightshores"
+   url: "https://www.brightshores.ca/about-us/executive-team/"
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 7  # Includes an Executive Assistant
+   html_structure:
+     combined_element: "p"  # ← UPDATE if using different pattern
+     separator: ","  # ← UPDATE if using different pattern
+     notes: "Executive assistant dealt iwth in Post"  
+   status: "ok"  
+     
+  
+  
+ - FAC: "950"
+   name: "HALTON HEALTHCARE"
+   url: "https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team"
+   pattern: "manual_entry_required"
+   expected_executives: 12
+   html_structure:
+     notes: "H3 elements with <br> separator - not supported by current patterns"
+   status: "ok"
+   known_executives:
+     - name: "Melissa Farrell"
+       title: "President & CEO"
+     - name: "Dr. David McConachie"
+       title: "Chief of Staff"
+     - name: "Al Coady"
+       title: "Senior Vice President, Redevelopment, Facilities & Retail Operations"
+     - name: "Debra Stout"
+       title: "Senior Vice President and Chief Nursing Executive"
+     - name: "Marie Hubbard"
+       title: "Senior Vice President, People and Culture"
+     - name: "Melissa McCullough"
+       title: "Senior Vice President, Chief Financial Officer and Chief Strategy Officer"
+     - name: "Dr. Sohail Gandhi"
+       title: "Vice President and Chief Medical Officer"
+     - name: "Sharon Gray"
+       title: "Vice President, Clinical Programs and Interprofessional Practice"
+     - name: "Naila Butt"
+       title: "Vice President, Patient Experience, Quality and Risk"
+     - name: "Jennifer Fiddick-Carvalho"
+       title: "Vice President, Corporate Services and Communications"
+     - name: "Katherine Scott"
+       title: "Vice President, Ambulatory Services and Partnerships"
+     - name: "Paul Milliken"
+       title: "Vice President, Communications and Stakeholder Relations"
 
  - FAC: "940"
    name: "COBOURG NORTHUMBERLAND HILLS"
@@ -21,17 +134,16 @@ hospitals:
  - FAC: "931"
    name: "PARRY SOUND WEST PARRY SOUND"
    url: "https://www.wpshc.com/about-us/our-senior-leadership-team/"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 10  # Directors actually seem like senior execs. 
+   pattern: "div_classes"
+   expected_executives: 10
    html_structure:
-    name_class: "-title" 
-    title_class: "meta--position"
-  #  container_class: "site-content"
-    notes: "Likely that some DIRECTORS are actually part of the senior Team"  
-   status: "needs tessting"  
+     name_class: "expand-tiles__tile-title"
+     title_class: "expand-tiles__tile-meta--position"
+     notes: "Expandable tile structure - using tile view classes"
+   status: "ok"
 
 
- - FAC: "916"
+ - FAC: "916e"
    name: "HEADWATERS"
    url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
    pattern: "manual_entry_required"
@@ -72,7 +184,7 @@ hospitals:
     name_class: "c3-heading" 
     title_class: "secondary_heading"
     notes: ""  # Could also be 
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
+   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
 
 
  - FAC: "814"

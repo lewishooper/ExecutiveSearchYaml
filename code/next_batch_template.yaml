@@ -25,88 +25,12 @@ hospitals:
 
 
 
- - FAC: "940"
-   name: "COBOURG NORTHUMBERLAND HILLS"
-   url: "https://nhh.ca/AboutNHH/senior-leadership-team"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 7  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "h3"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "950"
-   name: "OAKVILLE HALTON HEALTH CARE CORP"
-   url: "https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 9 # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "h2"  # ← UPDATE if using different pattern
-     separator: "br"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "Needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
- - FAC: "955"
-   name: "GREY BRUCE HEALTH SERVICES  Brightshores"
-   url: "https://www.brightshores.ca/about-us/executive-team/"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 7  # Includes an Executive Assistant
-   html_structure:
-     combined_element: "p"  # ← UPDATE if using different pattern
-     separator: ","  # ← UPDATE if using different pattern
-     notes: "Executive assistant dealt iwth in Post"  
-   status: "needs testing"  
-   
-   
- - FAC: "962"
-   name: "ST CATHARINES NIAGARA HEALTH SYSTEM"
-   url: "https://www.niagarahealth.on.ca/site/leadership-team"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 9 
-   html_structure:
-     name_element: "h3 "
-     title_element: "p"
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs_testing"
-
- - FAC: "965"
-   name: "SAULT STE MARIE SAULT AREA"
-   url: "https://sah.on.ca/about/hospital-leadership/senior-leadership-team/"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h3"  # ← UPDATE if using different pattern
-     title_element: "p"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "966"
-   name: "SARNIA BLUEWATER HEALTH"
-   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-     name_class: "field field--name-title field--type-string field--label-hidden"  # ← UPDATE if using different pattern
-     title_class: "field field--name-field-staff-title field--type-string field--label-hidden field__item"# ← UPDATE if using different pattern
-     container_class: "node_content"
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "967"
-   name: "CORNWALL COMMUNITY"
-   url: "https://www.cornwallhospital.ca/en/SeniorAdmin"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "p"  # ← CUSTOMIZABLE 
-     separator: ": "  
-     notes: "The name and title are in reverse order in a <p>"  # ← OPTIONAL: Add any special notes
-   status: "needs testing"  # ← UPDATE: Change to 'needs_testing' once URL added
 
  - FAC: "968"
    name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
-   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
+   url: "https://www.mahc.ca/about-us/leadership/"  # ← REQUIRED: Add leadership page URL
    pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
    expected_executives: 5  # ← UPDATE: Change based on website
    html_structure:

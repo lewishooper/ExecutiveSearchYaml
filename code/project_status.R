@@ -330,3 +330,6 @@ cat("  source('session_shutdown.R')    # End session\n")
 cat("  source('project_status.R')      # This report\n")
 cat("  quick_test(FAC)                 # Test hospital\n")
 cat("  helper$analyze_hospital_structure()  # Analyze HTML\n\n")
+
+source('project_status.R')   
+

@@ -13,10 +13,10 @@ source("project_status.R")
 # Next batch specific status
 source("test_next_batch.R")
 status_next()
-quick_test(940)
-FAC <- 931
-Name <- "Perry Sound"
-url <- "https://www.wpshc.com/about-us/our-senior-leadership-team/"
+quick_test(916)
+FAC<-967
+Name <- "Cornwall"
+url <- "https://www.cornwallhospital.ca/en/SeniorAdmin"
 helper$analyze_hospital_structure(FAC, Name, url)
 
 helper$test_hospital_config(fac, name, url, pattern)# - Test configuration (reads from YAML)\n")  

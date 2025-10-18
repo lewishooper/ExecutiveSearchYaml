@@ -18,6 +18,53 @@
 
 ## Session History
 
+### Session: 2025-10-18 AM - Hospital Configuration (FAC-931, 950, 955, 962, 965, 966, 967)
+
+**Time:** Morning session (~2-3 hours)
+
+**What We Accomplished:**
+- ✅ Configured FAC-931 (Parry Sound) - div_classes with expandable tile structure
+- ✅ Configured FAC-950 (Halton) - manual_entry_required (H3 with <br> separator)
+- ✅ Configured FAC-955 (Grey Bruce) - completed successfully
+- ✅ Configured FAC-962 (Niagara Health) - h2_name_p_title (H3→P variant)
+- ✅ Configured FAC-965 (Sault Area) - completed successfully
+- ✅ Configured FAC-966 (Bluewater Health) - manual_entry_required (site blocks scraping)
+- ✅ Configured FAC-967 (Cornwall) - manual_entry_required (reversed title→name order)
+
+**Files Modified:**
+- enhanced_hospitals.yaml - Added 7 hospitals
+- FUTURE_WORK_TRACKING.xlsx - Updated tracking
+
+**Current Status:**
+- Total configured hospitals: 60 (53 + 7 new)
+- Manual entry hospitals: 9 total
+- Reversed order pattern: 2 hospitals (threshold: 3)
+- H3 with <br> pattern: 1 hospital (threshold: 3)
+
+**Key Learnings:**
+1. **BEM-style CSS classes**: expand-tiles__tile-title format in expandable structures
+2. **Pattern flexibility**: h2_name_p_title works for H3→P pairs too
+3. **Copying class names**: Use helper output or DevTools "Copy attribute" feature
+4. **New pattern tracking**: H3 with <br> separator (1 hospital) - track until threshold
+5. **Reversed order tracking**: Title before name (2 hospitals) - one more triggers pattern creation
+6. **Site blocking**: Bluewater Health blocks automated requests
+
+**Pattern Issues Tracked:**
+- H3 with <br> separator: 1 hospital (FAC-950)
+- Reversed title→name order: 2 hospitals (FAC-916, 967)
+- Site blocking: Updated count in tracking
+
+**Next Steps:**
+1. Continue with remaining hospitals in next session
+2. Monitor reversed order pattern (1 more = create new pattern)
+3. Test all configured hospitals periodically
+4. Update Excel master list with done='y' for completed hospitals
+
+**Issues/Blockers:**
+- None currently
+
+**Time Spent:** ~2-3 hours
+
 ### Session: 2025-10-13 AM - Accented Names Fix & Documentation Review
 **Time:** 8:00 AM - 11:50 AM
 
