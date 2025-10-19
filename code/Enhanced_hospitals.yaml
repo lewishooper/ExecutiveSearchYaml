@@ -143,7 +143,7 @@ hospitals:
    status: "ok"
 
 
- - FAC: "916e"
+ - FAC: "916"
    name: "HEADWATERS"
    url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
    pattern: "manual_entry_required"
@@ -175,16 +175,7 @@ hospitals:
     notes: "AI predicted combined_h2 with HIGH confidence - confirmed via inspection"
    status: "ok"
 
- - FAC: "916"
-   name: "ORANGEVILLE HEADWATERS HC"
-   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-    name_class: "c3-heading" 
-    title_class: "secondary_heading"
-    notes: ""  # Could also be 
-   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
+
 
 
  - FAC: "814"
