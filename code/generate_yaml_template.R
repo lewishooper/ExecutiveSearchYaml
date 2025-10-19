@@ -9,7 +9,7 @@ library(yaml)
 master_list_file <- "E:/Public/ResourceFiles/LeadershipURLYAMLNotes.xlsx"
 config_file <- "enhanced_hospitals.yaml"
 batch_size <- 30
-output_file <- "E:/ExecutiveSearchYaml/next_batch_template.yaml"
+output_file <- "E:/ExecutiveSearchYaml/next_batch_template2.yaml"
 
 cat("=== GENERATING YAML TEMPLATE FOR NEXT BATCH ===\n\n")
 
