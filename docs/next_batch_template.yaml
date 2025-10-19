@@ -1,0 +1,384 @@
+# NEXT BATCH TEMPLATE
+# Generated: 2025-10-18 23:42:00
+#
+# Instructions:
+#   1. Fill in the 'url' field with the leadership page URL
+#   2. Update 'pattern' to match the HTML structure (see pattern guide)
+#   3. Set 'expected_executives' based on website inspection
+#   4. Update 'status' from 'needs_configuration' to 'needs_testing' once URL added
+#   5. Add any notes about the hospital's structure
+#   6. Once tested and working, copy to enhanced_hospitals.yaml and mark done='y' in Excel
+#
+# Common patterns:
+#   - h2_name_h3_title: Names in <h2>, titles in <h3>
+#   - combined_h2: Name and title together with separator
+#   - div_classes: CSS class-based extraction
+#   - table_rows: Table structure
+#   - list_items: List with separators
+#
+# See PATTERN_REGISTRY.md for all 13 patterns and examples
+
+hospitals:
+ - FAC: "968"
+   name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
+   url: "https://www.mahc.ca/about-us/leadership/"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: "" # ← CUSTOMIZABLE
+     notes: "title is proceeded by 'EMAIL' can we do this in the code or in post"  # ← OPTIONAL: Add any special notes
+   status: "needs configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "592"
+   name: "NAPANEE LENNOX & ADDINGTON"
+   url: ""  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Phone Call required 613 354 3301"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "593"
+   name: "NEWBURY FOUR COUNTIES HEALTH SERV."
+   url: "https://mhalliance.on.ca/about/administration/"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # combined but in a a refeerecne 
+   expected_executives: 4  # but six with directors 
+   html_structure:
+     combined_element: ""  # Not sure yet
+     separator: ","  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "597"
+   name: "ALMONTE GENERAL"
+   url: "https://www.mrha.ca/seniorteam"  # ← REQUIRED: Add leadership page URL
+   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 7  # ← UPDATE: Change based on website
+   html_structure:
+     name_element: "h2"
+     title_element: "h3"
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "599"
+   name: "MRHA ARNPRIOR & DISTRICT MEMORIAL"
+   url: "https://www.arnpriorregionalhealth.ca/about-us/#senior-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+      name_class: "desc_wrapper_title"       # CSS class for names (no dot)
+      title_class: "subtitle"     # CSS class for titles (no dot)
+      container_class: "staff-member" # Optional parent container
+   notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "600"
+   name: "ATIKOKAN GENERAL"
+   url: "https://aghospital.on.ca/about/board-of-directors/"  # ← REQUIRED: Add leadership page URL
+   pattern: "reversedtITLEiSSUE"  # ← UPDATE: Change to match actual pattern
+   expected_executives: R  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "eXECS BURIED IN THE bOARD"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "601"
+   name: "GUELPH HOMEWOOD"
+   url: ""  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "EXEC LEADERSHIP NOT POSTED"  # ← OPTIONAL: Add any special notes
+   status: "Empty"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "611"
+   name: "BLIND RIVER NORTH SHORE HN"
+   url: "https://www.nshn.care/senior-leadership-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "DIV SEQUENTIAL"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "uSE ANALYZER"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "626"
+   name: "MRHA CARLETON PLACE & DISTRICT "
+   url: "https://www.arnpriorregionalhealth.ca/about-us/#senior-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 6  # ← UPDATE: Change based on website
+   html_structure:
+      name_class: "desc_wrapper_title"       # CSS class for names (no dot)
+      title_class: "subtitle"     # CSS class for titles (no dot)
+      container_class: "staff-member" # Optional parent container
+   notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+
+ - FAC: "627"
+   name: "CHAPLEAU SER DE SANTÉ DE CHAPLEAU"
+   url: "https://www.sschs.ca/general/board.html"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "probably need to call for clarification (705) 864-1520  ext. 3053."  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "638"
+   name: "MICSGROUP COCHRANE LADY MINTO"
+   url: "https://www.micsgroup.com/governance/board-of-directors/"  # ← REQUIRED: Add leadership page URL
+   pattern: "reversedtitleIssue"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "644"
+   name: "CORNWALL HOTEL DIEU"
+   url: ""  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Merged with Cornwall general Hospital"  # ← OPTIONAL: Add any special notes
+   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "646"
+   name: "DEEP RIVER AND DISTRICT"
+   url: "https://www.drdh.org/boardofdirectors"  # ← REQUIRED: Add leadership page URL
+   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Combined with Board, can we callout by titles??Maybe Manual"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "647"
+   name: "DRYDEN REGIONAL HEALTH CENTRE"
+   url: "https://www.drhc.on.ca/board"  # ← REQUIRED: Add leadership page URL
+   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Combined with Board, can we callout by titles??Maybe Manual"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "648"
+   name: "DUNNVILLE HALDIMAND WAR MEMORIAL"
+   url: "https://www.hwmh.ca/about-us/senior-team/"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "650"
+   name: "ELLIOT LAKE ST JOSEPH'S"
+   url: "https://sjghel.ca/about/governance-board/"  
+   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "651"
+   name: "OTTAWA ROYAL OTTAWA (PSYCH)"
+   url: "https://www.theroyal.ca/about-royal/leadership/senior-leadership-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_p"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 13  # includes executive directors
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "653"
+   name: "Blanche River ENGLEHART & DISTRICT"
+   url: "https://www.blancheriverhealth.ca/about-us/leadership"  # ← REQUIRED: Add leadership page URL
+   pattern: 'div_classes'  # or whatever pattern you're currently using
+   expected_executives: 3  # Adjust based on actual senior leadership count
+   html_structure:
+     name_class: "name"
+     title_class: "position"
+     container_class: "member-name"
+     notes: "Leadership page includes both executives and board members"
+
+ - FAC: "654"
+   name: "ESPANOLA GENERAL"
+   url: "https://espanolaregionalhospital.ca/about-erhhc/governance-and-leadership/senior-management-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "reversed"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "655"
+   name: "Huron Health EXETER SOUTH HURON"
+   url: "https://www.huronhealthsystem.ca/leadership"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  #Combined H2 Name, P as title
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: "h2"  # ← CUSTOMIZABLE 
+     separator: "p"  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "656"
+   name: "WHCA Grove community hospital "
+   url: "https://gmch.whca.ca/board-of-directors"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # but alsoa sequential divs...
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "662"
+   name: "GERALDTON DISTRICT HOSPITAL"
+   url: "https://www.geraldtondh.com/board-of-directors"  # ← REQUIRED: Add leadership page URL
+   pattern: "table style"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "663"
+   name: "Huron HealthGODERICH ALEXANDRA MARINE & GEN"
+   url: "https://www.huronhealthsystem.ca/leadership"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "666"
+   name: "GUELPH ST JOSEPH'S HEALTH CENTRE"
+   url: "https://www.sjhcg.ca/welcome/our-leadership/"  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "674"
+   name: "HAMILTON ST JOSEPH'S"
+   url: ""  # ← REQUIRED: Add leadership page URL
+   pattern: "list_items"  #combined
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "676"
+   name: "HANOVER & DISTRICT"
+   url: "https://www.hanoverhospital.on.ca/our-team"  # ← REQUIRED: Add leadership page URL
+   pattern: "P following P"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "680"
+   name: "TORONTO DON MILLS SURGICAL UNIT"
+   url: ""  # No leadership page found  # ← REQUIRED: Add leadership page URL
+   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Private"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "681"
+   name: "HEARST NOTRE DAME"
+   url: "https://www.ndh.on.ca/board-of-directors/"  # Board of Directords page only  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Board of Directors page only"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "682"
+   name: "HORNEPAYNE COMMUNITY"
+   url: "https://www.hornepaynecommunityhospital.ca/about-1"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 4  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "684"
+   name: "Rural Roads Health servcies INGERSOLL ALEXANDRA"
+   url: "https://www.ruralroadshealthservices.ca/about/board-of-directors/"  # ← REQUIRED: Add leadership page URL
+   pattern: "div_classes"  # exec
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: "Board of Directors page only integrated and confusing"  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+ - FAC: "685"
+   name: "MICS Group IROQUOIS FALLS ANSON GENERAL"
+   url: ""  # ← REQUIRED: Add leadership page URL
+   pattern: "reversedtitleIssue"  # ← UPDATE: Change to match actual pattern
+   expected_executives: 5  # ← UPDATE: Change based on website
+   html_structure:
+     combined_element: ""  # ← CUSTOMIZABLE 
+     separator: ""  # ← CUSTOMIZABLE
+     notes: ""  # ← OPTIONAL: Add any special notes
+   status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
+
+# ============================================================================
+# BATCH SUMMARY
+# ============================================================================
+# Total active hospitals in this batch: 30
+# Remaining after this batch: 54
+#
+# WORKFLOW:
+# 1. For each hospital, find the leadership page URL
+# 2. Inspect the page structure in browser DevTools
+# 3. Update pattern, expected_executives, and html_structure fields
+# 4. Change status to 'needs_testing'
+# 5. Copy entry to enhanced_hospitals.yaml
+# 6. Test with: quick_test(FAC)
+# 7. If successful, change status to 'ok' or 'configured'
+# 8. Mark as done='y' in the LeadershipURLYAMLNotes.xlsx file
+#
+# Remember: Work directly in enhanced_hospitals.yaml for testing!
+# This file is just a reference/tracking list.
+# ============================================================================
