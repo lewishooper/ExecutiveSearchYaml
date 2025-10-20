@@ -13,15 +13,16 @@ source("project_status.R")
 # Next batch specific status
 source("test_next_batch.R")
 status_next()
-quick_test(916)
-FAC<-967
-Name <- "Cornwall"
-url <- "https://www.cornwallhospital.ca/en/SeniorAdmin"
+quick_test(600)
+FAC<-600
+Name <- "Atikokan "
+url <- "https://aghospital.on.ca/about/board-of-directors/"
 helper$analyze_hospital_structure(FAC, Name, url)
 
-helper$test_hospital_config(fac, name, url, pattern)# - Test configuration (reads from YAML)\n")  
+helper$test_hospital_config(FAC, Name, url, "combined_h2")# - Test configuration (reads from YAML)\n")  
 helper$show_pattern_guide()# - Show pattern identification guide\n")
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
-
+setwd("E:/ExecutiveSearchYaml/code/")
+source("generate_pattern_quick_reference.R")
 
 test_all_configured_hospitals()
