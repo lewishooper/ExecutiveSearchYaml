@@ -69,8 +69,8 @@ hospitals:
    pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
    expected_executives: 6  # ← UPDATE: Change based on website
    html_structure:
-      name_class: "desc_wrapper_title"       # CSS class for names (no dot)
-      title_class: "subtitle"     # CSS class for titles (no dot)
+      name_element:
+      title_element:
       container_class: "staff-member" # Optional parent container
    notes: ""  # ← OPTIONAL: Add any special notes
    status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
@@ -103,8 +103,10 @@ hospitals:
    pattern: "DIV SEQUENTIAL"  # ← UPDATE: Change to match actual pattern
    expected_executives: 4  # ← UPDATE: Change based on website
    html_structure:
-     combined_element: ""  # ← CUSTOMIZABLE 
-     separator: ""  # ← CUSTOMIZABLE
+     name_class:
+     title_class:
+container_class:
+
      notes: "uSE ANALYZER"  # ← OPTIONAL: Add any special notes
    status: "needs_configuration"  # ← UPDATE: Change to 'needs_testing' once URL added
 

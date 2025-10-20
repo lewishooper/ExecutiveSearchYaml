@@ -1,1158 +1,1086 @@
-# enhanced_hospitals.yaml - Structured hospital configuration
-# Save this in E:/ExecutiveSearchYaml/code/
-
 hospitals:
-  # Pattern 1: Separate H2 names + H3 titles (most common) 
-  
-  
- - FAC: "967"
-   name: "CORNWALL COMMUNITY"
-   url: "https://www.cornwallhospital.ca/en/SeniorAdmin"
-   pattern: "manual_entry_required"
-   expected_executives: 5
-   html_structure:
-     notes: "Reversed Titles new pattern??"
-   status: "ok"
-   known_executives:
-     - name: "Jeanette Despatie"
-       title: "President & Chief Executive Officer"
-     - name: "Dr. Anastasios Boubalos"
-       title: "Chief of Staff"
-     - name: "Kelly Shaw"
-       title: "Vice President of Patient Services & Chief Nursing Officer"
-     - name: "Ann Zeran"
-       title: "Vice President of Community Programs"
-     - name: "Karin Hagen"
-       title: "Chief Finance Officer"
-     - name: "vacant"
-       title: "Chief Information Officer"
- - FAC: "966"
-   name: "SARNIA BLUEWATER HEALTH"
-   url: "https://www.bluewaterhealth.ca/executive-team"
-   pattern: "manual_entry_required"
-   expected_executives: 6
-   html_structure:
-     notes: "Site blocks automated scraping - connection refused in R"
-   status: "ok"
-   known_executives:
-     - name: "Paula Reaume-Zimmer"
-       title: "President & CEO"
-     - name: "Dr. Michel Haddad"
-       title: "Chief of Staff"
-     - name: "Bob DeRaad"
-       title: "Vice-President, Clinical Services"
-     - name: "Marlene Kerwin"
-       title: "Vice-President, Corporate Services and Chief Financial Officer"
-     - name: "Jane Mathews"
-       title: "Vice-President Clinical Support Services and Chief Nursing Executive"
-     - name: "Lisa Regan"
-       title: "Vice-President, Care Transitions"
 
- - FAC: "965"
-   name: "SAULT STE MARIE SAULT AREA"
-   url: "https://sah.on.ca/about/hospital-leadership/senior-leadership-team/"
-   pattern: "h2_name_p_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h3"  # ← UPDATE if using different pattern
-     title_element: "p"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-     
-   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added  
- - FAC: "962"
-   name: "ST CATHARINES NIAGARA HEALTH SYSTEM"
-   url: "https://www.niagarahealth.on.ca/site/leadership-team"
-   pattern: "h2_name_p_title"
-   expected_executives: 9
-   html_structure:
-     name_element: "h3"       # ← Fixed: removed extra space
-     title_element: "p"
-     notes: "H3 for names, P with strong tags for titles"
-   status: "ok"
-
-
- - FAC: "955"
-   name: "GREY BRUCE HEALTH SERVICES  Brightshores"
-   url: "https://www.brightshores.ca/about-us/executive-team/"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 7  # Includes an Executive Assistant
-   html_structure:
-     combined_element: "p"  # ← UPDATE if using different pattern
-     separator: ","  # ← UPDATE if using different pattern
-     notes: "Executive assistant dealt iwth in Post"  
-   status: "ok"  
-     
-  
-  
- - FAC: "950"
-   name: "HALTON HEALTHCARE"
-   url: "https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team"
-   pattern: "manual_entry_required"
-   expected_executives: 12
-   html_structure:
-     notes: "H3 elements with <br> separator - not supported by current patterns"
-   status: "ok"
-   known_executives:
-     - name: "Melissa Farrell"
-       title: "President & CEO"
-     - name: "Dr. David McConachie"
-       title: "Chief of Staff"
-     - name: "Al Coady"
-       title: "Senior Vice President, Redevelopment, Facilities & Retail Operations"
-     - name: "Debra Stout"
-       title: "Senior Vice President and Chief Nursing Executive"
-     - name: "Marie Hubbard"
-       title: "Senior Vice President, People and Culture"
-     - name: "Melissa McCullough"
-       title: "Senior Vice President, Chief Financial Officer and Chief Strategy Officer"
-     - name: "Dr. Sohail Gandhi"
-       title: "Vice President and Chief Medical Officer"
-     - name: "Sharon Gray"
-       title: "Vice President, Clinical Programs and Interprofessional Practice"
-     - name: "Naila Butt"
-       title: "Vice President, Patient Experience, Quality and Risk"
-     - name: "Jennifer Fiddick-Carvalho"
-       title: "Vice President, Corporate Services and Communications"
-     - name: "Katherine Scott"
-       title: "Vice President, Ambulatory Services and Partnerships"
-     - name: "Paul Milliken"
-       title: "Vice President, Communications and Stakeholder Relations"
-
- - FAC: "940"
-   name: "COBOURG NORTHUMBERLAND HILLS"
-   url: "https://nhh.ca/AboutNHH/senior-leadership-team"
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 7  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "h3"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
-  
-  
-  
- - FAC: "931"
-   name: "PARRY SOUND WEST PARRY SOUND"
-   url: "https://www.wpshc.com/about-us/our-senior-leadership-team/"
-   pattern: "div_classes"
-   expected_executives: 10
-   html_structure:
-     name_class: "expand-tiles__tile-title"
-     title_class: "expand-tiles__tile-meta--position"
-     notes: "Expandable tile structure - using tile view classes"
-   status: "ok"
-
-
- - FAC: "916"
-   name: "HEADWATERS"
-   url: "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
-   pattern: "manual_entry_required"
-   expected_executives: 5
-   html_structure:
-     notes: "Titles appear BEFORE names (reversed order), causing pairing issues with div_classes pattern"
-   status: "ok"
-   known_executives:
-    - name: "Kim Delahunt"
-      title: "President & Chief Executive Officer"
-    - name: "Dr. Grace Wang, MD, FRSC"
-      title: "Chief of Staff & Vice President, Medical Affairs"
-    - name: "Cathy van Leipsig"
-      title: "Vice President, Corporate Services & Chief Financial Officer"
-    - name: "Annette Jones"
-      title: "Vice President Patient Experience, Health Integration, Chief Nursing and Health Disciplines Executive (CNE)"
-    - name: "Frances Duiker"
-      title: "Vice President, People and Culture"
-
-
- - FAC: "928"
-   name: "PERTH SMITHS FALLS"
-   url: "https://psfdh.on.ca/leadershipteam"
-   pattern: "combined_h2"
-   expected_executives: 5  # Count them on the website and update if different
-   html_structure:
-    combined_element: "p"  # It's p, not h2
-    separator: ", "  # Comma with space
-    notes: "AI predicted combined_h2 with HIGH confidence - confirmed via inspection"
-   status: "ok"
-
-
-
-
- - FAC: "814"
-   name: "STRATHROY MIDDLESEX GENERAL"
-   url: "https://mhalliance.on.ca/about/administration/"
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 4  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "h3"   # ← CUSTOMIZABLE
-     separator: ", "  
-     notes: "will need to strip out directors in post"  # ← OPTIONAL: Add any special notes
-   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
-
-
-
- - FAC: "813"
-   name: "STRATFORD GENERAL HPHA duplicate FAC=983"
-   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
-   pattern: "p_with_bold_and_br"
-   expected_executives: 5
-   html_structure:
-    notes: "Names in <strong> within <p>, titles after <br>"
-   status: "ok"
-
- - FAC: "804"
-   name: "SIMCOE NORFOLK GENERAL"
-   url: "https://www.ngh.on.ca/senior-leadership-team/"
-   pattern: "p_with_bold_and_br"
-   expected_executives: 5
-   html_structure:
-     notes: "Names and titles in <strong> within <p>, separated by <br> tags"
-   status: "ok"
-
-
- - FAC: "771"
-   name: "PETERBOROUGH REGIONAL HEALTH CENTRE"
-   url: "https://www.prhc.on.ca/about-us/senior-leadership/"  # ← REQUIRED: Add leadership page URL
-   pattern: "combined_h2"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 9  # ← UPDATE: Change based on website
-   html_structure:
-     combined_element: "span"
-     separator: ","
-     status: "ok"  #  
-  
-  
- - FAC: "763"
-   name: "PEMBROKE REGIONAL"
-   url: "https://www.pemreghos.org/slt?m=1"
-   pattern: "manual_entry_required"
-   expected_executives: 5
-   html_structure:
-     notes: "Titles embedded in prose paragraphs - not extractable by standard patterns"
-   status: "manual_entry"
-   known_executives:
-     - name: "Sabine Mersmann"
-       title: "President and CEO"
-     - name: "Dr. Declan Rowan"
-       title: "Chief of Staff"
-     - name: "Beth Brownlee"
-       title: "Vice President Clinical & Support Services and Chief Nursing Executive"
-     - name: "Brent McIntyre"
-       title: "Vice President Human Resources"
-     - name: "Scott Coombes"
-       title: "Vice President Finance and Corporate Services and Chief Financial Officer"
-       
-       
-       
- - FAC: "745"
-   name: "ORILLIA SOLDIERS' MEMORIAL"
-   url: "https://www.osmh.on.ca/senior-leadership-team/"
-   pattern: "div_classes"
-   expected_executives: 5
-   html_structure:
-     name_class: "name"
-     title_class: "position"
-     container_class: ""
-     notes: "Names in .name, titles in .position (not .title which is used for navigation)"
-   status: "ok"
-
- - FAC: "736"
-   name: "NEWMARKET SOUTHLAKE REGIONAL"
-   url: "https://southlake.ca/about-southlake/leadership-team/"
-   pattern: "div_classes"
-   expected_executives: 10
-   html_structure:
-     name_class: "tm-name"
-     title_class: "tm-primary-title"
-     container_class: "team-member"
-     notes: "Names in h3.tm-name, titles in p.tm-primary-title"
-   status: "ok"
-
- - FAC: "726"
-   name: "MIDLAND GEORGIAN BAY"
-   url: "https://gbgh.on.ca/about-us/senior-leadership-team/"
-   pattern: "h2_name_p_title"
-   expected_executives: 5
-   html_structure:
-    name_element: "h3"
-    title_element: "h4"
-    missing_people:
-      - name: "Dr. Vikram Ralhan"
-        title: "Chief of Staff"
-      - name: "Linda Gravel"
-        title: "Vice President, Clinical Services and Chief Nursing Executive"
-   status: "ok"
-  
-   
- - FAC: "718"
-   name: "BURLINGTON JOSEPH BRANT HOSPITAL"
-   url: "https://www.josephbranthospital.ca/about-us/our-team/senior-leadership"
-   pattern: "nested_list_with_ids"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-    name_selector: "span.name"
-    title_selector: "span.title"
-    container_class: ""
-    notes: ""  # ← OPTIONAL: Add any special notes
-   status: "ok"  
-  
- - FAC: "701"
-   name: "RICHMOND HILL MACKENZIE HEALTH"
-   url: "https://www.mackenziehealth.ca/about-us/executive-leadership-team"
-   pattern: "nested_list_with_ids"
-   expected_executives: 8
-   html_structure:
-    name_selector: "span.name"
-    title_selector: "span.position"
-   status: "ok"
-  
-  
- - FAC: "699"
-   name: "WRHN-KITCHENER ST MARY'S"
-   url: "https://www.smgh.ca/about-us/our-leadership-team"
-   pattern: "div_classes"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 17
-   html_structure:
-     name_class: "name"     # ← CUSTOMIZABLE 
-     title_class: "position"   # ← CUSTOMIZABLE 
-     container_class: "staff-member"  # ← OPTIONAL
-   status: "OK" 
-
- - FAC: "930"
-   name: "WRHN-KITCHENER GRAND RIVER"
-   url: "https://www.grhosp.on.ca/about/senior-leadership-team"
-   pattern: "list_items"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 17  # ← UPDATE: Change based on website
-   html_structure:
-     list_type: "ul"  # ← UPDATE if using different pattern
-     format: "combined"  # ← UPDATE if using different pattern
-     separator: ", "
-     notes: "Combined with St.Marys Kitchner, Has multiple commas in title"  # ← OPTIONAL: Add any special notes
-   status: "OK"  #multiple comma 
-  
- - FAC: "665"
-   name: "GUELPH GENERAL"
-   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
-   pattern: "combined_h2"
-   expected_executives: 6
-   html_structure:
-     combined_element: "h2"
-     separator: ", "  # COMMA + SPACE, not dash!
-   status: "ok"
-   
- - FAC: "640"
-   name: "COLLINGWOOD GENERAL AND MARINE HOSP"
-   url: "https://cgmh.on.ca/team/senior-leadership-team"
-   pattern: "div_classes"
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     name_class: "title"
-     title_class: "job_title"
-   status: "ok"  # ← UPDATE: Change to 'needs_testing' once URL added
-
-
- - FAC: "605"
-   name: "TORONTO ST. JOSEPH'S INFIRMARY"
-   url: "TODO_ADD_LEADERSHIP_URL"  # ← REQUIRED: Add leadership page URL
-   pattern: "h2_name_h3_title"  # ← UPDATE: Change to match actual pattern
-   expected_executives: 5  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "h3"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
-
- - FAC: "613"
-   name: "TORONTO WEST PARK"
-   url: "https://www.gghorg.ca/about-ggh/leadership-team/"
-   pattern: "combined_h2"
-   expected_executives: 6  # ← UPDATE: Change based on website
-   html_structure:
-     name_element: "h2"  # ← UPDATE if using different pattern
-     title_element: "h3"  # ← UPDATE if using different pattern
-     notes: ""  # ← OPTIONAL: Add any special notes
-   status: "closed"  # ← UPDATE: Change to 'needs_testing' once URL added
-  
- - FAC: "983"
-   name: "HURON PERTH HEALTHCARE ALLIANCE"
-   url: "https://www.hpha.ca/ourorganization#accordion-38-2"
-   pattern: "p_with_bold_and_br"
-   expected_executives: 5
-   html_structure:
-    notes: "Names in <strong> within <p>, titles after <br>"
-   status: "ok"
-
-
- - FAC: "974"
-   name: "NORTH BAY NORTH BAY REGIONAL HC"
-   url: "https://nbrhc.on.ca/about-nbrhc/senior-leadership-team/"
-   pattern: "manual_entry_required"
-   expected_executives: 5
-   html_structure:
-    notes: "Content loaded by JavaScript - cannot be scr"
-   status: "javascript_blocked"
-   known_executives:
-    - name: "Paul Heinrich"
-      title: "President & CEO"
-    - name: "Lise St. Marseille"
-      title: "Vice President, Mental Health & Addictions"
-    - name: "Joanne Laplante"
-      title: "Vice President, Clinical and Chief Nursing Executive"
-    - name: "Ryan Jeffers"
-      title: "Vice President of Corporate Services & CFO"
-    - name: "Dr. Scott Kerrigan"
-      title: "Chief of Staff"
-      
-
-   
- - FAC: "981"
-   name: "CHATHAM CHATHAM-KENT HEALTH ALLIANC"
-   url: "https://www.ckha.on.ca/senior-team/"
-   pattern: "manual_entry_required"
-   expected_executives: 8
-   html_structure:
-    notes: "Website blocks automated scraping - HTTP 403 Forbidden"
-   status: "blocked_by_site"
-   known_executives:
-    - name: "Adam Topp"
-      title: "President & CEO"
-    - name: "Aaron Ryan"
-      title: "Vice President, Performance & Chief Financial Officer"
-    - name: "Natalie Clark"
-      title: "Chief Nursing Executive"
-    - name: "Caen Suni"
-      title: "Vice President, Clinical Programs & Operations"
-    - name: "Dr. Zeke Milkovic"
-      title: "Chief of Staff"
-    - name: "Justin Turkington"
-      title: "Chief Human Resources Officer"
-    - name: "Fannie Vavoulis"
-      title: "Director, Communications & Patient Experience"
-    - name: "Christine Mitchell"
-      title: "CKHA Foundation, President & CEO"
-
- - FAC: "707" 
-   name: "Ross Memorial Hospital"
-   url: "https://rmh.org/about-ross-memorial/senior-leadership"
-   pattern: "h2_name_h3_title"
-   expected_executives: 6
-   html_structure:
-    name_element: "h2"
-    title_element: "h3" 
-    notes: ""
-    status: "ok"
-
- - FAC: "624"
-   name: "Campbellford Memorial Hospital"  
-   url: "https://cmh.ca/our-executive-leadership-team"
-   pattern: "h2_name_h3_title"
-   expected_executives: 6
-   html_structure:
-    name_element: "h2"
-    title_element: "h3"
-    notes: ""
-   status: "ok"
-    
- - FAC: "596"
-   name: "Alliston Stevenson Memorial Hospital"
-   url: "https://www.stevensonhospital.ca/senior-leadership"
-   pattern: "h2_name_h3_title"
-   expected_executives: 5
-   html_structure:
-    name_element: "h2"
-    title_element: "h3"
-    notes: ""
-   status: "ok"
-  
- - FAC: "661"
-   name: "Cambridge Memorial Hospital"
-   url: "https://www.cmh.org/contacts"
-   pattern: "table_rows"
-   expected_executives: 5 # includes directors
-   html_structure:
-    structure_type: "table"
-    name_location: "td_column_1"
-    title_location: "td_column_2"
-    notes: "Drop Managers in Post"
-
-   status: "ok"    
-
-
- - FAC: '957'
-   name: "BELLEVILLE QUINTE HEALTH CARE"
-   url: "https://quintehealth.ca/about-quinte-health/leadership/"
-   pattern: "list_items"
-   expected_executives: 6 
-   html_structure:
-    list_type: "ul"
-    format: "combined"
-    separator: ", "  # ← Comma with space
-    notes: ""
-   status: "ok"
-
- - FAC: "953"
-   name: "Sunnybrook Health Sciences Centre"
-   url: "https://sunnybrook.ca/content/?page=executive-leadership"
-   pattern: "h2_name_p_title"
-   expected_executives: 13
-   html_structure:
-    name_element: "h2"
-    title_element: "p"
-    missing_people:
-      - name: "Dr. Calvin Law, MD, FRCSC, MPH"
-        title: "Vice President, Education"
-      - name: "Kullervo Hynynen, Ph.D."
-        title: "Vice President, Research and Innovation"
-      - name: "Dr. Dan Cass B.Sc., MD, MSc, FRCPC"
-        title: "Executive Vice President and Chief Medical Executive"
-    notes: ""
-   status: "ok"
-
- - FAC: "935"
-   name: "Thunder Bay Regional Health Sciences Centre"
-   url: "https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/"
-   pattern: "boardcard_gallery"
-   expected_executives: 10
-   html_structure:
-    container_class: "boardcard"
-    text_format: "name_comma_title"
-    separator: ","
-    notes: "Gallery of senior leaders"
-
-   status: "ok "
-
- - FAC: "941"
-   name: "Humber River Hospital"
-   url: "https://www.hrh.ca/who-we-are/accountability/governance-leadership/"
-   pattern: "combined_h2"
-   expected_executives: 9
-   html_structure:
-    combined_element: "h3"
-    separator: " - "
-    notes: ""
-    status: "ok"
-
-   
- - FAC: "952"
-   name: "Lakeridge Health"
-   url: "https://www.lh.ca/about-us/leadership-team/"
-   pattern: "combined_h2"
-   expected_executives: 10
-   html_structure:
-    combined_element: "h3"
-    separator: ", "
-    notes: ""   
-   status: "ok"
-
- - FAC: '905'
-   name: OAK VALLEY HEALTH
-   url: 'https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/'
-   pattern: 'div_classes'
-   expected_executives: 11
-   html_structure:
-    name_class: "dr-name"           # Changed from 'dr-name board-member'
-    title_class: "dr-degrees"       # Changed from "dr-degree" (was missing the 's')
-    container_class: "right-side"
-    notes: "Names in span.dr-name, titles in span.dr-degrees within div.right-side"
-   status: "ok"
- - FAC: "632"
-   name: "North York General Hospital"
-   url: "https://www.nygh.on.ca/about-us/leadership-team/"
-   pattern: "h2_name_p_title"
-   expected_executives: 11  # Changed from 8 - we found 11 executives
-   html_structure:
-     name_element: "h2"
-     title_element: "p"
-     notes: "h2=Name, p=Title. Terri Stuart-McEwan has hyphenated name that needs pattern fix"
-    # missing_people: Currently all found via scraping
-   status: "ok" 
-
- - FAC: "777"
-   name: "Queensway Carleton Hospital"
-   url: "https://www.qch.on.ca/Leadership"
-   pattern: "qch_mixed_tables"
-   expected_executives: 9
-   html_structure:
-    notes: ""
-   status: "ok"
-
-# Pattern examples for other common structures
-
- - FAC: '606'
-   name: "BARRIE ROYAL VICTORIA REG HC"
-   url: 'https://www.rvh.on.ca/about-rvh/senior-leadership-team/'
-   pattern: "div_classes"
-   expected_executives: 11
-   html_structure:
-    name_class: "card-title"
-    title_class: "card-subtitle"
-    container_class: "card-info"
-    notes: "Names in .card-title divs, titles in .card-subtitle divs, within .card-info containers"
-   status: "ok"
-
- - FAC: '979'
-   name: "TORONTO SCARBOROUGH HEALTH NETWORK"
-   url: 'https://www.shn.ca/about-us/hospital-leadership/'
-   pattern: "div_classes"
-   expected_executives: 14
-   html_structure:
-        name_class: "staff-name"
-        title_class: "staff-title"
-        container_class: "staff-member"
-        notes: "div class=staff-info"
-   status: "ok"
-
+  - FAC: "600"
+    name: "ATIKOKAN GENERAL HOSPITAL"
+    hospital_type: "Small Hospital"
+    url: "https://aghospital.on.ca/about/board-of-directors/"
+    pattern: "combined_h2"
+    expected_executives: 3
+    html_structure:
+     combined_element: "p"
+     separator: " | "
+     notes: "Page shows 'Board of Directors' but contains Senior Management Team. Jeremy Dickson has no title."
+    status: "needs_testing"
  
- - FAC: '837'
-   name: "TORONTO HOSPITAL FOR SICK CHILDREN"
-   url: "https://www.sickkids.ca/en/about/leadership/"
-   pattern: "div_classes"
-   expected_executives: 14
-   html_structure:
-    container_class: "card"  # Changed from "staff-member" to "card"
-    name_class: "card-title"
-    title_class: "card-text"
-    notes: "Card 1 is news article. Board members included - clean in post."
-   status: "ok" 
-
- - FAC: '976'
-   name: "TORONTO SINAI HEALTH SYSTEM"
-   url: 'https://www.sinaihealth.ca/about-sinai-health/sinai-health-leadership'
-   pattern: 'div_classes'
-   expected_executives: 16
-   html_structure:
-      name_class: 'bio-token--name'
-      title_class: 'bio-token--position'
-      container_class: 'bio-token--inner'
+  - FAC: '967'
+    name: CORNWALL COMMUNITY
+    hospital_type: Large Community Hospital
+    url: https://www.cornwallhospital.ca/en/SeniorAdmin
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      notes: Reversed Titles new pattern??
+    status: ok
+    known_executives:
+      - name: Jeanette Despatie
+        title: President & Chief Executive Officer
+      - name: Dr. Anastasios Boubalos
+        title: Chief of Staff
+      - name: Kelly Shaw
+        title: Vice President of Patient Services & Chief Nursing Officer
+      - name: Ann Zeran
+        title: Vice President of Community Programs
+      - name: Karin Hagen
+        title: Chief Finance Officer
+      - name: vacant
+        title: Chief Information Officer
+  - FAC: '966'
+    name: SARNIA BLUEWATER HEALTH
+    hospital_type: Large Community Hospital
+    url: https://www.bluewaterhealth.ca/executive-team
+    pattern: manual_entry_required
+    expected_executives: 6
+    html_structure:
+      notes: Site blocks automated scraping - connection refused in R
+    status: ok
+    known_executives:
+      - name: Paula Reaume-Zimmer
+        title: President & CEO
+      - name: Dr. Michel Haddad
+        title: Chief of Staff
+      - name: Bob DeRaad
+        title: Vice-President, Clinical Services
+      - name: Marlene Kerwin
+        title: Vice-President, Corporate Services and Chief Financial Officer
+      - name: Jane Mathews
+        title: Vice-President Clinical Support Services and Chief Nursing Executive
+      - name: Lisa Regan
+        title: Vice-President, Care Transitions
+  - FAC: '965'
+    name: SAULT STE MARIE SAULT AREA
+    hospital_type: Large Community Hospital
+    url: https://sah.on.ca/about/hospital-leadership/senior-leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 6
+    html_structure:
+      name_element: h3
+      title_element: p
+      notes: ''
+    status: ok
+  - FAC: '962'
+    name: ST CATHARINES NIAGARA HEALTH SYSTEM
+    hospital_type: Large Community Hospital
+    url: https://www.niagarahealth.on.ca/site/leadership-team
+    pattern: h2_name_p_title
+    expected_executives: 9
+    html_structure:
+      name_element: h3
+      title_element: p
+      notes: H3 for names, P with strong tags for titles
+    status: ok
+  - FAC: '955'
+    name: GREY BRUCE HEALTH SERVICES  Brightshores
+    hospital_type: Large Community Hospital
+    url: https://www.brightshores.ca/about-us/executive-team/
+    pattern: combined_h2
+    expected_executives: 7
+    html_structure:
+      combined_element: p
+      separator: ','
+      notes: Executive assistant dealt iwth in Post
+    status: ok
+  - FAC: '950'
+    name: HALTON HEALTHCARE
+    hospital_type: Large Community Hospital
+    url: https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team
+    pattern: manual_entry_required
+    expected_executives: 12
+    html_structure:
+      notes: H3 elements with <br> separator - not supported by current patterns
+    status: ok
+    known_executives:
+      - name: Melissa Farrell
+        title: President & CEO
+      - name: Dr. David McConachie
+        title: Chief of Staff
+      - name: Al Coady
+        title: Senior Vice President, Redevelopment, Facilities & Retail Operations
+      - name: Debra Stout
+        title: Senior Vice President and Chief Nursing Executive
+      - name: Marie Hubbard
+        title: Senior Vice President, People and Culture
+      - name: Melissa McCullough
+        title: Senior Vice President, Chief Financial Officer and Chief Strategy Officer
+      - name: Dr. Sohail Gandhi
+        title: Vice President and Chief Medical Officer
+      - name: Sharon Gray
+        title: Vice President, Clinical Programs and Interprofessional Practice
+      - name: Naila Butt
+        title: Vice President, Patient Experience, Quality and Risk
+      - name: Jennifer Fiddick-Carvalho
+        title: Vice President, Corporate Services and Communications
+      - name: Katherine Scott
+        title: Vice President, Ambulatory Services and Partnerships
+      - name: Paul Milliken
+        title: Vice President, Communications and Stakeholder Relations
+  - FAC: '940'
+    name: COBOURG NORTHUMBERLAND HILLS
+    hospital_type: Large Community Hospital
+    url: https://nhh.ca/AboutNHH/senior-leadership-team
+    pattern: h2_name_h3_title
+    expected_executives: 7
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
+  - FAC: '931'
+    name: PARRY SOUND WEST PARRY SOUND
+    hospital_type: Large Community Hospital
+    url: https://www.wpshc.com/about-us/our-senior-leadership-team/
+    pattern: div_classes
+    expected_executives: 10
+    html_structure:
+      name_class: expand-tiles__tile-title
+      title_class: expand-tiles__tile-meta--position
+      notes: Expandable tile structure - using tile view classes
+    status: ok
+  - FAC: '916'
+    name: HEADWATERS
+    hospital_type: Large Community Hospital
+    url: https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      notes: Titles appear BEFORE names (reversed order), causing pairing issues with
+        div_classes pattern
+    status: ok
+    known_executives:
+      - name: Kim Delahunt
+        title: President & Chief Executive Officer
+      - name: Dr. Grace Wang, MD, FRSC
+        title: Chief of Staff & Vice President, Medical Affairs
+      - name: Cathy van Leipsig
+        title: Vice President, Corporate Services & Chief Financial Officer
+      - name: Annette Jones
+        title: Vice President Patient Experience, Health Integration, Chief Nursing
+          and Health Disciplines Executive (CNE)
+      - name: Frances Duiker
+        title: Vice President, People and Culture
+  - FAC: '928'
+    name: PERTH SMITHS FALLS
+    hospital_type: Large Community Hospital
+    url: https://psfdh.on.ca/leadershipteam
+    pattern: combined_h2
+    expected_executives: 5
+    html_structure:
+      combined_element: p
+      separator: ', '
+      notes: AI predicted combined_h2 with HIGH confidence - confirmed via inspection
+    status: ok
+  - FAC: '814'
+    name: STRATHROY MIDDLESEX GENERAL
+    hospital_type: Large Community Hospital
+    url: https://mhalliance.on.ca/about/administration/
+    pattern: combined_h2
+    expected_executives: 4
+    html_structure:
+      combined_element: h3
+      separator: ', '
+      notes: will need to strip out directors in post
+    status: ok
+  - FAC: '813'
+    name: STRATFORD GENERAL HPHA duplicate FAC=983
+    hospital_type: Large Community Hospital
+    url: https://www.hpha.ca/ourorganization#accordion-38-2
+    pattern: p_with_bold_and_br
+    expected_executives: 5
+    html_structure:
+      notes: Names in <strong> within <p>, titles after <br>
+    status: ok
+  - FAC: '804'
+    name: SIMCOE NORFOLK GENERAL
+    hospital_type: Large Community Hospital
+    url: https://www.ngh.on.ca/senior-leadership-team/
+    pattern: p_with_bold_and_br
+    expected_executives: 5
+    html_structure:
+      notes: Names and titles in <strong> within <p>, separated by <br> tags
+    status: ok
+  - FAC: '771'
+    name: PETERBOROUGH REGIONAL HEALTH CENTRE
+    hospital_type: Large Community Hospital
+    url: https://www.prhc.on.ca/about-us/senior-leadership/
+    pattern: combined_h2
+    expected_executives: 9
+    html_structure:
+      combined_element: span
+      separator: ','
+      status: ok
+  - FAC: '763'
+    name: PEMBROKE REGIONAL
+    hospital_type: Large Community Hospital
+    url: https://www.pemreghos.org/slt?m=1
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      notes: Titles embedded in prose paragraphs - not extractable by standard patterns
+    status: manual_entry
+    known_executives:
+      - name: Sabine Mersmann
+        title: President and CEO
+      - name: Dr. Declan Rowan
+        title: Chief of Staff
+      - name: Beth Brownlee
+        title: Vice President Clinical & Support Services and Chief Nursing Executive
+      - name: Brent McIntyre
+        title: Vice President Human Resources
+      - name: Scott Coombes
+        title: Vice President Finance and Corporate Services and Chief Financial Officer
+  - FAC: '745'
+    name: ORILLIA SOLDIERS' MEMORIAL
+    hospital_type: Large Community Hospital
+    url: https://www.osmh.on.ca/senior-leadership-team/
+    pattern: div_classes
+    expected_executives: 5
+    html_structure:
+      name_class: name
+      title_class: position
+      container_class: ''
+      notes: Names in .name, titles in .position (not .title which is used for navigation)
+    status: ok
+  - FAC: '736'
+    name: NEWMARKET SOUTHLAKE REGIONAL
+    hospital_type: Large Community Hospital
+    url: https://southlake.ca/about-southlake/leadership-team/
+    pattern: div_classes
+    expected_executives: 10
+    html_structure:
+      name_class: tm-name
+      title_class: tm-primary-title
+      container_class: team-member
+      notes: Names in h3.tm-name, titles in p.tm-primary-title
+    status: ok
+  - FAC: '726'
+    name: MIDLAND GEORGIAN BAY
+    hospital_type: Large Community Hospital
+    url: https://gbgh.on.ca/about-us/senior-leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 5
+    html_structure:
+      name_element: h3
+      title_element: h4
       missing_people:
-      - name: "Louis de Melo"
-        title: "President and Chief Executive Officer (CEO), Sinai Health Foundation and Executive Vice President, Academic Advancement, Sinai Health SYSTEM"
-      - name:  "Dr. Anne-Claude Gingras"
-        title: "Director, Lunenfeld-Tanenbaum Research Institute, and Vice President, Research for Sinai Health"
-      notes: ""
-   status: ok
-   
- - FAC: '793'
-   name: "ST THOMAS ELGIN GENERAL"
-   url: 'https://www.stegh.on.ca/about-us/our-leadership/'
-   pattern: "p_with_bold_and_br"
-   expected_executives: 6
-   html_structure:
-      notes: ""
-      
-   status: "ok"
-
- - FAC: "975"
-   name: "MISSISSAUGA TRILLIUM HEALTH PARTNER"
-   url: "https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx"
-   pattern: "h2_combined_complex"
-   expected_executives: 18
-   html_structure:
-    notes: "Complex H2 elements with names, credentials, and titles all combined"
-   status: "ok"
-
- - FAC: '947'
-   name: TORONTO UNIVERSITY HEALTH NETWORK
-   url: 'https://www.uhn.ca/corporate/AboutUHN/Governance_Leadership/Pages/Our_Leaders.aspx'
-   pattern: "manual_entry_required"
-   expected_executives: 30
-   html_structure:
-    notes: "Content loaded by JavaScript - cannot be scraped with rvest"
-   status: "javascript_blocked"
-   known_executives:
-    - name: "Dr. Kevin Smith"
-      title: "President and CEO"
-    - name: "Andrew Boozary"
-      title: "Executive Director, Social Medicine and Population Health"
-    - name: "Michael Caesar"
-      title: "Chief Data and Analytics Officer"
-    - name: "Lucas Chartier"
-      title: "Vice President, Quality and Safety"
-    - name: "Anil Chopra"
-      title: "Vice President, Medical Affairs"
-    - name: "Darlene Dasent"
-      title: "Executive Vice President & Chief Financial Officer"
-    - name: "Doug Earle"
-      title: "CEO, West Park Healthcare Centre Foundation"
-    - name: "Marnie Escaf"
-      title: "Vice President, Clinical"
-    - name: "Thomas Forbes"
-      title: "Surgeon-in-Chief"
-    - name: "Carolyn Gosse"
-      title: "Vice President, Clinical"
-    - name: "Brian Hodges"
-      title: "Executive Vice President, Education & Chief Medical Officer"
-    - name: "Pam Hubley"
-      title: "Vice President & Chief Nurse Executive"
-    - name: "Shiran Isaacksz"
-      title: "Vice President, Clinical"
-    - name: "Shaf Keshavjee"
-      title: "Chief of Innovation"
-    - name: "Kyla Kumar"
-      title: "Vice President, Communications & Brand Strategy"
-    - name: "Aimée Langan"
-      title: "Vice President, Clinical"
-    - name: "Joel Montesanti"
-      title: "Chief Strategy Officer"
-    - name: "Sarah Muttitt"
-      title: "Vice President & Chief Information Officer"
-    - name: "Janet Newton"
-      title: "Vice President, Clinical"
-    - name: "Michael O'Leary"
-      title: "Principal of the Michener Institute of Education"
-    - name: "Julie Quenneville"
-      title: "CEO, UHN Foundation"
-    - name: "Rebecca Repa"
-      title: "Executive Vice President, Clinical, Performance and Real Estate"
-    - name: "Mark Spencer"
-      title: "Executive Vice President, People & Culture"
-    - name: "Keith Stewart"
-      title: "Vice President, Clinical and Lab Medicine"
-    - name: "Kathryn Tinckam"
-      title: "Physician-in-Chief"
-    - name: "Marc Toppings"
-      title: "Vice President & Chief Legal Officer"
-    - name: "Jake Tran"
-      title: "Vice President, Clinical"
-    - name: "Aristotle Voineskos"
-      title: "Vice President, UHN-CAMH Partnership"
-    - name: "Bo Wang"
-      title: "Chief Artificial Intelligence Scientist"
-    - name: "Brad Wouters"
-      title: "Executive Vice President, Science & Research"
-    - name: "Miyo Yamashita"
-      title: "President & CEO, The Princess Margaret Cancer Foundation"
-
-
- - FAC: '951'
-   name: BRAMPTON WILLIAM OSLER
-   url: 'https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146'
-   pattern: 'combined_h2'
-   expected_executives: 5.0
-   html_structure:
-        combined_element: "h3"
-        separator: ", "  # e.g., "John Smith - CEO"
-        notes: ""
-   status: ok
-
-
- - FAC: '695'
-   name: KINGSTON PROVIDENCE CARE HOSPITAL
-   url: 'https://providencecare.ca/about-us/senior-leadership-team/'
-   pattern: "div_classes"
-   html_structure:
-    name_class: "mb-name"
-    title_class: "mb-position"
-    container_class: "mb-item"
-    notes: ""
-    missing_people:
-      - name: "Dr. Simon O'Brien"
-        title: "Chair, Medical Advisory Committee"
-      - name: "Tamás Zsolnay"
-        title: "President & CEO, University Hospitals Kingston Foundation"
-   status: "ok"
-
- - FAC: "932"
-   name: "Elizabeth Bruyere Hospital"
-   url: "https://www.bruyere.org/en/leadership-team?v=1"
-   pattern: "h2_name_p_title"
-   expected_executives: 10
-   html_structure:
-    name_element: "p"    # ← Changed from h2 to p
-    title_element: "p"   # ← Both are p elements now
-    notes: ""
-    #missing_people:
-    #  - name: "Mélanie Dubé"
-    #    title: "Chief Financial Officer, Vice-President Corporate Services, Planning and Redevelopment"
-   status: "ok"
- - FAC: '790'
-   name: "ST CATHARINES HOTEL DIEU"
-   url: "https://www.hoteldieushaver.org/site/team"
-   pattern: "list_items"
-   expected_executives: 5
-   html_structure:
-    list_type: "ul"
-    format: "combined"
-    separator: " | "
-    notes: " But includes non executive... Clean in full database: List items with pipe separator. Format: Name | Title | email. Clean spaces around pipe."
-   status: "ok"
-   
-   
- - FAC: '781'
-   name: THUNDER BAY ST. JOSEPH'S
-   url: 'https://sjcg.net/aboutus/leadership.aspx'
-   pattern: 'table_rows'
-   expected_executives: 6
-   html_structure:
-     structure_type: "table"
-     name_location: "th_column_1"
-     title_location: "td_column_2"
-     
-   notes: 
-   status: ok
-   
-   
- - FAC: '827'
-   name: TORONTO BAYCREST CTR GERIATRIC CARE
-   url: 'https://www.baycrest.org/Baycrest-Pages/About-Baycrest/Leadership/Baycrest-Hospital-Executive-Team'
-   pattern: "nested_list_with_ids"
-   expected_executives: 5
-   html_structure:
-    name_selector: "div[id^='t-']"
-    title_selector: "span[id^='d-']"
-    container: "li.column"
-    notes: ""
-   status: "ok"
-   
- - FAC: '939'
-   name: "TORONTO HOLLAND BLOORVIEW KIDS"
-   url: 'https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team'
-   pattern: "field_content_sequential"
-   expected_executives: 9
-   html_structure:
-    element_selector: ".field-content"
-    pattern_type: "sequential_every_3"
-    start_index: 3
-    missing_people:
-      - name: "Golda Milo-Manson, MD, FRCPC"
-        title: "Vice-President, Medicine and Academic Affairs"
-    notes: ""
-   status: "ok"        
- 
- - FAC: '850'
-   name: TORONTO RUNNYMEDE HC
-   url: 'https://runnymedehc.ca/runnymede-difference/about-runnymede/governance/'
-   pattern: 'list_items'
-   expected_executives: 3.0
-   html_structure:
-        list_type: "ul"  # or ol
-        item_element: "li"
-        format: "combined"
-        separator: ", "
-   notes: "need to strip out board chair"
-   status: ok
-
- - FAC: '927'
-   name: "Windsor Hotel Dieu Grace"
-   url: 'https://www.hdgh.org/leadership'
-   pattern: 'manual_entry_required'  # Site blocks automated access
-   expected_executives: 5
-   html_structure:
-    n otes: "Website blocks automated scraping - may need manual entry or contact hospital"
-   status: "blocked_by_site"
-   known_executives:
-    - name: "Bill Marra"
-      title: "President and CEO"
-    - name: "Andrea Steen"
-      title: "Chief of Staff"
-    - name: "Sherri Laframboise"
-      title: "Chief Financial Officer"
-    - name: "Sheri McGeen"
-      title: "Chief Human Resources"
-    - name: "Tammy Kotyk"
-      title: "VP Of Mental Healht and Addictions"
-    - name: "Shannon Landry"
-      title: "VP of Restorative Care and Chief Nursing Officer"
-  
-   
-   
- - FAC: '970'
-   name: "Brantford Brant Community"
-   url: 'https://www.bchsys.org/en/about-us/senior-leadership-team.aspx'
-   pattern: 'combined_h2'
-   expected_executives: 6
-   html_structure:
-    combined_element: 'h5.emphasis-Secondary'
-    separator: ' | '
-    notes: ""
-   status: "ok"
-   
-   
- - FAC: '982'
-   name: "Blanche River Health"
-   url: 'https://www.blancheriverhealth.ca/about-us/leadership'
-   pattern: 'div_classes'  # or whatever pattern you're currently using
-   expected_executives: 3  # Adjust based on actual senior leadership count
-   html_structure:
-     name_class: "name"
-     title_class: "position"
-     container_class: "member-name"
-     notes: "Leadership page includes both executives and board members"
-   status: "ok"
-   
-   
-   
- - FAC: '619'
-   name: "BROCKVILLE GENERAL"
-   url: "https://www.brockvillegeneralhospital.ca/who-we-are/executive-leadership-team/"
-   pattern: "combined_h2"
-   expected_executives: 6
-   html_structure:
-    combined_element: "p"
-    separator: ","
-    notes: "Format: Name, Title in P elements with comma separator"
-   status: "ok"
-   
-   
-# Pattern templates section for enhanced_hospitals.yaml
-# Add or replace the pattern_templates section with this updated version
-
+        - name: Dr. Vikram Ralhan
+          title: Chief of Staff
+        - name: Linda Gravel
+          title: Vice President, Clinical Services and Chief Nursing Executive
+    status: ok
+  - FAC: '718'
+    name: BURLINGTON JOSEPH BRANT HOSPITAL
+    hospital_type: Large Community Hospital
+    url: https://www.josephbranthospital.ca/about-us/our-team/senior-leadership
+    pattern: nested_list_with_ids
+    expected_executives: 6
+    html_structure:
+      name_selector: span.name
+      title_selector: span.title
+      container_class: ''
+      notes: ''
+    status: ok
+  - FAC: '701'
+    name: RICHMOND HILL MACKENZIE HEALTH
+    hospital_type: Large Community Hospital
+    url: https://www.mackenziehealth.ca/about-us/executive-leadership-team
+    pattern: nested_list_with_ids
+    expected_executives: 8
+    html_structure:
+      name_selector: span.name
+      title_selector: span.position
+    status: ok
+  - FAC: '699'
+    name: WRHN-KITCHENER ST MARY'S
+    hospital_type: Large Community Hospital
+    url: https://www.smgh.ca/about-us/our-leadership-team
+    pattern: div_classes
+    expected_executives: 17
+    html_structure:
+      name_class: name
+      title_class: position
+      container_class: staff-member
+    status: OK
+  - FAC: '930'
+    name: WRHN-KITCHENER GRAND RIVER
+    hospital_type: Large Community Hospital
+    url: https://www.grhosp.on.ca/about/senior-leadership-team
+    pattern: list_items
+    expected_executives: 17
+    html_structure:
+      list_type: ul
+      format: combined
+      separator: ', '
+      notes: Combined with St.Marys Kitchner, Has multiple commas in title
+    status: OK
+  - FAC: '665'
+    name: GUELPH GENERAL
+    hospital_type: Large Community Hospital
+    url: https://www.gghorg.ca/about-ggh/leadership-team/
+    pattern: combined_h2
+    expected_executives: 6
+    html_structure:
+      combined_element: h2
+      separator: ', '
+    status: ok
+  - FAC: '640'
+    name: COLLINGWOOD GENERAL AND MARINE HOSP
+    hospital_type: Large Community Hospital
+    url: https://cgmh.on.ca/team/senior-leadership-team
+    pattern: div_classes
+    expected_executives: 5
+    html_structure:
+      name_class: title
+      title_class: job_title
+    status: ok
+  - FAC: '605'
+    name: TORONTO ST. JOSEPH'S INFIRMARY
+    hospital_type: Chronic/Rehab Hospital
+    url: TODO_ADD_LEADERSHIP_URL
+    pattern: h2_name_h3_title
+    expected_executives: 5
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: closed
+  - FAC: '613'
+    name: TORONTO WEST PARK
+    hospital_type: Chronic/Rehab Hospital
+    url: https://www.gghorg.ca/about-ggh/leadership-team/
+    pattern: combined_h2
+    expected_executives: 6
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: closed
+  - FAC: '983'
+    name: HURON PERTH HEALTHCARE ALLIANCE
+    hospital_type: Large Community Hospital
+    url: https://www.hpha.ca/ourorganization#accordion-38-2
+    pattern: p_with_bold_and_br
+    expected_executives: 5
+    html_structure:
+      notes: Names in <strong> within <p>, titles after <br>
+    status: ok
+  - FAC: '974'
+    name: NORTH BAY NORTH BAY REGIONAL HC
+    hospital_type: Large Community Hospital
+    url: https://nbrhc.on.ca/about-nbrhc/senior-leadership-team/
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      notes: Content loaded by JavaScript - cannot be scr
+    status: javascript_blocked
+    known_executives:
+      - name: Paul Heinrich
+        title: President & CEO
+      - name: Lise St. Marseille
+        title: Vice President, Mental Health & Addictions
+      - name: Joanne Laplante
+        title: Vice President, Clinical and Chief Nursing Executive
+      - name: Ryan Jeffers
+        title: Vice President of Corporate Services & CFO
+      - name: Dr. Scott Kerrigan
+        title: Chief of Staff
+  - FAC: '981'
+    name: CHATHAM CHATHAM-KENT HEALTH ALLIANC
+    hospital_type: Large Community Hospital
+    url: https://www.ckha.on.ca/senior-team/
+    pattern: manual_entry_required
+    expected_executives: 8
+    html_structure:
+      notes: Website blocks automated scraping - HTTP 403 Forbidden
+    status: blocked_by_site
+    known_executives:
+      - name: Adam Topp
+        title: President & CEO
+      - name: Aaron Ryan
+        title: Vice President, Performance & Chief Financial Officer
+      - name: Natalie Clark
+        title: Chief Nursing Executive
+      - name: Caen Suni
+        title: Vice President, Clinical Programs & Operations
+      - name: Dr. Zeke Milkovic
+        title: Chief of Staff
+      - name: Justin Turkington
+        title: Chief Human Resources Officer
+      - name: Fannie Vavoulis
+        title: Director, Communications & Patient Experience
+      - name: Christine Mitchell
+        title: CKHA Foundation, President & CEO
+  - FAC: '707'
+    name: Ross Memorial Hospital
+    hospital_type: Large Community Hospital
+    url: https://rmh.org/about-ross-memorial/senior-leadership
+    pattern: h2_name_h3_title
+    expected_executives: 6
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+      status: ok
+  - FAC: '624'
+    name: Campbellford Memorial Hospital
+    hospital_type: Small Hospital
+    url: https://cmh.ca/our-executive-leadership-team
+    pattern: h2_name_h3_title
+    expected_executives: 6
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
+  - FAC: '596'
+    name: Alliston Stevenson Memorial Hospital
+    hospital_type: Small Hospital
+    url: https://www.stevensonhospital.ca/senior-leadership
+    pattern: h2_name_h3_title
+    expected_executives: 5
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
+  - FAC: '661'
+    name: Cambridge Memorial Hospital
+    hospital_type: Large Community Hospital
+    url: https://www.cmh.org/contacts
+    pattern: table_rows
+    expected_executives: 5
+    html_structure:
+      structure_type: table
+      name_location: td_column_1
+      title_location: td_column_2
+      notes: Drop Managers in Post
+    status: ok
+  - FAC: '957'
+    name: BELLEVILLE QUINTE HEALTH CARE
+    hospital_type: Large Community Hospital
+    url: https://quintehealth.ca/about-quinte-health/leadership/
+    pattern: list_items
+    expected_executives: 6
+    html_structure:
+      list_type: ul
+      format: combined
+      separator: ', '
+      notes: ''
+    status: ok
+  - FAC: '953'
+    name: Sunnybrook Health Sciences Centre
+    hospital_type: Teaching Hospital
+    url: https://sunnybrook.ca/content/?page=executive-leadership
+    pattern: h2_name_p_title
+    expected_executives: 13
+    html_structure:
+      name_element: h2
+      title_element: p
+      missing_people:
+        - name: Dr. Calvin Law, MD, FRCSC, MPH
+          title: Vice President, Education
+        - name: Kullervo Hynynen, Ph.D.
+          title: Vice President, Research and Innovation
+        - name: Dr. Dan Cass B.Sc., MD, MSc, FRCPC
+          title: Executive Vice President and Chief Medical Executive
+      notes: ''
+    status: ok
+  - FAC: '935'
+    name: Thunder Bay Regional Health Sciences Centre
+    hospital_type: Teaching Hospital
+    url: https://tbrhsc.net/tbrhsc/senior-leadership-council/senior-leadership-council-gallery/
+    pattern: boardcard_gallery
+    expected_executives: 10
+    html_structure:
+      container_class: boardcard
+      text_format: name_comma_title
+      separator: ','
+      notes: Gallery of senior leaders
+    status: 'ok '
+  - FAC: '941'
+    name: Humber River Hospital
+    hospital_type: Large Community Hospital
+    url: https://www.hrh.ca/who-we-are/accountability/governance-leadership/
+    pattern: combined_h2
+    expected_executives: 9
+    html_structure:
+      combined_element: h3
+      separator: ' - '
+      notes: ''
+      status: ok
+  - FAC: '952'
+    name: Lakeridge Health
+    hospital_type: Large Community Hospital
+    url: https://www.lh.ca/about-us/leadership-team/
+    pattern: combined_h2
+    expected_executives: 10
+    html_structure:
+      combined_element: h3
+      separator: ', '
+      notes: ''
+    status: ok
+  - FAC: '905'
+    name: OAK VALLEY HEALTH
+    hospital_type: Large Community Hospital
+    url: https://www.oakvalleyhealth.ca/about-us/meet-our-team/senior-leadership-team/
+    pattern: div_classes
+    expected_executives: 11
+    html_structure:
+      name_class: dr-name
+      title_class: dr-degrees
+      container_class: right-side
+      notes: Names in span.dr-name, titles in span.dr-degrees within div.right-side
+    status: ok
+  - FAC: '632'
+    name: North York General Hospital
+    hospital_type: Large Community Hospital
+    url: https://www.nygh.on.ca/about-us/leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 11
+    html_structure:
+      name_element: h2
+      title_element: p
+      notes: h2=Name, p=Title. Terri Stuart-McEwan has hyphenated name that needs
+        pattern fix
+    status: ok
+  - FAC: '777'
+    name: Queensway Carleton Hospital
+    hospital_type: Large Community Hospital
+    url: https://www.qch.on.ca/Leadership
+    pattern: qch_mixed_tables
+    expected_executives: 9
+    html_structure:
+      notes: ''
+    status: ok
+  - FAC: '606'
+    name: BARRIE ROYAL VICTORIA REG HC
+    hospital_type: Large Community Hospital
+    url: https://www.rvh.on.ca/about-rvh/senior-leadership-team/
+    pattern: div_classes
+    expected_executives: 11
+    html_structure:
+      name_class: card-title
+      title_class: card-subtitle
+      container_class: card-info
+      notes: Names in .card-title divs, titles in .card-subtitle divs, within .card-info
+        containers
+    status: ok
+  - FAC: '979'
+    name: TORONTO SCARBOROUGH HEALTH NETWORK
+    hospital_type: Large Community Hospital
+    url: https://www.shn.ca/about-us/hospital-leadership/
+    pattern: div_classes
+    expected_executives: 14
+    html_structure:
+      name_class: staff-name
+      title_class: staff-title
+      container_class: staff-member
+      notes: div class=staff-info
+    status: ok
+  - FAC: '837'
+    name: TORONTO HOSPITAL FOR SICK CHILDREN
+    hospital_type: Specialty Children Hospital
+    url: https://www.sickkids.ca/en/about/leadership/
+    pattern: div_classes
+    expected_executives: 14
+    html_structure:
+      container_class: card
+      name_class: card-title
+      title_class: card-text
+      notes: Card 1 is news article. Board members included - clean in post.
+    status: ok
+  - FAC: '976'
+    name: TORONTO SINAI HEALTH SYSTEM
+    hospital_type: Teaching Hospital
+    url: https://www.sinaihealth.ca/about-sinai-health/sinai-health-leadership
+    pattern: div_classes
+    expected_executives: 16
+    html_structure:
+      name_class: bio-token--name
+      title_class: bio-token--position
+      container_class: bio-token--inner
+      missing_people:
+        - name: Louis de Melo
+          title: President and Chief Executive Officer (CEO), Sinai Health Foundation
+            and Executive Vice President, Academic Advancement, Sinai Health SYSTEM
+        - name: Dr. Anne-Claude Gingras
+          title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
+            Research for Sinai Health
+      notes: ''
+    status: ok
+  - FAC: '793'
+    name: ST THOMAS ELGIN GENERAL
+    hospital_type: Large Community Hospital
+    url: https://www.stegh.on.ca/about-us/our-leadership/
+    pattern: p_with_bold_and_br
+    expected_executives: 6
+    html_structure:
+      notes: ''
+    status: ok
+  - FAC: '975'
+    name: MISSISSAUGA TRILLIUM HEALTH PARTNER
+    hospital_type: Large Community Hospital
+    url: https://www.thp.ca/aboutus/Pages/Seniorleadership.aspx
+    pattern: h2_combined_complex
+    expected_executives: 18
+    html_structure:
+      notes: Complex H2 elements with names, credentials, and titles all combined
+    status: ok
+  - FAC: '947'
+    name: TORONTO UNIVERSITY HEALTH NETWORK
+    hospital_type: Teaching Hospital
+    url: https://www.uhn.ca/corporate/AboutUHN/Governance_Leadership/Pages/Our_Leaders.aspx
+    pattern: manual_entry_required
+    expected_executives: 30
+    html_structure:
+      notes: Content loaded by JavaScript - cannot be scraped with rvest
+    status: javascript_blocked
+    known_executives:
+      - name: Dr. Kevin Smith
+        title: President and CEO
+      - name: Andrew Boozary
+        title: Executive Director, Social Medicine and Population Health
+      - name: Michael Caesar
+        title: Chief Data and Analytics Officer
+      - name: Lucas Chartier
+        title: Vice President, Quality and Safety
+      - name: Anil Chopra
+        title: Vice President, Medical Affairs
+      - name: Darlene Dasent
+        title: Executive Vice President & Chief Financial Officer
+      - name: Doug Earle
+        title: CEO, West Park Healthcare Centre Foundation
+      - name: Marnie Escaf
+        title: Vice President, Clinical
+      - name: Thomas Forbes
+        title: Surgeon-in-Chief
+      - name: Carolyn Gosse
+        title: Vice President, Clinical
+      - name: Brian Hodges
+        title: Executive Vice President, Education & Chief Medical Officer
+      - name: Pam Hubley
+        title: Vice President & Chief Nurse Executive
+      - name: Shiran Isaacksz
+        title: Vice President, Clinical
+      - name: Shaf Keshavjee
+        title: Chief of Innovation
+      - name: Kyla Kumar
+        title: Vice President, Communications & Brand Strategy
+      - name: Aimée Langan
+        title: Vice President, Clinical
+      - name: Joel Montesanti
+        title: Chief Strategy Officer
+      - name: Sarah Muttitt
+        title: Vice President & Chief Information Officer
+      - name: Janet Newton
+        title: Vice President, Clinical
+      - name: Michael O'Leary
+        title: Principal of the Michener Institute of Education
+      - name: Julie Quenneville
+        title: CEO, UHN Foundation
+      - name: Rebecca Repa
+        title: Executive Vice President, Clinical, Performance and Real Estate
+      - name: Mark Spencer
+        title: Executive Vice President, People & Culture
+      - name: Keith Stewart
+        title: Vice President, Clinical and Lab Medicine
+      - name: Kathryn Tinckam
+        title: Physician-in-Chief
+      - name: Marc Toppings
+        title: Vice President & Chief Legal Officer
+      - name: Jake Tran
+        title: Vice President, Clinical
+      - name: Aristotle Voineskos
+        title: Vice President, UHN-CAMH Partnership
+      - name: Bo Wang
+        title: Chief Artificial Intelligence Scientist
+      - name: Brad Wouters
+        title: Executive Vice President, Science & Research
+      - name: Miyo Yamashita
+        title: President & CEO, The Princess Margaret Cancer Foundation
+  - FAC: '951'
+    name: BRAMPTON WILLIAM OSLER
+    hospital_type: Large Community Hospital
+    url: https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146
+    pattern: combined_h2
+    expected_executives: 5.0
+    html_structure:
+      combined_element: h3
+      separator: ', '
+      notes: ''
+    status: ok
+  - FAC: '695'
+    name: KINGSTON PROVIDENCE CARE HOSPITAL
+    hospital_type: Chronic/Rehab Hospital
+    url: https://providencecare.ca/about-us/senior-leadership-team/
+    pattern: div_classes
+    html_structure:
+      name_class: mb-name
+      title_class: mb-position
+      container_class: mb-item
+      notes: ''
+      missing_people:
+        - name: Dr. Simon O'Brien
+          title: Chair, Medical Advisory Committee
+        - name: Tamás Zsolnay
+          title: President & CEO, University Hospitals Kingston Foundation
+    status: ok
+  - FAC: '932'
+    name: Elizabeth Bruyere Hospital
+    hospital_type: Chronic/Rehab Hospital
+    url: https://www.bruyere.org/en/leadership-team?v=1
+    pattern: h2_name_p_title
+    expected_executives: 10
+    html_structure:
+      name_element: p
+      title_element: p
+      notes: ''
+    status: ok
+  - FAC: '790'
+    name: ST CATHARINES HOTEL DIEU
+    hospital_type: Chronic/Rehab Hospital
+    url: https://www.hoteldieushaver.org/site/team
+    pattern: list_items
+    expected_executives: 5
+    html_structure:
+      list_type: ul
+      format: combined
+      separator: ' | '
+      notes: ' But includes non executive... Clean in full database: List items with
+        pipe separator. Format: Name | Title | email. Clean spaces around pipe.'
+    status: ok
+  - FAC: '781'
+    name: THUNDER BAY ST. JOSEPH'S
+    hospital_type: Chronic/Rehab Hospital
+    url: https://sjcg.net/aboutus/leadership.aspx
+    pattern: table_rows
+    expected_executives: 6
+    html_structure:
+      structure_type: table
+      name_location: th_column_1
+      title_location: td_column_2
+    status: ok
+  - FAC: '827'
+    name: TORONTO BAYCREST CTR GERIATRIC CARE
+    hospital_type: Chronic/Rehab Hospital
+    url: https://www.baycrest.org/Baycrest-Pages/About-Baycrest/Leadership/Baycrest-Hospital-Executive-Team
+    pattern: nested_list_with_ids
+    expected_executives: 5
+    html_structure:
+      name_selector: div[id^='t-']
+      title_selector: span[id^='d-']
+      container: li.column
+      notes: ''
+    status: ok
+  - FAC: '939'
+    name: TORONTO HOLLAND BLOORVIEW KIDS
+    hospital_type: Chronic/Rehab Hospital
+    url: https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team
+    pattern: field_content_sequential
+    expected_executives: 9
+    html_structure:
+      element_selector: .field-content
+      pattern_type: sequential_every_3
+      start_index: 3
+      missing_people:
+        - name: Golda Milo-Manson, MD, FRCPC
+          title: Vice-President, Medicine and Academic Affairs
+      notes: ''
+    status: ok
+  - FAC: '850'
+    name: TORONTO RUNNYMEDE HC
+    hospital_type: Chronic/Rehab Hospital
+    url: https://runnymedehc.ca/runnymede-difference/about-runnymede/governance/
+    pattern: list_items
+    expected_executives: 3.0
+    html_structure:
+      list_type: ul
+      item_element: li
+      format: combined
+      separator: ', '
+    notes: need to strip out board chair
+    status: ok
+  - FAC: '927'
+    name: Windsor Hotel Dieu Grace
+    hospital_type: Chronic/Rehab Hospital
+    url: https://www.hdgh.org/leadership
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      n otes: Website blocks automated scraping - may need manual entry or contact
+        hospital
+    status: blocked_by_site
+    known_executives:
+      - name: Bill Marra
+        title: President and CEO
+      - name: Andrea Steen
+        title: Chief of Staff
+      - name: Sherri Laframboise
+        title: Chief Financial Officer
+      - name: Sheri McGeen
+        title: Chief Human Resources
+      - name: Tammy Kotyk
+        title: VP Of Mental Healht and Addictions
+      - name: Shannon Landry
+        title: VP of Restorative Care and Chief Nursing Officer
+  - FAC: '970'
+    name: Brantford Brant Community
+    hospital_type: Large Community Hospital
+    url: https://www.bchsys.org/en/about-us/senior-leadership-team.aspx
+    pattern: combined_h2
+    expected_executives: 6
+    html_structure:
+      combined_element: h5.emphasis-Secondary
+      separator: ' | '
+      notes: ''
+    status: ok
+  - FAC: '982'
+    name: Blanche River Health
+    hospital_type: Large Community Hospital
+    url: https://www.blancheriverhealth.ca/about-us/leadership
+    pattern: div_classes
+    expected_executives: 3
+    html_structure:
+      name_class: name
+      title_class: position
+      container_class: member-name
+      notes: Leadership page includes both executives and board members
+    status: ok
+  - FAC: '619'
+    name: BROCKVILLE GENERAL
+    hospital_type: Large Community Hospital
+    url: https://www.brockvillegeneralhospital.ca/who-we-are/executive-leadership-team/
+    pattern: combined_h2
+    expected_executives: 6
+    html_structure:
+      combined_element: p
+      separator: ','
+      notes: 'Format: Name, Title in P elements with comma separator'
+    status: ok
 pattern_templates:
-  
-  # Pattern 1: Sequential different elements (most common)
   h2_name_h3_title_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/leadership"
-      pattern: "h2_name_h3_title"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/leadership
+      pattern: h2_name_h3_title
       html_structure:
-        name_element: "h2"
-        title_element: "h3"
-        notes: "h2=Name, h3=Title - most common pattern"
-  
-  # Pattern 2: Combined name+title in single element
+        name_element: h2
+        title_element: h3
+        notes: h2=Name, h3=Title - most common pattern
   combined_h2_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/leadership" 
-      pattern: "combined_h2"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/leadership
+      pattern: combined_h2
       html_structure:
-        combined_element: "h2"
-        separator: " - "  # e.g., "John Smith - CEO"
-        notes: "Name and title together in h2, separated by ' - '"
-  
-  # Pattern 3: Table structure
+        combined_element: h2
+        separator: ' - '
+        notes: Name and title together in h2, separated by ' - '
   table_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/admin"
-      pattern: "table_rows"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/admin
+      pattern: table_rows
       html_structure:
-        structure_type: "table"
-        name_location: "td_column_1"  # or th_column_1 for header cells
-        title_location: "td_column_2" 
-        table_selector: "table"  # or specific class
-        notes: "Standard table with name/title columns"
-      
-  # Pattern 4: Names in h2, titles in following p
+        structure_type: table
+        name_location: td_column_1
+        title_location: td_column_2
+        table_selector: table
+        notes: Standard table with name/title columns
   h2_name_p_title_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/team"
-      pattern: "h2_name_p_title"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/team
+      pattern: h2_name_p_title
       html_structure:
-        name_element: "h2"
-        title_element: "p"
-        notes: "h2=Name, immediately followed by p=Title"
-        
-  # Pattern 5: Div/span class-based
+        name_element: h2
+        title_element: p
+        notes: h2=Name, immediately followed by p=Title
   div_class_example:
-    - FAC: "XXX"
-      name: "Example Hospital" 
-      url: "https://example.com/staff"
-      pattern: "div_classes"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/staff
+      pattern: div_classes
       html_structure:
-        name_class: "staff-name"
-        title_class: "staff-title"
-        container_class: "staff-member"
-        notes: "Names in .staff-name divs, titles in .staff-title divs"
-
-  # Pattern 6: List items with separator
+        name_class: staff-name
+        title_class: staff-title
+        container_class: staff-member
+        notes: Names in .staff-name divs, titles in .staff-title divs
   list_items_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/leadership"
-      pattern: "list_items"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/leadership
+      pattern: list_items
       html_structure:
-        list_type: "ul"  # or ol
-        format: "combined"
-        separator: " | "  # Handles flexible whitespace automatically
-        notes: "Names and titles in li elements with separator. Handles non-breaking spaces."
-
-  # Pattern 7: Gallery/card layouts
+        list_type: ul
+        format: combined
+        separator: ' | '
+        notes: Names and titles in li elements with separator. Handles non-breaking
+          spaces.
   boardcard_gallery_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/team"
-      pattern: "boardcard_gallery"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/team
+      pattern: boardcard_gallery
       html_structure:
-        container_class: "boardcard"
-        text_format: "name_comma_title"
-        separator: ","
-        notes: "Gallery cards with combined name,title format"
-        missing_people:  # Optional: add people not in main structure
-          - name: "Dr. John Smith"
-            title: "President and CEO"
-
-  # Pattern 8: Complex nested tables
+        container_class: boardcard
+        text_format: name_comma_title
+        separator: ','
+        notes: Gallery cards with combined name,title format
+        missing_people:
+          - name: Dr. John Smith
+            title: President and CEO
   custom_table_nested_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/leadership"
-      pattern: "custom_table_nested"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/leadership
+      pattern: custom_table_nested
       html_structure:
-        structure_type: "table_with_nested_elements"
-        name_selector: "td p[style*='text-align: left']"
-        title_selector: "td div[style*='text-align: left']"
-        container: "td"
-        notes: "Complex table with nested p/div elements in cells"
-
-  # Pattern 9: Sequential same-class elements ⭐ NEW
+        structure_type: table_with_nested_elements
+        name_selector: 'td p[style*=''text-align: left'']'
+        title_selector: 'td div[style*=''text-align: left'']'
+        container: td
+        notes: Complex table with nested p/div elements in cells
   field_content_sequential_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/leadership"
-      pattern: "field_content_sequential"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/leadership
+      pattern: field_content_sequential
       expected_executives: 8
       html_structure:
-        element_selector: ".field-content"
-        pattern_type: "sequential_every_3"
+        element_selector: .field-content
+        pattern_type: sequential_every_3
         start_index: 3
-        notes: "All data in same CSS class. Pattern: skip first N, then Name(i), Title(i+1), Empty(i+2), repeat"
-      # Real example: FAC 939 (Holland Bloorview)
-
-  # Pattern 10: ID-based or complex selectors ⭐ NEW
+        notes: 'All data in same CSS class. Pattern: skip first N, then Name(i), Title(i+1),
+          Empty(i+2), repeat'
   nested_list_with_ids_example:
-    - FAC: "XXX"
-      name: "Example Hospital"
-      url: "https://example.com/team"
-      pattern: "nested_list_with_ids"
+    - FAC: XXX
+      name: Example Hospital
+      url: https://example.com/team
+      pattern: nested_list_with_ids
       expected_executives: 5
       html_structure:
-        name_selector: "div[id^='t-']"    # CSS selector for names
-        title_selector: "span[id^='d-']"  # CSS selector for titles
-        container: "li.column"             # Optional parent container
-        notes: "Names and titles in separate elements with ID patterns or complex selectors. Sequential pairing."
-      # Real example: FAC 827 (Baycrest)
-      # Other selector examples:
-      # - "h3.executive-name" and "p.executive-title"
-      # - "div[data-type='name']" and "div[data-type='title']"
-
-# Common executive titles for identification
+        name_selector: div[id^='t-']
+        title_selector: span[id^='d-']
+        container: li.column
+        notes: Names and titles in separate elements with ID patterns or complex selectors.
+          Sequential pairing.
 executive_titles:
   primary:
-    - "Chief Executive Officer"
-    - "CEO"
-    - "President" 
-    - "Chief Medical Officer"
-    - "CMO"
-    - "Chief of Staff"
-    - "Chair"  # ADD THIS
-    - "Vice-Chair"  # ADD THIS
-    - "Board Chair"  # ADD THIS
-    - "Secretary"  #
-    
-    - "Medical Director"
-    - "Chief Financial Officer"
-    - "CFO"
-    - "Chief Operating Officer"
-    - "COO"
-    - "Chief Nursing Officer"
-    - "CNO"
-    - "Administrator"
-    - "Vice President"
-    - "VP"
-    - "Supervisor" 
-    - "Interim"
-    - "Health System Executive"
-    
+    - Chief Executive Officer
+    - CEO
+    - President
+    - Chief Medical Officer
+    - CMO
+    - Chief of Staff
+    - Chair
+    - Vice-Chair
+    - Board Chair
+    - Secretary
+    - Medical Director
+    - Chief Financial Officer
+    - CFO
+    - Chief Operating Officer
+    - COO
+    - Chief Nursing Officer
+    - CNO
+    - Administrator
+    - Vice President
+    - VP
+    - Supervisor
+    - Interim
+    - Health System Executive
   secondary:
-    - "Director"
-    - "Manager"
-    - "Coordinator"
-    - "Chief Information Officer"
-    - "CIO"
-    - "Chief Human Resources Officer"
-    - "CHRO"
-    - "Associate Administrator"
-    - "Assistant Administrator"
-    - "Department Head"
-    
+    - Director
+    - Manager
+    - Coordinator
+    - Chief Information Officer
+    - CIO
+    - Chief Human Resources Officer
+    - CHRO
+    - Associate Administrator
+    - Assistant Administrator
+    - Department Head
   medical_specific:
-    - "Chief of Medicine"
-    - "Chief of Surgery"
-    - "Chief of Emergency"
-    - "Department Chair"
-    - "Division Head"
-    - "Physician Lead"
-
-# Common name patterns for identification  
+    - Chief of Medicine
+    - Chief of Surgery
+    - Chief of Emergency
+    - Department Chair
+    - Division Head
+    - Physician Lead
 name_patterns:
   standard:
-    - "^[A-Z][a-z]+ [A-Z][a-z]+$"  # First Last
-    - "^[A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # First M. Last
-    - "^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$"  # First Middle Last
-    
+    - ^[A-Z][a-z]+ [A-Z][a-z]+$
+    - ^[A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
   with_titles:
-    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Last
-    - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+$"  # Dr. First M. Last
-    - "^Dr\\.? [A-Z][a-z]+ Ma?c[A-Z][a-z]+$"  # Dr. Colin MacPherson, Dr. John McDonald
-    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. First Middle Last (THREE WORDS) - ADD THIS
-    - "^Dr\\.? [A-Z][a-z]+ Van[A-Z][a-z]+$"  # Dr. Erica VanDaalen - ADD THIS LINE TOO
-    #- "^Dr\\.? [A-Z][a-z]+ van [A-Z][a-z]+$"  # Dr. Charmaine van Schaik
-    - "^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$"  # Charmaine van Schaik, MD <- ADD THIS LINE
-    - "^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$"  # Cathy van Leipsig
-    
+    - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ Ma?c[A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ Van[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$
+    - ^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$
   with_credentials:
-    - "^Dr\\.? [A-Z][a-z]+ [A-Z]?\\. [A-Z][a-z]+,? [A-Z]{2,}.*$"  # Dr. First M. Last, MD, MSc, etc.
-    - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First Last, MD, MSc, etc.
-    - "^Dr\\.?\\s+[A-Z][a-z]+\\s+[A-Z][a-z]+,?\\s+[A-Z]{2,},?\\s+[A-Z]{2,}.*$"
-    - "^[A-Z][a-z]+ [A-Z]\\. [A-Z][a-z]+, [A-Z]{2,}.*$"  # First M. Last, credentials
-    
+    - ^Dr\.? [A-Z][a-z]+ [A-Z]?\. [A-Z][a-z]+,? [A-Z]{2,}.*$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
+    - ^Dr\.?\s+[A-Z][a-z]+\s+[A-Z][a-z]+,?\s+[A-Z]{2,},?\s+[A-Z]{2,}.*$
+    - ^[A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+, [A-Z]{2,}.*$
   hyphenated_names:
-    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$"  # First-Second Last
-    - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$"  # First Last-McName (allows McEwan, O'Brien style)
-    - "^Dr\\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Dr. First Last-Second
-    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$"  # First-Second Last, credentials
-    
+    - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$
+    - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
+    - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
   complex_credentials:
-    - "^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\\.[A-Z][a-z]+\\.,? [A-Z]{2,}.*$"  # Rudy Dahdal, B.Sc., MHSc, CHE
-    - "^Dr\\.? [A-Z]\\. [A-Z][a-z]+ [A-Z][a-z]+$"  # Dr. S. Zaki Ahmed
-    - "^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$"  # Maria-Cristina Cavicchia
-  
-  # ADD THIS NEW SECTION:
+    - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\.[A-Z][a-z]+\.,? [A-Z]{2,}.*$
+    - ^Dr\.? [A-Z]\. [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
   internal_capitals:
-    - "^[A-Z][a-z]+ [A-Z][a-z]*[A-Z][a-z]+$"  # Jorge VanSlyke, John McDonald, Mary O'Brien
-    - "^[A-Z][a-z]+ Mc[A-Z][a-z]+$"  # John McDonald, Mary McGregor
-    - "^[A-Z][a-z]+ O'[A-Z][a-z]+$"  # Patrick O'Brien, Mary O'Connor
-    - "^[A-Z][a-z]+ De[A-Z][a-z]+$"  # Maria DeLuca, John DeMarco
-    - "^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$"  
-    - "^[A-Z][a-z]+ Van[A-Z][a-z]+$"  # Jorge VanSlyke, John VanDyke
-    - "^[A-Z][a-z]+ La[A-Z][a-z]+$"  # Marie LaRose
-    - "^Dr\\.? [A-Z][a-z]+ van [A-Z][a-z]+$"  # Dr. Charmaine van Schaik 
-    
+    - ^[A-Z][a-z]+ [A-Z][a-z]*[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ Mc[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ O'[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ De[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ La[A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ van [A-Z][a-z]+$
   accented_names:
-    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Gisèle Larocque
-    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # José M. García
-    - "^Dr\\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Dr. François Dubois
-    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # André Martin-López
-    - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"  # Marie-Claire Beaumont
-
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
   parenthetical_names:
-    - "^Dr\\.? [A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$"  # Dr. Pavel (Paul) Ketov
-    - "^[A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$"  # Pavel (Paul) Ketov (without Dr.)
-
+    - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
+    - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
   flexible:
-    - "^Dr\\.? [A-Z][a-z]+ \\\\([A-Z][a-z]+\\\\) [A-Z][a-z]+$"
-    - "^[A-Z][a-z]+ \\\\([A-Z][a-z]+\\\\) [A-Z][a-z]+$"
-    - "^(Dr\\.?\\s+)?[A-Z][\\w'-]+(\\s+[A-Z][\\w'-]+)+$"
-    - "^(Dr\\.?\\s+)?[A-Z][a-z]+\\s+.+\\s+[A-Z][a-z]+$"  # Add this one
-    
-# Pattern identification guide for manual review
+    - ^Dr\.? [A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$
+    - ^[A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$
+    - ^(Dr\.?\s+)?[A-Z][\w'-]+(\s+[A-Z][\w'-]+)+$
+    - ^(Dr\.?\s+)?[A-Z][a-z]+\s+.+\s+[A-Z][a-z]+$
 pattern_identification_guide:
   questions_to_ask:
-    - "Where are the executive names located? (h1, h2, h3, p, div, span, td, li)"
-    - "Where are the titles located? (same or different element type)"
-    - "Are names and titles in the same element or separate?"
-    - "If separate, what's the relationship? (next sibling, same parent, table row)"
-    - "Are there any CSS classes that identify name/title elements?"
-    - "Are executives in a specific section/container?"
-    - "Are there any missing people not in the main structure?"
-    
+    - Where are the executive names located? (h1, h2, h3, p, div, span, td, li)
+    - Where are the titles located? (same or different element type)
+    - Are names and titles in the same element or separate?
+    - If separate, what's the relationship? (next sibling, same parent, table row)
+    - Are there any CSS classes that identify name/title elements?
+    - Are executives in a specific section/container?
+    - Are there any missing people not in the main structure?
   common_patterns_to_look_for:
-    - "h2 followed by h3 (name then title)"
-    - "h2 followed by p (name then title)"
-    - "Combined in h2 or h3 with separator (John Smith - CEO)"
-    - "Table rows with name/title columns"
-    - "Div or span classes (.name, .title, .staff-name, etc.)"
-    - "List items with structured content"
-    - "Card layouts with consistent structure"
+    - h2 followed by h3 (name then title)
+    - h2 followed by p (name then title)
+    - Combined in h2 or h3 with separator (John Smith - CEO)
+    - Table rows with name/title columns
+    - Div or span classes (.name, .title, .staff-name, etc.)
+    - List items with structured content
+    - Card layouts with consistent structure
+
