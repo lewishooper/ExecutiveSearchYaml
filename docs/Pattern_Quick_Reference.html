@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Scraper - Pattern Quick Reference Guide</title>
+    <style>
+        @page {
+            size: landscape;
+            margin: 0.5in;
+        }
+        body {
+            font-family: 'Calibri', 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18pt;
+            margin-bottom: 20px;
+            color: #2C3E50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+        th {
+            background-color: #2C3E50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #34495E;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #BDC3C7;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #ECF0F1;
+        }
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+        .pattern-col {
+            width: 18%;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+        .structure-col {
+            width: 30%;
+            font-family: 'Courier New', monospace;
+            white-space: pre-line;
+            background-color: #F8F9FA;
+        }
+        .elements-col {
+            width: 28%;
+        }
+        .examples-col {
+            width: 24%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hospital Scraper - Pattern Quick Reference Guide</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th class="pattern-col">Pattern</th>
+                <th class="structure-col">HTML Structure Items<br>(copy/paste into YAML)</th>
+                <th class="elements-col">Elements in the Structure</th>
+                <th class="examples-col">FAC & Hospital Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="pattern-col">h2_name_h3_title</td>
+                <td class="structure-col">name_element:
+title_element:</td>
+                <td class="elements-col">h2, h3, h4, p, strong, span
+h3, h4, p, span, div</td>
+                <td class="examples-col">FAC-707 Ross Memorial
+FAC-624 Campbellford
+FAC-596 Stevenson</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">combined_h2</td>
+                <td class="structure-col">combined_element:
+separator:</td>
+                <td class="elements-col">h2, h3, p, li, div, span
+" - ", ", ", " | "</td>
+                <td class="examples-col">FAC-941 Brockville
+FAC-952 Southlake
+FAC-619 Smith Falls</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">table_rows</td>
+                <td class="structure-col">structure_type:
+name_location:
+title_location:</td>
+                <td class="elements-col">"table"
+td_column_1, td_column_2
+td_column_2, td_column_3</td>
+                <td class="examples-col">FAC-661 Espanola
+FAC-781 St. Joseph's TB</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">h2_name_p_title</td>
+                <td class="structure-col">name_element:
+title_element:</td>
+                <td class="elements-col">h2 (fixed)
+p (fixed)</td>
+                <td class="examples-col">FAC-953 Headwaters
+FAC-632 St. Mary's KW
+FAC-932 Elizabeth Bruyère</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">div_classes</td>
+                <td class="structure-col">name_class:
+title_class:
+container_class:</td>
+                <td class="elements-col">"staff-name", "exec-name"
+"staff-title", "position"
+"staff-member" (optional)</td>
+                <td class="examples-col">FAC-606 Queensway Carleton
+FAC-695 Arnprior
+FAC-905 Hamilton HS</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">list_items</td>
+                <td class="structure-col">list_type:
+format:
+separator:</td>
+                <td class="elements-col">"ul", "ol"
+"combined"
+" | ", " - ", ", "</td>
+                <td class="examples-col">FAC-957 Hanover
+FAC-790 Grey Bruce
+FAC-850 Runnymede</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">boardcard_gallery</td>
+                <td class="structure-col">container_class:
+text_format:
+separator:</td>
+                <td class="elements-col">"boardcard", "team-card"
+"name_comma_title"
+",", " - "</td>
+                <td class="examples-col">FAC-935 Kemptville</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">custom_table_nested</td>
+                <td class="structure-col">structure_type:
+name_selector:
+title_selector:
+container:</td>
+                <td class="elements-col">"table_with_nested_elements"
+"td p[style*='left']"
+"td div[style*='left']"
+"td"</td>
+                <td class="examples-col">(No current examples)</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">field_content_sequential</td>
+                <td class="structure-col">element_selector:
+pattern_type:
+start_index:</td>
+                <td class="elements-col">".field-content", ".bio-item"
+"sequential_every_3"
+3, 1, 5 (number)</td>
+                <td class="examples-col">FAC-939 Holland Bloorview</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">nested_list_with_ids</td>
+                <td class="structure-col">name_selector:
+title_selector:
+container:</td>
+                <td class="elements-col">"div[id^='t-']", "#name-"
+"span[id^='d-']", "#title-"
+"li.column" (optional)</td>
+                <td class="examples-col">FAC-827 Baycrest</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">qch_mixed_tables</td>
+                <td class="structure-col">table_type:
+name_table_selector:
+title_table_selector:</td>
+                <td class="elements-col">"two_table_format"
+"table:nth-of-type(1)"
+"table:nth-of-type(2)"</td>
+                <td class="examples-col">FAC-777 Queensway Carleton</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">p_with_bold_and_br</td>
+                <td class="structure-col">container_element:
+name_format:
+separator:</td>
+                <td class="elements-col">"p", "div"
+"bold_text" (in strong)
+"br"</td>
+                <td class="examples-col">FAC-975 Wingham</td>
+            </tr>
+            <tr>
+                <td class="pattern-col">manual_entry_required</td>
+                <td class="structure-col">reason:
+manual_people:</td>
+                <td class="elements-col">"site_blocks_scraping"
+List of name/title pairs</td>
+                <td class="examples-col">FAC-947 Pembroke
+FAC-927 Orillia</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
