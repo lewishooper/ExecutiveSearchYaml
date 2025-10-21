@@ -1,5 +1,42 @@
 hospitals:
 
+  - FAC: "592"
+    name: "NAPANEE LENNOX & ADDINGTON"
+    hospital_type: "Small Hospital"
+    url: "https://web.lacgh.napanee.on.ca/about/governance/"
+    pattern: "manual_entry_required"
+    expected_executives: 3
+    html_structure:
+    notes: "Small hospital with governance page showing mixed board and executives. Reversed format (Title – Name). No separate leadership page available."
+    status: "manual_entry"
+    known_executives:
+    - name: "Mike Bell"
+      title: "President & CEO"
+    - name: "Kristen Rochon"
+      title: "Vice President, Patient & Resident Services and Chief Nursing Officer"
+    - name: "Dr. Kimberley Morrison"
+      title: "Chief of Medical Staff"
+
+  - FAC: "968"
+    name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
+    url: "https://www.mahc.ca/about-us/leadership/"
+    pattern: "manual_entry_required"
+    expected_executives: 5
+    html_structure:
+     notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
+    status: "javascript_blocked"
+    known_executives:
+     - name: "Cheryl Harrison"
+       title: "President & Chief Executive Officer"
+     - name: "Diane George"
+       title: "Vice President, Integrated Care, Patient Services, Quality & Chief Nursing Executive"
+     - name: "Alasdair Smith"
+       title: "Vice President, Corporate Services & Chief Financial Officer"
+     - name: "Mary Silverthorn"
+       title: "Vice President, People, Communications, Stakeholder Relations & Chief Human Resources Officer"
+     - name: "Dr. Khaled Abdel-Razek"
+       title: "Chief of Staff"
+
   - FAC: "600"
     name: "ATIKOKAN GENERAL HOSPITAL"
     hospital_type: "Small Hospital"
@@ -10,7 +47,7 @@ hospitals:
      combined_element: "p"
      separator: " | "
      notes: "Page shows 'Board of Directors' but contains Senior Management Team. Jeremy Dickson has no title."
-    status: "needs_testing"
+    status: "ok"
  
   - FAC: '967'
     name: CORNWALL COMMUNITY

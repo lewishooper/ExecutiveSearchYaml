@@ -1,26 +1,5 @@
 hospitals:
-  - FAC: '968'
-    name: HUNTSVILLE MUSKOKA ALGONQUIN HC
-    hospital_type: Large Community Hospital
-    url: https://www.mahc.ca/about-us/leadership/
-    pattern: combined_h2
-    expected_executives: 5
-    html_structure: 
-      combined_element: ''
-      separator: ''
-      notes: title is proceeded by 'EMAIL' can we do this in the code or in post
-    status: needs configuration
-  - FAC: '592'
-    name: NAPANEE LENNOX & ADDINGTON
-    hospital_type: Small Hospital
-    url: https://web.lacgh.napanee.on.ca/about/governance/
-    pattern: combined_P
-    expected_executives: 5
-    html_structure:
-      combined_element: ''
-      separator: ''
-      notes: Phone Call required 613 354 3301
-    status: needs_configuration
+
   - FAC: '593'
     name: NEWBURY FOUR COUNTIES HEALTH SERV.
     hospital_type: Small Hospital

@@ -1,1 +1,2 @@
-results <- test_all_configured_hospitals()
+setwd("E:/ExecutiveSearchYaml/code/")
+source("session_shutdown.R") 
