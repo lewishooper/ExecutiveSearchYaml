@@ -168,4 +168,3 @@ if (nchar(notes) > 0) {
 
 cat("\n✓ Shutdown complete. See you next session!\n\n")
 
-setwd()

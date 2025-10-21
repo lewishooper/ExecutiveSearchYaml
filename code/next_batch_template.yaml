@@ -1,80 +1,8 @@
 hospitals:
 
-  - FAC: '593'
-    name: NEWBURY FOUR COUNTIES HEALTH SERV.
-    hospital_type: Small Hospital
-    url: https://mhalliance.on.ca/about/administration/
-    pattern: combined_h2
-    expected_executives: 4
-    html_structure:
-      combined_element: ''
-      separator: ','
-      notes: ''
-    status: needs_configuration
-  - FAC: '597'
-    name: ALMONTE GENERAL
-    hospital_type: Small Hospital
-    url: https://www.mrha.ca/seniorteam
-    pattern: h2_name_h3_title
-    expected_executives: 7
-    html_structure:
-      name_element: h2
-      title_element: h3
-      notes: ''
-    status: needs_configuration
-  - FAC: '599'
-    name: MRHA ARNPRIOR & DISTRICT MEMORIAL
-    hospital_type: Small Hospital
-    url: https://www.arnpriorregionalhealth.ca/about-us/#senior-team
-    pattern: div_classes
-    expected_executives: 6
-    html_structure:
-      name_class: desc_wrapper_title
-      title_class: subtitle
-      container_class: staff-member
-    notes: ''
-    status: needs_configuration
 
-  - FAC: '601'
-    name: GUELPH HOMEWOOD
-    hospital_type: Specialty Mental Health Hospital
-    url: https://homewoodhealth.com/home/about-us/leadership/
-    pattern: div_classes
-    expected_executives: 8
-    html_structure:
-      combined_element: ''
-      separator: ''
-      notes: ''
-    status: needs configuration
-  - FAC: '611'
-    name: BLIND RIVER NORTH SHORE HN
-    hospital_type: Small Hospital
-    url: https://www.nshn.care/senior-leadership-team
-    pattern: DIV SEQUENTIAL
-    expected_executives: 4
-    html_structure:
-      name_class:
-      title_class:
-      container_class:
+    
 
-      notes: uSE ANALYZER
-    status: needs_configuration
-    
-    
-  - FAC: '626'
-    name: 'MRHA CARLETON PLACE & DISTRICT '
-    hospital_type: Small Hospital
-    url: https://www.arnpriorregionalhealth.ca/about-us/#senior-team
-    pattern: div_classes
-    expected_executives: 6
-    html_structure:
-      name_class: desc_wrapper_title
-      title_class: subtitle
-      container_class: staff-member
-    notes: ''
-    status: needs_configuration
-    
-    
   - FAC: '627'
     name: CHAPLEAU SER DE SANTÉ DE CHAPLEAU
     hospital_type: Small Hospital
@@ -86,6 +14,7 @@ hospitals:
       separator: ''
       notes: probably need to call for clarification (705) 864-1520  ext. 3053.
     status: needs_configuration
+    
   - FAC: '638'
     name: MICSGROUP COCHRANE LADY MINTO
     hospital_type: Small Hospital

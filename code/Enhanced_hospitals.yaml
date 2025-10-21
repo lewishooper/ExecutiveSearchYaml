@@ -1,5 +1,104 @@
 hospitals:
+  - FAC: "627"
+    name: "CHAPLEAU SER DE SANTÉ DE CHAPLEAU"
+    hospital_type: "Small Hospital"
+    url: "https://www.sschs.ca/general/board.html"
+    pattern: "manual_entry_required"
+    expected_executives: 3
+    html_structure:
+      notes: "Board page with executives mixed in. Co-CEOs structure. No clear HTML patterns."
+    status: "ok"
+    known_executives:
+      - name: "Natasha Comte"
+        title: "Co-Chief Executive Officer / Director of Finances and Corporate Services"
+      - name: "Jamie Fiaschetti"
+        title: "Co-Chief Executive Officer / Director of Clinical Services"
+      - name: "Dr. Kendra Saari"
+        title: "Chief of Medical Staff"
+   
+  - FAC: '626'
+    name: 'MRHA CARLETON PLACE & DISTRICT '
+    hospital_type: Small Hospital
+    url: https://www.mrha.ca/seniorteam
+    partnership: "Mississippi River Heath Alliance"
+    parternship_abbrev: "MRHA"
+    pattern: h2_name_h3_title
+    expected_executives: 7
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
+    
 
+
+  - FAC: '611'
+    name: BLIND RIVER NORTH SHORE HN
+    hospital_type: Small Hospital
+    url: https://www.nshn.care/senior-leadership-team
+    pattern: h2_name_p_title
+    expected_executives: 4
+    html_structure:
+      name_element: "h2"
+      title_element: "p"
+      container_class:
+
+      notes: uSE ANALYZER
+    status: ok
+
+  - FAC: "601"
+    name: "GUELPH HOMEWOOD"
+    hospital_type: "Specialty Mental Health Hospital"
+    url: "https://homewoodhealth.com/home/about-us/leadership/"
+    pattern: "combined_h2"
+    expected_executives: 8
+    html_structure:
+      combined_element: "h3"
+      separator: ","
+      notes: "Name and title combined in H3 elements with comma separator"
+    status: "ok"
+ 
+   
+  - FAC: '599'
+    name: MRHA ARNPRIOR & DISTRICT MEMORIAL
+    hospital_type: Small Hospital
+    url: https://www.mrha.ca/seniorteam
+    partnership: "Mississippi River Heath Alliance"
+    parternship_abbrev: "MRHA"
+    pattern: h2_name_h3_title
+    expected_executives: 7
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
+
+
+  - FAC: '597'
+    name: ALMONTE GENERAL
+    hospital_type: Small Hospital
+    url: https://www.mrha.ca/seniorteam
+    pattern: h2_name_h3_title
+    expected_executives: 7
+    html_structure:
+      name_element: h2
+      title_element: h3
+      notes: 'partnership'
+    status: OK
+
+  - FAC: '593'
+    name: Middlesex Hospital Alliance NEWBURY FOUR COUNTIES HEALTH SERV.
+    hospital_type: Small Hospital
+    url: https://mhalliance.on.ca/about/administration/
+    pattern: combined_h2
+    expected_executives: 4
+    html_structure:
+      combined_element: 'h3'
+      separator: ','
+      notes: ''
+  
+    status: ok
+    
   - FAC: "592"
     name: "NAPANEE LENNOX & ADDINGTON"
     hospital_type: "Small Hospital"
@@ -216,7 +315,7 @@ hospitals:
       notes: AI predicted combined_h2 with HIGH confidence - confirmed via inspection
     status: ok
   - FAC: '814'
-    name: STRATHROY MIDDLESEX GENERAL
+    name: Middlesex Hosptial Alliance  STRATHROY MIDDLESEX GENERAL
     hospital_type: Large Community Hospital
     url: https://mhalliance.on.ca/about/administration/
     pattern: combined_h2
@@ -224,7 +323,7 @@ hospitals:
     html_structure:
       combined_element: h3
       separator: ', '
-      notes: will need to strip out directors in post
+      notes: 
     status: ok
   - FAC: '813'
     name: STRATFORD GENERAL HPHA duplicate FAC=983
