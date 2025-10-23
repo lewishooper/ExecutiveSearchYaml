@@ -206,10 +206,18 @@ PatternBasedScraper <- function() {
   # ============================================================================
   # PATTERN 2: Combined name+title in single element
   # ============================================================================
+  # ============================================================================
+  # PATTERN 2: Combined name+title in single element
+  # UPDATED: Added 'reversed' parameter to handle Title:Name format
+  # ============================================================================
   scrape_combined_h2 <- function(page, hospital_info, config) {
     tryCatch({
       separator <- hospital_info$html_structure$separator %||% " - "
       element_type <- hospital_info$html_structure$combined_element %||% "h2"
+      
+      # NEW: Check if reversed order (title comes before name)
+      # Defaults to FALSE for backward compatibility
+      reversed <- hospital_info$html_structure$reversed %||% FALSE
       
       elements <- page %>% html_nodes(element_type) %>% html_text(trim = TRUE)
       
@@ -222,8 +230,19 @@ PatternBasedScraper <- function() {
         parts <- strsplit(element_text, separator, fixed = TRUE)[[1]]
         
         if (length(parts) >= 2) {
-          potential_name <- trimws(parts[1])
-          potential_title <- trimws(paste(parts[2:length(parts)], collapse = separator))
+          part1 <- trimws(parts[1])
+          part2 <- trimws(paste(parts[2:length(parts)], collapse = separator))
+          
+          # NEW: Assign name and title based on reversed flag
+          if (reversed) {
+            # Reversed: part1 is title, part2 is name
+            potential_name <- part2
+            potential_title <- part1
+          } else {
+            # Normal: part1 is name, part2 is title
+            potential_name <- part1
+            potential_title <- part2
+          }
           
           if (is_executive_name(potential_name, config) && 
               is_executive_title(potential_title, config)) {
@@ -243,6 +262,14 @@ PatternBasedScraper <- function() {
             name = missing$name,
             title = missing$title
           )
+        }
+      }
+      
+      # Limit to expected count if specified
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) {
+          pairs <- pairs[1:max_count]
         }
       }
       
@@ -308,11 +335,27 @@ PatternBasedScraper <- function() {
   # PATTERN 4: Sequential name + title (Flexible version)
   # UPDATED: Now supports h2→p OR p(with strong)→p patterns or <a>
   # ============================================================================
+  # ============================================================================
+  # PATTERN 4: Sequential name + title (Flexible version)
+  # UPDATED: Now supports h2→p OR p(with strong)→p patterns or <a>
+  # NEW: Added 'reversed' parameter to handle Title→Name order
+  # ============================================================================
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get configuration for which elements to use
       name_element <- hospital_info$html_structure$name_element %||% "h2"
       title_element <- hospital_info$html_structure$title_element %||% "p"
+      
+      # NEW: Check if reversed order (title comes before name)
+      # Defaults to FALSE for backward compatibility
+      reversed <- hospital_info$html_structure$reversed %||% FALSE
+      
+      # NEW: If reversed, swap the elements we're looking for
+      if (reversed) {
+        temp <- name_element
+        name_element <- title_element
+        title_element <- temp
+      }
       
       # Build selector for elements we're looking for
       selector <- paste(name_element, title_element, sep = ", ")
@@ -332,36 +375,49 @@ PatternBasedScraper <- function() {
           current_text <- normalize_text(html_text(current_element, trim = TRUE))
           next_text <- normalize_text(html_text(next_element, trim = TRUE))
           
+          # NEW: Handle reversed order
+          if (reversed) {
+            # If reversed, current is actually title, next is actually name
+            name_text <- next_text
+            title_text <- current_text
+          } else {
+            # Normal order: current is name, next is title
+            name_text <- current_text
+            title_text <- next_text
+          }
+          
           # Additional filter for p→p pattern: name must contain <strong> or <a>
-          if (name_element == "p" && title_element == "p") {
+          # Skip this check if reversed (since we swapped the elements)
+          if (name_element == "p" && title_element == "p" && !reversed) {
             # Check if current element has strong or a tag
             has_strong <- length(current_element %>% html_nodes("strong")) > 0
             has_link <- length(current_element %>% html_nodes("a")) > 0
             
-            # Next element should NOT have strong (to avoid matching two names in a row)
-            next_has_strong <- length(next_element %>% html_nodes("strong")) > 0
-            
-            # Skip if current doesn't have strong/link, or if next does have strong
-            if (!has_strong && !has_link) next
-            if (next_has_strong) next
-            
-            # Skip empty spacers (just &nbsp; or whitespace)
-            if (grepl("^\\s*(&nbsp;)?\\s*$", next_text)) next
+            if (!has_strong && !has_link) {
+              next
+            }
           }
           
-          # Validate name and title
-          if (is_executive_name(current_text, config) && 
-              is_executive_title(next_text, config)) {
-            
+          # MODIFIED: Use name_text and title_text variables instead of current_text and next_text
+          if (is_executive_name(name_text, config) && 
+              is_executive_title(title_text, config)) {
             pairs[[length(pairs) + 1]] <- list(
-              name = clean_text_data(current_text),
-              title = clean_text_data(next_text)
+              name = clean_text_data(name_text),
+              title = clean_text_data(title_text)
             )
           }
         }
       }
       
-      # Add missing people
+      # Limit to expected count if specified
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) {
+          pairs <- pairs[1:max_count]
+        }
+      }
+      
+      # Add any missing people specified in config
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -374,10 +430,10 @@ PatternBasedScraper <- function() {
       return(pairs)
       
     }, error = function(e) {
+      cat("  ERROR:", e$message, "\n")
       return(list())
     })
   }
-  
   # ============================================================================
   # PATTERN 5: Div classes (CSS class-based) - UPDATED with missing_people
   # ============================================================================

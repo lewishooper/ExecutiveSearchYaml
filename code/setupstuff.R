@@ -1,25 +1,24 @@
 setwd("E:/ExecutiveSearchYaml/code/")
-source("session_startup.R") 
-# stop and review
-
-
-# Compare both YAML files (comprehensive)
-source("compare_yaml_status.R")
-
-# Full project status
-source("project_status.R")
-
-# Next batch specific status
-source("test_next_batch.R")
+source("pattern_based_scraper.R")
+source("session_startup.R")
+quick_test(646)
 status_next()
-FAC<-916
+FAC<-653
 
 quick_test(FAC)
-Name <- "headwaters"
-url <- "https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/"
+Name <- "Royal ottawa"
+url <- "https://www.theroyal.ca/about-royal/leadership/senior-leadership-team"
 helper$analyze_hospital_structure(FAC, Name, url)
 
-helper$test_hospital_config(FAC, Name, url, "combined_h2")# - Test configuration (reads from YAML)\n")  
+helper$test_hospital_config(FAC, Name, url, "h2_name_p_title")# - Test configuration (reads from YAML)\n")  
 helper$show_pattern_guide()# - Show pattern identification guide\n")
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
 
+helper$analyze_hospital_structure(967, "Cornwall", "https://www.cornwallhospital.ca/en/SeniorAdmin")
+
+source("pattern_based_scraper.R")
+quick_test(665)  # Test existing hospital still works
+quick_test(967)  
+helper$test_hospital_config(648, "DUNNVILLE", "https://www.hwmh.ca/about-us/senior-team/", "div_classes")
+helper$test_hospital_config(648, "DUNNVILLE", "https://www.hwmh.ca/about-us/senior-team/", "h2_name_p_title")
+time 

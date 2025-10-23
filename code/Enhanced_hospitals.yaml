@@ -1,4 +1,160 @@
 hospitals:
+
+
+  - FAC: '653'
+    name: Blanche River ENGLEHART & DISTRICT
+    hospital_type: Small Hospital
+    partnership: "Blanche River"
+    url: https://www.blancheriverhealth.ca/about-us/leadership
+    pattern: div_classes
+    expected_executives: 3
+    html_structure:
+      name_class: name
+      title_class: position
+      container_class: member-name
+      notes: Leadership page includes both executives and board members
+  - FAC: '651'
+    name: "OTTAWA ROYAL OTTAWA (PSYCH)"
+    hospital_type: "Specialty Mental Health Hospital"
+    url: "https://www.theroyal.ca/about-royal/leadership/senior-leadership-team"
+    pattern: "manual_entry_required"
+    expected_executives: 13
+    html_structure:
+      notes: "P elements with plain text names and <br> separator. No bold/strong tags on names. When text is extracted, <br> disappears making automated splitting impossible."
+    status: "ok"
+    known_executives:
+      - name: "Cara Vaccarino"
+        title: "President and CEO"
+      - name: "Dr. Benoît Mulsant"
+        title: "Interim Psychiatrist-in-Chief and Chief of Staff"
+      - name: "Nyranne Martin"
+        title: "Chief Operating Officer"
+      - name: "Dr. Florence Dzierszinski"
+        title: "President & CEO, IMHR and VP of Research at The Royal"
+      - name: "Chris Ide"
+        title: "President & CEO, Foundation and VP, Brand & Marketing"
+      - name: "Linda Mohri"
+        title: "Senior VP, Patient Care Services"
+      - name: "Laura MacDonald"
+        title: "VP, People and Culture"
+      - name: "Carolyn Jodouin"
+        title: "VP, Finance"
+      - name: "Kristina McGeough"
+        title: "Executive Director"
+      - name: "Domenic Ielo"
+        title: "Executive Director and Interim Chief Nursing Executive"
+      - name: "Stephanie Carter"
+        title: "Executive Director"
+      - name: "Andrea MacLean"
+        title: "Director, Communications"
+      - name: "Dr. Floyd Wood"
+        title: "Interim, Medical Director, Integrated Forensics Program"
+
+
+  - FAC: '650'
+    name: "ELLIOT LAKE ST JOSEPH'S"
+    hospital_type: "Small Hospital"
+    url: "https://sjghel.ca/about/governance-board/"
+    pattern: "manual_entry_required"
+    expected_executives: 4
+    html_structure:
+      notes: "Board page with figcaption elements containing names and titles separated by <br>. Mix of 11 board members and 4 executives. No existing pattern supports figcaption with plain text names. Executives manually extracted from Ex-Officio section."
+    status: "ok"
+    known_executives:
+      - name: "Kelli-Ann Lemieux"
+        title: "President & CEO, Board Secretary-Treasurer"
+      - name: "Dr. Todd Spencer"
+        title: "Chief of Staff"
+      - name: "Dr Chris Prescott"
+        title: "Medical Staff President"
+      - name: "Leslie Sanders"
+        title: "Chief Nursing Executive"
+      
+  - FAC: '648'
+    name: "DUNNVILLE HALDIMAND WAR MEMORIAL"
+    hospital_type: "Small Hospital"
+    url: "https://www.hwmh.ca/about-us/senior-team/"
+    pattern: "h2_name_p_title"
+    expected_executives: 5
+    html_structure:
+      name_element: "p"
+      title_element: "p"
+      reversed: true
+    notes: "Alternating p elements. Titles in <strong> tags come before names. Empty p element breaks pattern for Tom Dorland."
+    status: "ok"
+
+  - FAC: '647'
+    name: "DRYDEN REGIONAL HEALTH CENTRE"
+    hospital_type: "Small Hospital"
+    url: "https://www.drhc.on.ca/board"
+    pattern: "list_items"
+    expected_executives: 7
+    html_structure:
+      list_type: "ul"
+      format: "combined"
+      separator: ", "
+    notes: "Board page with bullet list using comma separator. Will capture titled positions (executives + board officers) and skip untitled board members. Chair/Vice Chair/Treasurer to be filtered in cleanup phase."
+    status: "ok"
+
+  - FAC: '646'
+    name: "DEEP RIVER AND DISTRICT"
+    hospital_type: "Small Hospital"
+    url: "https://www.drdh.org/leadershipteam"  # ← CORRECTED URL
+    pattern: "h2_name_p_title"
+    expected_executives: 4
+    html_structure:
+      name_element: "p"
+      title_element: "p"
+      reversed: true                # Will test if this is actually needed
+      notes: "Leadership team page"
+    status: "ok"
+    
+    
+  - FAC: '644'
+    name: Cornwall Hospital  CORNWALL HOTEL DIEU
+    hospital_type: Small Hospital
+    url: https://www.cornwallhospital.ca/en/SeniorAdmin
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure:
+      notes: Reversed Titles new pattern??
+    status: merged
+    known_executives:
+      - name: Jeanette Despatie
+        title: President & Chief Executive Officer
+      - name: Dr. Anastasios Boubalos
+        title: Chief of Staff
+      - name: Kelly Shaw
+        title: Vice President of Patient Services & Chief Nursing Officer
+      - name: Ann Zeran
+        title: Vice President of Community Programs
+      - name: Karin Hagen
+        title: Chief Finance Officer
+      - name: vacant
+        title: Chief Information Officer
+
+
+  - FAC: '638'
+    name: "MICS GROUP COCHRANE LADY MINTO"
+    hospital_type: "Small Hospital"
+    url: "https://www.micsgroup.com/governance/board-of-directors/"
+    pattern: "manual_entry_required"
+    expected_executives: 4
+    partnership: "MICS Group"
+    parternship_abbrev: "MICS"
+    html_structure:
+      notes: "Board page with executives mixed with board members. Shares same page/executives with Bingham Memorial and Anson General (FAC-685). All three MICS hospitals share same leadership team."
+    status: "needs_manual_entry"
+    known_executives:
+      - name: "Dr. Joey Tremblay"
+        title: "CHIEF OF STAFF"
+      - name: "Dr. Auri Bruno-Petrina"
+        title: "PRESIDENT OF MEDICAL STAFF"
+      - name: "Paul Chatelain"
+        title: "CHIEF EXECUTIVE OFFICER"
+      - name: "Isabelle Boucher"
+        title: "CHIEF NURSING OFFICER"
+    
   - FAC: "627"
     name: "CHAPLEAU SER DE SANTÉ DE CHAPLEAU"
     hospital_type: "Small Hospital"
@@ -147,29 +303,19 @@ hospitals:
      separator: " | "
      notes: "Page shows 'Board of Directors' but contains Senior Management Team. Jeremy Dickson has no title."
     status: "ok"
- 
+    
   - FAC: '967'
     name: CORNWALL COMMUNITY
-    hospital_type: Large Community Hospital
     url: https://www.cornwallhospital.ca/en/SeniorAdmin
-    pattern: manual_entry_required
+    pattern: "combined_h2"
     expected_executives: 5
     html_structure:
-      notes: Reversed Titles new pattern??
-    status: ok
-    known_executives:
-      - name: Jeanette Despatie
-        title: President & Chief Executive Officer
-      - name: Dr. Anastasios Boubalos
-        title: Chief of Staff
-      - name: Kelly Shaw
-        title: Vice President of Patient Services & Chief Nursing Officer
-      - name: Ann Zeran
-        title: Vice President of Community Programs
-      - name: Karin Hagen
-        title: Chief Finance Officer
-      - name: vacant
-        title: Chief Information Officer
+       combined_element: "p"
+       separator: ":"
+       reversed: true          # ← Key!
+       notes: "Title:Name format"
+    status: "needs_testing"
+    
   - FAC: '966'
     name: SARNIA BLUEWATER HEALTH
     hospital_type: Large Community Hospital
@@ -981,6 +1127,7 @@ hospitals:
   - FAC: '982'
     name: Blanche River Health
     hospital_type: Large Community Hospital
+    partnership: "Blanche River"
     url: https://www.blancheriverhealth.ca/about-us/leadership
     pattern: div_classes
     expected_executives: 3

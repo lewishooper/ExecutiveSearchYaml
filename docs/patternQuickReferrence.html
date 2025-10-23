@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital Scraper - Pattern Quick Reference Guide</title>
+    <style>
+        @page {
+            size: landscape;
+            margin: 0.5in;
+        }
+        body {
+            font-family: "Calibri", "Arial", sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18pt;
+            margin-bottom: 10px;
+            color: #2C3E50;
+        }
+        .update-notice {
+            text-align: center;
+            color: #E74C3C;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 11pt;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7F8C8D;
+            margin-bottom: 20px;
+            font-size: 10pt;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 10pt;
+        }
+        th {
+            background-color: #2C3E50;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            border: 1px solid #34495E;
+        }
+        td {
+            padding: 8px;
+            border: 1px solid #BDC3C7;
+            vertical-align: top;
+        }
+        tr:nth-child(even) {
+            background-color: #ECF0F1;
+        }
+        tr:nth-child(odd) {
+            background-color: white;
+        }
+        .pattern-col {
+            width: 18%;
+            font-weight: bold;
+            color: #2C3E50;
+        }
+        .structure-col {
+            width: 30%;
+            font-family: "Courier New", monospace;
+            white-space: pre-line;
+            background-color: #F8F9FA;
+        }
+        .elements-col {
+            width: 28%;
+            font-size: 9pt;
+        }
+        .examples-col {
+            width: 24%;
+            font-size: 9pt;
+        }
+        .new-feature {
+            background-color: #FFF9C4 !important;
+            border-left: 4px solid #FFC107;
+        }
+        .reversed-note {
+            color: #E74C3C;
+            font-weight: bold;
+            font-size: 9pt;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 10pt;
+            color: #7F8C8D;
+        }
+    </style>
+</head>
+<body>
+    <h1>Hospital Scraper - Pattern Quick Reference Guide</h1>
+    <p class="update-notice">★ UPDATED: Added 'reversed' Parameter Support (Oct 2025) ★</p>
+    <p class="subtitle">
+        Generated from enhanced_hospitals.yaml | Total Patterns: 13 | Total Hospitals: 62
+    </p>
+    
+    <table>
+        <thead>
+            <tr>
+                <th class="pattern-col">Pattern</th>
+                <th class="structure-col">HTML Structure Items<br>(copy/paste into YAML)</th>
+                <th class="elements-col">Elements in the Structure</th>
+                <th class="examples-col">FAC & Hospital Examples</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr class="new-feature">
+                <td class="pattern-col">combined_h2<br><span class="reversed-note">NEW: reversed support</span></td>
+                <td class="structure-col">combined_element:
+separator:
+reversed: true/false
+notes:</td>
+                <td class="elements-col">p, h2, h3, span
+:, |, ,, " - "
+<span class="reversed-note">NEW: Use 'reversed: true' for Title:Name format</span>
+Combined text with separator</td>
+                <td class="examples-col">FAC-665 GUELPH GENERAL (normal)
+FAC-941 CHATHAM-KENT (normal)
+FAC-967 CORNWALL COMMUNITY (reversed)
+FAC-600 ATIKOKAN GENERAL</td>
+            </tr>
+
+            <tr class="new-feature">
+                <td class="pattern-col">h2_name_p_title<br><span class="reversed-note">NEW: reversed support</span></td>
+                <td class="structure-col">name_element:
+title_element:
+reversed: true/false
+notes:</td>
+                <td class="elements-col">h2, h3, p
+p, h3, h4
+<span class="reversed-note">NEW: Use 'reversed: true' for Title→Name sequence</span>
+Sequential elements with name then title (or reversed)</td>
+                <td class="examples-col">FAC-646 DEEP RIVER (reversed)
+FAC-965 SAULT STE MARIE (normal)
+FAC-962 ST CATHARINES NIAGARA (normal)
+FAC-953 HANOVER (normal)</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">boardcard_gallery</td>
+                <td class="structure-col">container_class:
+text_format:
+separator:
+notes:</td>
+                <td class="elements-col">boardcard
+name_comma_title
+,
+Gallery of senior leaders</td>
+                <td class="examples-col">FAC-935 THUNDER BAY REGIONAL</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">div_classes</td>
+                <td class="structure-col">name_class:
+title_class:
+container_class:
+notes:</td>
+                <td class="elements-col">name, tm-name, title
+position, tm-primary-title
+team-member, staff-member
+CSS class-based extraction</td>
+                <td class="examples-col">FAC-931 PARRY SOUND WEST PARRY
+FAC-745 ORILLIA SOLDIERS'
+FAC-736 NEWMARKET SOUTHLAKE
+FAC-699 KITCHENER ST MARY'S</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">field_content_sequential</td>
+                <td class="structure-col">element_selector:
+pattern_type:
+start_index:
+notes:</td>
+                <td class="elements-col">.field-content
+sequential_every_3
+3
+Sequential field elements</td>
+                <td class="examples-col">FAC-939 TORONTO HOLLAND BLOORVIEW</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">h2_combined_complex</td>
+                <td class="structure-col">notes:</td>
+                <td class="elements-col">Complex H2 with name, credentials, and title combined</td>
+                <td class="examples-col">FAC-975 MISSISSAUGA TRILLIUM</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">h2_name_h3_title</td>
+                <td class="structure-col">name_element:
+title_element:
+notes:</td>
+                <td class="elements-col">h2
+h3
+Sequential H2→H3 pattern</td>
+                <td class="examples-col">FAC-940 COBOURG NORTHUMBERLAND
+FAC-605 TORONTO ST. JOSEPH'S
+FAC-707 ROSS MEMORIAL</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">list_items</td>
+                <td class="structure-col">list_type:
+format:
+separator:
+notes:</td>
+                <td class="elements-col">ul, ol
+combined
+|, ,
+List items with separator</td>
+                <td class="examples-col">FAC-930 WRHN-KITCHENER GRAND RIVER
+FAC-957 BELLEVILLE QUINTE
+FAC-790 ST CATHARINES HOTEL DIEU</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">manual_entry_required</td>
+                <td class="structure-col">notes:
+executives:</td>
+                <td class="elements-col">For blocked sites or irregular structures
+Manual list of name/title pairs</td>
+                <td class="examples-col">FAC-966 SARNIA BLUEWATER
+FAC-950 HALTON HEALTHCARE
+FAC-916 HEADWATERS (convertible)</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">nested_list_with_ids</td>
+                <td class="structure-col">name_selector:
+title_selector:
+container_class:
+notes:</td>
+                <td class="elements-col">span.name, div[id^='t-']
+span.position, span[id^='d-']
+li.column
+ID or class-based selectors</td>
+                <td class="examples-col">FAC-718 BURLINGTON JOSEPH BRANT
+FAC-701 RICHMOND HILL MACKENZIE
+FAC-827 PETERBOROUGH REGIONAL</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">p_with_bold_and_br</td>
+                <td class="structure-col">container_selector:
+notes:</td>
+                <td class="elements-col">p strong, p b
+Bold name with BR separator for title</td>
+                <td class="examples-col">FAC-660 WINDSOR REGIONAL</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">qch_mixed_tables</td>
+                <td class="structure-col">notes:</td>
+                <td class="elements-col">Mixed table formats with varying structures</td>
+                <td class="examples-col">FAC-777 QUINTE HEALTHCARE</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">table_rows</td>
+                <td class="structure-col">name_column:
+title_column:
+notes:</td>
+                <td class="elements-col">1, 2 (varies)
+2, 3 (varies)
+Standard table with name/title in columns</td>
+                <td class="examples-col">FAC-661 NORTH BAY
+FAC-781 OWEN SOUND</td>
+            </tr>
+
+            <tr>
+                <td class="pattern-col">custom_table_nested</td>
+                <td class="structure-col">table_selector:
+notes:</td>
+                <td class="elements-col">Complex nested table structure</td>
+                <td class="examples-col">FAC-971 SCARBOROUGH HEALTH NETWORK</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="footer">
+        <p><strong>NEW FEATURE:</strong> The 'reversed' parameter is now available for <strong>combined_h2</strong> and <strong>h2_name_p_title</strong> patterns.</p>
+        <p>Use <code>reversed: true</code> when the title appears before the name in the HTML.</p>
+        <p><strong>Examples:</strong></p>
+        <ul style="text-align: left; display: inline-block;">
+            <li><strong>combined_h2 reversed:</strong> &lt;p&gt;President &amp; CEO:John Smith&lt;/p&gt; (Title:Name)</li>
+            <li><strong>h2_name_p_title reversed:</strong> &lt;p&gt;CEO&lt;/p&gt;&lt;p&gt;John Smith&lt;/p&gt; (Title→Name)</li>
+        </ul>
+        <p style="margin-top: 10px;">Defaults to <code>false</code> for backward compatibility. All existing hospitals continue working unchanged.</p>
+        <p style="margin-top: 10px; font-size: 9pt;">
+            Generated: October 2025 | Version: 1.1 | 
+            Hospitals Automated: 62 | Manual: 11 (15.1%) | 
+            <strong>Reversed Parameter: 2 hospitals (FAC-646, FAC-967)</strong>
+        </p>
+    </div>
+</body>
+</html>
