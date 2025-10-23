@@ -17,6 +17,208 @@
 ---
 
 ## Session History
+# Session Summary Log - October 23, 2025
+
+## Session Overview
+Continued hospital import process into enhanced_hospitals.yaml, focusing on fixing pattern matching issues and analyzing new hospitals.
+
+---
+
+## Work Completed
+
+### 1. FAC 654 - ESPANOLA GENERAL ✅ COMPLETED
+
+**Problem Identified:**
+- Scraper was rejecting the name "Jennifer Stanton Smith, CGA, CPA"
+- Quick test showed 4 of 5 expected executives found
+- Debug message: `Rejected name: 'Jennifer Stanton Smith, CGA, CPA' (matches_pattern=FALSE, is_non_name=FALSE)`
+
+**Root Cause:**
+- Name pattern library didn't support three-part names with credentials (First Middle Last, CREDENTIALS)
+- Existing patterns handled:
+  - Two-part names with credentials: `John Smith, MBA`
+  - Three-part names with middle initials: `John Q. Smith, MBA`
+- But NOT: `Jennifer Stanton Smith, CGA, CPA`
+
+**Solution Implemented:**
+- Added new regex pattern to `enhanced_hospitals.yaml` (line ~1220):
+  ```yaml
+  - ^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
+  ```
+- This pattern matches: First name + Middle name + Last name + optional comma + Credentials
+
+**Hospital Configuration:**
+```yaml
+- FAC: '654'
+  name: 'ESPANOLA GENERAL'
+  hospital_type: 'Small Hospital'
+  url: 'https://espanolaregionalhospital.ca/about-erhhc/governance-and-leadership/senior-management-team'
+  pattern: 'combined_h2'
+  expected_executives: 5
+  html_structure:
+    combined_element: 'h3'
+    separator: '-'
+    reversed: true
+    notes: 'Three-part name with credentials (Jennifer Stanton Smith, CGA, CPA) now supported'
+  status: 'ok'
+```
+
+**Files Modified:**
+- `/mnt/project/enhanced_hospitals.yaml` - Added name pattern (line ~1220)
+- `/mnt/project/enhanced_hospitals.yaml` - Added FAC 654 hospital configuration
+
+**Expected Executives:**
+1. Jane Battistelli, RN → Chief Executive Officer
+2. Anna Love, RRT, BScN, MN → Chief Nursing Officer
+3. Marlo Desjardins → Chief Human Resources Officer
+4. Dr. Aidan Wharton → Chief of Staff & ED Medical Director
+5. Jennifer Stanton Smith, CGA, CPA → [Title TBD] ← **Previously missed, now captured**
+
+---
+
+### 2. FAC 655 - Huron Health EXETER SOUTH HURON ✅ WORKING
+
+**Status:** Already configured and working properly
+
+**Configuration:**
+```yaml
+- FAC: '655'
+  name: 'Huron Health EXETER SOUTH HURON'
+  hospital_type: 'Small Hospital'
+  partnership: 'Huron Health'
+  url: 'https://www.huronhealthsystem.ca/leadership'
+  pattern: 'h2_name_p_title'
+  expected_executives: 5
+  html_structure:
+    combined_element: 'h2'
+    separator: 'p'
+    notes: ''
+  status: 'ok'
+```
+
+**Result:** No changes needed - working correctly
+
+---
+
+### 3. FAC 656 - WHCA Groves Memorial Community Hospital 🔄 IN PROGRESS
+
+**URL:** https://gmch.whca.ca/board-of-directors
+
+**Current Issue:**
+- Quick test returned: `✗ FAILED: No executives found`
+- Error: `row names contain missing values`
+
+**Analysis Performed:**
+- Used `helper$analyze_hospital_structure()` to examine page
+- Found: 7 H2 elements, 5 H3 elements, 37 P elements
+- Pattern predictions suggested: h2_name_h3_title, div_classes, or combined_h2
+
+**Key Discovery:**
+- This is a **COMBINED BOARD AND EXECUTIVE PAGE**
+- Page lists both board members AND executives together
+- Board members are listed first with titles like:
+  - "Board Chair"
+  - "Board Vice Chair"
+  - "Treasurer"
+  - "Past Board Chair"
+  - County/Township Representatives
+  
+**Executives Identified (from web fetch):**
+1. **Dr. Matthew Westendorp** - Ex-Officio, Chief of Staff
+2. **Dr. Amanda Wagler** - Ex-Officio, President of Professional Staff Association
+3. **Angela Stanley** - President and CEO
+4. **Angela Stanley** - Interim - VP Clinical Services and CNE (possibly duplicate/interim role)
+
+**Page Structure:**
+- Appears to be plain text format
+- Each person listed as: `Name - Title`
+- Separator: `-`
+- Likely in `<p>` tags or simple list structure
+
+**Partnership Context:**
+- Part of Wellington Health Care Alliance (WHCA)
+- Shares leadership with North Wellington Health Care
+- Comprises 3 hospitals:
+  - Groves Memorial Community Hospital (Fergus)
+  - Louise Marshall Hospital (Mount Forest)
+  - Palmerston and District Hospital (Palmerston)
+
+**Status:** Analysis complete, configuration pending
+- Need to determine exact HTML structure (p tags vs li tags)
+- Need to configure scraper to handle combined board/executive page
+- Scraper should filter based on executive title keywords (Ex-Officio, CEO, VP, Chief, etc.)
+
+**Proposed Next Steps:**
+1. Test with `combined_p` or `list_items` pattern
+2. Verify scraper's `is_executive_title()` function filters board members correctly
+3. Confirm which executives to capture (may need to handle duplicate Angela Stanley entries)
+
+---
+
+## Important Workflow Note
+
+**User Working Environment:**
+- User works directly in R environment
+- **Active working file:** `enhanced_hospitals.yaml` in R working directory
+- `/mnt/project/` files are reference copies from the project
+- When saving work back to project, explicit update needed
+- Pattern fix for FAC 654 needs to be applied to user's R environment file
+
+---
+
+## Files Created This Session
+
+1. **fac_654_fix_summary.md** - Detailed documentation of the three-part name pattern fix
+2. **session_log_2025-10-23.md** - This summary document
+
+---
+
+## Statistics
+
+**Hospitals Processed:**
+- ✅ FAC 654 - Fixed and configured
+- ✅ FAC 655 - Verified working
+- 🔄 FAC 656 - Analyzed, configuration pending
+
+**Pattern Updates:**
+- 1 new name pattern added to handle three-part names with credentials
+
+**Files Modified:**
+- enhanced_hospitals.yaml (2 updates: pattern library + hospital entry)
+
+---
+
+## Next Session Tasks
+
+1. **FAC 656 - Complete configuration:**
+   - Determine exact HTML structure (test with pattern)
+   - Configure scraper for combined board/executive page
+   - Test and verify executive filtering
+   - Add to enhanced_hospitals.yaml
+
+2. **Continue hospital imports:**
+   - Move to next hospital in queue
+   - Apply lessons learned from combined board/executive pages
+
+3. **Pattern Library Maintenance:**
+   - Document the three-part name pattern fix in project documentation
+   - Consider if other edge cases exist for name patterns
+
+---
+
+## Technical Notes
+
+- Three-part name pattern fix is backward-compatible
+- No existing hospital configurations affected by the change
+- Combined board/executive pages are a known pattern type
+- Scraper's `is_executive_title()` function should handle filtering automatically
+
+---
+
+## Session End Time
+October 23, 2025 - End of work session
+
+
 # Session Summary: Adding 'reversed' Parameter Support
 **Date:** October 22, 2025
 **Duration:** ~2 hours

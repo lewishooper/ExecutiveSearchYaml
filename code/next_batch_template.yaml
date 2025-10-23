@@ -1,37 +1,4 @@
 hospitals:
-
-  - FAC: '654'
-    name: ESPANOLA GENERAL
-    hospital_type: Small Hospital
-    url: https://espanolaregionalhospital.ca/about-erhhc/governance-and-leadership/senior-management-team
-    pattern: reversed
-    expected_executives: 5
-    html_structure:
-      combined_element: ''
-      separator: ''
-      notes: ''
-    status: needs_configuration
-  - FAC: '655'
-    name: Huron Health EXETER SOUTH HURON
-    hospital_type: Small Hospital
-    url: https://www.huronhealthsystem.ca/leadership
-    pattern: combined_h2
-    expected_executives: 5
-    html_structure:
-      combined_element: h2
-      separator: p
-      notes: ''
-    status: needs_configuration
-  - FAC: '656'
-    name: 'WHCA Grove community hospital '
-    hospital_type: Small Hospital
-    url: https://gmch.whca.ca/board-of-directors
-    pattern: div_classes
-    expected_executives: 5
-    html_structure:
-      combined_element: ''
-      separator: ''
-      notes: ''
     status: needs_configuration
   - FAC: '662'
     name: GERALDTON DISTRICT HOSPITAL

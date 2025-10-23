@@ -1,6 +1,45 @@
 hospitals:
 
 
+  - FAC: '656'
+    name: 'WHCA Grove community hospital '
+    hospital_type: Small Hospital
+    url: https://gmch.whca.ca/board-of-directors
+    partnership: "Wellington Health Care Alliance "
+    parternship_abbrev: "WHCA"
+    pattern: h2_name_h3_title
+    expected_executives: 4
+    html_structure:
+      combined_element: 'span'
+      separator: '-'
+      notes: ''
+  - FAC: '655'
+    name: Huron Health EXETER SOUTH HURON
+    hospital_type: Small Hospital
+    partnership: "Huron Health"
+    url: https://www.huronhealthsystem.ca/leadership
+    pattern: h2_name_p_title
+    expected_executives: 5
+    html_structure:
+      combined_element: h2
+      separator: p
+      notes: ''
+    status: ok
+
+
+  - FAC: '654'
+    name: ESPANOLA GENERAL
+    hospital_type: Small Hospital
+    url: https://espanolaregionalhospital.ca/about-erhhc/governance-and-leadership/senior-management-team
+    pattern: combined_h2
+    expected_executives: 5
+    html_structure:
+      combined_element: 'h3'
+      separator: '-'
+      reversed: true
+      notes: ''
+    status: ok  
+
   - FAC: '653'
     name: Blanche River ENGLEHART & DISTRICT
     hospital_type: Small Hospital
@@ -1317,6 +1356,7 @@ name_patterns:
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
     - ^Dr\.?\s+[A-Z][a-z]+\s+[A-Z][a-z]+,?\s+[A-Z]{2,},?\s+[A-Z]{2,}.*$
     - ^[A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+, [A-Z]{2,}.*$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
   hyphenated_names:
     - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+$
     - ^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$

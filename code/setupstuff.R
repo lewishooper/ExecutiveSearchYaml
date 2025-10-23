@@ -1,13 +1,13 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
-source("session_startup.R")
+ #source("session_startup.R")
 quick_test(646)
 status_next()
-FAC<-653
+FAC<-656
 
 quick_test(FAC)
-Name <- "Royal ottawa"
-url <- "https://www.theroyal.ca/about-royal/leadership/senior-leadership-team"
+Name <- "Grove County"
+url <- "https://gmch.whca.ca/board-of-directors"
 helper$analyze_hospital_structure(FAC, Name, url)
 
 helper$test_hospital_config(FAC, Name, url, "h2_name_p_title")# - Test configuration (reads from YAML)\n")  
