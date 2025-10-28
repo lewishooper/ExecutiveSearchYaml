@@ -1,16 +1,15 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
  #source("session_startup.R")
-quick_test(646)
-status_next()
-FAC<-656
+FAC<-676
 
 quick_test(FAC)
-Name <- "Grove County"
-url <- "https://gmch.whca.ca/board-of-directors"
+Name <- "hanover and district"
+url <- "https://www.hanoverhospital.on.ca/our-team"
+quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)
 
-helper$test_hospital_config(FAC, Name, url, "h2_name_p_title")# - Test configuration (reads from YAML)\n")  
+helper$test_hospital_config(FAC, Name, url, "div_classes")# - Test configuration (reads from YAML)\n")  
 helper$show_pattern_guide()# - Show pattern identification guide\n")
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
 

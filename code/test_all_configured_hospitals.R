@@ -24,7 +24,7 @@ test_all_configured_hospitals <- function(config_file = "enhanced_hospitals.yaml
     cat("ERROR: Configuration file not found:", config_file, "\n")
     return(NULL)
   }
-  
+
   config <- yaml::read_yaml(config_file)
   hospitals <- config$hospitals
   
@@ -443,5 +443,6 @@ cat("  • test_report_TIMESTAMP.txt - Detailed text report\n\n")
 
 cat("═══════════════════════════════════════════════════════════════════\n\n")
 
-check_configuration_status()
+#GoodHospitals<-check_configuration_status()
 
+#test_all_configured_hospitals()
