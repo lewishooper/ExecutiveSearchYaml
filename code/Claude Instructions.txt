@@ -1,0 +1,26 @@
+I have updated the SESSION_LOG.MD, the next_batch_template.yaml, and the enhanced_hospitals.yaml These files are now in the knowledge repository.
+
+I have also revised the pattern_based_scraper.R and created a new pattern
+the first agenda for the day is to continue to rebuild the 
+file:///E:/ExecutiveSearchYaml/docs/patternQuickReferrence.html
+We know have an updated pattern Patternsummary.R which creates a dataframe of hospitals, patterns html items and elements
+We need to check for duplicates, patterns where the html_Structure is differnt for the same pattern,
+isolate all the elements used for each pattern to generate the name title etc
+Then build out a new patternquickreference guide 
+Note the format of the HTML Stucture should be copy and paste able
+
+
+
+I would like to follow this process for todays work. 
+1) I will pick and attempt to debug hospitals. using the following tools which are in  the knowledge repository including:
+	* The quick_test()
+	* helper$analyze_hospital_structure(FAC, Name, url)
+	* patternQuickReferrence.html and 
+	* the resources we have created and are in the knowledge repository. 
+Note:  The working copy of enhance_hospitals.yaml is in my R environment.
+
+2) I will use Claude when those tools aren't helping. At which point I will give you the results of the quick_test, the analyze_hospital_structure the current Yaml card for the hospital and if the html code for each executive member appears congruent, I will give you a copy of the html code element for the CEO
+
+3) If you need additional R code run to help debug please create the code and ask me to run it. 
+4) if you believe the pattern_based_scraper.R needs to be changed please create the necessary changes and tell me where to put it. 
+5) Do not create additional documentation without asking if I want that documentation created. 

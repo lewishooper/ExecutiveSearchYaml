@@ -1274,6 +1274,125 @@ PatternBasedScraper <- function() {
       return(list())
     })
   }
+  # ============================================================================
+  # PATTERN 15: Table cells (each TD contains name + title)
+  # ============================================================================
+  # ============================================================================
+  # PATTERN 15: Table cells (each TD contains name + title) rev2
+  # ============================================================================
+  scrape_table_cells <- function(page, hospital_info, config) {
+    tryCatch({
+      separator <- hospital_info$html_structure$separator %||% "\n"
+      cells <- page %>% html_nodes("table td") %>% html_text2()
+      pairs <- list()
+      
+      for (cell_text in cells) {
+        # Skip empty cells BEFORE normalizing
+        if (nchar(trimws(cell_text)) == 0 || cell_text == "Â ") next
+        
+        # Split by separator BEFORE normalizing (preserve newlines)
+        lines <- strsplit(cell_text, separator, fixed = TRUE)[[1]]
+        lines <- trimws(lines)
+        lines <- lines[nchar(lines) > 0]
+        
+        if (length(lines) >= 2) {
+          for (i in 1:(length(lines) - 1)) {
+            # NOW normalize each line individually
+            potential_name <- normalize_text(lines[i])
+            potential_title <- normalize_text(lines[i + 1])
+            
+            if (is_executive_name(potential_name, config) && 
+                is_executive_title(potential_title, config)) {
+              pairs[[length(pairs) + 1]] <- list(
+                name = clean_text_data(potential_name),
+                title = clean_text_data(potential_title)
+              )
+              break
+            }
+          }
+        }
+      }
+      
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(name = missing$name, title = missing$title)
+        }
+      }
+      
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) pairs <- pairs[1:max_count]
+      }
+      
+      return(pairs)
+    }, error = function(e) {
+      message("Error in scrape_table_cells: ", e$message)
+      return(list())
+    })
+  }
+  
+  # ============================================================================
+  # PATTERN 16: Single P element with BR-separated list (Title | Name)
+  # ============================================================================
+  scrape_p_with_br_list_reversed <- function(page, hospital_info, config) {
+    tryCatch({
+      separator <- hospital_info$html_structure$separator %||% " | "
+      container_class <- hospital_info$html_structure$container_class %||% "elementor-icon-box-description"
+      
+      # Find the container paragraph
+      p_elements <- page %>% html_nodes(paste0("p.", container_class))
+      
+      pairs <- list()
+      
+      for (p_elem in p_elements) {
+        # Get HTML content and split by <br> tags
+        html_content <- p_elem %>% html_children()
+        text_content <- p_elem %>% html_text2()
+        
+        # Split by newlines (br tags become newlines with html_text2)
+        lines <- strsplit(text_content, "\n")[[1]]
+        lines <- trimws(lines)
+        lines <- lines[nchar(lines) > 0]
+        
+        for (line in lines) {
+          # Skip lines that don't contain the separator
+          if (!grepl(separator, line, fixed = TRUE)) next
+          
+          # Split by separator
+          parts <- strsplit(line, separator, fixed = TRUE)[[1]]
+          if (length(parts) < 2) next
+          
+          # REVERSED: part1 is title, part2 is name
+          potential_title <- trimws(parts[1])
+          potential_name <- trimws(parts[2])
+          
+          if (is_executive_name(potential_name, config) && 
+              is_executive_title(potential_title, config)) {
+            pairs[[length(pairs) + 1]] <- list(
+              name = clean_text_data(potential_name),
+              title = clean_text_data(potential_title)
+            )
+          }
+        }
+      }
+      
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(name = missing$name, title = missing$title)
+        }
+      }
+      
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) pairs <- pairs[1:max_count]
+      }
+      
+      return(pairs)
+    }, error = function(e) {
+      message("Error in scrape_p_with_br_list_reversed: ", e$message)
+      return(list())
+    })
+  }
   
   # ============================================================================
   # MAIN SCRAPER FUNCTION
@@ -1311,6 +1430,8 @@ PatternBasedScraper <- function() {
                         "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # ← ADD THIS
                         "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
                         "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
+                        "table_cells" = scrape_table_cells(page, hospital_info, config),
+                        "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
                         # Default fallback 
                         scrape_h2_name_h3_title(page, hospital_info, config)
         )

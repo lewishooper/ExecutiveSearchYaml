@@ -2,19 +2,19 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
 source("quick_test_single.R")
-FAC<-682
+FAC<-734
 
-quick_test(967)
-Name <- "hanover and district"
-url <- "https://www.hanoverhospital.on.ca/our-team"
+quick_test(FAC)
+Name <- "Frank Vassallo"
+url <- "https://kdh.on.ca/about-kemptville-district-hospital/leadership-team/"
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)
 
-helper$test_hospital_config(FAC, Name, url, "div_classes")# - Test configuration (reads from YAML)\n")  
+helper$test_hospital_config(FAC, Name, url, "table_rows")# - Test configuration (reads from YAML)\n")  
 helper$show_pattern_guide()# - Show pattern identification guide\n")
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
 
-helper$analyze_hospital_structure(967, "Cornwall", "https://www.cornwallhospital.ca/en/SeniorAdmin")
+helper$analyze_hospital_structure(FAC, Name,url)
 
 source("pattern_based_scraper.R")
 quick_test(665)  # Test existing hospital still works

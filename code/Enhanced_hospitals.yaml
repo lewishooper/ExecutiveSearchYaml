@@ -1,4 +1,134 @@
 hospitals:
+
+
+  - FAC: '734'
+    name: 'HALDIMAND WEST HALDIMAND GENERAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.whgh.ca/senior-leadership-team/
+    pattern: p_with_bold_and_br
+    expected_executives: 4
+    html_structure:
+      notes: Names in <strong> within <p>, titles after <br>
+    status: ok
+
+
+  - FAC: '732'
+    name: 'KEMPTVILLE DISTRICT'
+    hospital_type: 'Small Hospital'
+    url: https://kdh.on.ca/about-kemptville-district-hospital/leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 4
+    html_structure:
+     name_element: h2
+     title_element: p
+     reversed: false 
+    notes: 
+    status: ok
+
+  - FAC: '724'
+    name: 'MATTAWA GENERAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.mattawahealth.ca/About-Us/Senior-Team
+    pattern: combined_h2
+    expected_executives: 4
+    html_structure:
+        combined_element: 'h2'
+        separator: ', '
+        reversed: false
+        notes: ' '
+    status: ok
+
+
+  - FAC: '723'
+    name: 'MATHESON BINGHAM MEMORIAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.micsgroup.com/governance/board-of-directors/
+    pattern: "p_with_br_list_reversed"
+    expected_executives: 4
+    partnership: "MICS Group"
+    html_structure:
+      container_class: "elementor-icon-box-description"
+      separator: " | "
+      notes: "Title | Name format in single <p> with <br> separators"
+    status: "ok"
+    
+
+
+  - FAC: '719'
+    name: 'MANITOUWADGE SANTE MANITOUWADGE'
+    hospital_type: 'Small Hospital'
+    url: https://www.mh.on.ca/organizationalstructure
+    pattern: "manual_entry_required"
+    expected_executives: 5
+    html_structure:
+      notes: "Mixed format - CEO is Name–Title, others are Title–Name in <strong> tags"
+    status: "needs_manual_entry"
+    known_executives:
+      - name: "Annie Janveau"
+        title: "President and CEO"
+      - name: "Megan Esarte"
+        title: "Chief Nursing Officer/Director of Clinical Services"
+      - name: "Trena Roberts"
+        title: "Director of Community Services and Programs"
+      - name: "Amy Gray"
+        title: "Director of Finance"
+      - name: "Teresa Malakoff"
+        title: "Support Services Manager/Privacy Officer"
+    
+
+  - FAC: '714'
+    name: LONDON ST JOSEPHS
+    hospital_type: 'Teaching Hospital'
+    url: https://www.sjhc.london.on.ca/about-us/about-st-josephs-health-care-london/leadership-team
+    pattern: div_classes
+    expected_executives: 5
+    html_structure:
+     
+    notes: 
+    status: "Not usable"
+    
+    
+    
+  - FAC: '709'
+    name: 'Listowel Wingham LISTOWEL MEMORIAL'
+    hospital_type: 'Small Hospital'
+    partnership: Listowel Wingham Hospital Alliance
+    url: https://lwha.ca/about/board/
+    pattern: "manual_entry_required"
+    html_structure:
+      notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
+    status: "needs_manual_entry"
+    known_executives:
+      - name: "Esther Millar"
+        title: "CEO"
+    
+
+  - FAC: "704"
+    name: "Erie Shores Leamington"
+    url: "https://erie.bluelemonmedia.com/boardofdirectors"
+    expected_executives: 15
+    
+    pattern: "table_cells"
+    html_structure:
+      separator: "\n"
+      notes: Full Board needs extracting in final
+    status: "ok"
+
+  - FAC: '696'
+    name: 'KIRKLAND & DISTRICT'
+    hospital_type: 'Small Hospital'
+    partnership: "Blanche River"
+    url: https://www.blancheriverhealth.ca/about-us/leadership
+    pattern: div_classes
+    expected_executives: 3
+    html_structure:
+      name_class: name
+      title_class: position
+      container_class: member-name
+      notes: Leadership page includes both executives and board members
+    status: ok
+
+
   - FAC: "682"
     name: "HORNEPAYNE COMMUNITY"
     url: "https://www.hornepaynecommunityhospital.ca/about-1"
@@ -9,6 +139,7 @@ hospitals:
       name_class: "font_5"
       title_class: "font_7"
       category_filter: ["​"]  # Filter out the zero-width space
+      notes: Need to filter out emails in the final version
     status: "ok"
 
   - FAC: '686'
@@ -28,24 +159,15 @@ hospitals:
     name: MICS Group IROQUOIS FALLS ANSON GENERAL
     hospital_type: Small Hospital
     url: https://www.micsgroup.com/governance/board-of-directors/
-    pattern: "manual_entry_required"
+    pattern: "p_with_br_list_reversed"
     expected_executives: 4
     partnership: "MICS Group"
-    parternship_abbrev: "MICS"
     html_structure:
-      notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
-    status: "needs_manual_entry"
-    known_executives:
-      - name: "Dr. Joey Tremblay"
-        title: "CHIEF OF STAFF"
-      - name: "Dr. Auri Bruno-Petrina"
-        title: "PRESIDENT OF MEDICAL STAFF"
-      - name: "Paul Chatelain"
-        title: "CHIEF EXECUTIVE OFFICER"
-      - name: "Isabelle Boucher"
-        title: "CHIEF NURSING OFFICER"
+      container_class: "elementor-icon-box-description"
+      separator: " | "
+      notes: "Title | Name format in single <p> with <br> separators"
+    status: "ok"
     
-
 
   - FAC: '684'
     name: Rural Roads Health servcies INGERSOLL ALEXANDRA
@@ -90,7 +212,7 @@ hospitals:
     name: TORONTO DON MILLS SURGICAL UNIT
     hospital_type: Other Hospital
     url: ''
-    pattern: combined_h2
+    pattern: closed
     expected_executives: 5
     html_structure:
       combined_element: ''
@@ -208,7 +330,7 @@ hospitals:
       separator: '-'
       reversed: true
       notes: ''
-    status: ok  
+    status: "ok"
 
   - FAC: '653'
     name: Blanche River ENGLEHART & DISTRICT
@@ -222,6 +344,7 @@ hospitals:
       title_class: position
       container_class: member-name
       notes: Leadership page includes both executives and board members
+    status: ok
   - FAC: '651'
     name: "OTTAWA ROYAL OTTAWA (PSYCH)"
     hospital_type: "Specialty Mental Health Hospital"
@@ -347,22 +470,15 @@ hospitals:
     name: "MICS GROUP COCHRANE LADY MINTO"
     hospital_type: "Small Hospital"
     url: "https://www.micsgroup.com/governance/board-of-directors/"
-    pattern: "manual_entry_required"
+    pattern: "p_with_br_list_reversed"
     expected_executives: 4
     partnership: "MICS Group"
-    parternship_abbrev: "MICS"
     html_structure:
-      notes: "Board page with executives mixed with board members. Shares same page/executives with Bingham Memorial and Anson General (FAC-685). All three MICS hospitals share same leadership team."
-    status: "needs_manual_entry"
-    known_executives:
-      - name: "Dr. Joey Tremblay"
-        title: "CHIEF OF STAFF"
-      - name: "Dr. Auri Bruno-Petrina"
-        title: "PRESIDENT OF MEDICAL STAFF"
-      - name: "Paul Chatelain"
-        title: "CHIEF EXECUTIVE OFFICER"
-      - name: "Isabelle Boucher"
-        title: "CHIEF NURSING OFFICER"
+      container_class: "elementor-icon-box-description"
+      separator: " | "
+      notes: "Title | Name format in single <p> with <br> separators"
+    status: "ok"
+    
     
   - FAC: "627"
     name: "CHAPLEAU SER DE SANTÉ DE CHAPLEAU"
@@ -448,7 +564,7 @@ hospitals:
       name_element: h2
       title_element: h3
       notes: 'partnership'
-    status: OK
+    status: ok
 
   - FAC: '593'
     name: Middlesex Hospital Alliance NEWBURY FOUR COUNTIES HEALTH SERV.
@@ -701,6 +817,7 @@ hospitals:
     html_structure:
       notes: Names and titles in <strong> within <p>, separated by <br> tags
     status: ok
+    
   - FAC: '771'
     name: PETERBOROUGH REGIONAL HEALTH CENTRE
     hospital_type: Large Community Hospital
@@ -710,7 +827,7 @@ hospitals:
     html_structure:
       combined_element: span
       separator: ','
-      status: ok
+    status: ok
   - FAC: '763'
     name: PEMBROKE REGIONAL
     hospital_type: Large Community Hospital
@@ -802,7 +919,7 @@ hospitals:
       name_class: name
       title_class: position
       container_class: staff-member
-    status: OK
+    status: ok
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
@@ -814,7 +931,7 @@ hospitals:
       format: combined
       separator: ', '
       notes: Combined with St.Marys Kitchner, Has multiple commas in title
-    status: OK
+    status: ok
   - FAC: '665'
     name: GUELPH GENERAL
     hospital_type: Large Community Hospital
@@ -924,7 +1041,7 @@ hospitals:
       name_element: h2
       title_element: h3
       notes: ''
-      status: ok
+    status: ok
   - FAC: '624'
     name: Campbellford Memorial Hospital
     hospital_type: Small Hospital
@@ -1011,7 +1128,7 @@ hospitals:
       combined_element: h3
       separator: ' - '
       notes: ''
-      status: ok
+    status: ok
   - FAC: '952'
     name: Lakeridge Health
     hospital_type: Large Community Hospital
