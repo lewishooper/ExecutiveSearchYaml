@@ -9,7 +9,7 @@ hospitals:
       name_class: "font_5"
       title_class: "font_7"
       category_filter: ["​"]  # Filter out the zero-width space
-    status: "configured"
+    status: "ok"
 
   - FAC: '686'
     name: 'WAWA LADY DUNN HC'
@@ -71,9 +71,8 @@ hospitals:
      name_element: span
      title_element: span
      reversed: false 
-     notes: Missing two folks and sequence of titles is wrong
-    status: needs_configuration
-
+     notes: need to strip out emails ? manual at end of run or patten??
+    status: ok
   - FAC: '681'
     name: HEARST NOTRE DAME
     hospital_type: Small Hospital
@@ -84,7 +83,7 @@ hospitals:
       name_element: h1
       title_element: h4
       reversed: false
-      notes: Leadership page includes both executives and board members
+      notes: "Missing CEO  Name issue"
     status: needs_configuration
 
   - FAC: '680'
@@ -113,7 +112,7 @@ hospitals:
         - name: Saskia MacMillan
           title: Vice President of Patient Care Service/CNE 
       notes: ' Missing person TITLE WITH A "/" IS LIKELY THE PROBLEM'
-    status: needs_configuration
+    status: ok
 
 
   - FAC: '674'
@@ -142,7 +141,7 @@ hospitals:
       list_type: ul
       format: combined
       separator: ', '
-    status: needs_configuration
+    status: ok
 
   - FAC: '663'
     name: Huron HealthGODERICH ALEXANDRA MARINE & GEN
@@ -231,7 +230,7 @@ hospitals:
     expected_executives: 13
     html_structure:
       notes: "P elements with plain text names and <br> separator. No bold/strong tags on names. When text is extracted, <br> disappears making automated splitting impossible."
-    status: "ok"
+    status: "manual"
     known_executives:
       - name: "Cara Vaccarino"
         title: "President and CEO"
@@ -269,7 +268,7 @@ hospitals:
     expected_executives: 4
     html_structure:
       notes: "Board page with figcaption elements containing names and titles separated by <br>. Mix of 11 board members and 4 executives. No existing pattern supports figcaption with plain text names. Executives manually extracted from Ex-Officio section."
-    status: "ok"
+    status: "manual"
     known_executives:
       - name: "Kelli-Ann Lemieux"
         title: "President & CEO, Board Secretary-Treasurer"
@@ -328,7 +327,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: Reversed Titles new pattern??
-    status: merged
+    status: merged Manual
     known_executives:
       - name: Jeanette Despatie
         title: President & Chief Executive Officer
@@ -373,7 +372,7 @@ hospitals:
     expected_executives: 3
     html_structure:
       notes: "Board page with executives mixed in. Co-CEOs structure. No clear HTML patterns."
-    status: "ok"
+    status: "Manual"
     known_executives:
       - name: "Natasha Comte"
         title: "Co-Chief Executive Officer / Director of Finances and Corporate Services"
@@ -523,7 +522,7 @@ hospitals:
        separator: ":"
        reversed: true          # ← Key!
        notes: "Title:Name format"
-    status: "needs_testing"
+    status: "ok"
     
   - FAC: '966'
     name: SARNIA BLUEWATER HEALTH
@@ -533,7 +532,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: Site blocks automated scraping - connection refused in R
-    status: ok
+    status: Manual
     known_executives:
       - name: Paula Reaume-Zimmer
         title: President & CEO
@@ -584,11 +583,13 @@ hospitals:
     name: HALTON HEALTHCARE
     hospital_type: Large Community Hospital
     url: https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team
-    pattern: manual_entry_required
+    pattern: Manualcombined_h2
     expected_executives: 12
     html_structure:
+      combined_element: h3
+      separator: ''
       notes: H3 elements with <br> separator - not supported by current patterns
-    status: ok
+    status: Manual  Needs
     known_executives:
       - name: Melissa Farrell
         title: President & CEO
@@ -645,7 +646,7 @@ hospitals:
     html_structure:
       notes: Titles appear BEFORE names (reversed order), causing pairing issues with
         div_classes pattern
-    status: ok
+    status: manual
     known_executives:
       - name: Kim Delahunt
         title: President & Chief Executive Officer
@@ -1110,7 +1111,7 @@ hospitals:
           title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
             Research for Sinai Health
       notes: ''
-    status: ok
+    status: missing
   - FAC: '793'
     name: ST THOMAS ELGIN GENERAL
     hospital_type: Large Community Hospital
@@ -1227,7 +1228,7 @@ hospitals:
           title: Chair, Medical Advisory Committee
         - name: Tamás Zsolnay
           title: President & CEO, University Hospitals Kingston Foundation
-    status: ok
+    status: missing
   - FAC: '932'
     name: Elizabeth Bruyere Hospital
     hospital_type: Chronic/Rehab Hospital
@@ -1289,7 +1290,7 @@ hospitals:
         - name: Golda Milo-Manson, MD, FRCPC
           title: Vice-President, Medicine and Academic Affairs
       notes: ''
-    status: ok
+    status: missing
   - FAC: '850'
     name: TORONTO RUNNYMEDE HC
     hospital_type: Chronic/Rehab Hospital
@@ -1310,7 +1311,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 5
     html_structure:
-      n otes: Website blocks automated scraping - may need manual entry or contact
+      notes: Website blocks automated scraping - may need manual entry or contact
         hospital
     status: blocked_by_site
     known_executives:

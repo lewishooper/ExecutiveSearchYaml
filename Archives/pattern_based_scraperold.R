@@ -1,11 +1,7 @@
-# pattern_based_scraper.R - Enhanced scraper with 14 pattern-based approaches
+# pattern_based_scraper.R - Enhanced scraper with 10 pattern-based approaches
 # Save this in E:/ExecutiveSearchYaml/code/
 # UPDATED: Added missing_people support to Patterns 5 & 8, fixed Pattern 8 for FAC 777
-# updated to add new patterns
 
-###############
-##############
-#   TEST sytem replacing html_text2() with html_text2()
 library(rvest)
 library(dplyr)
 library(stringr)
@@ -30,7 +26,7 @@ PatternBasedScraper <- function() {
     return(text)
   }
   
-  ## nEW
+ ## nEW
   
   ## END nEW
   
@@ -139,7 +135,7 @@ PatternBasedScraper <- function() {
     
     return(contains_keyword)
   }
-  
+    
   # Clean and format text data
   clean_text_data <- function(text) {
     if (is.na(text)) return(text)
@@ -161,8 +157,8 @@ PatternBasedScraper <- function() {
   scrape_h2_name_h3_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get h2 and h3 elements
-      h2_elements <- page %>% html_nodes("h2") %>% html_text2()
-      h3_elements <- page %>% html_nodes("h3") %>% html_text2()
+      h2_elements <- page %>% html_nodes("h2") %>% html_text(trim = TRUE)
+      h3_elements <- page %>% html_nodes("h3") %>% html_text(trim = TRUE)
       
       # Normalize text
       h2_elements <- sapply(h2_elements, normalize_text)
@@ -223,7 +219,7 @@ PatternBasedScraper <- function() {
       # Defaults to FALSE for backward compatibility
       reversed <- hospital_info$html_structure$reversed %||% FALSE
       
-      elements <- page %>% html_nodes(element_type) %>% html_text2()
+      elements <- page %>% html_nodes(element_type) %>% html_text(trim = TRUE)
       
       pairs <- list()
       
@@ -446,8 +442,8 @@ PatternBasedScraper <- function() {
       name_class <- hospital_info$html_structure$name_class
       title_class <- hospital_info$html_structure$title_class
       
-      name_elements <- page %>% html_nodes(paste0(".", name_class)) %>% html_text2()
-      title_elements <- page %>% html_nodes(paste0(".", title_class)) %>% html_text2()
+      name_elements <- page %>% html_nodes(paste0(".", name_class)) %>% html_text(trim = TRUE)
+      title_elements <- page %>% html_nodes(paste0(".", title_class)) %>% html_text(trim = TRUE)
       
       pairs <- list()
       max_pairs <- min(length(name_elements), length(title_elements))
@@ -503,7 +499,7 @@ PatternBasedScraper <- function() {
   # ============================================================================
   scrape_list_items <- function(page, hospital_info, config) {
     tryCatch({
-      li_elements <- page %>% html_nodes("li") %>% html_text2()
+      li_elements <- page %>% html_nodes("li") %>% html_text(trim = TRUE)
       
       pairs <- list()
       
@@ -589,7 +585,7 @@ PatternBasedScraper <- function() {
   # Pattern 7: Boardcard gallery pattern - UPDATED VERSION
   scrape_boardcard_pattern <- function(page, hospital_info, config) {
     tryCatch({
-      boardcard_elements <- page %>% html_nodes("div.boardcard") %>% html_text2()
+      boardcard_elements <- page %>% html_nodes("div.boardcard") %>% html_text(trim = TRUE)
       
       # Normalize text
       boardcard_elements <- sapply(boardcard_elements, normalize_text)
@@ -673,7 +669,7 @@ PatternBasedScraper <- function() {
           
           # Extract name from strong element inside p
           potential_name <- name_elements %>% 
-            html_text2() %>% 
+            html_text(trim = TRUE) %>% 
             first()
           
           # Look for title in BOTH div AND p elements with text-align styles
@@ -683,8 +679,8 @@ PatternBasedScraper <- function() {
           
           # Combine both sources
           all_title_elements <- c(
-            title_divs %>% html_text2(),
-            title_ps %>% html_text2()
+            title_divs %>% html_text(trim = TRUE),
+            title_ps %>% html_text(trim = TRUE)
           )
           
           # Remove empty strings and filter
@@ -768,7 +764,7 @@ PatternBasedScraper <- function() {
       # Get ALL field-content elements
       all_field_content <- page %>% 
         html_nodes(".field-content") %>% 
-        html_text2()
+        html_text(trim = TRUE)
       
       pairs <- list()
       
@@ -829,8 +825,8 @@ PatternBasedScraper <- function() {
       title_selector <- hospital_info$html_structure$title_selector %||% "span[id^='d-']"
       
       # Extract all names and titles
-      all_names <- page %>% html_nodes(name_selector) %>% html_text2()
-      all_titles <- page %>% html_nodes(title_selector) %>% html_text2()
+      all_names <- page %>% html_nodes(name_selector) %>% html_text(trim = TRUE)
+      all_titles <- page %>% html_nodes(title_selector) %>% html_text(trim = TRUE)
       
       pairs <- list()
       
@@ -917,7 +913,7 @@ PatternBasedScraper <- function() {
             if (length(strong_elements) == 0) next
             
             potential_name <- strong_elements %>% 
-              html_text2() %>% 
+              html_text(trim = TRUE) %>% 
               first()
             
             # STEP 2: Find title - try multiple strategies
@@ -926,7 +922,7 @@ PatternBasedScraper <- function() {
             # Strategy A: Look for divs with text-align style (Table 1 format)
             title_divs <- cell %>% 
               html_nodes("div[style*='text-align']") %>% 
-              html_text2()
+              html_text(trim = TRUE)
             
             title_divs <- title_divs[nchar(trimws(title_divs)) > 0]
             
@@ -946,7 +942,7 @@ PatternBasedScraper <- function() {
                 has_img <- length(p_tag %>% html_nodes("img")) > 0
                 
                 if (!has_strong && !has_img) {
-                  p_text <- p_tag %>% html_text2()
+                  p_text <- p_tag %>% html_text(trim = TRUE)
                   if (nchar(p_text) > 0 && !grepl("^\\s*&nbsp;\\s*$", p_text)) {
                     title_parts <- c(title_parts, p_text)
                   }
@@ -1136,7 +1132,7 @@ PatternBasedScraper <- function() {
   scrape_h2_combined_complex <- function(page, hospital_info, config) {
     pairs <- list()
     
-    h2_elements <- page %>% html_nodes("h2") %>% html_text2()
+    h2_elements <- page %>% html_nodes("h2") %>% html_text(trim = TRUE)
     
     for (text in h2_elements) {
       # Skip if empty or too short
@@ -1208,73 +1204,6 @@ PatternBasedScraper <- function() {
     
     return(pairs)
   }
-  
-  # ============================================================
-  # PATTERN 14: div_container_multiclass
-  # Name and title in separate <p> tags with different classes within container divs
-  # ============================================================
-  scrape_div_container_multiclass = function(page, hospital_info, config) {
-    tryCatch({
-      container_selector <- hospital_info$html_structure$container_selector %||% "[data-testid='mesh-container-content']"
-      name_class <- hospital_info$html_structure$name_class %||% "font_5"
-      title_class <- hospital_info$html_structure$title_class %||% "font_8"
-      category_filter <- hospital_info$html_structure$category_filter %||% NULL
-      
-      containers <- page %>% html_nodes(container_selector)
-      
-      # Initialize empty list for results
-      pairs <- list()
-      seen <- list()  # Track unique name-title combinations
-      
-      for (container in containers) {
-        # Extract name
-        name <- container %>% 
-          html_nodes(paste0("p.", name_class)) %>% 
-          html_text2() %>%
-          paste(collapse = " ") %>%
-          str_trim()
-        
-        # Skip containers with multiple names (master containers)
-        name_count <- container %>% 
-          html_nodes(paste0("p.", name_class)) %>% 
-          length()
-        
-        if (name_count > 1) next
-        
-        # Extract all title paragraphs
-        title_paragraphs <- container %>% 
-          html_nodes(paste0("p.", title_class)) %>% 
-          html_text2() %>%
-          str_trim()
-        
-        # Filter out category markers if specified
-        if (!is.null(category_filter)) {
-          title_paragraphs <- title_paragraphs[!title_paragraphs %in% category_filter]
-        }
-        
-        # Combine remaining paragraphs as title
-        title <- paste(title_paragraphs, collapse = " ") %>% str_trim()
-        
-        # Only add if we have both name and title, and haven't seen this combo
-        if (name != "" && title != "" && nchar(title) > 0) {
-          key <- paste(name, title, sep = "|||")
-          if (!(key %in% names(seen))) {
-            seen[[key]] <- TRUE
-            pairs[[length(pairs) + 1]] <- list(
-              name = clean_text_data(name),
-              title = clean_text_data(title)
-            )
-          }
-        }
-      }
-      
-      return(pairs)
-      
-    }, error = function(e) {
-      return(list())
-    })
-  }
-  
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
@@ -1292,28 +1221,27 @@ PatternBasedScraper <- function() {
         # Normal scraping for all other patterns
         page <- read_html(hospital_info$url)
         
-        
-        
-        # Dispatch to appropriate pattern scraper
-        pairs <- switch(hospital_info$pattern,
-                        "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
-                        "combined_h2" = scrape_combined_h2(page, hospital_info, config),
-                        "table_rows" = scrape_table_rows(page, hospital_info, config),
-                        "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
-                        "div_classes" = scrape_div_classes(page, hospital_info, config),
-                        "list_items" = scrape_list_items(page, hospital_info, config),
-                        "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
-                        "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
-                        "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
-                        "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
-                        "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
-                        "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
-                        "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # ← ADD THIS
-                        "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
-                        "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
-                        # Default fallback 
-                        scrape_h2_name_h3_title(page, hospital_info, config)
-        )
+       
+      
+      # Dispatch to appropriate pattern scraper
+      pairs <- switch(hospital_info$pattern,
+                      "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
+                      "combined_h2" = scrape_combined_h2(page, hospital_info, config),
+                      "table_rows" = scrape_table_rows(page, hospital_info, config),
+                      "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
+                      "div_classes" = scrape_div_classes(page, hospital_info, config),
+                      "list_items" = scrape_list_items(page, hospital_info, config),
+                      "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
+                      "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
+                      "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
+                      "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
+                      "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
+                      "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
+                      "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # ← ADD THIS
+                      "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
+                      # Default fallback 
+                      scrape_h2_name_h3_title(page, hospital_info, config)
+      )
       }
       # Create consistent output data frame
       if (length(pairs) > 0) {

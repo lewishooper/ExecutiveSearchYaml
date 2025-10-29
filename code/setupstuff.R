@@ -1,9 +1,10 @@
+#rm(list=ls())
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
- #source("session_startup.R")
-FAC<-676
+source("quick_test_single.R")
+FAC<-682
 
-quick_test(FAC)
+quick_test(967)
 Name <- "hanover and district"
 url <- "https://www.hanoverhospital.on.ca/our-team"
 quick_test(FAC)
