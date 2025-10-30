@@ -1395,6 +1395,67 @@ PatternBasedScraper <- function() {
   }
   
   # ============================================================================
+  # PATTERN 17: table_data_name_accordion
+  # Structure: h2 name in div.factsheet__callout, td[data-name="accParent"] for title
+  # Example: FAC-751 (CHEO)
+  # ============================================================================
+  scrape_table_data_name_accordion <- function(page, hospital_info, config) {
+    tryCatch({
+      pairs <- list()  # Changed from data.frame to list
+      debug <- config$debug_mode
+      non_name_pattern <- config$non_names_pattern
+      
+      # Get all factsheet callout containers
+      containers <- page %>% html_nodes("div.factsheet__callout")
+      
+      if (length(containers) == 0) {
+        if (debug) cat("DEBUG: No factsheet callout containers found\n")
+        return(pairs)  # Changed to return empty list
+      }
+      
+      for (container in containers) {
+        # Extract name from h2
+        name_node <- container %>% html_node("h2")
+        if (length(name_node) == 0) next
+        
+        name <- name_node %>% html_text(trim = TRUE)
+        
+        # Extract title from table td with data-name="accParent"
+        title_node <- container %>% html_node('td[data-name="accParent"]')
+        if (length(title_node) == 0) next
+        
+        title <- title_node %>% html_text(trim = TRUE)
+        
+        # Validate both name and title exist
+        if (is.na(name) || is.na(title) || nchar(name) == 0 || nchar(title) == 0) {
+          next
+        }
+        
+        # Apply standard validation
+        passes_pattern <- !grepl(non_name_pattern, name, ignore.case = TRUE)
+        
+        if (debug && !passes_pattern) {
+          cat(sprintf("DEBUG: Rejected name: '%s'\n", name))
+        }
+        
+        if (passes_pattern) {
+          pairs[[length(pairs) + 1]] <- list(  # Changed to list format
+            name = name,
+            title = title
+          )
+        }
+      }
+      
+      return(pairs)  # Return list of lists
+      
+    }, error = function(e) {
+      if (config$debug_mode) {
+        cat("DEBUG: Error in table_data_name_accordion pattern:", e$message, "\n")
+      }
+      return(list())  # Return empty list on error
+    })
+  }
+  # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
@@ -1432,6 +1493,7 @@ PatternBasedScraper <- function() {
                         "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
                         "table_cells" = scrape_table_cells(page, hospital_info, config),
                         "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
+                        "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
                         # Default fallback 
                         scrape_h2_name_h3_title(page, hospital_info, config)
         )
