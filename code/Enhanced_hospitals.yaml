@@ -1,5 +1,53 @@
 hospitals:
 
+  - FAC: '753'
+    name: 'OTTAWA MONTFORT'
+    hospital_type: 'Teaching Hospital'
+    url: https://hopitalmontfort.com/en/corp/senior-leadership
+    pattern: combined_h2
+    expected_executives: 10
+    html_structure:
+      combined_element: "button.btn.bold.text-Hm2021_Noir_special"
+      separator: ", "
+      reversed: false
+      missing_people:
+        - name: "Dr. Chantal D'Aoust-Bernard"
+          title: "Chief-of-staff"
+        - name: "Valérie Dubois Desroches"
+          title: "Senior Vice-President, Patient Care"
+        - name: "Martin Sauvé"
+          title: "Director of Communications"
+      notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
+    status: Missing folks
+
+  - FAC: '751'
+    name: 'OTTAWA CHEO CTC'
+    hospital_type: 'Specialty Children Hospital'
+    url: https://www.cheo.on.ca/en/about-us/senior-leadership.aspx?_mid_=1829
+    pattern: table_data_name_accordion
+    expected_executives: 15
+    html_structure:
+      name_element: h2
+      title_element: 'td[data-name="accParent"]'
+      container: div.factsheet__callout
+      notes: 'Table-based accordion with data-name attributes'
+    status: Needs configuration
+    
+
+
+  - FAC: '739'
+    name: 'NIPIGON DISTRICT MEMORIAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.ndmh.ca/about-our-hospital
+    pattern: div_classes
+    expected_executives: 4
+    html_structure:
+      name_class: staff-name
+      title_class: staff-title
+      container_class: staff-top
+    notes: includes board names and titles
+    status: ok
+
 
   - FAC: '734'
     name: 'HALDIMAND WEST HALDIMAND GENERAL'
@@ -699,13 +747,13 @@ hospitals:
     name: HALTON HEALTHCARE
     hospital_type: Large Community Hospital
     url: https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team
-    pattern: Manualcombined_h2
+    pattern: Manual
     expected_executives: 12
     html_structure:
       combined_element: h3
       separator: ''
       notes: H3 elements with <br> separator - not supported by current patterns
-    status: Manual  Needs
+    status: manual_entry_required
     known_executives:
       - name: Melissa Farrell
         title: President & CEO

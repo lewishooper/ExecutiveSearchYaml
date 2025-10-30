@@ -1,20 +1,33 @@
 # Review of Patterns
+#rm(list=ls())
 source<-"E:/ExecutiveSearchYaml/code"
 library(tidyr)
-library(tidyVerse)
+library(tidyverse)
 
+setwd("E:/ExecutiveSearchYaml/code")
+
+source("test_all_configured_hospitals.R")
+AllHospitals<-check_configuration_status()
+saveRDS(AllHospitals,"pattern_summary.rds")
+OKpatterns<-AllHospitals %>%
+  filter(tolower(Status)=='ok') %>%
+  filter(!Has_Missing)
+saveRDS(OKpatterns,"GoodHospitals.rds")
 
 #
 pattern_summary<-readRDS("E:/ExecutiveSearchYaml/code/pattern_summary.rds")
+##### 
+#Consolidate with YAML files
+####
 
 PatternsInSummary<-pattern_summary %>%
-  select(pattern) %>%
-  group_by(pattern) %>%
+  select(Pattern) %>%
+  group_by(Pattern) %>%
   mutate(Count=n()) %>%
   unique()
 ConsolidatedPatterns<-pattern_summary %>%
-  select(-c("Name","FAC")) %>%
-  group_by(pattern) %>%
+  select(-c("Hospital","FAC")) %>%
+  group_by(Pattern) %>%
   mutate(NumPatterns=n()) %>%
   relocate(NumPatterns) %>%
   arrange(desc("NumPatterns")) %>%
@@ -23,9 +36,9 @@ library(dplyr)
 
 # Create the consolidated dataframe
 consolidated_df <- pattern_summary %>%
-  mutate(FACName=paste0(FAC,"->",Name))%>%
-  select(-c(FAC,Name)) %>%
-  group_by(pattern) %>%
+  mutate(FACName=paste0(FAC,"->",Hospital))%>%
+  select(-c(FAC,Hospital)) %>%
+  group_by(Pattern) %>%
   mutate(NumByPattern=n())%>%
   summarise(across(everything(), ~ paste(unique(na.omit(.)), collapse = " : "))) %>%
   ungroup() %>%
