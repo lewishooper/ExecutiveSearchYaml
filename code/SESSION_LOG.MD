@@ -17,6 +17,61 @@
 
 ---
 ## Session History
+## session summary - November 1, 2025
+Perfect! Great work today. Here's what we accomplished:
+Session Summary
+Hospitals Configured:
+
+✅ FAC 862 (Toronto Women's College) - Fixed by adding "Strategic Lead" to executive_keywords
+✅ FAC 881 (West Nipissing) - Fixed separator issue (em dash vs hyphen)
+✅ FAC 882 - Configured with p_with_bold_and_br (note: managers to trim later)
+
+Key Learnings:
+
+Title keyword sync issue identified - led to creating "Single Source of Truth" section in future_work.md
+Separator characters matter - em dash (–) vs regular hyphen (-) are different
+Manager filtering can be deferred to final cleanup phase
+
+Documentation Updated:
+
+✅ future_work.md - Added Category 2: Single Source of Truth for Configuration
+✅ File ready for upload to knowledge repository
+
+Process Reminder:
+
+Upload updated future_work.md to project knowledge repository for next session
+Continue with hospital configuration workflow
+Keep tracking issues for post-configuration cleanup phase
+
+Great debugging work today! See you next session!
+
+Total hospitals in configuration: 119 
+
+STATUS BREAKDOWN:
+  blocked_by_site: 2
+  closed: 3
+  javascript_blocked: 3
+  manual: 3
+  Manual: 2
+  manual_entry: 2
+  manual_entry_required: 1
+  merged Manual: 1
+  missing: 3
+  Missing folks: 1
+  Missing People: 1
+  Needs Checking: 1
+  needs configuration: 1
+  Needs configuration: 1
+  needs_configuration: 2
+  needs_manual_entry: 3
+  Not usable: 1
+  ok: 83
+  oK: 1
+  Ok: 1
+  ok : 1
+  private: 1
+  unknown: 1
+
 
 ## Session Summary - October 31, 2025
 Hospitals Debugged & Fixed: 7

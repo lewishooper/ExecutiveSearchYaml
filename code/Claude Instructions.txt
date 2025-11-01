@@ -27,4 +27,4 @@ I would like to follow this process for todays work.
 
 7) when passing a  yaml card for a hospital for trial the status should marked as follows:
     A) status: Needs Testing. 
-    B) status:  missing_people if we have added people through a missing people add on
+    B) status:  missing_people.  only if we have added people through a missing people add on

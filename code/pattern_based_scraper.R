@@ -133,7 +133,8 @@ PatternBasedScraper <- function() {
       "Director", "Officer", "Administrator", "Manager", 
       "Chair", "Vice-Chair", "Vice Chair",
       "Medical Staff", "Nursing Executive", "CNE",
-      "Supervisor", "Health System Executive"
+      "Supervisor", "Health System Executive",
+      "Strategic Lead"
     )
     
     contains_keyword <- any(sapply(executive_keywords, function(k) 

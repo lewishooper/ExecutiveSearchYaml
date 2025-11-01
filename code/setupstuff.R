@@ -2,11 +2,11 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
 source("test_all_configured_hospitals.R")
-FAC<-855
+FAC<-882
 
 quick_test(FAC)
-Name <- "Toronto Grace"
-url <- "https://www.torontograce.org/about-tghc/senior-management-team/"
+Name <- "West Nippising General"
+url <- "https://www.wngh.ca/about-wngh/board/#gsc.tab=0"
 
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)

@@ -1,6 +1,63 @@
 hospitals:
 
 
+
+  - FAC: '882'
+    name: 'WINCHESTER DISTRICT MEMORIAL'
+    hospital_type: 'Large Community Hospital'
+    url: https://www.wdmh.on.ca/ourleadershipteam
+    pattern: p_with_bold_and_br
+    expected_executives: 4
+    html_structure:
+      - ~
+      - ~
+    notes: trim Managers
+    status: oK
+
+
+  - FAC: '881'
+    name: 'STURGEON FALLS WEST NIPISSING'
+    hospital_type: 'Small Hospital'
+    url: https://www.wngh.ca/about-wngh/board/#gsc.tab=0
+    pattern: list_items
+    expected_executives: 5
+    html_structure:
+      list_type: ol
+      format: combined
+      separator: '–'
+    notes: 'Mixed with board'
+    status: Ok
+    
+    
+    
+  - FAC: '862'
+    name: 'TORONTO WOMENS COLLEGE'
+    hospital_type: 'Teaching Hospital'
+    url: https://www.womenscollegehospital.ca/who-we-are/executive-team/
+    pattern: div_classes
+    expected_executives: ~
+    html_structure:
+      name_class: card-title
+      title_class: card-subtitle
+      container_class:
+    notes: ~
+    status: ok
+
+
+  - FAC: '858'
+    name: 'Michael Garron TORONTO EAST GENERAL'
+    hospital_type: 'Large Community Hospital'
+    url: https://www.tehn.ca/about-us/our-team/executive-team
+    pattern: div_classes
+    expected_executives: ~
+    html_structure:
+      name_class: field__content
+      title_class: field--name-field-position
+      container_class:
+    notes: ~
+    status: ok
+
+
   - FAC: '854'
     name: 'TORONTO SA GRACE'
     hospital_type: 'Small Hospital'
@@ -327,6 +384,7 @@ hospitals:
     status: ok
 
 
+
   - FAC: "682"
     name: "HORNEPAYNE COMMUNITY"
     url: "https://www.hornepaynecommunityhospital.ca/about-1"
@@ -394,6 +452,7 @@ hospitals:
      reversed: false 
      notes: need to strip out emails ? manual at end of run or patten??
     status: ok
+    
   - FAC: '681'
     name: HEARST NOTRE DAME
     hospital_type: Small Hospital
