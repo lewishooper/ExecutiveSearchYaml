@@ -67,6 +67,8 @@ PatternBasedScraper <- function() {
       config$name_patterns$hyphenated_names,
       config$name_patterns$complex_credentials,
       config$name_patterns$internal_capitals,
+      config$name_patterns$accented_names,        # ADD THIS LINE
+      config$name_patterns$parenthetical_names,   # ADD THIS LINE TOO (why not!)
       config$name_patterns$flexible
     )
     
@@ -136,6 +138,25 @@ PatternBasedScraper <- function() {
     
     contains_keyword <- any(sapply(executive_keywords, function(k) 
       grepl(k, clean_text, ignore.case = TRUE)))
+    
+    # Filter out website credits and non-executive entries by title
+    invalid_title_patterns <- c(
+      "powered by",
+      "designed by",
+      "website by",
+      "created by",
+      "developed by",
+      "©",
+      "copyright",
+      "all rights reserved"
+    )
+    
+    # Check if title contains any invalid terms
+    has_invalid_term <- any(sapply(invalid_title_patterns, function(pattern) {
+      grepl(pattern, clean_text, ignore.case = TRUE)
+    }))
+    
+    if (has_invalid_term) return(FALSE)
     
     return(contains_keyword)
   }
@@ -405,9 +426,17 @@ PatternBasedScraper <- function() {
           # MODIFIED: Use name_text and title_text variables instead of current_text and next_text
           if (is_executive_name(name_text, config) && 
               is_executive_title(title_text, config)) {
+            
+            # Enhanced title cleaning for phone/fax numbers
+            cleaned_title <- title_text
+            cleaned_title <- gsub("Telephone:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("Fax:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}.*$", "", cleaned_title)
+            cleaned_title <- trimws(cleaned_title)
+            
             pairs[[length(pairs) + 1]] <- list(
               name = clean_text_data(name_text),
-              title = clean_text_data(title_text)
+              title = clean_text_data(cleaned_title)
             )
           }
         }
@@ -1095,13 +1124,11 @@ PatternBasedScraper <- function() {
         title <- gsub("\\s+ext\\.?\\s*\\d+", "", title, ignore.case = TRUE)
         title <- trimws(title)
         
-        # Filter out non-executive titles
-        # Skip: pure phone numbers, emails, or administrative assistants
-        if (nchar(title) > 0 &&
-            !grepl("^[0-9\\-\\(\\)\\s\\.]+$", title) &&  # Not just a phone number
-            !grepl("^[a-zA-Z0-9._%+-]+@", title) &&  # Not starting with email
-            !grepl("^(Executive Assistant|Administrative Assistant|Assistant to|Secretary)$", title, ignore.case = TRUE)) {  # Not pure assistant role
-          
+        # Validate using standard validation functions
+        name_valid <- is_executive_name(name, config)
+        title_valid <- is_executive_title(title, config)
+        
+        if (name_valid && title_valid) {
           pairs[[length(pairs) + 1]] <- list(
             name = name,
             title = title
@@ -1212,6 +1239,7 @@ PatternBasedScraper <- function() {
   # ============================================================
   # PATTERN 14: div_container_multiclass
   # Name and title in separate <p> tags with different classes within container divs
+  # revised to include both p and div tags
   # ============================================================
   scrape_div_container_multiclass = function(page, hospital_info, config) {
     tryCatch({
@@ -1219,6 +1247,7 @@ PatternBasedScraper <- function() {
       name_class <- hospital_info$html_structure$name_class %||% "font_5"
       title_class <- hospital_info$html_structure$title_class %||% "font_8"
       category_filter <- hospital_info$html_structure$category_filter %||% NULL
+      element_type <- hospital_info$html_structure$element_type %||% "p"  # NEW: Allow div or p
       
       containers <- page %>% html_nodes(container_selector)
       
@@ -1227,25 +1256,40 @@ PatternBasedScraper <- function() {
       seen <- list()  # Track unique name-title combinations
       
       for (container in containers) {
-        # Extract name
-        name <- container %>% 
-          html_nodes(paste0("p.", name_class)) %>% 
-          html_text2() %>%
-          paste(collapse = " ") %>%
-          str_trim()
+        # Extract name - MODIFIED to use element_type
+        if (name_class != "") {
+          name <- container %>% 
+            html_nodes(paste0(element_type, ".", name_class)) %>% 
+            html_text2() %>%
+            paste(collapse = " ") %>%
+            str_trim()
+          
+          # Skip containers with multiple names (master containers)
+          name_count <- container %>% 
+            html_nodes(paste0(element_type, ".", name_class)) %>% 
+            length()
+          
+          if (name_count > 1) next
+        } else {
+          name <- ""
+        }
         
-        # Skip containers with multiple names (master containers)
-        name_count <- container %>% 
-          html_nodes(paste0("p.", name_class)) %>% 
-          length()
-        
-        if (name_count > 1) next
-        
-        # Extract all title paragraphs
-        title_paragraphs <- container %>% 
-          html_nodes(paste0("p.", title_class)) %>% 
-          html_text2() %>%
-          str_trim()
+        # Extract title - MODIFIED to handle both classed and unclassed elements
+        if (title_class != "") {
+          # Standard: title has a class
+          title_paragraphs <- container %>% 
+            html_nodes(paste0(element_type, ".", title_class)) %>% 
+            html_text2() %>%
+            str_trim()
+        } else {
+          # NEW: Special case - title has NO class (get second div/p in container)
+          all_elements <- container %>% html_nodes(element_type)
+          if (length(all_elements) >= 2) {
+            title_paragraphs <- all_elements[2] %>% html_text2() %>% str_trim()
+          } else {
+            title_paragraphs <- character(0)
+          }
+        }
         
         # Filter out category markers if specified
         if (!is.null(category_filter)) {

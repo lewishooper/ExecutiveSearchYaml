@@ -1,5 +1,155 @@
 hospitals:
 
+
+  - FAC: '854'
+    name: 'TORONTO SA GRACE'
+    hospital_type: 'Small Hospital'
+    url: https://www.torontograce.org/about-tghc/senior-management-team/
+    pattern: p_with_bold_and_br
+    expected_executives: 5
+    html_structure:
+    
+    status: ok
+
+  - FAC: '855'
+    name: 'THORNHILL SHOULDICE HOSPITAL'
+    hospital_type: 'Other Hospital'
+    url: ~
+    pattern: div_classes
+    expected_executives: ~
+    html_structure:
+      - ~
+      - ~
+    notes: Private hospital no board or executives listed
+    status: private
+
+
+
+  - FAC: '826'
+    name: 'KENORA LAKE OF THE WOODS'
+    hospital_type: 'Medium Hospital'
+    url: http://www.lwdh.on.ca/index.php/programs-and-services/administration.html
+    pattern: manual_entry_required
+    expected_executives: 6
+    html_structure:
+      notes: "NAMES SOURCED FROM JPEG ON GOVERNANCE PAGE"
+      status: ok
+    known_executives:
+      - name: Cheryl O'Flaherty
+        title: President and Chief Executive Officer
+      - name: Gillian Nattress
+        title: Vice President Patient Services and Chief Nursing Officer
+      - name: Alison Wesley-James
+      
+        title:  VP Operations and Capital Planning
+      - name: Dr. Sean Moore, 
+        title: Chief of Staff
+      - name: Dr. Meghan Olson
+        title: President of Medical Staff
+      - name:  Dr. Jossie Sweat Cosentino
+        title: Vice President of Medical Staff
+
+
+  - FAC: '824'
+    name: 'Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL'
+    hospital_type: Small Hospital
+    partnership:  Rural Roads Health Services
+    url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
+    pattern: div_classes
+    expected_executives: 7
+    html_structure:
+      name_class: person-name
+      title_class: person-title
+      container_class: author-wrapper
+      notes: need to filter off board members
+    status: ok
+    
+    
+  - FAC: '809'
+    name: 'SMOOTH ROCK FALLS'
+    hospital_type: 'Small Hospital'
+    url: https://www.srfhosp.ca/
+    pattern: manual_entry_required
+    expected_executives: 1
+    html_structure:
+      notes: "No leadership page on website. CEO info found on Accessibility page."
+    status: needs_manual_entry
+    known_executives:
+      - name: Melonie Loubert
+        title: Chief Executive Officer
+
+
+  - FAC: '802'
+    name: 'ALEXANDRIA GLENGARRY'
+    hospital_type: 'Small Hospital'
+    url: https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team
+    pattern: div_container_multiclass
+    expected_executives: 5
+    html_structure:
+      container_selector: ".about_team-item_block"
+      element_type: "div"
+      name_class: "text-weight-bold"
+      title_class: ""
+      notes: "Captures 31 people including managers and board. First 5 are executives. Filter on back-end."
+    status: ok
+
+
+  - FAC: '800'
+    name: 'HAWKESBURY & DISTRICT GENERAL'
+    hospital_type: 'Small Hospital'
+    url: https://hgh.ca/about-hgh/leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 6
+    html_structure:
+     name_element: h3
+     title_element: span
+     reversed: false
+    notes: ~
+    status: Needs Checking
+
+  - FAC: '788'
+    name: 'RENFREW VICTORIA'
+    hospital_type: 'Small Hospital'
+    url: https://www.renfrewhosp.com/srmanagement
+    pattern: h2_name_p_title
+    expected_executives: 4
+    html_structure:
+      name_element: h2
+      title_element: p
+      reversed: false
+      missing_people:
+        - name: Mary Ellen Harris
+          title: Vice President/Chief Nursing Executive, Patient Care, Quality & Clinical Services
+        - name: Kimberley Harbord
+          title: Vice President, Finance, Performance & Information
+      notes: "Inconsistent structure - 2 execs in H2, 2 in P tags. Phone/fax cleanup needed."
+    status: Missing People
+
+  - FAC: '784'
+    name: 'LITTLE CURRENT MANITOULIN'
+    hospital_type: 'Small Hospital'
+    url: https://www.mhc.on.ca/our-team/senior-management
+    pattern: p_with_bold_and_br
+    expected_executives: 3
+    html_structure:
+      notes: Names in <strong> within <p>, titles after <br>
+    status: ok
+
+
+  - FAC: '768'
+    name: 'BARRYS BAY ST FRANCIS'
+    hospital_type: 'Small Hospital'
+    Partnership: Renfrew Victoria St. Francis Barrys Bay. Shared CEO
+    url: https://www.sfmhosp.com/about-us/
+    pattern: combined_h2
+    expected_executives: 4
+    html_structure:
+      combined_element: "a"
+      separator: ": "
+      reversed: True
+    notes: ~
+    status: ok 
+
   - FAC: '753'
     name: 'OTTAWA MONTFORT'
     hospital_type: 'Teaching Hospital'
@@ -220,6 +370,7 @@ hospitals:
   - FAC: '684'
     name: Rural Roads Health servcies INGERSOLL ALEXANDRA
     hospital_type: Small Hospital
+    partnership:  Rural Roads Health Services
     url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
     pattern: div_classes
     expected_executives: 7
@@ -1723,6 +1874,7 @@ name_patterns:
     - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
