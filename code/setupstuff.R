@@ -1,13 +1,12 @@
 #rm(list=ls())
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
-source("test_all_configured_hospitals.R")
-FAC<-882
+#source("test_all_configured_hospitals.R")
+FAC<-938
 
 quick_test(FAC)
-Name <- "West Nippising General"
-url <- "https://www.wngh.ca/about-wngh/board/#gsc.tab=0"
-
+Name <- "Haliburton Highlands"
+url <- "https://www.hhhs.ca/about/board"
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)
 

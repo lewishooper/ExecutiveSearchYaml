@@ -1500,6 +1500,74 @@ PatternBasedScraper <- function() {
       return(list())  # Return empty list on error
     })
   }
+  
+  # ============================================================================
+  # PATTERN 18: p_strong_combined
+  # Extracts name and title from <strong> tags within <p> elements
+  # Ignores any text outside the <strong> tags (like bios in <em> or plain text)
+  # ============================================================================
+  scrape_p_strong_combined <- function(page, hospital_info, config) {
+    tryCatch({
+      # Get configuration
+      separator <- hospital_info$html_structure$separator %||% ", "
+      container_selector <- hospital_info$html_structure$container_selector %||% "p"
+      
+      # Find all strong tags within p elements
+      strong_elements <- html_nodes(page, paste0(container_selector, " strong"))
+      
+      pairs <- list()
+      
+      for(strong in strong_elements) {
+        text <- html_text(strong, trim = TRUE)
+        text <- normalize_text(text)
+        
+        # Skip if no separator
+        if(!grepl(separator, text, fixed = TRUE)) next
+        
+        # Split on separator
+        parts <- strsplit(text, separator, fixed = TRUE)[[1]]
+        if(length(parts) < 2) next
+        
+        name_part <- trimws(parts[1])
+        title_part <- paste(parts[-1], collapse = separator)
+        title_part <- trimws(title_part)
+        
+        # Validate
+        if(is_executive_name(name_part, config) && 
+           is_executive_title(title_part, config)) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = clean_text_data(name_part),
+            title = clean_text_data(title_part)
+          )
+        }
+      }
+      
+      # Limit to expected count if specified
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) {
+          pairs <- pairs[1:max_count]
+        }
+      }
+      
+      # Add missing people
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
+      
+    }, error = function(e) {
+      cat("  ERROR:", e$message, "\n")
+      return(list())
+    })
+  }
+  
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
@@ -1539,6 +1607,8 @@ PatternBasedScraper <- function() {
                         "table_cells" = scrape_table_cells(page, hospital_info, config),
                         "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
                         "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
+                        "p_strong_combined" = scrape_p_strong_combined(page, hospital_info, config),
+                        
                         # Default fallback 
                         scrape_h2_name_h3_title(page, hospital_info, config)
         )

@@ -1,6 +1,188 @@
 hospitals:
 
 
+  - FAC: '938'
+    name: 'DYSART ET AL HALIBURTON HEALTH SER'
+    hospital_type: 'Small Hospital'
+    url: https://www.hhhs.ca/about/board
+    pattern: p_strong_combined
+    expected_executives: 15
+    html_structure:
+      container_selector: p
+      separator: ", "
+    notes: Extracts only from <strong> tags, includes board members - strip in post
+    status: needs_testing
+
+
+  - FAC: '936'
+    name: 'LONDON HEALTH SCIENCES'
+    hospital_type: 'Teaching Hospital'
+    url: https://www.lhsc.on.ca/about-lhsc/executive-leadership-team
+    pattern: combined_h2
+    expected_executives: 11
+    html_structure:
+      combined_element: div.field--name-field-title
+      separator: ", "
+    notes: Name and title combined in div.field--name-field-title elements
+    status: ok
+
+  - FAC: '933'
+    name: 'WINDSOR REGIONAL HOSPITAL'
+    hospital_type: 'Large Community Hospital'
+    url: #https://www.wrh.on.ca/ExecutiveCommittee
+    pattern: manual_entry_required
+    expected_executives: ~
+    html_structure:
+    known_executives:
+      - name: "Karen Riddell"
+        title: "President & Chief Executive Officer"
+      - name: "Nicole Krywionek"
+        title: "Chief Nursing Executive and Vice President of Critical Care, Cardiology, Diagnostic Imaging, Respiratory Therapy, Patient Relations, Corporate Education and Training, and Professional Practice"
+      - name: "Dr. Wassim Saad"
+        title: "Vice President of Medical Affairs and Chief of Staff"
+      - name: "Brandon Bailey"
+        title: "Vice President of Redevelopment"
+      - name: "Todd Bested"
+        title: "Vice President of People & Culture"
+      - name: "Kristi Cecile"
+        title: "Vice President of Medicine, Stroke Program, Access & Patient Flow, Allied Health, Pharmacy, IPAC and HIV Care Program"
+      - name: "Jonathan Foster"
+        title: "Vice President of Emergency, Trauma, Mental Health, Cancer Services & Renal"
+      - name: "Malissa Gauthier"
+        title: "Vice President of Corporate and Laboratory Services & Chief Financial Officer"
+      - name: "Kelly Heron"
+        title: "Vice President of Women and Children, Inpatient Surgery, Peri-Operative and Ambulatory Surgical Services"
+      - name: "Margo Reilly"
+        title: "Executive Director of the Windsor Family Health Team"
+    notes: Returns 403 Forbidden - site blocks automated requests
+    status: ok
+
+
+  - FAC: '910'
+    name: 'TORONTO CASEY HOUSE'
+    hospital_type: 'Small Hospital'
+    url: https://caseyhouse.ca/about-us/leadership/
+    pattern: div_classes
+    expected_executives: 6
+    html_structure:
+      name_class: leadership-block-name
+      title_class: leadership-block-title
+      container_class:
+    notes: ~
+    status: ok
+    
+
+
+  - FAC: '908'
+    name: 'EHN Canada TORONTO BELLWOOD HEALTH SERVICES'
+    hospital_type: 'Other Hospital'
+    url: https://www.edgewoodhealthnetwork.com/about/
+    pattern: h2_name_p_title
+    expected_executives: 4
+    html_structure:
+      name_element: h3
+      title_element: div
+      container_class: member-content
+    notes: private
+    status: ok
+
+
+  - FAC: '907'
+    name: 'TIMMINS & DISTRICT GENERAL'
+    hospital_type: 'Large Community Hospital'
+    url: https://tadh.com/about-us/senior-leadership-team/
+    pattern: h2_name_p_title
+    expected_executives: 7
+    html_structure:
+      name_element: h6
+      title_element: div
+      container_class: elementor-cta__content
+    notes: Sequential h6->div pattern within containers
+    status: ok
+
+
+  - FAC: '900'
+    name: 'FORT FRANCES RIVERSIDE HEALTH CARE'
+    hospital_type: 'Small Hospital'
+    url: https://riversidehealthcare.ca/communities
+    pattern: combined_h2
+    expected_executives: 3
+    html_structure:
+      combined_element: "h3"
+      separator: ", "
+      reversed: False
+    notes: ~
+    status: ok
+
+
+
+  - FAC: '896'
+    name: 'RED LAKE MARG COCHENOUR MEMORIAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.redlakehospital.ca/leadershipteam?s=1
+    pattern: h2_name_p_title
+    expected_executives: 11
+    html_structure:
+      name_element: h2
+      title_element: p
+      reversed: false
+      missing_people:
+       - name: Angela Bishop
+         title: Interim President & CEO
+    notes: Mixed html structure ceo name is P rest are h2?
+    status: ok
+
+
+  - FAC: '890'
+    name: 'WOODSTOCK WOODSTOCK HOSPITAL'
+    hospital_type: 'Large Community Hospital'
+    url: https://www.woodstockhospital.ca/board-of-directors/
+    pattern: manual_entry_required
+    expected_executives: 5
+    html_structure: # weird table of names
+    known_executives:
+      - name: Cheryl O'Flaherty
+        title: President and Chief Executive Officer
+      - name:  Perry Lang
+        title: President & CEO 
+      - name: Cindy Smart 
+        title: Vice President of Patient Care/CNO
+      - name: Dr. Malcolm MacLeod
+        title: Chief of Staff
+      - name: Dr. lan Hons, 
+        title: Assistant Chief of Staff
+      - name: Dr. Paul Howatt, 
+        title: President Medical Staff
+      - name: Dr. Rob Humphrey, 
+        title: Vice President of Medical Staff
+    notes: Weird table on webpage
+    status: ok
+
+
+  - FAC: '889'
+    name: 'WINGHAM & DISTRICT'
+    hospital_type: 'Small Hospital'
+    url: https://lwha.ca/about/contact/
+    pattern: p_with_bold_and_br
+    expected_executives: 4
+    html_structure:
+     
+    notes: found in contact sheet,1 missign person logged
+    status: Ok
+
+  - FAC: '888'
+    name: 'NEW LISKEARD TEMISKAMING HOSPITAL'
+    hospital_type: 'Small Hospital'
+    url: https://www.temiskaming-hospital.com/board-of-directors
+    pattern: h2_name_p_title
+    expected_executives: 8
+    html_structure:
+      name_element: h2
+      title_element: p
+      reversed: false
+    notes: Includes Board
+    status: Needs testing
+
 
   - FAC: '882'
     name: 'WINCHESTER DISTRICT MEMORIAL'
@@ -1934,6 +2116,7 @@ name_patterns:
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - '^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$

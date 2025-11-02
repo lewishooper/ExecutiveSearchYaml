@@ -3,6 +3,9 @@
 
 I have updated the SESSION_LOG.MD,next_batch_template.yaml, and the enhanced_hospitals.yaml These are now in the Knowledge repository
 An updated version of the QuickReferenceUpdated.docx is now in the knowledge repository. 
+Also there is the newly created "Project Plan November 1 2025.docx" that outlines the next few steps
+Please review the above documents.
+
 Note:  The working copy of enhance_hospitals.yaml is in my R environment.
 I would like to follow this process for todays work. 
 1) I will pick and attempt to debug hospitals. using the following tools which are in  the knowledge repository including:
@@ -21,10 +24,23 @@ I would like to follow this process for todays work.
 
 
 3) If you need additional R code run to help debug please create the code and ask me to run it. 
+
 4) if you believe the pattern_based_scraper.R needs to be changed please create the necessary changes and tell me where to put it. 
+
 5) Do not create additional documentation without asking if I want that documentation created. 
+
 6) our focus is on using and or amending existing patterns where possible. adding new patterns is a last resort
 
 7) when passing a  yaml card for a hospital for trial the status should marked as follows:
     A) status: Needs Testing. 
     B) status:  missing_people.  only if we have added people through a missing people add on
+8) based on the project plan "Project Plan November 1 2025.docx" we will provide less emphasis on solving Missing people problems assuming:
+    A) the pattern based scrapper process finds a significant majority of 4/5 of the executives
+    B) This is based on the idea that we will be working on creating a  signle source of truth for names and titles in the next phase
+9) I have created a log of   missing people that we can use when we start working on the single source of truth: see example below
+FAC	Hospital	Name	Title	Pattern
+
+hospital 889 added 1 missing person logged to the missign person log.
+hospital 890 added  all as manual entry required. This one may require a new pattern.
+Hospital 896 added 1 missing person, logged to the missign person log. This is a mixed HTML pattern
+Hospital 900 added no issues
