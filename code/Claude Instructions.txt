@@ -1,5 +1,6 @@
 
 
+for the records we have successfully added:  FAC:  961, 959, 958, 948, 946 942, 964 and 938
 
 I have updated the SESSION_LOG.MD,next_batch_template.yaml, and the enhanced_hospitals.yaml These are now in the Knowledge repository
 An updated version of the QuickReferenceUpdated.docx is now in the knowledge repository. 
