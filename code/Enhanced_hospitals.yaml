@@ -6,7 +6,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://unityhealth.to/about-unity-health/about-unity-health-toronto/leadership/
     pattern: div_classes
-    expected_executives: ~
+    expected_executives: 10
     html_structure:
       name_class: card-title
       title_class: card-subtitle
@@ -15,7 +15,6 @@ hospitals:
     status: ok
 
   
- 
   - FAC: '978'
     name: 'KINGSTON KINGSTON HEALTH SCIENCES'
     hospital_type: 'Teaching Hospital'
@@ -23,11 +22,16 @@ hospitals:
     pattern: div_classes
     expected_executives: 11
     html_structure:
-      name_calss: "name-title field" 
-      title_class: "name-field-position"
-      notes: ~
-    status: needs configuration
-
+      name_class: field--name-title
+      title_class: field--name-field-position
+      missing_people:
+        - name: Valérie Gamache-O'Leary
+          title: Vice President and Chief Information Officer
+        
+      notes: missing_people
+    status: ok-mp
+    
+    
   - FAC: '977'
     name: 'TERRACE BAY NORTH OF SUPERIOR HC'
     hospital_type: 'Small Hospital'
@@ -58,14 +62,13 @@ hospitals:
     name: 'PENETANGUISHENE WAYPOINT'
     hospital_type: 'Specialty Mental Health Hospital'
     url: https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team
-    pattern: h2_name_p_title
-    expected_executives: ~
+    pattern: div_classes
+    expected_executives: 20
     html_structure:
-      name_element: h4
-      title_element: p
-      notes: duplicate entries and missing names mixed titles
-    status: needs configuration
-
+      name_class: personnel--name
+      title_class: personnel--title
+      notes: ~
+    status: ok
 
   - FAC: '971'
     name: 'SUDBURY ST.JOSEPHS CONTINUING CARE'
@@ -74,10 +77,11 @@ hospitals:
     pattern: combined_h2
     expected_executives: 21
     html_structure:
-      combined_element: span
+      combined_element: span.fusion-toggle-heading
       separator: " - "
-    notes: Only captures 5 of 21 potential Sr. (for sister rejectedc)
-    status: needs configuration
+      notes: ~
+    status: needs_testing
+
 
   - FAC: '969'
     name: 'WHITBY ONT SHORES CENTRE MH SCIENCE'
@@ -89,7 +93,7 @@ hospitals:
       name_class: "field--name-title"
       title_class: "field--name-field-role"
     notes: Fails to find title for Daniel Mueller...Physician-in-Chief and Research Chair of Personalized Medicine and Personalized Mental Health Care
-    status: needs configuration
+    status: ok
     
 
 
@@ -110,16 +114,42 @@ hospitals:
   - FAC: '963'
     name: 'MOUNT FOREST NORTH WELLINGTON HC'
     hospital_type: 'Small Hospital'
-    partnership: Wellington Health Care Alliance
-    partnership_abbrev: WHCA
-    url: ~
-    pattern: div_classes
-    expected_executives: ~
+    url: https://gmch.whca.ca/board-of-directors
+    partnership: "Wellington Health Care Alliance "
+    parternship_abbrev: "WHCA"
+    pattern: manual_entry_required
+    expected_executives: 4
     html_structure:
-      - ~
-      - ~
-    notes: Same as 656  needs debugging
-    status: needs configuration
+        ##
+    known_executives:
+      - name: "Dr. Christine Peterkin"
+        title: "Chief of Staff"
+        organization: "NWHC"
+    
+      - name: "Angela Stanley"
+        title: "President and CEO"
+        organization: "WHCA"
+    
+      - name: "Dr. Matthew Westendorp"
+        title: "Chief of Staff"
+        organization: "GMCH"
+    
+      - name: "Matt Smith"
+        title: "VP Quality Clinical Services and CNE"
+        organization: "WHCA"
+    
+      - name: "Richard Al"
+        title: "VP Infrastructure, Diagnostics and CIO"
+        organization: "WHCA"
+    
+      - name: "James McDevitt"
+        title: "VP Corporate Services and CFO"
+        organization: "WHCA"
+    
+      - name: "Sarah Sheppard"
+        title: "Chief Human Resources Officer"
+        organization: "WHCA"
+    status: "ok-MER"
 
 
   - FAC: '961'
@@ -141,7 +171,7 @@ hospitals:
         - name: Erika MacPhee, RN, MHScN
           title: Vice President, Clinical Operations
     notes: missing people
-    status: ok
+    status: ok-Manual
 
 
 
@@ -150,7 +180,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://hsnsudbury.ca/en/About-Us/Leadership-at-HSN/Senior-Management-Team
     pattern: h2_name_p_title
-    expected_executives: ~
+    expected_executives: 10
     html_structure:
        name_element: h5
        title_element: p
@@ -186,7 +216,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.sbghc.on.ca/about-us/leadership-team/
     pattern: p_with_bold_and_br
-    expected_executives: r
+    expected_executives: 5
     html_structure:
     
     notes: ~
@@ -205,7 +235,7 @@ hospitals:
          - name: Rochelle Reid
            title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
     notes: ~
-    status: ok
+    status: ok-mp
 
   - FAC: '938'
     name: 'DYSART ET AL HALIBURTON HEALTH SER'
@@ -237,7 +267,7 @@ hospitals:
     hospital_type: 'Large Community Hospital'
     url: #https://www.wrh.on.ca/ExecutiveCommittee
     pattern: manual_entry_required
-    expected_executives: ~
+    expected_executives: 10
     html_structure:
     known_executives:
       - name: "Karen Riddell"
@@ -261,7 +291,7 @@ hospitals:
       - name: "Margo Reilly"
         title: "Executive Director of the Windsor Family Health Team"
     notes: Returns 403 Forbidden - site blocks automated requests
-    status: ok
+    status: ok-Manual
 
 
   - FAC: '910'
@@ -336,7 +366,7 @@ hospitals:
        - name: Angela Bishop
          title: Interim President & CEO
     notes: Mixed html structure ceo name is P rest are h2?
-    status: ok
+    status: ok-mp
 
 
   - FAC: '890'
@@ -362,7 +392,7 @@ hospitals:
       - name: Dr. Rob Humphrey, 
         title: Vice President of Medical Staff
     notes: Weird table on webpage
-    status: ok
+    status: ok-MER
 
 
   - FAC: '889'
@@ -423,12 +453,12 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.womenscollegehospital.ca/who-we-are/executive-team/
     pattern: div_classes
-    expected_executives: ~
+    expected_executives: 
     html_structure:
       name_class: card-title
       title_class: card-subtitle
       container_class:
-    notes: ~
+    notes: 10
     status: ok
 
 
@@ -437,7 +467,7 @@ hospitals:
     hospital_type: 'Large Community Hospital'
     url: https://www.tehn.ca/about-us/our-team/executive-team
     pattern: div_classes
-    expected_executives: ~
+    expected_executives: 8
     html_structure:
       name_class: field__content
       title_class: field--name-field-position
@@ -461,7 +491,7 @@ hospitals:
     hospital_type: 'Other Hospital'
     url: ~
     pattern: div_classes
-    expected_executives: ~
+    expected_executives: 2
     html_structure:
       - ~
       - ~
@@ -478,7 +508,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: "NAMES SOURCED FROM JPEG ON GOVERNANCE PAGE"
-      status: ok
+    status: ok-Manual
     known_executives:
       - name: Cheryl O'Flaherty
         title: President and Chief Executive Officer
@@ -518,7 +548,7 @@ hospitals:
     expected_executives: 1
     html_structure:
       notes: "No leadership page on website. CEO info found on Accessibility page."
-    status: needs configuration
+    status: ok-Manual
     known_executives:
       - name: Melonie Loubert
         title: Chief Executive Officer
@@ -568,7 +598,7 @@ hospitals:
         - name: Kimberley Harbord
           title: Vice President, Finance, Performance & Information
       notes: "Inconsistent structure - 2 execs in H2, 2 in P tags. Phone/fax cleanup needed."
-    status: ok
+    status: ok-mp
 
   - FAC: '784'
     name: 'LITTLE CURRENT MANITOULIN'
@@ -613,17 +643,16 @@ hospitals:
         - name: "Martin Sauvé"
           title: "Director of Communications"
       notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
-    status: ok
+    status: ok-mp
 
   - FAC: '751'
     name: 'OTTAWA CHEO CTC'
     hospital_type: 'Specialty Children Hospital'
     url: https://www.cheo.on.ca/en/about-us/senior-leadership.aspx?_mid_=1829
-    pattern: table_data_name_accordion
+    pattern: div_classes
     expected_executives: 15
     html_structure:
       name_element: h2
-      title_element: 'td[data-name="accParent"]'
       container: div.factsheet__callout
       notes: 'Table-based accordion with data-name attributes'
     status: needs configuration
@@ -705,7 +734,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: "Mixed format - CEO is Name–Title, others are Title–Name in <strong> tags"
-    status: "ok"
+    status: "ok-MER"
     known_executives:
       - name: "Annie Janveau"
         title: "President and CEO"
@@ -723,12 +752,12 @@ hospitals:
     name: LONDON ST JOSEPHS
     hospital_type: 'Teaching Hospital'
     url: https://www.sjhc.london.on.ca/about-us/about-st-josephs-health-care-london/leadership-team
-    pattern: div_classes
+    pattern: h2_name_h3_title
     expected_executives: 5
     html_structure:
      
-    notes: 
-    status: "needs configuration"
+    notes: Only shows CEO
+    status: "no executive team shown"
     
     
     
@@ -740,7 +769,7 @@ hospitals:
     pattern: "manual_entry_required"
     html_structure:
       notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
-    status: "ok"
+    status: "ok-MER"
     known_executives:
       - name: "Esther Millar"
         title: "CEO"
@@ -880,7 +909,7 @@ hospitals:
         - name: Saskia MacMillan
           title: Vice President of Patient Care Service/CNE 
       notes: ' Missing person TITLE WITH A "/" IS LIKELY THE PROBLEM'
-    status: ok
+    status: ok-mp
 
 
   - FAC: '674'
@@ -897,7 +926,7 @@ hospitals:
        missing_people:
         - name: Dr. Mike Heenan
           title: President and chief executive officer, St. Joseph's Health System
-    status: ok
+    status: ok-mp
 
   - FAC: '666'
     name: GUELPH ST JOSEPH'S HEALTH CENTRE
@@ -943,14 +972,39 @@ hospitals:
     url: https://gmch.whca.ca/board-of-directors
     partnership: "Wellington Health Care Alliance "
     parternship_abbrev: "WHCA"
-    pattern: h2_name_h3_title
+    pattern: manual_entry_required
     expected_executives: 4
     html_structure:
-      name_class: wixui-rich-text__text
-      title_class: wixui-rich-text__text
-      container_class:
-      notes:
-    status: "needs configuration"
+        ##
+    known_executives:
+      - name: "Dr. Christine Peterkin"
+        title: "Chief of Staff"
+        organization: "NWHC"
+    
+      - name: "Angela Stanley"
+        title: "President and CEO"
+        organization: "WHCA"
+    
+      - name: "Dr. Matthew Westendorp"
+        title: "Chief of Staff"
+        organization: "GMCH"
+    
+      - name: "Matt Smith"
+        title: "VP Quality Clinical Services and CNE"
+        organization: "WHCA"
+    
+      - name: "Richard Al"
+        title: "VP Infrastructure, Diagnostics and CIO"
+        organization: "WHCA"
+    
+      - name: "James McDevitt"
+        title: "VP Corporate Services and CFO"
+        organization: "WHCA"
+    
+      - name: "Sarah Sheppard"
+        title: "Chief Human Resources Officer"
+        organization: "WHCA"
+    status: "ok-MER"
     
   - FAC: '655'
     name: Huron Health EXETER SOUTH HURON
@@ -1000,7 +1054,7 @@ hospitals:
     expected_executives: 13
     html_structure:
       notes: "P elements with plain text names and <br> separator. No bold/strong tags on names. When text is extracted, <br> disappears making automated splitting impossible."
-    status: "ok"
+    status: "ok-MER"
     known_executives:
       - name: "Cara Vaccarino"
         title: "President and CEO"
@@ -1038,7 +1092,7 @@ hospitals:
     expected_executives: 4
     html_structure:
       notes: "Board page with figcaption elements containing names and titles separated by <br>. Mix of 11 board members and 4 executives. No existing pattern supports figcaption with plain text names. Executives manually extracted from Ex-Officio section."
-    status: "manual_entry_required"
+    status: "ok-MER"
     known_executives:
       - name: "Kelli-Ann Lemieux"
         title: "President & CEO, Board Secretary-Treasurer"
@@ -1097,7 +1151,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: Reversed Titles new pattern??
-    status: ok
+    status: ok-MER
     known_executives:
       - name: Jeanette Despatie
         title: President & Chief Executive Officer
@@ -1135,7 +1189,7 @@ hospitals:
     expected_executives: 3
     html_structure:
       notes: "Board page with executives mixed in. Co-CEOs structure. No clear HTML patterns."
-    status: "manual_entry_required"
+    status: "ok-MER"
     known_executives:
       - name: "Natasha Comte"
         title: "Co-Chief Executive Officer / Director of Finances and Corporate Services"
@@ -1234,7 +1288,7 @@ hospitals:
     expected_executives: 3
     html_structure:
     notes: "Small hospital with governance page showing mixed board and executives. Reversed format (Title – Name). No separate leadership page available."
-    status: "manual_entry"
+    status: "ok-MER"
     known_executives:
     - name: "Mike Bell"
       title: "President & CEO"
@@ -1295,7 +1349,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: Site blocks automated scraping - connection refused in R
-    status: ok
+    status: ok-MER
     known_executives:
       - name: Paula Reaume-Zimmer
         title: President & CEO
@@ -1352,7 +1406,7 @@ hospitals:
       combined_element: h3
       separator: ''
       notes: H3 elements with <br> separator - not supported by current patterns
-    status: ok
+    status: ok-MER
     known_executives:
       - name: Melissa Farrell
         title: President & CEO
@@ -1409,7 +1463,7 @@ hospitals:
     html_structure:
       notes: Titles appear BEFORE names (reversed order), causing pairing issues with
         div_classes pattern
-    status: ok
+    status: ok-MER
     known_executives:
       - name: Kim Delahunt
         title: President & Chief Executive Officer
@@ -1483,7 +1537,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: Titles embedded in prose paragraphs - not extractable by standard patterns
-    status: ok
+    status: ok-MER
     known_executives:
       - name: Sabine Mersmann
         title: President and CEO
@@ -1533,7 +1587,7 @@ hospitals:
           title: Chief of Staff
         - name: Linda Gravel
           title: Vice President, Clinical Services and Chief Nursing Executive
-    status: ok
+    status: ok-mp
   - FAC: '718'
     name: BURLINGTON JOSEPH BRANT HOSPITAL
     hospital_type: Large Community Hospital
@@ -1752,7 +1806,7 @@ hospitals:
         - name: Dr. Dan Cass B.Sc., MD, MSc, FRCPC
           title: Executive Vice President and Chief Medical Executive
       notes: ''
-    status: ok
+    status: ok-mp
   - FAC: '935'
     name: Thunder Bay Regional Health Sciences Centre
     hospital_type: Teaching Hospital
@@ -1875,7 +1929,7 @@ hospitals:
           title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
             Research for Sinai Health
       notes: ''
-    status: ok
+    status: ok-mp
   - FAC: '793'
     name: ST THOMAS ELGIN GENERAL
     hospital_type: Large Community Hospital
@@ -1971,7 +2025,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146
     pattern: combined_h2
-    expected_executives: 5.0
+    expected_executives: 5
     html_structure:
       combined_element: h3
       separator: ', '
@@ -1992,7 +2046,7 @@ hospitals:
           title: Chair, Medical Advisory Committee
         - name: Tamás Zsolnay
           title: President & CEO, University Hospitals Kingston Foundation
-    status: ok
+    status: ok-mp
   - FAC: '932'
     name: Elizabeth Bruyere Hospital
     hospital_type: Chronic/Rehab Hospital
@@ -2054,7 +2108,7 @@ hospitals:
         - name: Golda Milo-Manson, MD, FRCPC
           title: Vice-President, Medicine and Academic Affairs
       notes: ''
-    status: ok
+    status: ok-mp
   - FAC: '850'
     name: TORONTO RUNNYMEDE HC
     hospital_type: Chronic/Rehab Hospital
@@ -2199,6 +2253,7 @@ pattern_templates:
         missing_people:
           - name: Dr. John Smith
             title: President and CEO
+      status: ok-mp      
   custom_table_nested_example:
     - FAC: XXX
       name: Example Hospital
@@ -2292,6 +2347,8 @@ name_patterns:
     - ^Dr\.? [A-Z][a-z]+ Van[A-Z][a-z]+$
     - ^[A-Z][a-z]+ van [A-Z][a-z]+, [A-Z]{2,}$
     - ^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$
+    - '^Sr\.? [A-Z][a-z]+ [A-Z][a-z]+$'
+    - '^Sr\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$'
   with_credentials:
     - ^Dr\.? [A-Z][a-z]+ [A-Z]?\. [A-Z][a-z]+,? [A-Z]{2,}.*$
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
@@ -2324,6 +2381,7 @@ name_patterns:
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
     - '^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
+    - '^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ]''[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$

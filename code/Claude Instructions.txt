@@ -41,7 +41,8 @@ I would like to follow this process for todays work.
 9) I have created a log of   missing people that we can use when we start working on the single source of truth: see example below
 FAC	Hospital	Name	Title	Pattern
 
-hospital 889 added 1 missing person logged to the missign person log.
-hospital 890 added  all as manual entry required. This one may require a new pattern.
-Hospital 896 added 1 missing person, logged to the missign person log. This is a mixed HTML pattern
-Hospital 900 added no issues
+All hospitals have now been processed. There are 7 hospitals who are blocked or closed
+
+There are 123 hospitals where the pattern is working but some of those will need to be reviewed for missing people.
+These can be dealt with as a part of the process of developing a single source of truth for exectuive names and titles
+There are 9 hospitals that required debugging. This will be our focus for today

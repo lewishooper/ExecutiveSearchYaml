@@ -2,11 +2,11 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
 #source("test_all_configured_hospitals.R")
-FAC<-964
+FAC<-963
 
-quick_test(FAC)
-Name <- "KGH"
-url <- "https://kingstonhsc.ca/about-khsc/senior-leadership-team"
+#quick_test(FAC)
+Name <- "cheo"
+url <- "https://www.sjhc.london.on.ca/about-us/about-st-josephs-health-care-london/leadership-team"
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)
 

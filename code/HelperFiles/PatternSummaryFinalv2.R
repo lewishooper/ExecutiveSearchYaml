@@ -15,8 +15,7 @@ source("test_all_configured_hospitals.R")
 AllHospitals<-check_configuration_status()
 saveRDS(AllHospitals,"pattern_summary.rds")
 OKpatterns<-AllHospitals %>%
-  filter(tolower(Status)=='ok') %>%
-  filter(!Has_Missing)
+  filter(tolower(Status) %in% c('ok', 'ok-mp'))
 saveRDS(OKpatterns,"GoodHospitals.rds")
 
 
@@ -43,9 +42,19 @@ remove_notes <- function(obj) {
   }
   return(obj)
 }
-
+remove_missing <- function(obj) {
+  if (is.list(obj)) {
+    # Remove the 'missing people' element if it exists
+    obj$html_structure$missing_people <- NULL
+    
+    # Recursively apply to all remaining elements
+    obj <- lapply(obj, remove_missing)
+  }
+  return(obj)
+}
 # Apply the function to strip out all notes
 hospitals_yaml <- remove_notes(hospitals_yaml)
+hospitals_yaml<-remove_missing(hospitals_yaml)
 cat("Loaded", length(hospitals_yaml), "hospitals from YAML\n\n")
 
 # Initialize list to store results
@@ -201,7 +210,9 @@ consolidated_df <-consolidated_df%>%
   Element4=HTMLItemElement4) 
 consolidated_df  <-consolidated_df%>%
   mutate(FAC=str_replace_all(FAC,"\\*\\*"," ")) %>%
-  relocate( FAC, .after = last_col())
+  relocate( FAC, .after = last_col()) %>%
+  arrange(desc(NumByPattern))
 
 saveRDS(consolidated_df,"Pattern_summary_final.rds")
-write_excel_csv(consolidated_df,"PatternSummary_final.csv")
+writexl::write_xlsx(consolidated_df,"PatternSummary_final.csv")
+write.csv(consolidated_df,"PSF.csv")

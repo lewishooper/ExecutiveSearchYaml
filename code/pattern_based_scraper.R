@@ -102,9 +102,12 @@ PatternBasedScraper <- function() {
     non_names <- c(
       "^(About|Our|The|Welcome|Contact|Services|Programs|News|Events)\\b",
       "^(Ontario|Ministry|Government|Hospital|Health|Department)\\b",
-      "^(For Staff|Staff Only|General|Information)\\b"
+      "^(For Staff|Staff Only|General|Information)\\b",
+      "^Senior Leadership Team$",
+      "^Executive Leadership Team$",
+      "^Board Members$",
+      "^Management Team$"
     )
-    
     is_non_name <- any(sapply(non_names, function(p) grepl(p, clean_text, ignore.case = TRUE)))
     
     # Debug logging
@@ -480,23 +483,31 @@ PatternBasedScraper <- function() {
       title_elements <- page %>% html_nodes(paste0(".", title_class)) %>% html_text2()
       
       pairs <- list()
-      max_pairs <- min(length(name_elements), length(title_elements))
+      
+      # NEW APPROACH: Filter valid names first, then pair with titles sequentially
+      valid_names <- c()
+      for (i in seq_along(name_elements)) {
+        potential_name <- clean_text_data(name_elements[i])
+        if (is_executive_name(potential_name, config)) {
+          valid_names <- c(valid_names, potential_name)
+        }
+      }
+      
+      # Now pair valid names with titles sequentially
+      max_pairs <- min(length(valid_names), length(title_elements))
       
       for (i in 1:max_pairs) {
-        potential_name <- clean_text_data(name_elements[i])
         potential_title <- clean_text_data(title_elements[i])
         
-        if (is_executive_name(potential_name, config) && 
-            is_executive_title(potential_title, config)) {
-          
+        if (is_executive_title(potential_title, config)) {
           pairs[[length(pairs) + 1]] <- list(
-            name = potential_name,
+            name = valid_names[i],
             title = potential_title
           )
         }
       }
       
-      # FIXED: Add missing people support
+      # Add missing people support
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
