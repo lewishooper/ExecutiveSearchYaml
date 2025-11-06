@@ -1,6 +1,5 @@
 hospitals:
 
-
   - FAC: '980'
     name: 'TORONTO UNITY HEALTH TORONTO'
     hospital_type: 'Teaching Hospital'
@@ -115,42 +114,15 @@ hospitals:
     name: 'MOUNT FOREST NORTH WELLINGTON HC'
     hospital_type: 'Small Hospital'
     url: https://gmch.whca.ca/board-of-directors
-    partnership: "Wellington Health Care Alliance "
-    parternship_abbrev: "WHCA"
-    pattern: manual_entry_required
-    expected_executives: 4
+    partnership: "Wellington Health Care Alliance"
+    partnership_abbrev: "WHCA"
+    pattern: combined_h2
+    expected_executives: 3
     html_structure:
-        ##
-    known_executives:
-      - name: "Dr. Christine Peterkin"
-        title: "Chief of Staff"
-        organization: "NWHC"
-    
-      - name: "Angela Stanley"
-        title: "President and CEO"
-        organization: "WHCA"
-    
-      - name: "Dr. Matthew Westendorp"
-        title: "Chief of Staff"
-        organization: "GMCH"
-    
-      - name: "Matt Smith"
-        title: "VP Quality Clinical Services and CNE"
-        organization: "WHCA"
-    
-      - name: "Richard Al"
-        title: "VP Infrastructure, Diagnostics and CIO"
-        organization: "WHCA"
-    
-      - name: "James McDevitt"
-        title: "VP Corporate Services and CFO"
-        organization: "WHCA"
-    
-      - name: "Sarah Sheppard"
-        title: "Chief Human Resources Officer"
-        organization: "WHCA"
-    status: "ok-MER"
-
+      combined_element: "span.wixui-rich-text__text"
+      separator: " - "
+      notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
+    status: ok
 
   - FAC: '961'
     name: 'OTTAWA HEART INSTITUTE'
@@ -171,7 +143,7 @@ hospitals:
         - name: Erika MacPhee, RN, MHScN
           title: Vice President, Clinical Operations
     notes: missing people
-    status: ok-Manual
+    status: ok-mp
 
 
 
@@ -291,7 +263,7 @@ hospitals:
       - name: "Margo Reilly"
         title: "Executive Director of the Windsor Family Health Team"
     notes: Returns 403 Forbidden - site blocks automated requests
-    status: ok-Manual
+    status: ok-blocked
 
 
   - FAC: '910'
@@ -368,32 +340,17 @@ hospitals:
     notes: Mixed html structure ceo name is P rest are h2?
     status: ok-mp
 
-
   - FAC: '890'
     name: 'WOODSTOCK WOODSTOCK HOSPITAL'
     hospital_type: 'Large Community Hospital'
     url: https://www.woodstockhospital.ca/board-of-directors/
-    pattern: manual_entry_required
-    expected_executives: 5
-    html_structure: # weird table of names
-    known_executives:
-      - name: Cheryl O'Flaherty
-        title: President and Chief Executive Officer
-      - name:  Perry Lang
-        title: President & CEO 
-      - name: Cindy Smart 
-        title: Vice President of Patient Care/CNO
-      - name: Dr. Malcolm MacLeod
-        title: Chief of Staff
-      - name: Dr. lan Hons, 
-        title: Assistant Chief of Staff
-      - name: Dr. Paul Howatt, 
-        title: President Medical Staff
-      - name: Dr. Rob Humphrey, 
-        title: Vice President of Medical Staff
-    notes: Weird table on webpage
-    status: ok-MER
-
+    pattern: combined_h2
+    expected_executives: 6
+    html_structure:
+      combined_element: "table tr td:nth-child(3)"
+      separator: ", "
+      notes: "Column 3 of table contains executives with comma-separated name and title. Rows 7-8 are city/county reps, not executives."
+    status: ok
 
   - FAC: '889'
     name: 'WINGHAM & DISTRICT'
@@ -508,7 +465,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: "NAMES SOURCED FROM JPEG ON GOVERNANCE PAGE"
-    status: ok-Manual
+    status: ok-MER
     known_executives:
       - name: Cheryl O'Flaherty
         title: President and Chief Executive Officer
@@ -548,10 +505,9 @@ hospitals:
     expected_executives: 1
     html_structure:
       notes: "No leadership page on website. CEO info found on Accessibility page."
-    status: ok-Manual
+    status: Not reported
     known_executives:
-      - name: Melonie Loubert
-        title: Chief Executive Officer
+      
 
 
   - FAC: '802'
@@ -725,7 +681,6 @@ hospitals:
     status: "ok"
     
 
-
   - FAC: '719'
     name: 'MANITOUWADGE SANTE MANITOUWADGE'
     hospital_type: 'Small Hospital'
@@ -746,6 +701,7 @@ hospitals:
         title: "Director of Finance"
       - name: "Teresa Malakoff"
         title: "Support Services Manager/Privacy Officer"
+ 
     
 
   - FAC: '714'
@@ -970,41 +926,15 @@ hospitals:
     name: 'WHCA Grove community hospital '
     hospital_type: Small Hospital
     url: https://gmch.whca.ca/board-of-directors
-    partnership: "Wellington Health Care Alliance "
-    parternship_abbrev: "WHCA"
-    pattern: manual_entry_required
-    expected_executives: 4
+    partnership: "Wellington Health Care Alliance"
+    partnership_abbrev: "WHCA"
+    pattern: combined_h2
+    expected_executives: 3
     html_structure:
-        ##
-    known_executives:
-      - name: "Dr. Christine Peterkin"
-        title: "Chief of Staff"
-        organization: "NWHC"
-    
-      - name: "Angela Stanley"
-        title: "President and CEO"
-        organization: "WHCA"
-    
-      - name: "Dr. Matthew Westendorp"
-        title: "Chief of Staff"
-        organization: "GMCH"
-    
-      - name: "Matt Smith"
-        title: "VP Quality Clinical Services and CNE"
-        organization: "WHCA"
-    
-      - name: "Richard Al"
-        title: "VP Infrastructure, Diagnostics and CIO"
-        organization: "WHCA"
-    
-      - name: "James McDevitt"
-        title: "VP Corporate Services and CFO"
-        organization: "WHCA"
-    
-      - name: "Sarah Sheppard"
-        title: "Chief Human Resources Officer"
-        organization: "WHCA"
-    status: "ok-MER"
+      combined_element: "span.wixui-rich-text__text"
+      separator: " - "
+      notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
+    status: ok
     
   - FAC: '655'
     name: Huron Health EXETER SOUTH HURON
@@ -1046,6 +976,8 @@ hospitals:
       container_class: member-name
       notes: Leadership page includes both executives and board members
     status: ok
+    
+
   - FAC: '651'
     name: "OTTAWA ROYAL OTTAWA (PSYCH)"
     hospital_type: "Specialty Mental Health Hospital"
@@ -1053,7 +985,7 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 13
     html_structure:
-      notes: "P elements with plain text names and <br> separator. No bold/strong tags on names. When text is extracted, <br> disappears making automated splitting impossible."
+      notes: Java script issue
     status: "ok-MER"
     known_executives:
       - name: "Cara Vaccarino"
@@ -1083,6 +1015,9 @@ hospitals:
       - name: "Dr. Floyd Wood"
         title: "Interim, Medical Director, Integrated Forensics Program"
 
+
+    
+ 
 
   - FAC: '650'
     name: "ELLIOT LAKE ST JOSEPH'S"
@@ -1147,25 +1082,16 @@ hospitals:
     name: Cornwall Hospital  CORNWALL HOTEL DIEU
     hospital_type: Small Hospital
     url: https://www.cornwallhospital.ca/en/SeniorAdmin
-    pattern: manual_entry_required
+    pattern: combined_h2
     expected_executives: 5
     html_structure:
-      notes: Reversed Titles new pattern??
-    status: ok-MER
-    known_executives:
-      - name: Jeanette Despatie
-        title: President & Chief Executive Officer
-      - name: Dr. Anastasios Boubalos
-        title: Chief of Staff
-      - name: Kelly Shaw
-        title: Vice President of Patient Services & Chief Nursing Officer
-      - name: Ann Zeran
-        title: Vice President of Community Programs
-      - name: Karin Hagen
-        title: Chief Finance Officer
-      - name: vacant
-        title: Chief Information Officer
-
+       combined_element: "p"
+       separator: ":"
+       reversed: true          # ← Key!
+       notes: Reversed Titles new pattern??
+    status: ok
+    
+    
 
   - FAC: '638'
     name: "MICS GROUP COCHRANE LADY MINTO"
@@ -1279,32 +1205,39 @@ hospitals:
       notes: ''
   
     status: ok
-    
-  - FAC: "592"
+ 
+  - FAC: '592'
     name: "NAPANEE LENNOX & ADDINGTON"
     hospital_type: "Small Hospital"
     url: "https://web.lacgh.napanee.on.ca/about/governance/"
-    pattern: "manual_entry_required"
-    expected_executives: 3
+    pattern: combined_h2
+    expected_executives: 4
     html_structure:
-    notes: "Small hospital with governance page showing mixed board and executives. Reversed format (Title – Name). No separate leadership page available."
-    status: "ok-MER"
-    known_executives:
-    - name: "Mike Bell"
-      title: "President & CEO"
-    - name: "Kristen Rochon"
-      title: "Vice President, Patient & Resident Services and Chief Nursing Officer"
-    - name: "Dr. Kimberley Morrison"
-      title: "Chief of Medical Staff"
+      combined_element: "p"
+      separator: " – "
+      reversed: true
+      missing_people:
+        - name: Mr. Mike Bell
+          title: President and CEO
+        - name: Ms. Kristen Rochon
+          title: Vice President, Patient & Resident Services and Chief Nursing Officer 
 
+
+      notes: "P elements with reversed format: Title – Name. Includes board members (President of Volunteer Services) to filter later."
+    status: ok-mp
+    
+    
   - FAC: "968"
     name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
     url: "https://www.mahc.ca/about-us/leadership/"
-    pattern: "manual_entry_required"
+    pattern: "combined_h2"
     expected_executives: 5
     html_structure:
-     notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
-    status: "javascript_blocked"
+      combined_element: p
+      separator: <br>
+      reversed: False
+      notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
+    status: ok-mp
     known_executives:
      - name: "Cheryl Harrison"
        title: "President & Chief Executive Officer"
@@ -1349,7 +1282,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: Site blocks automated scraping - connection refused in R
-    status: ok-MER
+    status: ok-blocked
     known_executives:
       - name: Paula Reaume-Zimmer
         title: President & CEO
@@ -1396,42 +1329,31 @@ hospitals:
       separator: ','
       notes: Executive assistant dealt iwth in Post
     status: ok
+  - FAC: '955'
+    name: GREY BRUCE HEALTH SERVICES  Brightshores
+    hospital_type: Large Community Hospital
+    url: https://www.brightshores.ca/about-us/executive-team/
+    pattern: combined_h2
+    expected_executives: 7
+    html_structure:
+      combined_element: p
+      separator: ','
+      notes: Executive assistant dealt iwth in Post
+    status: ok
+    
   - FAC: '950'
     name: HALTON HEALTHCARE
     hospital_type: Large Community Hospital
     url: https://www.haltonhealthcare.on.ca/about/leadership-team/executive-leadership-team
-    pattern: manual_entry_required
+    pattern: combined_h2
     expected_executives: 12
     html_structure:
       combined_element: h3
-      separator: ''
-      notes: H3 elements with <br> separator - not supported by current patterns
-    status: ok-MER
-    known_executives:
-      - name: Melissa Farrell
-        title: President & CEO
-      - name: Dr. David McConachie
-        title: Chief of Staff
-      - name: Al Coady
-        title: Senior Vice President, Redevelopment, Facilities & Retail Operations
-      - name: Debra Stout
-        title: Senior Vice President and Chief Nursing Executive
-      - name: Marie Hubbard
-        title: Senior Vice President, People and Culture
-      - name: Melissa McCullough
-        title: Senior Vice President, Chief Financial Officer and Chief Strategy Officer
-      - name: Dr. Sohail Gandhi
-        title: Vice President and Chief Medical Officer
-      - name: Sharon Gray
-        title: Vice President, Clinical Programs and Interprofessional Practice
-      - name: Naila Butt
-        title: Vice President, Patient Experience, Quality and Risk
-      - name: Jennifer Fiddick-Carvalho
-        title: Vice President, Corporate Services and Communications
-      - name: Katherine Scott
-        title: Vice President, Ambulatory Services and Partnerships
-      - name: Paul Milliken
-        title: Vice President, Communications and Stakeholder Relations
+      separator: '<br>'
+      missing_people:
+        - name: Al Coady
+          title: Senior Vice President Redevelopment, Facilities & Retail Operations
+    status: ok-MP
   - FAC: '940'
     name: COBOURG NORTHUMBERLAND HILLS
     hospital_type: Large Community Hospital
@@ -1454,39 +1376,33 @@ hospitals:
       title_class: expand-tiles__tile-meta--position
       notes: Expandable tile structure - using tile view classes
     status: ok
+    
   - FAC: '916'
     name: HEADWATERS
     hospital_type: Large Community Hospital
     url: https://www.headwatershealth.ca/who-we-are/governance/executive-leadership-team/
-    pattern: manual_entry_required
+    pattern: h2_name_p_title
     expected_executives: 5
     html_structure:
-      notes: Titles appear BEFORE names (reversed order), causing pairing issues with
-        div_classes pattern
-    status: ok-MER
-    known_executives:
-      - name: Kim Delahunt
-        title: President & Chief Executive Officer
-      - name: Dr. Grace Wang, MD, FRSC
-        title: Chief of Staff & Vice President, Medical Affairs
-      - name: Cathy van Leipsig
-        title: Vice President, Corporate Services & Chief Financial Officer
-      - name: Annette Jones
-        title: Vice President Patient Experience, Health Integration, Chief Nursing
-          and Health Disciplines Executive (CNE)
-      - name: Frances Duiker
-        title: Vice President, People and Culture
+      name_element: "p.heading.c3-heading"
+      title_element: "p.secondary-heading.c3-secondary-heading"
+      reversed: true
+      notes: "Title in secondary-heading class, name in heading class - reversed order"
+    status: ok
+  
+        
   - FAC: '928'
     name: PERTH SMITHS FALLS
     hospital_type: Large Community Hospital
     url: https://psfdh.on.ca/leadershipteam
-    pattern: combined_h2
+    pattern: div_classes
     expected_executives: 5
     html_structure:
       combined_element: p
       separator: ', '
       notes: AI predicted combined_h2 with HIGH confidence - confirmed via inspection
     status: ok
+    
   - FAC: '814'
     name: Middlesex Hosptial Alliance  STRATHROY MIDDLESEX GENERAL
     hospital_type: Large Community Hospital

@@ -17,6 +17,35 @@
 
 ---
 ## Session History
+
+## session summary - november 3-5
+Summary of Today's Accomplishments
+Code Improvements (3 major fixes):
+
+combined_h2 - Added <br> tag handling
+h2_name_p_title - Added complex CSS selector support
+combined_h2 - Added deduplication + removed count limiting
+
+Hospitals Debugged: 17 total
+
+Fixed with patterns: 7 hospitals
+Manual entry required: 8 hospitals
+Blocked/Not reported: 2 hospitals
+
+Future Work Notes Captured:
+
+Hospitals with "()" title format: FAC 650, 627
+Name validation needs "Mr./Ms./Mrs." honorifics: FAC 592
+Text cleaning for "Email" prefix: FAC 968
+
+Next Phase Plan (as you outlined):
+
+✅ Create baseline dataframe (all hospitals + executives)
+✅ Consolidate name/title parsing into YAML (single source of truth)
+✅ Refactor pattern_based_scraper.R accordingly
+✅ Compare with baseline to identify corrections needed
+
+
 ##  Session Summary - November 2, 2025
 Hospitals Completed: 10
 

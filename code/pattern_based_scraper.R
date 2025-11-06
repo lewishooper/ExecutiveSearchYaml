@@ -248,7 +248,23 @@ PatternBasedScraper <- function() {
       # Defaults to FALSE for backward compatibility
       reversed <- hospital_info$html_structure$reversed %||% FALSE
       
-      elements <- page %>% html_nodes(element_type) %>% html_text2()
+     # insert code on <br> recognition here.
+      # REPLACE WITH:
+      # Handle <br> separator specially
+      if (separator == "<br>" || separator == "br") {
+        elements_raw <- page %>% html_nodes(element_type)
+        elements <- sapply(elements_raw, function(elem) {
+          # Replace <br> with our separator marker before extracting text
+          html_content <- as.character(elem)
+          html_content <- gsub("<br\\s*/?>", " |BR| ", html_content, ignore.case = TRUE)
+          # Now extract text
+          read_html(html_content) %>% html_text2()
+        })
+        # Update separator to match our marker
+        separator <- " |BR| "
+      } else {
+        elements <- page %>% html_nodes(element_type) %>% html_text2()
+      }
       
       pairs <- list()
       
@@ -285,24 +301,36 @@ PatternBasedScraper <- function() {
       }
       
       # Add missing people
-      if (!is.null(hospital_info$html_structure$missing_people)) {
-        for (missing in hospital_info$html_structure$missing_people) {
-          pairs[[length(pairs) + 1]] <- list(
-            name = missing$name,
-            title = missing$title
-          )
-        }
-      }
-      
-      # Limit to expected count if specified
-      if (!is.null(hospital_info$expected_executives)) {
-        max_count <- hospital_info$expected_executives
-        if (length(pairs) > max_count) {
-          pairs <- pairs[1:max_count]
-        }
-      }
-      
-      return(pairs)
+      # code insert Claude
+      # Deduplicate pairs before adding missing people
+unique_pairs <- list()
+for (pair in pairs) {
+  is_duplicate <- FALSE
+  for (existing in unique_pairs) {
+    if (existing$name == pair$name && existing$title == pair$title) {
+      is_duplicate <- TRUE
+      break
+    }
+  }
+  if (!is_duplicate) {
+    unique_pairs <- c(unique_pairs, list(pair))
+  }
+}
+
+# Add missing people
+if (!is.null(hospital_info$html_structure$missing_people)) {
+  for (missing in hospital_info$html_structure$missing_people) {
+    unique_pairs[[length(unique_pairs) + 1]] <- list(
+      name = missing$name,
+      title = missing$title
+    )
+  }
+}
+
+# Note: No longer limiting to expected_executives count
+# All unique pairs are returned for filtering in final database phase
+
+return(unique_pairs)
       
     }, error = function(e) {
       return(list())
@@ -372,22 +400,33 @@ PatternBasedScraper <- function() {
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get configuration for which elements to use
+      # new code from claude
+      # Get configuration for which elements to use
       name_element <- hospital_info$html_structure$name_element %||% "h2"
       title_element <- hospital_info$html_structure$title_element %||% "p"
+      
+      # NEW: Extract just the tag name for comparison (before any classes/IDs)
+      name_tag <- gsub("\\..*$|#.*$|\\[.*$", "", name_element)
+      title_tag <- gsub("\\..*$|#.*$|\\[.*$", "", title_element)
       
       # NEW: Check if reversed order (title comes before name)
       # Defaults to FALSE for backward compatibility
       reversed <- hospital_info$html_structure$reversed %||% FALSE
       
-      # NEW: If reversed, swap the elements we're looking for
+      # NEW: If reversed, swap BOTH the full selectors and the tag names
       if (reversed) {
         temp <- name_element
         name_element <- title_element
         title_element <- temp
+        
+        temp_tag <- name_tag
+        name_tag <- title_tag
+        title_tag <- temp_tag
       }
       
-      # Build selector for elements we're looking for
+      # Build selector for elements we're looking for (use full selectors with classes)
       selector <- paste(name_element, title_element, sep = ", ")
+      
       all_elements <- page %>% html_nodes(selector)
       
       pairs <- list()
@@ -397,9 +436,11 @@ PatternBasedScraper <- function() {
         next_element <- all_elements[[i + 1]]
         
         # Check if current element is the name type and next is title type
-        current_is_name <- html_name(current_element) == name_element
-        next_is_title <- html_name(next_element) == title_element
-        
+        #replace with new claude code
+        # Check if current element is the name type and next is title type
+        # Compare HTML tag names (not full selectors with classes)
+        current_is_name <- html_name(current_element) == name_tag
+        next_is_title <- html_name(next_element) == title_tag
         if (current_is_name && next_is_title) {
           current_text <- normalize_text(html_text(current_element, trim = TRUE))
           next_text <- normalize_text(html_text(next_element, trim = TRUE))
@@ -557,6 +598,8 @@ PatternBasedScraper <- function() {
         clean_li <- trimws(clean_li)
         
         # Build regex pattern for separator
+        # put in Claude fix 
+        # Build regex pattern for separator
         if (separator == " | ") {
           sep_pattern <- "\\s*\\|\\s*"
         } else if (separator == ", ") {
@@ -564,13 +607,16 @@ PatternBasedScraper <- function() {
         } else if (separator == " - ") {
           sep_pattern <- "\\s*-\\s*"
         } else {
+          # Escape all regex special characters
           sep_clean <- trimws(separator)
-          sep_escaped <- gsub("([\\|\\(\\)\\[\\]\\{\\}\\+\\*\\?\\.\\^\\$])", "\\\\\\1", sep_clean)
-          sep_pattern <- paste0("\\s*", sep_escaped, "\\s*")
+          # Use fixed=TRUE instead of regex to avoid escaping issues
+          # Just mark where to split
+          sep_pattern <- sep_clean
         }
         
         # Split using the pattern
-        parts <- strsplit(clean_li, sep_pattern, perl = TRUE)[[1]]
+        # insert claude split 
+        parts <- strsplit(clean_li, sep_pattern, fixed = TRUE)[[1]]
         
         if (length(parts) < 2) next
         

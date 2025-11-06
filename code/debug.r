@@ -1,31 +1,29 @@
-# Test the Sr. pattern we added
-test_names <- c(
-  "Sr. Sarah Quackenbush",
-  "Sr. Bonnie Chesser", 
-  "Sr. Frances Carter",
-  "Tony Niro",
-  "Stephanie Lefebvre",
-  "Andre Thibert",
-  "Suzanne Lemieux"
-)
+library(rvest)
+url <- "https://web.lacgh.napanee.on.ca/about/governance/"
+page <- read_html(url)
 
-# Load config patterns
-config <- yaml::read_yaml("enhanced_hospitals.yaml")
+# Look for executive-related text
+page_text <- page %>% html_text2()
 
-# Check if Sr. patterns are there
-cat("Checking for Sr. patterns in with_titles:\n")
-sr_patterns <- grep("^Sr", config$name_patterns$with_titles, value=TRUE)
-if(length(sr_patterns) > 0) {
-  cat("Found Sr. patterns:\n")
-  print(sr_patterns)
-} else {
-  cat("NO Sr. patterns found!\n")
+# Search for keywords
+cat("Looking for executive keywords in page text:\n\n")
+if (grepl("President|CEO|Chief", page_text, ignore.case = TRUE)) {
+  # Extract surrounding context
+  lines <- strsplit(page_text, "\n")[[1]]
+  exec_lines <- lines[grepl("President|CEO|Chief|Executive", lines, ignore.case = TRUE)]
+  
+  cat("Lines containing executive keywords:\n")
+  for (line in head(exec_lines, 10)) {
+    cat("-", trimws(line), "\n")
+  }
 }
 
-# Test each name against all patterns
-all_patterns <- unlist(config$name_patterns)
-cat("\n\nTesting names:\n")
-for(name in test_names) {
-  matches <- sapply(all_patterns, function(p) grepl(p, name))
-  cat(name, ": ", sum(matches), " patterns match\n", sep="")
+# Also check for any p elements that might contain executive info
+cat("\n\nChecking P elements:\n")
+all_p <- page %>% html_nodes("p") %>% html_text2()
+exec_p <- all_p[grepl("President|CEO|Chief", all_p, ignore.case = TRUE)]
+
+for (i in seq_along(exec_p)) {
+  cat("\nP element", i, ":\n")
+  cat(exec_p[i], "\n")
 }
