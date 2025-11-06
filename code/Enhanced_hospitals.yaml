@@ -79,7 +79,7 @@ hospitals:
       combined_element: span.fusion-toggle-heading
       separator: " - "
       notes: ~
-    status: needs_testing
+    status: ok
 
 
   - FAC: '969'
@@ -505,7 +505,7 @@ hospitals:
     expected_executives: 1
     html_structure:
       notes: "No leadership page on website. CEO info found on Accessibility page."
-    status: Not reported
+    status: no executive team shown
     known_executives:
       
 
@@ -611,7 +611,7 @@ hospitals:
       name_element: h2
       container: div.factsheet__callout
       notes: 'Table-based accordion with data-name attributes'
-    status: needs configuration
+    status: ok
     
 
 
@@ -708,9 +708,12 @@ hospitals:
     name: LONDON ST JOSEPHS
     hospital_type: 'Teaching Hospital'
     url: https://www.sjhc.london.on.ca/about-us/about-st-josephs-health-care-london/leadership-team
-    pattern: h2_name_h3_title
+    pattern: manual_entry_required
     expected_executives: 5
     html_structure:
+    known_executives:
+        - name: Roy Butler
+          title: President and CEO
      
     notes: Only shows CEO
     status: "no executive team shown"
@@ -768,8 +771,8 @@ hospitals:
       name_class: "font_5"
       title_class: "font_7"
       category_filter: ["​"]  # Filter out the zero-width space
-      notes: Need to filter out emails in the final version
-    status: "ok"
+      notes: Need to filter out emails in the final version added to ok-mp for this reson
+    status: "ok-mp"
 
   - FAC: '686'
     name: 'WAWA LADY DUNN HC'
@@ -813,18 +816,7 @@ hospitals:
     status: ok
 
 
-  - FAC: '682'
-    name: HORNEPAYNE COMMUNITY
-    hospital_type: Small Hospital
-    url: "https://www.hornepaynecommunityhospital.ca/about-1"
-    pattern: h2_name_p_title
-    expected_executives: 4
-    html_structure:
-     name_element: span
-     title_element: span
-     reversed: false 
-     notes: need to strip out emails ? manual at end of run or patten??
-    status: ok
+
     
   - FAC: '681'
     name: HEARST NOTRE DAME
@@ -1318,6 +1310,7 @@ hospitals:
       title_element: p
       notes: H3 for names, P with strong tags for titles
     status: ok
+    
   - FAC: '955'
     name: GREY BRUCE HEALTH SERVICES  Brightshores
     hospital_type: Large Community Hospital
@@ -1327,19 +1320,9 @@ hospitals:
     html_structure:
       combined_element: p
       separator: ','
-      notes: Executive assistant dealt iwth in Post
-    status: ok
-  - FAC: '955'
-    name: GREY BRUCE HEALTH SERVICES  Brightshores
-    hospital_type: Large Community Hospital
-    url: https://www.brightshores.ca/about-us/executive-team/
-    pattern: combined_h2
-    expected_executives: 7
-    html_structure:
-      combined_element: p
-      separator: ','
-      notes: Executive assistant dealt iwth in Post
-    status: ok
+      notes: Executive assistant dealt iwth in Post Need to deal with phone numbers
+    status: ok-mp 
+  
     
   - FAC: '950'
     name: HALTON HEALTHCARE
@@ -1353,7 +1336,7 @@ hospitals:
       missing_people:
         - name: Al Coady
           title: Senior Vice President Redevelopment, Facilities & Retail Operations
-    status: ok-MP
+    status: ok-mp
   - FAC: '940'
     name: COBOURG NORTHUMBERLAND HILLS
     hospital_type: Large Community Hospital
@@ -1610,7 +1593,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: Content loaded by JavaScript - cannot be scr
-    status: javascript_blocked
+    status: ok-blocked
     known_executives:
       - name: Paul Heinrich
         title: President & CEO
@@ -1630,7 +1613,7 @@ hospitals:
     expected_executives: 8
     html_structure:
       notes: Website blocks automated scraping - HTTP 403 Forbidden
-    status: blocked_by_site
+    status: ok-blocked
     known_executives:
       - name: Adam Topp
         title: President & CEO
@@ -1872,7 +1855,7 @@ hospitals:
     expected_executives: 30
     html_structure:
       notes: Content loaded by JavaScript - cannot be scraped with rvest
-    status: javascript_blocked
+    status: ok-blocked
     known_executives:
       - name: Dr. Kevin Smith
         title: President and CEO
@@ -2047,7 +2030,7 @@ hospitals:
     html_structure:
       notes: Website blocks automated scraping - may need manual entry or contact
         hospital
-    status: blocked_by_site
+    status: ok-blocked
     known_executives:
       - name: Bill Marra
         title: President and CEO

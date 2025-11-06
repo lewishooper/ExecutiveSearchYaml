@@ -1,0 +1,594 @@
+- FAC: '686'
+  name: 'WAWA LADY DUNN HC'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '687'
+  name: 'KAPUSKASING SENSENBRENNER'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '696'
+  name: 'KIRKLAND & DISTRICT'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '704'
+  name: 'LEAMINGTON DISTRICT MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '709'
+  name: 'LISTOWEL MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '714'
+  name: 'LONDON ST JOSEPH'S'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '719'
+  name: 'MANITOUWADGE SANTE MANITOUWADGE'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '723'
+  name: 'MATHESON BINGHAM MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '724'
+  name: 'MATTAWA GENERAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '732'
+  name: 'KEMPTVILLE DISTRICT'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '734'
+  name: 'HALDIMAND WEST HALDIMAND GENERAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '739'
+  name: 'NIPIGON DISTRICT MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '751'
+  name: 'OTTAWA CHEO CTC'
+  hospital_type: 'Specialty Children Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '753'
+  name: 'OTTAWA MONTFORT'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '768'
+  name: 'BARRY'S BAY ST FRANCIS'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '784'
+  name: 'LITTLE CURRENT MANITOULIN'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '788'
+  name: 'RENFREW VICTORIA'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '800'
+  name: 'HAWKESBURY & DISTRICT GENERAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '802'
+  name: 'ALEXANDRIA GLENGARRY'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '809'
+  name: 'SMOOTH ROCK FALLS'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '824'
+  name: 'TILLSONBURG DISTRICT MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '826'
+  name: 'KENORA LAKE-OF-THE-WOODS DISTRICT'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '854'
+  name: 'TORONTO SA GRACE'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '855'
+  name: 'THORNHILL SHOULDICE HOSPITAL'
+  hospital_type: 'Other Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '858'
+  name: 'TORONTO EAST GENERAL'
+  hospital_type: 'Large Community Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '862'
+  name: 'TORONTO WOMEN'S COLLEGE'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '881'
+  name: 'STURGEON FALLS WEST NIPISSING'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '882'
+  name: 'WINCHESTER DISTRICT MEMORIAL'
+  hospital_type: 'Large Community Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '888'
+  name: 'NEW LISKEARD TEMISKAMING HOSPITAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '889'
+  name: 'WINGHAM & DISTRICT'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '890'
+  name: 'WOODSTOCK WOODSTOCK HOSPITAL'
+  hospital_type: 'Large Community Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '896'
+  name: 'RED LAKE MARG COCHENOUR MEMORIAL'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '900'
+  name: 'FORT FRANCES RIVERSIDE HEALTH CARE'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '907'
+  name: 'TIMMINS & DISTRICT GENERAL'
+  hospital_type: 'Large Community Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '908'
+  name: 'TORONTO BELLWOOD HEALTH SERVICES'
+  hospital_type: 'Other Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '910'
+  name: 'TORONTO CASEY HOUSE'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '933'
+  name: 'WINDSOR REGIONAL'
+  hospital_type: 'Large Community Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '936'
+  name: 'LONDON HEALTH SCIENCES'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '938'
+  name: 'DYSART ET AL HALIBURTON HEALTH SER'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '942'
+  name: 'HAMILTON HEALTH SCIENCES CORP'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '946'
+  name: 'KINCARDINE SOUTH BRUCE GREY'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '948'
+  name: 'TORONTO ADDICTION & MENTAL HEALTH'
+  hospital_type: 'Specialty Mental Health Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '958'
+  name: 'OTTAWA THE OTTAWA HOSPITAL'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '959'
+  name: 'SUDBURY HEALTH SCIENCES NORTH'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '961'
+  name: 'OTTAWA HEART INSTITUTE'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '963'
+  name: 'MOUNT FOREST NORTH WELLINGTON HC'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '964'
+  name: 'SIOUX LOOKOUT MENO-YA-WIN HC'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '969'
+  name: 'WHITBY ONT SHORES CENTRE MH SCIENCE'
+  hospital_type: 'Specialty Mental Health Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '971'
+  name: 'SUDBURY ST.JOSEPH'S CONTINUING CARE'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '972'
+  name: 'PENETANGUISHENE WAYPOINT'
+  hospital_type: 'Specialty Mental Health Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '973'
+  name: 'MOOSE FACTORY WEENEEBAYKO AREA'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '977'
+  name: 'TERRACE BAY NORTH OF SUPERIOR HC'
+  hospital_type: 'Small Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '978'
+  name: 'KINGSTON KINGSTON HEALTH SCIENCES'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~
+- FAC: '980'
+  name: 'TORONTO UNITY HEALTH TORONTO'
+  hospital_type: 'Teaching Hospital'
+  url: ~
+  pattern: div_classes
+  expected_executives: ~
+  html_structure:
+    - ~
+    - ~
+  notes: ~
+  status: ~

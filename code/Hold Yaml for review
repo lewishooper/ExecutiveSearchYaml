@@ -1,0 +1,20 @@
+   
+  - FAC: "592"
+    name: "NAPANEE LENNOX & ADDINGTON"
+    hospital_type: "Small Hospital"
+    url: "https://web.lacgh.napanee.on.ca/about/governance/"
+    pattern: combined_h2
+    expected_executives: 3
+    html_structure:
+       combined_element: "p"
+       separator: "-"
+       reversed: true          # ← Key!
+       notes: "Title:Name format"
+    status: "ok-MER"
+    known_executives:
+    - name: "Mike Bell"
+      title: "President & CEO"
+    - name: "Kristen Rochon"
+      title: "Vice President, Patient & Resident Services and Chief Nursing Officer"
+    - name: "Dr. Kimberley Morrison"
+      title: "Chief of Medical Staff"

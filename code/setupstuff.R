@@ -1,9 +1,8 @@
 #rm(list=ls())
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
-#source("test_all_configured_hospitals.R")
-FAC<-968
-
+source("test_all_configured_hospitals.R")
+FAC<-714
 
 #quick_test(FAC)
 Name <- "Elliot Lake "

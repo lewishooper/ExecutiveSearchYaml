@@ -444,5 +444,5 @@ cat("  • test_report_TIMESTAMP.txt - Detailed text report\n\n")
 cat("═══════════════════════════════════════════════════════════════════\n\n")
 
 #GoodHospitals<-check_configuration_status()
-
+#saveRDS(GoodHospitals,"E:/ExecutiveSearchYaml/output/GoodHospBaselineNov6.rds")
 #test_all_configured_hospitals()
