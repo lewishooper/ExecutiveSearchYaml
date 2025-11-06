@@ -56,10 +56,13 @@ PatternBasedScraper <- function() {
   # Check if text matches name patterns
   # Check if text matches name patternsNew
   # add in debug language
-  is_executive_name <- function(text, config) {
+  # new function that uses yaml as the source of truth
+  # creates a common approach to verifying names and titles
+  # Check if text matches name patterns
+  is_executive_name <- function(text, config, hospital_info = NULL) {
     if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
     
-    # Get name patterns from config
+    # Get base name patterns from config
     name_patterns <- c(
       config$name_patterns$standard,
       config$name_patterns$with_titles,
@@ -67,48 +70,41 @@ PatternBasedScraper <- function() {
       config$name_patterns$hyphenated_names,
       config$name_patterns$complex_credentials,
       config$name_patterns$internal_capitals,
-      config$name_patterns$accented_names,        # ADD THIS LINE
-      config$name_patterns$parenthetical_names,   # ADD THIS LINE TOO (why not!)
+      config$name_patterns$accented_names,
+      config$name_patterns$parenthetical_names,
       config$name_patterns$flexible
     )
+    
+    # Add hospital-specific name patterns if available
+    if (!is.null(hospital_info)) {
+      fac_key <- paste0("FAC_", hospital_info$FAC)
+      if (!is.null(config$hospital_overrides[[fac_key]]$additional_name_patterns)) {
+        name_patterns <- c(name_patterns, 
+                           config$hospital_overrides[[fac_key]]$additional_name_patterns)
+        cat(sprintf("  [FAC %s] Using %d additional name patterns\n", 
+                    hospital_info$FAC,
+                    length(config$hospital_overrides[[fac_key]]$additional_name_patterns)))
+      }
+    }
     
     # Clean text first (but preserve hyphens in names)
     clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
     clean_text <- trimws(clean_text)
     
-    # ADD SPECIFIC DEBUG FOR VAN DAALEN
-    if (grepl("Van Daalen|Erica", text, ignore.case = TRUE)) {
-      cat("\n=== DEBUGGING VAN DAALEN ===\n")
-      cat("Original text: '", text, "'\n", sep = "")
-      cat("Clean text: '", clean_text, "'\n", sep = "")
-      cat("Number of patterns loaded: ", length(name_patterns), "\n", sep = "")
-      
-      # Test each pattern
-      for (i in seq_along(name_patterns)) {
-        if (!is.null(name_patterns[i]) && !is.na(name_patterns[i])) {
-          pattern_match <- grepl(name_patterns[i], clean_text)
-          if (pattern_match) {
-            cat("✓ MATCHED pattern [", i, "]: ", name_patterns[i], "\n", sep = "")
-          }
-        }
-      }
-      cat("=== END DEBUG ===\n\n")
-    }
-    
     # Check against patterns
-    matches_pattern <- any(sapply(name_patterns, function(p) grepl(p, clean_text)))
+    matches_pattern <- any(sapply(name_patterns, function(p) {
+      if (!is.null(p) && !is.na(p)) {
+        grepl(p, clean_text)
+      } else {
+        FALSE
+      }
+    }))
+n
     
-    # Exclude obvious non-names
-    non_names <- c(
-      "^(About|Our|The|Welcome|Contact|Services|Programs|News|Events)\\b",
-      "^(Ontario|Ministry|Government|Hospital|Health|Department)\\b",
-      "^(For Staff|Staff Only|General|Information)\\b",
-      "^Senior Leadership Team$",
-      "^Executive Leadership Team$",
-      "^Board Members$",
-      "^Management Team$"
-    )
-    is_non_name <- any(sapply(non_names, function(p) grepl(p, clean_text, ignore.case = TRUE)))
+    # Get exclusions from config (no longer hardcoded)
+    non_names <- config$recognition_config$name_exclusions
+    is_non_name <- any(sapply(non_names, function(p) 
+      grepl(p, clean_text, ignore.case = TRUE)))
     
     # Debug logging
     if (!matches_pattern || is_non_name) {
@@ -121,49 +117,54 @@ PatternBasedScraper <- function() {
   }
   
   
+  
   # Simplified title checking - just look for executive keywords
-  is_executive_title <- function(text, config) {
-    if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
-    
-    # Clean text first
-    clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
-    clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
-    clean_text <- trimws(clean_text)
-    
-    # Simplified approach: Check if contains ANY executive keyword
-    executive_keywords <- c(
-      "CEO", "Chief", "President", "Vice President", "VP", 
-      "Director", "Officer", "Administrator", "Manager", 
-      "Chair", "Vice-Chair", "Vice Chair",
-      "Medical Staff", "Nursing Executive", "CNE",
-      "Supervisor", "Health System Executive",
-      "Strategic Lead"
-    )
-    
-    contains_keyword <- any(sapply(executive_keywords, function(k) 
-      grepl(k, clean_text, ignore.case = TRUE)))
-    
-    # Filter out website credits and non-executive entries by title
-    invalid_title_patterns <- c(
-      "powered by",
-      "designed by",
-      "website by",
-      "created by",
-      "developed by",
-      "©",
-      "copyright",
-      "all rights reserved"
-    )
-    
-    # Check if title contains any invalid terms
-    has_invalid_term <- any(sapply(invalid_title_patterns, function(pattern) {
-      grepl(pattern, clean_text, ignore.case = TRUE)
-    }))
-    
-    if (has_invalid_term) return(FALSE)
-    
-    return(contains_keyword)
-  }
+  
+   # new revised exexcutive title key words
+    # Check if text matches title patterns
+    is_executive_title <- function(text, config, hospital_info = NULL) {
+      if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
+      
+      # Clean text first
+      clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
+      clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
+      clean_text <- trimws(clean_text)
+      
+      # Get executive keywords from config (no longer hardcoded)
+      executive_keywords <- c(
+        config$recognition_config$title_keywords$primary,
+        config$recognition_config$title_keywords$secondary,
+        config$recognition_config$title_keywords$medical_specific
+      )
+      
+      # Add hospital-specific title keywords if available
+      if (!is.null(hospital_info)) {
+        fac_key <- paste0("FAC_", hospital_info$FAC)
+        if (!is.null(config$hospital_overrides[[fac_key]]$additional_title_keywords)) {
+          executive_keywords <- c(executive_keywords,
+                                  config$hospital_overrides[[fac_key]]$additional_title_keywords)
+          cat(sprintf("  [FAC %s] Using %d additional title keywords\n", 
+                      hospital_info$FAC,
+                      length(config$hospital_overrides[[fac_key]]$additional_title_keywords)))
+        }
+      }
+      
+      # Check if contains ANY executive keyword
+      contains_keyword <- any(sapply(executive_keywords, function(k) 
+        grepl(k, clean_text, ignore.case = TRUE)))
+      
+      # Get invalid patterns from config (no longer hardcoded)
+      invalid_title_patterns <- config$recognition_config$title_exclusions
+      
+      # Check if title contains any invalid terms
+      has_invalid_term <- any(sapply(invalid_title_patterns, function(pattern) {
+        grepl(pattern, clean_text, ignore.case = TRUE)
+      }))
+      
+      if (has_invalid_term) return(FALSE)
+      
+      return(contains_keyword)
+    }
   
   # Clean and format text data
   clean_text_data <- function(text) {
@@ -179,6 +180,7 @@ PatternBasedScraper <- function() {
     
     return(cleaned)
   }
+Start changing patterns here?
   
   # ============================================================================
   # PATTERN 1: H2 names + H3 titles (Sequential different elements)
@@ -194,8 +196,12 @@ PatternBasedScraper <- function() {
       h3_elements <- sapply(h3_elements, normalize_text)
       
       # Filter for actual names and titles
-      names <- h2_elements[sapply(h2_elements, function(x) is_executive_name(x, config))]
-      titles <- h3_elements[sapply(h3_elements, function(x) is_executive_title(x, config))]
+      # Filter for actual names and titles (now with hospital_info for overrides)
+      names <- h2_elements[sapply(h2_elements, function(x) 
+        is_executive_name(x, config, hospital_info))]
+      titles <- h3_elements[sapply(h3_elements, function(x) 
+        is_executive_title(x, config, hospital_info))]
+      
       
       # Limit to expected count
       if (!is.null(hospital_info$expected_executives)) {

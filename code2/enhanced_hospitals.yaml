@@ -2307,3 +2307,173 @@ pattern_identification_guide:
     - List items with structured content
     - Card layouts with consistent structure
 
+Location: Add AFTER line 2327 in enhanced_hospitals.yaml
+Copy and paste this entire section:
+
+# ============================================================================
+# RECOGNITION CONFIGURATION (Phase 2 Addition)
+# ============================================================================
+# Central configuration for name and title recognition logic
+# Used by all 18 pattern scrapers to validate executive names and titles
+# ============================================================================
+
+recognition_config:
+  
+  # Title Keywords - Used by is_executive_title() function
+  # These keywords identify executive-level positions
+  title_keywords:
+    
+    # Primary executive keywords (C-suite, Presidents, VPs, etc.)
+    primary:
+      - CEO
+      - Chief
+      - President
+      - Vice President
+      - VP
+      - Director
+      - Officer
+      - Administrator
+      - Manager
+      - Chair
+      - Vice-Chair
+      - Vice Chair
+      - Medical Staff
+      - Nursing Executive
+      - CNE
+      - CNO
+      - CFO
+      - COO
+      - CMO
+      - CIO
+      - CHRO
+      - Supervisor
+      - Health System Executive
+      - Strategic Lead
+      - President and CEO
+      - Executive Vice President
+      - Senior Vice President
+      - Chief of Staff
+    
+    # Secondary keywords (Associates, Assistants, Acting positions)
+    secondary:
+      - Associate
+      - Assistant
+      - Interim
+      - Acting
+      - Department Head
+      - Division Head
+      - Physician Lead
+      - Senior Leader
+      - Executive Director
+      - Senior Director
+    
+    # Medical-specific titles
+    medical_specific:
+      - Chief of Medicine
+      - Chief of Surgery
+      - Chief of Emergency
+      - Physician-in-Chief
+      - Medical Director
+      - Department Chair
+      - Division Chair
+      - Chief Medical Officer
+      - Chief Nursing Officer
+      - Scientific Officer
+      - Research Chair
+  
+  # Name Exclusions - Patterns that should NOT be considered names
+  # Used by is_executive_name() function
+  name_exclusions:
+    - "^(About|Our|The|Welcome|Contact|Services|Programs|News|Events)\\b"
+    - "^(Ontario|Ministry|Government|Hospital|Health|Department)\\b"
+    - "^(For Staff|Staff Only|General|Information)\\b"
+    - "^Senior Leadership Team$"
+    - "^Executive Leadership Team$"
+    - "^Board Members$"
+    - "^Management Team$"
+    - "^Board of Directors$"
+    - "^Our Team$"
+    - "^Leadership$"
+  
+  # Title Exclusions - Patterns that should NOT be considered titles
+  # Used by is_executive_title() function
+  title_exclusions:
+    - "powered by"
+    - "designed by"
+    - "website by"
+    - "created by"
+    - "developed by"
+    - "©"
+    - "copyright"
+    - "all rights reserved"
+    - "terms of use"
+    - "privacy policy"
+  
+  # Fuzzy Matching Configuration (Future enhancement)
+  fuzzy_matching:
+    enabled: false
+    threshold: 0.85
+    method: "levenshtein"
+  
+  # Title Inference Configuration (Future enhancement)
+  title_inference:
+    enabled: false
+    default_titles:
+      - "Executive Team Member"
+      - "Senior Leader"
+
+# ============================================================================
+# HOSPITAL-SPECIFIC OVERRIDES (Phase 2 Addition)
+# ============================================================================
+# Custom recognition rules for hospitals with unique formatting
+# ============================================================================
+
+hospital_overrides:
+  
+  # Example: FAC 969 - Ontario Shores
+  # Issue: "Physician-in-Chief and Research Chair" not recognized
+  FAC_969:
+    additional_title_keywords:
+      - "Physician-in-Chief"
+      - "Research Chair"
+      - "Personalized Medicine"
+      - "Personalized Mental Health Care"
+    notes: "Complex multi-part title with 'and' connector"
+  
+  # Example: FAC 978 - Kingston Health Sciences
+  # Issue: Accented characters in "Valérie Gamache-O'Leary"
+  FAC_978:
+    additional_name_patterns:
+      - "^[A-ZÀ-Ö][a-zà-öø-ÿ]+ [A-ZÀ-Ö][a-zà-öø-ÿ]+-[A-Z]'[A-Z][a-z]+$"
+    notes: "Accented first name with hyphenated-apostrophe last name"
+  
+  # Example: FAC 961 - Ottawa Heart Institute
+  # Issue: Multiple people with complex multi-line titles
+  FAC_961:
+    additional_title_keywords:
+      - "Scientific Officer"
+      - "Division Head"
+      - "Cardiac Anesthesiology"
+      - "Cardiac Surgery"
+      - "Clinical Operations"
+    title_multiline: true
+    notes: "Titles span multiple lines or contain division names"
+  
+  # Example: FAC 942 - Hamilton Health Sciences
+  # Issue: "Senior Lead & Strategic Advisor" format
+  FAC_942:
+    additional_title_keywords:
+      - "Senior Lead"
+      - "Strategic Advisor"
+    notes: "Non-standard title format with ampersand"
+  
+  # Template for future overrides:
+  # FAC_XXX:
+  #   additional_name_patterns:
+  #     - "regex_pattern_here"
+  #   additional_title_keywords:
+  #     - "keyword1"
+  #     - "keyword2"
+  #   custom_title_separator: " and "
+  #   title_multiline: true
+  #   notes: "Description of the issue and solution"

@@ -8,3 +8,4 @@ NumHospitals<-GoodHospitals %>%
   mutate(DupsCheck=n())
 
 test_all_configured_hospitals()
+# takes about 4 minutes
