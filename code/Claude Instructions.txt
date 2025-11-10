@@ -1,11 +1,19 @@
+we are now in Phase 2 of the project which is focused on creating a single source of truth for recognzing executive names and titles. using the enhanced_hospitals.yaml file as the  source of truth
+UPdated versions of the following documents with the suggested changes are now in the knowledge repository: 
+   pattern_based_scrapper.r
+   enhanced_hospitals.yaml
+   test_all configured_hospitals.R (a change in working directory only)
+   a number of docx files related to the phase 2 developent are also there as a reference.
+Please review the above documents which are all in the repospitory
+
+A baseline document(nov 8) was created with the new software usign test_all_configure_hospitals, and it idnentified 399 executives but the older baseline document identified 1042
+An Analhysis of the failures indicates that some patterns were successfully changed while others need to be debugged.
 
 
-for the records we have successfully added:  FAC:  961, 959, 958, 948, 946 942, 964 and 938
-
-I have updated the SESSION_LOG.MD,next_batch_template.yaml, and the enhanced_hospitals.yaml These are now in the Knowledge repository
-An updated version of the QuickReferenceUpdated.docx is now in the knowledge repository. 
-Also there is the newly created "Project Plan November 1 2025.docx" that outlines the next few steps
-Please review the above documents.
+I would like to begin a process of debugging the pattern_based_scraper.R and the Enhanced_hospitals.yaml on a pattern by pattern basis
+My working model will be to initially  pick patterns with the most failures and then give you a hospital that uses tha pattern as a starting point for debugging
+Does that make sense? or is there a better way to proceed.
+If so please create a workflow or check list that will help manage the process
 
 Note:  The working copy of enhance_hospitals.yaml is in my R environment.
 I would like to follow this process for todays work. 

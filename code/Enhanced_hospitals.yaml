@@ -24,8 +24,8 @@ hospitals:
       name_class: field--name-title
       title_class: field--name-field-position
       missing_people:
-        - name: Valérie Gamache-O'Leary
-          title: Vice President and Chief Information Officer
+     #   - name: Valérie Gamache-O'Leary
+      #    title: Vice President and Chief Information Officer
         
       notes: missing_people
     status: ok-mp
@@ -129,7 +129,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.ottawaheart.ca/who-we-are/governance-and-leadership/our-management-team
     pattern: h2_name_p_title
-    expected_executives: 11
+    expected_executives: 12
     html_structure:
       name_element: h2
       title_element: h4
@@ -199,13 +199,13 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.hamiltonhealthsciences.ca/about-us/our-organization/senior-leadership-team/
     pattern: div_classes
-    expected_executives: 19
+    expected_executives: 18
     html_structure:
        name_class: staff-name
        title_class: staff-title
        missing_people:
-         - name: Rochelle Reid
-           title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
+       #  - name: Rochelle Reid
+       #     title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
     notes: ~
     status: ok-mp
 
@@ -592,12 +592,11 @@ hospitals:
       separator: ", "
       reversed: false
       missing_people:
-        - name: "Dr. Chantal D'Aoust-Bernard"
-          title: "Chief-of-staff"
-        - name: "Valérie Dubois Desroches"
-          title: "Senior Vice-President, Patient Care"
-        - name: "Martin Sauvé"
-          title: "Director of Communications"
+        #- name: "Dr. Chantal D'Aoust-Bernard"
+         # title: "Chief-of-staff"
+        #- name: "Valérie Dubois Desroches"
+         # title: "Senior Vice-President, Patient Care"
+    
       notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
     status: ok-mp
 
@@ -726,6 +725,7 @@ hospitals:
     partnership: Listowel Wingham Hospital Alliance
     url: https://lwha.ca/about/board/
     pattern: "manual_entry_required"
+    expected_executives: 5
     html_structure:
       notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
     status: "ok-MER"
@@ -771,8 +771,8 @@ hospitals:
       name_class: "font_5"
       title_class: "font_7"
       category_filter: ["​"]  # Filter out the zero-width space
-      notes: Need to filter out emails in the final version added to ok-mp for this reson
-    status: "ok-mp"
+      notes: 
+    status: "ok"
 
   - FAC: '686'
     name: 'WAWA LADY DUNN HC'
@@ -1316,7 +1316,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.brightshores.ca/about-us/executive-team/
     pattern: combined_h2
-    expected_executives: 7
+    expected_executives: 8
     html_structure:
       combined_element: p
       separator: ','
@@ -1334,8 +1334,8 @@ hospitals:
       combined_element: h3
       separator: '<br>'
       missing_people:
-        - name: Al Coady
-          title: Senior Vice President Redevelopment, Facilities & Retail Operations
+       # - name: Al Coady
+        #  title: Senior Vice President Redevelopment, Facilities & Retail Operations
     status: ok-mp
   - FAC: '940'
     name: COBOURG NORTHUMBERLAND HILLS
@@ -1798,6 +1798,7 @@ hospitals:
       container_class: staff-member
       notes: div class=staff-info
     status: ok
+    
   - FAC: '837'
     name: TORONTO HOSPITAL FOR SICK CHILDREN
     hospital_type: Specialty Children Hospital
@@ -1805,10 +1806,10 @@ hospitals:
     pattern: div_classes
     expected_executives: 14
     html_structure:
-      container_class: card
+      container_class: card-body  # Changed from 'card'
       name_class: card-title
       title_class: card-text
-      notes: Card 1 is news article. Board members included - clean in post.
+    notes: Board members filtered via title exclusions
     status: ok
   - FAC: '976'
     name: TORONTO SINAI HEALTH SYSTEM
@@ -1821,12 +1822,12 @@ hospitals:
       title_class: bio-token--position
       container_class: bio-token--inner
       missing_people:
-        - name: Louis de Melo
-          title: President and Chief Executive Officer (CEO), Sinai Health Foundation
-            and Executive Vice President, Academic Advancement, Sinai Health SYSTEM
-        - name: Dr. Anne-Claude Gingras
-          title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
-            Research for Sinai Health
+      #  - name: Louis de Melo
+       #   title: President and Chief Executive Officer (CEO), Sinai Health Foundation
+        #    and Executive Vice President, Academic Advancement, Sinai Health SYSTEM
+      #  - name: Dr. Anne-Claude Gingras
+       #   title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
+        #    Research for Sinai Health
       notes: ''
     status: ok-mp
   - FAC: '793'
@@ -1935,16 +1936,17 @@ hospitals:
     hospital_type: Chronic/Rehab Hospital
     url: https://providencecare.ca/about-us/senior-leadership-team/
     pattern: div_classes
+    expected_executives: 12
     html_structure:
       name_class: mb-name
       title_class: mb-position
       container_class: mb-item
       notes: ''
       missing_people:
-        - name: Dr. Simon O'Brien
-          title: Chair, Medical Advisory Committee
-        - name: Tamás Zsolnay
-          title: President & CEO, University Hospitals Kingston Foundation
+      #  - name: Dr. Simon O'Brien
+       #   title: Chair, Medical Advisory Committee
+      #  - name: Tamás Zsolnay
+       #   title: President & CEO, University Hospitals Kingston Foundation
     status: ok-mp
   - FAC: '932'
     name: Elizabeth Bruyere Hospital
@@ -2075,9 +2077,9 @@ hospitals:
     pattern: combined_h2
     expected_executives: 6
     html_structure:
-      combined_element: p
+      combined_element: div.text > p:first-of-type
       separator: ','
-      notes: 'Format: Name, Title in P elements with comma separator'
+    notes: 'First paragraph in each bio contains Name, Title format'
     status: ok
 pattern_templates:
   h2_name_h3_title_example:
@@ -2193,6 +2195,7 @@ executive_titles:
     - Chief Executive Officer
     - CEO
     - President
+    - Secretary/President & CEO
     - Chief Medical Officer
     - CMO
     - Chief of Staff
@@ -2307,3 +2310,194 @@ pattern_identification_guide:
     - List items with structured content
     - Card layouts with consistent structure
 
+Location: Add AFTER line 2327 in enhanced_hospitals.yaml
+Copy and paste this entire section:
+
+# ============================================================================
+# RECOGNITION CONFIGURATION (Phase 2 Addition)
+# ============================================================================
+# Central configuration for name and title recognition logic
+# Used by all 18 pattern scrapers to validate executive names and titles
+# ============================================================================
+
+recognition_config:
+  
+  # Title Keywords - Used by is_executive_title() function
+  # These keywords identify executive-level positions
+  title_keywords:
+    
+    # Primary executive keywords (C-suite, Presidents, VPs, etc.)
+    primary:
+      - CEO
+      - Chief
+      - President
+      - Vice President
+      - VP
+      - Director
+      - Officer
+      - Administrator
+      - Manager
+      - Chair
+      - Vice-Chair
+      - Vice Chair
+      - Medical Staff
+      - Nursing Executive
+      - CNE
+      - CNO
+      - CFO
+      - COO
+      - CMO
+      - CIO
+      - CHRO
+      - Supervisor
+      - Health System Executive
+      - Strategic Lead
+      - President and CEO
+      - Executive Vice President
+      - Senior Vice President
+      - Chief of Staff
+    
+    # Secondary keywords (Associates, Assistants, Acting positions)
+    secondary:
+      - Associate
+      - Assistant
+      - Interim
+      - Acting
+      - Department Head
+      - Division Head
+      - Physician Lead
+      - Senior Leader
+      - Executive Director
+      - Senior Director
+    
+    # Medical-specific titles
+    medical_specific:
+      - Chief of Medicine
+      - Chief of Surgery
+      - Chief of Emergency
+      - Physician-in-Chief
+      - Medical Director
+      - Department Chair
+      - Division Chair
+      - Chief Medical Officer
+      - Chief Nursing Officer
+      - Scientific Officer
+      - Research Chair
+  
+  # Name Exclusions - Patterns that should NOT be considered names
+  # Used by is_executive_name() function
+  name_exclusions:
+    - "^(About|Our|The|Welcome|Contact|Services|Programs|News|Events)\\b"
+    - "^(Ontario|Ministry|Government|Hospital|Health|Department)\\b"
+    - "^(For Staff|Staff Only|General|Information)\\b"
+    - "^Senior Leadership Team$"
+    - "^Executive Leadership Team$"
+    - "^Board Members$"
+    - "^Management Team$"
+    - "^Board of Directors$"
+    - "^Our Team$"
+    - "^Leadership$"
+  
+  # Title Exclusions - Patterns that should NOT be considered titles
+  # Used by is_executive_title() function
+  title_exclusions:
+    - "powered by"
+    - "designed by"
+    - "website by"
+    - "created by"
+    - "developed by"
+    - "©"
+    - "copyright"
+    - "all rights reserved"
+     # Medical/Quality Reporting Terms:
+    - "Infection Prevention"
+    - "C\\. Difficile"
+    - "Blood Stream Infection"
+    - "Hand Hygiene"
+    - "HSMR"
+    - "MRSA"
+    - "Surgical Safety"
+    - "Vancomycin-Resistant"
+    - "Ventilator-Associated"
+  
+  # Fuzzy Matching Configuration (Future enhancement)
+  fuzzy_matching:
+    enabled: false
+    threshold: 0.85
+    method: "levenshtein"
+  
+  # Title Inference Configuration (Future enhancement)
+  title_inference:
+    enabled: false
+    default_titles:
+      - "Executive Team Member"
+      - "Senior Leader"
+
+# ============================================================================
+# HOSPITAL-SPECIFIC OVERRIDES (Phase 2 Addition)
+# ============================================================================
+# Custom recognition rules for hospitals with unique formatting
+# ============================================================================
+
+hospital_overrides:
+  
+  # Example: FAC 969 - Ontario Shores
+  # Issue: "Physician-in-Chief and Research Chair" not recognized
+
+  FAC_837:
+    additional_name_exclusions:
+      - "^Dr\\. Kathy Boutis"
+      - "appointed new Chair"
+    additional_title_exclusions:
+      - "Board of Trustees"
+      - "joined the SickKids Board"
+      - "Founding Partner"
+      - "EdgePoint Investment Group"
+    notes: "Filters out news article at top and Board members"
+
+  FAC_969:
+    additional_title_keywords:
+      - "Physician-in-Chief"
+      - "Research Chair"
+      - "Personalized Medicine"
+      - "Personalized Mental Health Care"
+    notes: "Complex multi-part title with 'and' connector"
+  
+  # Example: FAC 978 - Kingston Health Sciences
+  # Issue: Accented characters in "Valérie Gamache-O'Leary"
+  FAC_978:
+    additional_name_patterns:
+      - "^[A-ZÀ-Ö][a-zà-öø-ÿ]+ [A-ZÀ-Ö][a-zà-öø-ÿ]+-[A-Z]'[A-Z][a-z]+$"
+    notes: "Accented first name with hyphenated-apostrophe last name"
+  
+  # Example: FAC 961 - Ottawa Heart Institute
+  # Issue: Multiple people with complex multi-line titles
+  FAC_961:
+    additional_title_keywords:
+      - "Scientific Officer"
+      - "Division Head"
+      - "Cardiac Anesthesiology"
+      - "Cardiac Surgery"
+      - "Clinical Operations"
+    title_multiline: true
+    notes: "Titles span multiple lines or contain division names"
+  
+  # Example: FAC 942 - Hamilton Health Sciences
+  # Issue: "Senior Lead & Strategic Advisor" format
+  FAC_942:
+    additional_title_keywords:
+      - "Senior Lead"
+      - "Strategic Advisor"
+    notes: "Non-standard title format with ampersand"
+  
+  
+  # Template for future overrides:
+  # FAC_XXX:
+  #   additional_name_patterns:
+  #     - "regex_pattern_here"
+  #   additional_title_keywords:
+  #     - "keyword1"
+  #     - "keyword2"
+  #   custom_title_separator: " and "
+  #   title_multiline: true
+  #   notes: "Description of the issue and solution"

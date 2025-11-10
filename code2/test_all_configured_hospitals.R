@@ -1,7 +1,7 @@
 # test_all_configured_hospitals.R - Comprehensive testing of all configured hospitals
 # Save this in E:/ExecutiveSearchYaml/code/
 
-setwd("E:/ExecutiveSearchYaml/code/")
+
 
 library(yaml)
 library(dplyr)

@@ -1,6 +1,6 @@
 # session_startup.R - Start of session initialization
 # Run this at the beginning of each work session
-# Save in E:/ExecutiveSearchYaml/code/
+# Save in E:/ExecutiveSearchYaml/code2/
 
 cat("╔════════════════════════════════════════════════════════════════╗\n")
 cat("║           HOSPITAL SCRAPER PROJECT - SESSION STARTUP           ║\n")
@@ -11,7 +11,7 @@ session_start_time <- Sys.time()
 cat("Session started:", format(session_start_time, "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 # Set working directory
-setwd("E:/ExecutiveSearchYaml/code/")
+setwd("E:/ExecutiveSearchYaml/code2/")
 cat("✓ Working directory set\n")
 
 # Load required libraries

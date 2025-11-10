@@ -99,7 +99,7 @@ PatternBasedScraper <- function() {
         FALSE
       }
     }))
-n
+#was an n here???
     
     # Get exclusions from config (no longer hardcoded)
     non_names <- config$recognition_config$name_exclusions
@@ -180,7 +180,7 @@ n
     
     return(cleaned)
   }
-Start changing patterns here?
+#Start changing patterns here?
   
   # ============================================================================
   # PATTERN 1: H2 names + H3 titles (Sequential different elements)
@@ -295,8 +295,8 @@ Start changing patterns here?
             potential_title <- part2
           }
           
-          if (is_executive_name(potential_name, config) && 
-              is_executive_title(potential_title, config)) {
+          if (is_executive_name(x, config, hospital_info) && 
+              is_executive_title(x, config, hospital_info)) {
             
             pairs[[length(pairs) + 1]] <- list(
               name = clean_text_data(potential_name),
@@ -362,8 +362,8 @@ return(unique_pairs)
             potential_name <- normalize_text(clean_text_data(table[row_idx, name_col]))
             potential_title <- normalize_text(clean_text_data(table[row_idx, title_col]))
             
-            if (is_executive_name(potential_name, config) && 
-                is_executive_title(potential_title, config)) {
+            if (is_executive_name(x, config, hospital_info) && 
+                is_executive_title(x, config, hospital_info)) {
               
               pairs[[length(pairs) + 1]] <- list(
                 name = potential_name,
@@ -475,8 +475,8 @@ return(unique_pairs)
           }
           
           # MODIFIED: Use name_text and title_text variables instead of current_text and next_text
-          if (is_executive_name(name_text, config) && 
-              is_executive_title(title_text, config)) {
+          if (is_executive_name(x, config, hospital_info) && 
+              is_executive_title(x, config, hospital_info)) {
             
             # Enhanced title cleaning for phone/fax numbers
             cleaned_title <- title_text
@@ -535,7 +535,7 @@ return(unique_pairs)
       valid_names <- c()
       for (i in seq_along(name_elements)) {
         potential_name <- clean_text_data(name_elements[i])
-        if (is_executive_name(potential_name, config)) {
+        if (is_executive_name(x, config, hospital_info)) {
           valid_names <- c(valid_names, potential_name)
         }
       }
@@ -546,7 +546,7 @@ return(unique_pairs)
       for (i in 1:max_pairs) {
         potential_title <- clean_text_data(title_elements[i])
         
-        if (is_executive_title(potential_title, config)) {
+        if (is_executive_title(x, config, hospital_info)) {
           pairs[[length(pairs) + 1]] <- list(
             name = valid_names[i],
             title = potential_title
@@ -647,8 +647,8 @@ return(unique_pairs)
         }
         
         # Validate
-        name_valid <- is_executive_name(potential_name, config)
-        title_valid <- is_executive_title(potential_title, config)
+        name_valid <- is_executive_name(x, config, hospital_info)
+        title_valid <- is_executive_title(x, config, hospital_info)
         
         if (name_valid && title_valid) {
           pairs[[length(pairs) + 1]] <- list(
@@ -704,8 +704,8 @@ return(unique_pairs)
             # Take only the first sentence/phrase of the title
             potential_title <- trimws(strsplit(potential_title, "\\.")[[1]][1])
             
-            if (is_executive_name(potential_name, config) && 
-                is_executive_title(potential_title, config)) {
+            if (is_executive_name(x, config, hospital_info) && 
+                is_executive_title(x, config, hospital_info)) {
               
               pairs[[length(pairs) + 1]] <- list(
                 name = potential_name,
@@ -808,8 +808,8 @@ return(unique_pairs)
           }
           
           # Validate name and title
-          if (is_executive_name(potential_name, config) && 
-              is_executive_title(potential_title, config)) {
+          if (is_executive_name(x, config, hospital_info) && 
+              is_executive_title(x, config, hospital_info)) {
             
             pairs[[length(pairs) + 1]] <- list(
               name = potential_name,
@@ -881,8 +881,8 @@ return(unique_pairs)
             nchar(potential_name) > 0 && nchar(potential_title) > 0) {
           
           # Validate
-          if (is_executive_name(potential_name, config) && 
-              is_executive_title(potential_title, config)) {
+          if (is_executive_name(x, config, hospital_info) && 
+              is_executive_title(x, config, hospital_info)) {
             
             pairs[[length(pairs) + 1]] <- list(
               name = potential_name,
@@ -944,8 +944,8 @@ return(unique_pairs)
         }
         
         # Validate
-        name_valid <- is_executive_name(potential_name, config)
-        title_valid <- is_executive_title(potential_title, config)
+        name_valid <- is_executive_name(x, config, hospital_info)
+        title_valid <- is_executive_title(x, config, hospital_info)
         
         if (name_valid && title_valid) {
           pairs[[length(pairs) + 1]] <- list(
@@ -1076,8 +1076,8 @@ return(unique_pairs)
             }
             
             # Validate with pattern matching
-            name_valid <- is_executive_name(potential_name, config)
-            title_valid <- is_executive_title(potential_title, config)
+            name_valid <- is_executive_name(x, config, hospital_info)
+            title_valid <- is_executive_title(x, config, hospital_info)
             
             if (name_valid && title_valid) {
               cat("    Cell", cell_idx, "- VALID: ", potential_name, " -> ", potential_title, "\n")
@@ -1189,8 +1189,8 @@ return(unique_pairs)
         title <- trimws(title)
         
         # Validate using standard validation functions
-        name_valid <- is_executive_name(name, config)
-        title_valid <- is_executive_title(title, config)
+        name_valid <- is_executive_name(name, config,hospital_info)
+        title_valid <- is_executive_title(title, config,hospital_info)
         
         if (name_valid && title_valid) {
           pairs[[length(pairs) + 1]] <- list(
@@ -1222,7 +1222,7 @@ return(unique_pairs)
     return(pairs)
   } 
   # ============================================================================
-  # PATTERN 13: H2 with complex combined name/title requiring smart parsing
+  # PATTERN 14: H2 with complex combined name/title requiring smart parsing
   # ============================================================================
   scrape_h2_combined_complex <- function(page, hospital_info, config) {
     pairs <- list()
@@ -1301,7 +1301,7 @@ return(unique_pairs)
   }
   
   # ============================================================
-  # PATTERN 14: div_container_multiclass
+  # PATTERN 15: div_container_multiclass
   # Name and title in separate <p> tags with different classes within container divs
   # revised to include both p and div tags
   # ============================================================
@@ -1383,10 +1383,10 @@ return(unique_pairs)
     })
   }
   # ============================================================================
-  # PATTERN 15: Table cells (each TD contains name + title)
+  # PATTERN 16: Table cells (each TD contains name + title)
   # ============================================================================
   # ============================================================================
-  # PATTERN 15: Table cells (each TD contains name + title) rev2
+  # PATTERN 16: Table cells (each TD contains name + title) rev2
   # ============================================================================
   scrape_table_cells <- function(page, hospital_info, config) {
     tryCatch({
@@ -1409,8 +1409,8 @@ return(unique_pairs)
             potential_name <- normalize_text(lines[i])
             potential_title <- normalize_text(lines[i + 1])
             
-            if (is_executive_name(potential_name, config) && 
-                is_executive_title(potential_title, config)) {
+            if (is_executive_name(potential_name, config,hospital_info) && 
+                is_executive_title(potential_title, config,hospital_info)) {
               pairs[[length(pairs) + 1]] <- list(
                 name = clean_text_data(potential_name),
                 title = clean_text_data(potential_title)
@@ -1440,7 +1440,7 @@ return(unique_pairs)
   }
   
   # ============================================================================
-  # PATTERN 16: Single P element with BR-separated list (Title | Name)
+  # PATTERN 17: Single P element with BR-separated list (Title | Name)
   # ============================================================================
   scrape_p_with_br_list_reversed <- function(page, hospital_info, config) {
     tryCatch({
@@ -1474,8 +1474,8 @@ return(unique_pairs)
           potential_title <- trimws(parts[1])
           potential_name <- trimws(parts[2])
           
-          if (is_executive_name(potential_name, config) && 
-              is_executive_title(potential_title, config)) {
+          if (is_executive_name(potential_name, config,hospital_info) && 
+              is_executive_title(potential_title, config,hospital_info)) {
             pairs[[length(pairs) + 1]] <- list(
               name = clean_text_data(potential_name),
               title = clean_text_data(potential_title)
@@ -1503,7 +1503,7 @@ return(unique_pairs)
   }
   
   # ============================================================================
-  # PATTERN 17: table_data_name_accordion
+  # PATTERN 18: table_data_name_accordion
   # Structure: h2 name in div.factsheet__callout, td[data-name="accParent"] for title
   # Example: FAC-751 (CHEO)
   # ============================================================================
@@ -1565,7 +1565,7 @@ return(unique_pairs)
   }
   
   # ============================================================================
-  # PATTERN 18: p_strong_combined
+  # PATTERN 19: p_strong_combined
   # Extracts name and title from <strong> tags within <p> elements
   # Ignores any text outside the <strong> tags (like bios in <em> or plain text)
   # ============================================================================
@@ -1596,8 +1596,8 @@ return(unique_pairs)
         title_part <- trimws(title_part)
         
         # Validate
-        if(is_executive_name(name_part, config) && 
-           is_executive_title(title_part, config)) {
+        if(is_executive_name(name_part, config,hospital_info) && 
+           is_executive_title(title_part, config,hospital_info)) {
           pairs[[length(pairs) + 1]] <- list(
             name = clean_text_data(name_part),
             title = clean_text_data(title_part)

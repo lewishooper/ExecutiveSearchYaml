@@ -3,7 +3,7 @@ library(rvest)
 library(dplyr)
 library(stringr)
 library(yaml)
-
+setwd("E:/ExecutiveSearchYaml/code2")
 # Load the updated scraper
 source("pattern_based_scraper.R")
 scraper <- PatternBasedScraper()
@@ -31,5 +31,3 @@ if (!is.null(config$hospital_overrides[[fac_key]])) {
 } else {
   cat("No overrides found for FAC 969\n")
 }
-Run:
-  source("test_phase2_single.R")

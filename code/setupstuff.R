@@ -2,11 +2,10 @@
 setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
 source("test_all_configured_hospitals.R")
-FAC<-714
+FAC<-826
+
 
 #quick_test(FAC)
-Name <- "Elliot Lake "
-url <- "https://sjghel.ca/about/governance-board/"
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, Name, url)
 
