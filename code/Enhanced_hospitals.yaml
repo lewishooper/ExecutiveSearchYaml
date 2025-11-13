@@ -1209,12 +1209,10 @@ hospitals:
       separator: " – "
       reversed: true
       missing_people:
-        - name: Mr. Mike Bell
-          title: President and CEO
-        - name: Ms. Kristen Rochon
-          title: Vice President, Patient & Resident Services and Chief Nursing Officer 
-
-
+        #- name: Mr. Mike Bell
+         # title: President and CEO
+        # - name: Ms. Kristen Rochon
+          #title: Vice President, Patient & Resident Services and Chief Nursing Officer 
       notes: "P elements with reversed format: Title – Name. Includes board members (President of Volunteer Services) to filter later."
     status: ok-mp
     
@@ -1231,16 +1229,16 @@ hospitals:
       notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
     status: ok-mp
     known_executives:
-     - name: "Cheryl Harrison"
-       title: "President & Chief Executive Officer"
-     - name: "Diane George"
-       title: "Vice President, Integrated Care, Patient Services, Quality & Chief Nursing Executive"
-     - name: "Alasdair Smith"
-       title: "Vice President, Corporate Services & Chief Financial Officer"
-     - name: "Mary Silverthorn"
-       title: "Vice President, People, Communications, Stakeholder Relations & Chief Human Resources Officer"
-     - name: "Dr. Khaled Abdel-Razek"
-       title: "Chief of Staff"
+    # - name: "Cheryl Harrison"
+     #  title: "President & Chief Executive Officer"
+     #- name: "Diane George"
+      # title: "Vice President, Integrated Care, Patient Services, Quality & Chief Nursing Executive"
+     #- name: "Alasdair Smith"
+      # title: "Vice President, Corporate Services & Chief Financial Officer"
+     #- name: "Mary Silverthorn"
+      # title: "Vice President, People, Communications, Stakeholder Relations & Chief Human Resources Officer"
+     #- name: "Dr. Khaled Abdel-Razek"
+      # title: "Chief of Staff"
 
   - FAC: "600"
     name: "ATIKOKAN GENERAL HOSPITAL"
@@ -1319,7 +1317,7 @@ hospitals:
     expected_executives: 8
     html_structure:
       combined_element: p
-      separator: ','
+      separator: '<br>'
       notes: Executive assistant dealt iwth in Post Need to deal with phone numbers
     status: ok-mp 
   
@@ -1334,8 +1332,8 @@ hospitals:
       combined_element: h3
       separator: '<br>'
       missing_people:
-       # - name: Al Coady
-        #  title: Senior Vice President Redevelopment, Facilities & Retail Operations
+        - name: Al Coady
+          title: Senior Vice President Redevelopment, Facilities & Retail Operations
     status: ok-mp
   - FAC: '940'
     name: COBOURG NORTHUMBERLAND HILLS
@@ -2251,6 +2249,17 @@ name_patterns:
     - ^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$
     - '^Sr\.? [A-Z][a-z]+ [A-Z][a-z]+$'
     - '^Sr\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$'
+    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
+    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
+        - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
+    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
+    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+,\s+(Senior\s+)?Vice\s+President$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+,\s+(Senior\s+)?(Vice\s+)?President$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+,.*$
+    
   with_credentials:
     - ^Dr\.? [A-Z][a-z]+ [A-Z]?\. [A-Z][a-z]+,? [A-Z]{2,}.*$
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$

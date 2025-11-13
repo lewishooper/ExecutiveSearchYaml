@@ -1,19 +1,19 @@
-# Find the broken pattern
-for(i in 1:length(name_patterns)) {
-  if(!is.null(name_patterns[[i]]) && !is.na(name_patterns[[i]])) {
-    result <- tryCatch({
-      grepl(name_patterns[[i]], test_name)
-      "OK"
-    }, error = function(e) {
-      paste("ERROR:", e$message)
-    })
-    
-    if(result != "OK") {
-      cat("Pattern", i, "BROKEN:", name_patterns[[i]], "\n")
-      cat("  Error:", result, "\n\n")
-    }
+# Test the title validation
+source("pattern_based_scraper.R")
+
+# Get hospital info
+hospital <- NULL
+for(h in config$hospitals) {
+  if(h$FAC == "950") {
+    hospital <- h
+    break
   }
 }
 
+# Test the title
+test_title <- "Redevelopment, Facilities & Retail Operations"
+cat("Testing title:", test_title, "\n")
 
-config <- yaml::read_yaml("enhanced_hospitals.yaml")
+# This function should exist in your scraper
+result <- is_executive_title(test_title, config, hospital)
+cat("Is executive title?", result, "\n")
