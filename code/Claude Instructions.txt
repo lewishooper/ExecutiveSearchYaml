@@ -6,16 +6,15 @@ UPdated versions of the following documents with the suggested changes are now i
    a number of docx files related to the phase 2 developent are also there as a reference.
 Please review the above documents which are all in the repospitory
 
+#Nov9 2025
 A baseline document(nov 8) was created with the new software usign test_all_configure_hospitals, and it idnentified 399 executives but the older baseline document identified 1042
 An Analhysis of the failures indicates that some patterns were successfully changed while others need to be debugged.
 
-
+Based on the comparison of baselinedocuments from nov6 and nov 8
 I would like to begin a process of debugging the pattern_based_scraper.R and the Enhanced_hospitals.yaml on a pattern by pattern basis
 My working model will be to initially  pick patterns with the most failures and then give you a hospital that uses tha pattern as a starting point for debugging
-Does that make sense? or is there a better way to proceed.
-If so please create a workflow or check list that will help manage the process
 
-Note:  The working copy of enhance_hospitals.yaml is in my R environment.
+Note:  The working copy of enhance_hospitals.yaml and pattern_based_scraper.R is in my R environment.
 I would like to follow this process for todays work. 
 1) I will pick and attempt to debug hospitals. using the following tools which are in  the knowledge repository including:
 	* The quick_test()
@@ -29,7 +28,7 @@ I would like to follow this process for todays work.
 	a sample code element for the CEO,
 	the current Yaml card for the hospital
 	the results of the quick_test, 
-	the results of the analyze_hospital_structure and,
+	the results of the analyze_hospital_structure
 
 
 3) If you need additional R code run to help debug please create the code and ask me to run it. 

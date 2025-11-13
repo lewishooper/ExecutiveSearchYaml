@@ -1,3 +1,4 @@
+# Downloaded from Claude
 # pattern_based_scraper.R - Enhanced scraper with 14 pattern-based approaches
 # Save this in E:/ExecutiveSearchYaml/code/
 # UPDATED: Added missing_people support to Patterns 5 & 8, fixed Pattern 8 for FAC 777
@@ -37,17 +38,17 @@ PatternBasedScraper <- function() {
   normalize_name_for_matching <- function(name) {
     if (is.na(name)) return(name)
     
-    name <- gsub("[àáâãäåÀÁÂÃÄÅ]", "a", name)
-    name <- gsub("[èéêëÈÉÊË]", "e", name)
-    name <- gsub("[ìíîïÌÍÎÏ]", "i", name)
-    name <- gsub("[òóôõöÒÓÔÕÖ]", "o", name)
-    name <- gsub("[ùúûüÙÚÛÜ]", "u", name)
-    name <- gsub("[çÇ]", "c", name)
-    name <- gsub("[ñÑ]", "n", name)
-    name <- gsub("[ýÝ]", "y", name)
-    name <- gsub("ß", "ss", name)
-    name <- gsub("[æÆ]", "ae", name)
-    name <- gsub("[œŒ]", "oe", name)
+    name <- gsub("[Ã Ã¡Ã¢Ã£Ã¤Ã¥Ã€ÃÃ‚ÃƒÃ„Ã…]", "a", name)
+    name <- gsub("[Ã¨Ã©ÃªÃ«ÃˆÃ‰ÃŠÃ‹]", "e", name)
+    name <- gsub("[Ã¬Ã­Ã®Ã¯ÃŒÃÃŽÃ]", "i", name)
+    name <- gsub("[Ã²Ã³Ã´ÃµÃ¶Ã’Ã“Ã”Ã•Ã–]", "o", name)
+    name <- gsub("[Ã¹ÃºÃ»Ã¼Ã™ÃšÃ›Ãœ]", "u", name)
+    name <- gsub("[Ã§Ã‡]", "c", name)
+    name <- gsub("[Ã±Ã‘]", "n", name)
+    name <- gsub("[Ã½Ã]", "y", name)
+    name <- gsub("ÃŸ", "ss", name)
+    name <- gsub("[Ã¦Ã†]", "ae", name)
+    name <- gsub("[Å“Å’]", "oe", name)
     
     return(name)
   }
@@ -103,62 +104,9 @@ PatternBasedScraper <- function() {
     
     # Get exclusions from config (no longer hardcoded)
     non_names <- config$recognition_config$name_exclusions
-    is_executive_name <- function(text, config, hospital_info = NULL) {
-      if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
-      
-      # Get base name patterns from config
-      name_patterns <- c(
-        config$name_patterns$standard,
-        config$name_patterns$with_titles,
-        config$name_patterns$with_credentials,
-        config$name_patterns$hyphenated_names,
-        config$name_patterns$complex_credentials,
-        config$name_patterns$internal_capitals,
-        config$name_patterns$accented_names,
-        config$name_patterns$parenthetical_names,
-        config$name_patterns$flexible
-      )
-      
-      # Add hospital-specific name patterns if available
-      if (!is.null(hospital_info)) {
-        fac_key <- paste0("FAC_", hospital_info$FAC)
-        if (!is.null(config$hospital_overrides[[fac_key]]$additional_name_patterns)) {
-          name_patterns <- c(name_patterns, 
-                             config$hospital_overrides[[fac_key]]$additional_name_patterns)
-          cat(sprintf("  [FAC %s] Using %d additional name patterns\n", 
-                      hospital_info$FAC,
-                      length(config$hospital_overrides[[fac_key]]$additional_name_patterns)))
-        }
-      }
-      
-      # Clean text first (but preserve hyphens in names)
-      clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
-      clean_text <- trimws(clean_text)
-      
-      # Check against patterns
-      matches_pattern <- any(sapply(name_patterns, function(p) {
-        if (!is.null(p) && !is.na(p)) {
-          grepl(p, clean_text)
-        } else {
-          FALSE
-        }
-      }))
-      #was an n here???
-      
-      # Get exclusions from config (no longer hardcoded)
-      non_names <- config$recognition_config$name_exclusions
-      is_non_name <- any(sapply(non_names, function(p) 
-        grepl(p, clean_text, ignore.case = TRUE)))
-      
-      # Debug logging
-      if (!matches_pattern || is_non_name) {
-        cat("DEBUG: Rejected name: '", text, "'", 
-            " (matches_pattern=", matches_pattern, 
-            ", is_non_name=", is_non_name, ")\n", sep = "")
-      }
-      
-      return(matches_pattern && !is_non_name)
-    }
+    is_non_name <- any(sapply(non_names, function(p) 
+      grepl(p, clean_text, ignore.case = TRUE)))
+    
     # Debug logging
     if (!matches_pattern || is_non_name) {
       cat("DEBUG: Rejected name: '", text, "'", 
@@ -460,12 +408,12 @@ return(unique_pairs)
   # ============================================================================
   # ============================================================================
   # PATTERN 4: Sequential name + title (Flexible version)
-  # UPDATED: Now supports h2→p OR p(with strong)→p patterns or <a>
+  # UPDATED: Now supports h2â†’p OR p(with strong)â†’p patterns or <a>
   # ============================================================================
   # ============================================================================
   # PATTERN 4: Sequential name + title (Flexible version)
-  # UPDATED: Now supports h2→p OR p(with strong)→p patterns or <a>
-  # NEW: Added 'reversed' parameter to handle Title→Name order
+  # UPDATED: Now supports h2â†’p OR p(with strong)â†’p patterns or <a>
+  # NEW: Added 'reversed' parameter to handle Titleâ†’Name order
   # ============================================================================
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
@@ -526,7 +474,7 @@ return(unique_pairs)
             title_text <- next_text
           }
           
-          # Additional filter for p→p pattern: name must contain <strong> or <a>
+          # Additional filter for pâ†’p pattern: name must contain <strong> or <a>
           # Skip this check if reversed (since we swapped the elements)
           if (name_element == "p" && title_element == "p" && !reversed) {
             # Check if current element has strong or a tag
@@ -625,7 +573,7 @@ return(unique_pairs)
                 name = potential_name,
                 title = potential_title
               )
-              cat("DEBUG:   ✓ ADDED TO PAIRS\n")
+              cat("DEBUG:   âœ“ ADDED TO PAIRS\n")
             }
           }
         }
@@ -1497,7 +1445,7 @@ return(unique_pairs)
       
       for (cell_text in cells) {
         # Skip empty cells BEFORE normalizing
-        if (nchar(trimws(cell_text)) == 0 || cell_text == "Â ") next
+        if (nchar(trimws(cell_text)) == 0 || cell_text == "Ã‚ ") next
         
         # Split by separator BEFORE normalizing (preserve newlines)
         lines <- strsplit(cell_text, separator, fixed = TRUE)[[1]]
@@ -1765,7 +1713,7 @@ return(unique_pairs)
                         "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
                         "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
                         "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
-                        "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # ← ADD THIS
+                        "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # â† ADD THIS
                         "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
                         "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
                         "table_cells" = scrape_table_cells(page, hospital_info, config),

@@ -591,9 +591,9 @@ hospitals:
       combined_element: "button.btn.bold.text-Hm2021_Noir_special"
       separator: ", "
       reversed: false
-      missing_people:
-        - name: "Dr. Chantal D'Aoust-Bernard"
-          title: "Chief-of-staff"
+      #missing_people:
+        #- name: "Dr. Chantal D'Aoust-Bernard"
+         # title: "Chief-of-staff"
         #- name: "Valérie Dubois Desroches"
          # title: "Senior Vice-President, Patient Care"
     
@@ -2272,20 +2272,18 @@ name_patterns:
     - ^[A-Z][a-z]+ O'[A-Z][a-z]+$
     - ^[A-Z][a-z]+ De[A-Z][a-z]+$
     - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$
-    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$ 
+    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$
     - ^[A-Z][a-z]+ La[A-Z][a-z]+$
     - ^Dr\.? [A-Z][a-z]+ van [A-Z][a-z]+$
   accented_names:
-    # Two-part names with accents
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    # French Canadian patterns (safe, structured)
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^Dr\. [A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-   
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - '^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
+    - '^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ]''[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
@@ -2445,7 +2443,13 @@ hospital_overrides:
   
   # Example: FAC 969 - Ontario Shores
   # Issue: "Physician-in-Chief and Research Chair" not recognized
-
+# FAC 753 - Ottawa Montfort Hospital
+  # Issue: Accented characters and apostrophe-hyphen combinations
+  FAC_753:
+    additional_name_patterns:
+      - "^Dr\\..+$"
+      - "^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"
+    notes: "Accented first names and compound last names"
   FAC_837:
     additional_name_exclusions:
       - "^Dr\\. Kathy Boutis"

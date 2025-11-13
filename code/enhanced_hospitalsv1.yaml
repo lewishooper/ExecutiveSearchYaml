@@ -24,7 +24,7 @@ hospitals:
       name_class: field--name-title
       title_class: field--name-field-position
       missing_people:
-     #   - name: Valérie Gamache-O'Leary
+     #   - name: ValÃ©rie Gamache-O'Leary
       #    title: Vice President and Chief Information Officer
         
       notes: missing_people
@@ -399,7 +399,7 @@ hospitals:
     html_structure:
       list_type: ol
       format: combined
-      separator: '–'
+      separator: 'â€“'
     notes: 'Mixed with board'
     status: ok
     
@@ -592,9 +592,9 @@ hospitals:
       separator: ", "
       reversed: false
       missing_people:
-        - name: "Dr. Chantal D'Aoust-Bernard"
-          title: "Chief-of-staff"
-        #- name: "Valérie Dubois Desroches"
+        #- name: "Dr. Chantal D'Aoust-Bernard"
+         # title: "Chief-of-staff"
+        #- name: "ValÃ©rie Dubois Desroches"
          # title: "Senior Vice-President, Patient Care"
     
       notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
@@ -687,7 +687,7 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 5
     html_structure:
-      notes: "Mixed format - CEO is Name–Title, others are Title–Name in <strong> tags"
+      notes: "Mixed format - CEO is Nameâ€“Title, others are Titleâ€“Name in <strong> tags"
     status: "ok-MER"
     known_executives:
       - name: "Annie Janveau"
@@ -770,7 +770,7 @@ hospitals:
       container_selector: "[data-testid='mesh-container-content']"
       name_class: "font_5"
       title_class: "font_7"
-      category_filter: ["​"]  # Filter out the zero-width space
+      category_filter: ["â€‹"]  # Filter out the zero-width space
       notes: 
     status: "ok"
 
@@ -982,7 +982,7 @@ hospitals:
     known_executives:
       - name: "Cara Vaccarino"
         title: "President and CEO"
-      - name: "Dr. Benoît Mulsant"
+      - name: "Dr. BenoÃ®t Mulsant"
         title: "Interim Psychiatrist-in-Chief and Chief of Staff"
       - name: "Nyranne Martin"
         title: "Chief Operating Officer"
@@ -1059,7 +1059,7 @@ hospitals:
   - FAC: '646'
     name: "DEEP RIVER AND DISTRICT"
     hospital_type: "Small Hospital"
-    url: "https://www.drdh.org/leadershipteam"  # ← CORRECTED URL
+    url: "https://www.drdh.org/leadershipteam"  # CORRECTED URL
     pattern: "h2_name_p_title"
     expected_executives: 4
     html_structure:
@@ -1079,7 +1079,7 @@ hospitals:
     html_structure:
        combined_element: "p"
        separator: ":"
-       reversed: true          # ← Key!
+       reversed: true          # â† Key!
        notes: Reversed Titles new pattern??
     status: ok
     
@@ -1100,7 +1100,7 @@ hospitals:
     
     
   - FAC: "627"
-    name: "CHAPLEAU SER DE SANTÉ DE CHAPLEAU"
+    name: "CHAPLEAU SER DE SANTÃ‰ DE CHAPLEAU"
     hospital_type: "Small Hospital"
     url: "https://www.sschs.ca/general/board.html"
     pattern: "manual_entry_required"
@@ -1206,7 +1206,7 @@ hospitals:
     expected_executives: 4
     html_structure:
       combined_element: "p"
-      separator: " – "
+      separator: " â€“ "
       reversed: true
       missing_people:
         - name: Mr. Mike Bell
@@ -1215,7 +1215,7 @@ hospitals:
           title: Vice President, Patient & Resident Services and Chief Nursing Officer 
 
 
-      notes: "P elements with reversed format: Title – Name. Includes board members (President of Volunteer Services) to filter later."
+      notes: "P elements with reversed format: Title â€“ Name. Includes board members (President of Volunteer Services) to filter later."
     status: ok-mp
     
     
@@ -1262,7 +1262,7 @@ hospitals:
     html_structure:
        combined_element: "p"
        separator: ":"
-       reversed: true          # ← Key!
+       reversed: true          # â† Key!
        notes: "Title:Name format"
     status: "ok"
     
@@ -1888,7 +1888,7 @@ hospitals:
         title: Chief of Innovation
       - name: Kyla Kumar
         title: Vice President, Communications & Brand Strategy
-      - name: Aimée Langan
+      - name: AimÃ©e Langan
         title: Vice President, Clinical
       - name: Joel Montesanti
         title: Chief Strategy Officer
@@ -1945,7 +1945,7 @@ hospitals:
       missing_people:
       #  - name: Dr. Simon O'Brien
        #   title: Chair, Medical Advisory Committee
-      #  - name: Tamás Zsolnay
+      #  - name: TamÃ¡s Zsolnay
        #   title: President & CEO, University Hospitals Kingston Foundation
     status: ok-mp
   - FAC: '932'
@@ -2272,20 +2272,25 @@ name_patterns:
     - ^[A-Z][a-z]+ O'[A-Z][a-z]+$
     - ^[A-Z][a-z]+ De[A-Z][a-z]+$
     - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$
-    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$ 
+    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$
     - ^[A-Z][a-z]+ La[A-Z][a-z]+$
     - ^Dr\.? [A-Z][a-z]+ van [A-Z][a-z]+$
   accented_names:
-    # Two-part names with accents
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    # French Canadian patterns (safe, structured)
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^Dr\. [A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-   
+    - ^[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - ^[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž]\. [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - ^Dr\.? [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - ^[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+-[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - ^[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+-[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - ^Dr\.? [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž]\. [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$
+    - '^Dr\.? [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+-[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$'
+    - '^[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+-[A-ZÃ€-Ã–Ã˜-Ãž]''[A-ZÃ€-Ã–Ã˜-Ãž][a-zÃ -Ã¶Ã¸-Ã¿]+$'
+    # French Canadian patterns added 2025-11-12 (safe, structured patterns)
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$  # Three-part accented names (Valérie Dubois Desroches)
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$  # Dr + three-part accented
+    - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$  # Apostrophe-hyphen compound (D'Aoust-Bernard)
+    - ^Dr\. [A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$  # Dr. + apostrophe-hyphen compound
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$  # Accented apostrophe-hyphen
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$  # Dr + accented apostrophe-hyphen
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
@@ -2408,7 +2413,7 @@ recognition_config:
     - "website by"
     - "created by"
     - "developed by"
-    - "©"
+    - "Â©"
     - "copyright"
     - "all rights reserved"
      # Medical/Quality Reporting Terms:
@@ -2466,10 +2471,10 @@ hospital_overrides:
     notes: "Complex multi-part title with 'and' connector"
   
   # Example: FAC 978 - Kingston Health Sciences
-  # Issue: Accented characters in "Valérie Gamache-O'Leary"
+  # Issue: Accented characters in "ValÃ©rie Gamache-O'Leary"
   FAC_978:
     additional_name_patterns:
-      - "^[A-ZÀ-Ö][a-zà-öø-ÿ]+ [A-ZÀ-Ö][a-zà-öø-ÿ]+-[A-Z]'[A-Z][a-z]+$"
+      - "^[A-ZÃ€-Ã–][a-zÃ -Ã¶Ã¸-Ã¿]+ [A-ZÃ€-Ã–][a-zÃ -Ã¶Ã¸-Ã¿]+-[A-Z]'[A-Z][a-z]+$"
     notes: "Accented first name with hyphenated-apostrophe last name"
   
   # Example: FAC 961 - Ottawa Heart Institute
@@ -2492,6 +2497,12 @@ hospital_overrides:
       - "Strategic Advisor"
     notes: "Non-standard title format with ampersand"
   
+  # FAC 753 - Ottawa Montfort Hospital
+  # Issue: Accented characters and apostrophe-hyphen combinations
+  FAC_753:
+    additional_name_patterns:
+      - "^Dr\\. [A-Z][a-z]+ [A-Z][^,]+$"  # Permissive fallback for complex compound names
+    notes: "Permissive pattern as fallback - most French names now handled by base accented_names patterns"
   
   # Template for future overrides:
   # FAC_XXX:

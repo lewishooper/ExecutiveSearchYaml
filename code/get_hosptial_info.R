@@ -21,3 +21,4 @@ get_hospital_info <- function(fac) {
   # Not found
   return(NULL)
 }
+get_hospital_info(753)
