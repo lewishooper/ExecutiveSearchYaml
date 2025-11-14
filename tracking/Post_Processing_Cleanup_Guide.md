@@ -1,5 +1,13 @@
 # Post-Processing Cleanup Guide for Hospital Executive Scraping
-
+## Note November 14, 2025
+We may wish to rethink how we deal with exectuive titles here. 
+For small hospitals Directors and managers who are on the leadership page may need to be left there.
+The hospital has decided to include them as "leaders"  on their leadership page. They are paid leadership??
+Board members/board directors could be trimmed off in post processing as they are "volunteers"
+The issue of Executive assistants ?? not sure about 
+Clean up may be divided into two purpose categories.  
+1) for purposes of a paper on turn over
+2) for b2b   who would be interested
 ## Purpose
 This document provides systematic guidance for cleaning scraped executive data to remove non-executive personnel captured during the scraping process. The goal is to minimize manual post-processing work for monthly/quarterly monitoring runs.
 

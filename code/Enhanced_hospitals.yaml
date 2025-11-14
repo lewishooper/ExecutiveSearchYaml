@@ -5,7 +5,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://unityhealth.to/about-unity-health/about-unity-health-toronto/leadership/
     pattern: div_classes
-    expected_executives: 10
+    expected_executives: 17
     html_structure:
       name_class: card-title
       title_class: card-subtitle
@@ -28,7 +28,7 @@ hospitals:
       #    title: Vice President and Chief Information Officer
         
       notes: missing_people
-    status: ok-mp
+    status: ok
     
     
   - FAC: '977'
@@ -122,7 +122,7 @@ hospitals:
       combined_element: "span.wixui-rich-text__text"
       separator: " - "
       notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
-    status: ok
+    status: ok-PP
 
   - FAC: '961'
     name: 'OTTAWA HEART INSTITUTE'
@@ -207,7 +207,7 @@ hospitals:
        #  - name: Rochelle Reid
        #     title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
     notes: ~
-    status: ok-mp
+    status: ok
 
   - FAC: '938'
     name: 'DYSART ET AL HALIBURTON HEALTH SER'
@@ -410,7 +410,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.womenscollegehospital.ca/who-we-are/executive-team/
     pattern: div_classes
-    expected_executives: 
+    expected_executives: 10
     html_structure:
       name_class: card-title
       title_class: card-subtitle
@@ -482,19 +482,6 @@ hospitals:
         title: Vice President of Medical Staff
 
 
-  - FAC: '824'
-    name: 'Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL'
-    hospital_type: Small Hospital
-    partnership:  Rural Roads Health Services
-    url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
-    pattern: div_classes
-    expected_executives: 7
-    html_structure:
-      name_class: person-name
-      title_class: person-title
-      container_class: author-wrapper
-      notes: need to filter off board members
-    status: ok
     
     
   - FAC: '809'
@@ -625,7 +612,7 @@ hospitals:
       title_class: staff-title
       container_class: staff-top
     notes: includes board names and titles
-    status: ok
+    status: ok-pp
 
 
   - FAC: '734'
@@ -792,13 +779,13 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.micsgroup.com/governance/board-of-directors/
     pattern: "p_with_br_list_reversed"
-    expected_executives: 4
+    expected_executives: 5
     partnership: "MICS Group"
     html_structure:
       container_class: "elementor-icon-box-description"
       separator: " | "
       notes: "Title | Name format in single <p> with <br> separators"
-    status: "ok"
+    status: "ok-pp"
     
 
   - FAC: '684'
@@ -811,10 +798,23 @@ hospitals:
     html_structure:
       name_class: person-name
       title_class: person-title
-      container_class: author-wrapper
+      container_class: person-author-wrapper  # FIXED
       notes: need to filter off board members
-    status: ok
+    status: ok-PP
 
+  - FAC: '824'
+    name: 'Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL'
+    hospital_type: Small Hospital
+    partnership:  Rural Roads Health Services
+    url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
+    pattern: div_classes
+    expected_executives: 7
+    html_structure:
+      name_class: person-name
+      title_class: person-title
+      container_class: person-author-wrapper  # FIXED
+      notes: need to filter off board members
+    status: ok-PP
 
 
     
@@ -926,7 +926,7 @@ hospitals:
       combined_element: "span.wixui-rich-text__text"
       separator: " - "
       notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
-    status: ok
+    status: ok-PP
     
   - FAC: '655'
     name: Huron Health EXETER SOUTH HURON
@@ -967,7 +967,7 @@ hospitals:
       title_class: position
       container_class: member-name
       notes: Leadership page includes both executives and board members
-    status: ok
+    status: ok-PP
     
 
   - FAC: '651'
@@ -1150,7 +1150,7 @@ hospitals:
     hospital_type: "Specialty Mental Health Hospital"
     url: "https://homewoodhealth.com/home/about-us/leadership/"
     pattern: "combined_h2"
-    expected_executives: 8
+    expected_executives: 7
     html_structure:
       combined_element: "h3"
       separator: ","
@@ -1189,6 +1189,7 @@ hospitals:
     name: Middlesex Hospital Alliance NEWBURY FOUR COUNTIES HEALTH SERV.
     hospital_type: Small Hospital
     url: https://mhalliance.on.ca/about/administration/
+    partnership: Middlesex Hospital Alliance
     pattern: combined_h2
     expected_executives: 4
     html_structure:
@@ -1196,7 +1197,7 @@ hospitals:
       separator: ','
       notes: ''
   
-    status: ok
+    status: ok-pp
  
   - FAC: '592'
     name: "NAPANEE LENNOX & ADDINGTON"
@@ -1214,20 +1215,20 @@ hospitals:
         # - name: Ms. Kristen Rochon
           #title: Vice President, Patient & Resident Services and Chief Nursing Officer 
       notes: "P elements with reversed format: Title – Name. Includes board members (President of Volunteer Services) to filter later."
-    status: ok-mp
+    status: ok-pp
     
     
   - FAC: "968"
     name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
     url: "https://www.mahc.ca/about-us/leadership/"
     pattern: "combined_h2"
-    expected_executives: 5
+    expected_executives: 17
     html_structure:
       combined_element: p
       separator: <br>
       reversed: False
       notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
-    status: ok-mp
+    status: ok-pp
     known_executives:
     # - name: "Cheryl Harrison"
      #  title: "President & Chief Executive Officer"
@@ -1250,7 +1251,7 @@ hospitals:
      combined_element: "p"
      separator: " | "
      notes: "Page shows 'Board of Directors' but contains Senior Management Team. Jeremy Dickson has no title."
-    status: "ok"
+    status: "ok-PP"
     
   - FAC: '967'
     name: CORNWALL COMMUNITY
@@ -1317,9 +1318,12 @@ hospitals:
     expected_executives: 8
     html_structure:
       combined_element: p
-      separator: '<br>'
+      separator: ','
+      missing_people:
+      #  - name: Dr. Cornelius Van Zyl
+       #   title: Chief of Staff
       notes: Executive assistant dealt iwth in Post Need to deal with phone numbers
-    status: ok-mp 
+    status: ok-PP
   
     
   - FAC: '950'
@@ -1371,12 +1375,11 @@ hospitals:
       notes: "Title in secondary-heading class, name in heading class - reversed order"
     status: ok
   
-        
   - FAC: '928'
     name: PERTH SMITHS FALLS
     hospital_type: Large Community Hospital
     url: https://psfdh.on.ca/leadershipteam
-    pattern: div_classes
+    pattern: combined_h2  # FIXED - was div_classes
     expected_executives: 5
     html_structure:
       combined_element: p
@@ -1387,6 +1390,7 @@ hospitals:
   - FAC: '814'
     name: Middlesex Hosptial Alliance  STRATHROY MIDDLESEX GENERAL
     hospital_type: Large Community Hospital
+    partnership: Middlesex Hospital Alliance
     url: https://mhalliance.on.ca/about/administration/
     pattern: combined_h2
     expected_executives: 4
@@ -1394,7 +1398,7 @@ hospitals:
       combined_element: h3
       separator: ', '
       notes: 
-    status: ok
+    status: ok-pp
   - FAC: '813'
     name: HPHA STRATFORD GENERAL 
     hospital_type: Large Community Hospital
@@ -1421,7 +1425,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.prhc.on.ca/about-us/senior-leadership/
     pattern: combined_h2
-    expected_executives: 9
+    expected_executives: 8
     html_structure:
       combined_element: span
       separator: ','
@@ -1545,7 +1549,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://cgmh.on.ca/team/senior-leadership-team
     pattern: div_classes
-    expected_executives: 5
+    expected_executives: 9
     html_structure:
       name_class: title
       title_class: job_title
@@ -1721,7 +1725,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.hrh.ca/who-we-are/accountability/governance-leadership/
     pattern: combined_h2
-    expected_executives: 9
+    expected_executives: 11
     html_structure:
       combined_element: h3
       separator: ' - '
@@ -1737,7 +1741,7 @@ hospitals:
       combined_element: h3
       separator: ', '
       notes: ''
-    status: ok
+    status: ok-PP
   - FAC: '905'
     name: OAK VALLEY HEALTH
     hospital_type: Large Community Hospital
@@ -1793,7 +1797,7 @@ hospitals:
     html_structure:
       name_class: staff-name
       title_class: staff-title
-      container_class: staff-member
+      container_class: staff-info
       notes: div class=staff-info
     status: ok
     
@@ -1820,9 +1824,6 @@ hospitals:
       title_class: bio-token--position
       container_class: bio-token--inner
       missing_people:
-      #  - name: Louis de Melo
-       #   title: President and Chief Executive Officer (CEO), Sinai Health Foundation
-        #    and Executive Vice President, Academic Advancement, Sinai Health SYSTEM
       #  - name: Dr. Anne-Claude Gingras
        #   title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
         #    Research for Sinai Health
@@ -1923,7 +1924,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146
     pattern: combined_h2
-    expected_executives: 5
+    expected_executives: 17
     html_structure:
       combined_element: h3
       separator: ', '
@@ -1934,7 +1935,7 @@ hospitals:
     hospital_type: Chronic/Rehab Hospital
     url: https://providencecare.ca/about-us/senior-leadership-team/
     pattern: div_classes
-    expected_executives: 12
+    expected_executives: 11
     html_structure:
       name_class: mb-name
       title_class: mb-position

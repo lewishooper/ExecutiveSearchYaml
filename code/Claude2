@@ -1,14 +1,22 @@
 Today we will continue to review the hospitals with missing persons to see if we  can improve recogniton
-We are working through those hospitals who have missing persons and are  using the combined_h2 pattern. 4 in total
+Yesterday we dealt with a number of a number of hospitasl with a  Combined_h2 pattern
+I ran the test_all_configured Hospitals and Identified several where the expected counts differ from the actual.Many of these were addressed as counting issues.
+However in one case errors have been idnentified. 
+In those cases I find where there is an error that is intended to be pickedup or cleaned up in post processing I have marked the yamal status as ok-PP
+
+In order to continue our debugging process
 
 I will give you:
 the FAC  to debug
+a description of the error.
 the yaml code for that FAC
 a snippet of html code for the CEO
 and the results of the quickTest
-Since the debug assumption is that the pattern chosen is correct
-And the issue is name/title recogniton needs tuned Do you need the analysis of structure?
-And is there any other data you will need?
+The working assumption is that changes to either the pattern_based_scraper.R and the enhanced_hospitals.yaml will be done in one of two ways.
+1) The error correction is likely specific only to that hospital or has risks of untoward effects it will go into the # HOSPITAL-SPECIFIC OVERRIDES (Phase 2 Addition)
+2) but where possible and with minimum risk the changes should go into the general RECOGNITION CONFIGURATION (Phase 2 Addition) of the  yaml file.
+ Does the above make sense?
+ 
 
 in terms of workflow process. The pattern_based_scrape.r and the enhanced_hospitals.yaml code in the knowlege repostiory is current
 however, the working copies of both files are in my R environment.
