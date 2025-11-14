@@ -11,7 +11,166 @@ library(rvest)
 library(dplyr)
 library(stringr)
 library(yaml)
+library(httr)
+# ============================================================================
+# ROBOTS.TXT CHECKING FUNCTIONS
+# ============================================================================
 
+# Global cache for robots.txt results (persists across scraping calls)
+.robots_cache <- new.env(parent = emptyenv())
+
+# Check if a URL is allowed by robots.txt
+check_robots_txt <- function(url, user_agent = "OntarioHospitalScraper/1.0") {
+  # Extract domain from URL
+  domain <- gsub("^(https?://[^/]+).*$", "\\1", url)
+  robots_url <- paste0(domain, "/robots.txt")
+  
+  # Check cache first
+  cache_key <- paste0(domain, "|", user_agent)
+  if (exists(cache_key, envir = .robots_cache)) {
+    cached <- get(cache_key, envir = .robots_cache)
+    return(cached)
+  }
+  
+  # Try to fetch robots.txt
+  result <- list(
+    allowed = TRUE,
+    status = "no_robotstxt",
+    crawl_delay = 0,
+    message = "No robots.txt found - assuming allowed"
+  )
+  
+  tryCatch({
+    response <- httr::GET(robots_url, httr::timeout(10))
+    
+    if (httr::status_code(response) == 200) {
+      content <- httr::content(response, "text", encoding = "UTF-8")
+      
+      # Parse robots.txt for our user agent (or *)
+      result <- parse_robots_txt(content, user_agent, url)
+      
+    } else if (httr::status_code(response) == 404) {
+      result$status <- "no_robotstxt"
+      result$message <- "No robots.txt (404) - assuming allowed"
+    } else {
+      result$status <- "error"
+      result$message <- paste0("robots.txt returned status ", httr::status_code(response))
+    }
+    
+  }, error = function(e) {
+    result$status <- "error"
+    result$message <- paste0("Error reading robots.txt: ", e$message)
+  })
+  
+  # Cache the result
+  assign(cache_key, result, envir = .robots_cache)
+  
+  return(result)
+}
+
+# Parse robots.txt content
+parse_robots_txt <- function(content, user_agent, url) {
+  lines <- strsplit(content, "\n")[[1]]
+  lines <- trimws(lines)
+  
+  # Remove comments and empty lines
+  lines <- lines[!grepl("^#", lines) & nchar(lines) > 0]
+  
+  # Track which user-agent section we're in
+  current_agent <- NULL
+  applies_to_us <- FALSE
+  disallow_rules <- character()
+  allow_rules <- character()
+  crawl_delay <- 0
+  
+  for (line in lines) {
+    # Check for User-agent directive
+    if (grepl("^User-agent:", line, ignore.case = TRUE)) {
+      agent <- sub("^User-agent:\\s*", "", line, ignore.case = TRUE)
+      agent <- trimws(agent)
+      current_agent <- agent
+      
+      # Does this section apply to us?
+      applies_to_us <- (agent == "*" || 
+                          grepl(user_agent, agent, ignore.case = TRUE) ||
+                          grepl("OntarioHospitalScraper", agent, ignore.case = TRUE))
+    }
+    
+    # If this section applies to us, parse rules
+    if (applies_to_us) {
+      if (grepl("^Disallow:", line, ignore.case = TRUE)) {
+        path <- sub("^Disallow:\\s*", "", line, ignore.case = TRUE)
+        path <- trimws(path)
+        if (nchar(path) > 0) {
+          disallow_rules <- c(disallow_rules, path)
+        }
+      }
+      
+      if (grepl("^Allow:", line, ignore.case = TRUE)) {
+        path <- sub("^Allow:\\s*", "", line, ignore.case = TRUE)
+        path <- trimws(path)
+        if (nchar(path) > 0) {
+          allow_rules <- c(allow_rules, path)
+        }
+      }
+      
+      if (grepl("^Crawl-delay:", line, ignore.case = TRUE)) {
+        delay <- sub("^Crawl-delay:\\s*", "", line, ignore.case = TRUE)
+        delay <- as.numeric(trimws(delay))
+        if (!is.na(delay)) {
+          crawl_delay <- delay
+        }
+      }
+    }
+  }
+  
+  # Check if URL path matches any rules
+  url_path <- gsub("^https?://[^/]+", "", url)
+  if (url_path == "") url_path <- "/"
+  
+  # Check allow rules first (they take precedence)
+  for (allow_rule in allow_rules) {
+    if (path_matches_rule(url_path, allow_rule)) {
+      return(list(
+        allowed = TRUE,
+        status = "allowed",
+        crawl_delay = crawl_delay,
+        message = paste0("Explicitly allowed by rule: ", allow_rule)
+      ))
+    }
+  }
+  
+  # Check disallow rules
+  for (disallow_rule in disallow_rules) {
+    if (path_matches_rule(url_path, disallow_rule)) {
+      return(list(
+        allowed = FALSE,
+        status = "disallowed",
+        crawl_delay = crawl_delay,
+        message = paste0("Blocked by rule: ", disallow_rule)
+      ))
+    }
+  }
+  
+  # No matching rules - allowed
+  return(list(
+    allowed = TRUE,
+    status = "allowed",
+    crawl_delay = crawl_delay,
+    message = "No matching disallow rules - allowed"
+  ))
+}
+
+# Check if a URL path matches a robots.txt rule
+path_matches_rule <- function(path, rule) {
+  # Handle wildcard * (matches any sequence)
+  # Convert robots.txt pattern to regex
+  rule_regex <- gsub("\\*", ".*", rule, fixed = TRUE)
+  rule_regex <- gsub("\\$", "$", rule_regex, fixed = TRUE)
+  rule_regex <- paste0("^", rule_regex)
+  
+  grepl(rule_regex, path)
+}
 PatternBasedScraper <- function() {
   
   # Load configuration data
@@ -192,6 +351,28 @@ PatternBasedScraper <- function() {
     
     return(cleaned)
   }
+  
+  # ============================================================================
+  # DEDUPLICATION HELPER - Removes duplicate names (keeps first occurrence)
+  # ============================================================================
+  deduplicate_pairs <- function(pairs) {
+    if (length(pairs) == 0) return(pairs)
+    
+    unique_pairs <- list()
+    seen_names <- character(0)
+    
+    for (pair in pairs) {
+      if (!(pair$name %in% seen_names)) {
+        unique_pairs <- c(unique_pairs, list(pair))
+        seen_names <- c(seen_names, pair$name)
+      } else {
+        cat("  DEBUG: Removed duplicate name:", pair$name, "\n")
+      }
+    }
+    
+    return(unique_pairs)
+  }  
+  
 #Start changing patterns here?
   
   # ============================================================================
@@ -1683,48 +1864,78 @@ return(unique_pairs)
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
+  # ============================================================================
+  # MAIN SCRAPER FUNCTION (with robots.txt checking)
+  # ============================================================================
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
     config <- load_config(config_file)
     
     cat("Scraping", hospital_info$name, "(FAC-", hospital_info$FAC, ")")
     cat(" - Pattern:", hospital_info$pattern, "\n")
     
+    # Initialize robots status
+    robots_status <- "unknown"
+    robots_message <- ""
+    
     tryCatch({
-      # Special handling for manual entry - skip URL reading
-      if (hospital_info$pattern == "manual_entry_required") {
+      # Special handling for manual entry and closed sites - skip robots check
+      if (hospital_info$pattern %in% c("manual_entry_required", "closed")) {
         pairs <- scrape_manual_entry(NULL, hospital_info, config)
+        robots_status <- "not_applicable"
+        robots_message <- "Manual entry or closed site"
+        
       } else {
-        # Normal scraping for all other patterns
-        page <- read_html(hospital_info$url)
+        # Check robots.txt before scraping
+        robots_check <- check_robots_txt(hospital_info$url)
+        robots_status <- robots_check$status
+        robots_message <- robots_check$message
         
+        cat("  Robots.txt:", robots_status, "-", robots_message, "\n")
         
+        # If disallowed, don't scrape
+        if (!robots_check$allowed) {
+          cat("  SKIPPED: Scraping disallowed by robots.txt\n")
+          pairs <- list()
+          
+        } else {
+          # Respect crawl-delay if specified
+          if (robots_check$crawl_delay > 0) {
+            cat("  Respecting crawl-delay:", robots_check$crawl_delay, "seconds\n")
+            Sys.sleep(robots_check$crawl_delay)
+          }
+          
+          # Normal scraping for all other patterns
+          page <- read_html(hospital_info$url)
+          
+          # Dispatch to appropriate pattern scraper
+          pairs <- switch(hospital_info$pattern,
+                          "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
+                          "combined_h2" = scrape_combined_h2(page, hospital_info, config),
+                          "table_rows" = scrape_table_rows(page, hospital_info, config),
+                          "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
+                          "div_classes" = scrape_div_classes(page, hospital_info, config),
+                          "list_items" = scrape_list_items(page, hospital_info, config),
+                          "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
+                          "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
+                          "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
+                          "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
+                          "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
+                          "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),
+                          "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
+                          "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
+                          "table_cells" = scrape_table_cells(page, hospital_info, config),
+                          "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
+                          "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
+                          "p_strong_combined" = scrape_p_strong_combined(page, hospital_info, config),
+                          # Default fallback 
+                          scrape_h2_name_h3_title(page, hospital_info, config)
+          )
+        }
         
-        # Dispatch to appropriate pattern scraper
-        pairs <- switch(hospital_info$pattern,
-                        "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
-                        "combined_h2" = scrape_combined_h2(page, hospital_info, config),
-                        "table_rows" = scrape_table_rows(page, hospital_info, config),
-                        "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
-                        "div_classes" = scrape_div_classes(page, hospital_info, config),
-                        "list_items" = scrape_list_items(page, hospital_info, config),
-                        "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
-                        "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
-                        "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
-                        "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
-                        "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
-                        "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
-                        "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # â† ADD THIS
-                        "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
-                        "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
-                        "table_cells" = scrape_table_cells(page, hospital_info, config),
-                        "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
-                        "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
-                        "p_strong_combined" = scrape_p_strong_combined(page, hospital_info, config),
-                        
-                        # Default fallback 
-                        scrape_h2_name_h3_title(page, hospital_info, config)
-        )
+        # Deduplicate pairs
+        pairs <- deduplicate_pairs(pairs)
       }
+      
       # Create consistent output data frame
       if (length(pairs) > 0) {
         result_df <- data.frame(
@@ -1733,6 +1944,8 @@ return(unique_pairs)
           executive_name = sapply(pairs, function(p) p$name),
           executive_title = sapply(pairs, function(p) p$title),
           date_gathered = Sys.Date(),
+          robots_status = robots_status,
+          robots_message = robots_message,
           stringsAsFactors = FALSE
         )
         
@@ -1747,6 +1960,8 @@ return(unique_pairs)
           executive_name = NA,
           executive_title = NA,
           date_gathered = Sys.Date(),
+          robots_status = robots_status,
+          robots_message = robots_message,
           stringsAsFactors = FALSE
         ))
       }
@@ -1759,6 +1974,8 @@ return(unique_pairs)
         executive_name = NA,
         executive_title = NA,
         date_gathered = Sys.Date(),
+        robots_status = ifelse(robots_status == "unknown", "error", robots_status),
+        robots_message = ifelse(robots_status == "unknown", e$message, robots_message),
         error_message = e$message,
         stringsAsFactors = FALSE
       ))
