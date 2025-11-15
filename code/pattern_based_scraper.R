@@ -248,18 +248,26 @@ PatternBasedScraper <- function() {
     }
     
     # Clean text first (but preserve hyphens in names)
+    # Clean text first (but preserve hyphens in names)
     clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
     clean_text <- trimws(clean_text)
     
-    # Check against patterns
+    # Normalize Unicode apostrophes to ASCII
+    clean_text <- gsub(intToUtf8(8217), "'", clean_text)  # Right single quotation mark (')
+    clean_text <- gsub(intToUtf8(8216), "'", clean_text)  # Left single quotation mark (')
+    clean_text <- gsub(intToUtf8(8220), '"', clean_text)  # Left double quotation mark (")
+    clean_text <- gsub(intToUtf8(8221), '"', clean_text)  # Right double quotation mark (")
+    
+    # Check against patterns  # added perl=TRUE
     matches_pattern <- any(sapply(name_patterns, function(p) {
       if (!is.null(p) && !is.na(p)) {
-        grepl(p, clean_text)
+        grepl(p, clean_text, perl = TRUE)  # <-- ADD perl=TRUE
       } else {
         FALSE
       }
     }))
-#was an n here???
+    
+
     
     # Get exclusions from config (no longer hardcoded)
     non_names <- config$recognition_config$name_exclusions
@@ -285,9 +293,16 @@ PatternBasedScraper <- function() {
     is_executive_title <- function(text, config, hospital_info = NULL) {
       if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
       
-      # Clean text first
+      # Clean text first (but preserve hyphens in names)
       clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
-      clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
+      clean_text <- trimws(clean_text)
+      
+      # Normalize Unicode apostrophes to ASCII
+      clean_text <- gsub(intToUtf8(8217), "'", clean_text)  # Right single quotation mark (')
+      clean_text <- gsub(intToUtf8(8216), "'", clean_text)  # Left single quotation mark (')
+      clean_text <- gsub(intToUtf8(8220), '"', clean_text)  # Left double quotation mark (")
+      clean_text <- gsub(intToUtf8(8221), '"', clean_text)  # Right double quotation mark (")
+      
       clean_text <- trimws(clean_text)
       
       # Get executive keywords from config (no longer hardcoded)

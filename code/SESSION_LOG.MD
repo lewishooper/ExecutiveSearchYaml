@@ -17,7 +17,36 @@
 
 ---
 ## Session History
+## sessioon log Nov 15,2025 @12:30PM
+Summary of Major Accomplishments
+Bugs Fixed (Global Impact)
 
+Critical perl=TRUE bug - Fixed \w character class matching in name patterns
+Unicode apostrophe normalization - Fixed fancy quotes (U+8217, U+8216, U+8220, U+8221)
+Container class lesson - Clarified how to pick the right container for div_classes pattern
+
+Hospitals Fixed
+
+✅ FAC 751 (OTTAWA CHEO CTC) - Pattern change to h2_name_p_title
+✅ FAC 695 (KINGSTON PROVIDENCE CARE) - Unicode apostrophe (Dr. Simon O'Brien)
+✅ FAC 978 (KINGSTON HEALTH SCIENCES) - Container class for sequential pairing
+✅ FAC 969 - Container class fix (you did this one!)
+✅ FAC 976 - Bonus fix from Unicode normalization
+✅ FAC 910 (TORONTO CASEY HOUSE) - Lowercase last name override
+✅ FAC 699 - Container class correction
+
+Status
+
+✅ All Combined_h2 discrepancies - COMPLETE
+✅ All div_classes complete failures - COMPLETE
+✅ div_classes missing people (1-2 per hospital) - COMPLETE
+
+Files Updated
+
+pattern_based_scraper.R - Added perl=TRUE and Unicode normalization
+enhanced_hospitals.yaml - Updated hospital configs and overrides
+
+Great debugging session! The project is in much better shape now. Rest well - you've earned it! 
 ## session Log nov 14 2025
 Session Summary - November 14, 2025
 Major Accomplishments ✅

@@ -23,11 +23,8 @@ hospitals:
     html_structure:
       name_class: field--name-title
       title_class: field--name-field-position
-      missing_people:
-     #   - name: Valérie Gamache-O'Leary
-      #    title: Vice President and Chief Information Officer
-        
-      notes: missing_people
+      container_class: teaser-title-header  # ADD THIS LINE
+      notes: ''
     status: ok
     
     
@@ -91,7 +88,8 @@ hospitals:
     html_structure:
       name_class: "field--name-title"
       title_class: "field--name-field-role"
-    notes: Fails to find title for Daniel Mueller...Physician-in-Chief and Research Chair of Personalized Medicine and Personalized Mental Health Care
+      container_class: node__content
+    notes: 
     status: ok
     
 
@@ -275,7 +273,7 @@ hospitals:
     html_structure:
       name_class: leadership-block-name
       title_class: leadership-block-title
-      container_class:
+      container_class: leadership-block 
     notes: ~
     status: ok
     
@@ -586,17 +584,18 @@ hospitals:
     
       notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
     status: ok-mp
-
+    
+    
   - FAC: '751'
     name: 'OTTAWA CHEO CTC'
     hospital_type: 'Specialty Children Hospital'
     url: https://www.cheo.on.ca/en/about-us/senior-leadership.aspx?_mid_=1829
-    pattern: div_classes
+    pattern: h2_name_p_title
     expected_executives: 15
     html_structure:
       name_element: h2
-      container: div.factsheet__callout
-      notes: 'Table-based accordion with data-name attributes'
+      title_element: td[data-name='accParent']
+      notes: 'Table-based accordion with data-name attributes in factsheet containers'
     status: ok
     
 
@@ -1515,24 +1514,28 @@ hospitals:
     name: WRHN-KITCHENER ST MARY'S
     hospital_type: Large Community Hospital
     url: https://www.smgh.ca/about-us/our-leadership-team
+    partnership: Waterloo Regional Health Network
+    partnership_abbrev: WRHN
     pattern: div_classes
     expected_executives: 17
     html_structure:
       name_class: name
       title_class: position
-      container_class: staff-member
+      container_class: member-name
     status: ok
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
     url: https://www.grhosp.on.ca/about/senior-leadership-team
+    partnership: Waterloo Regional Health Network
+    partnership_abbrev: WRHN
     pattern: list_items
     expected_executives: 17
     html_structure:
       list_type: ul
       format: combined
       separator: ', '
-      notes: Combined with St.Marys Kitchner, Has multiple commas in title
+      notes: Different URLS for leadership even though they are the same people 
     status: ok
   - FAC: '665'
     name: GUELPH GENERAL
@@ -1935,7 +1938,7 @@ hospitals:
     hospital_type: Chronic/Rehab Hospital
     url: https://providencecare.ca/about-us/senior-leadership-team/
     pattern: div_classes
-    expected_executives: 11
+    expected_executives: 12
     html_structure:
       name_class: mb-name
       title_class: mb-position
@@ -2455,6 +2458,11 @@ hospital_overrides:
   
   # Example: FAC 969 - Ontario Shores
   # Issue: "Physician-in-Chief and Research Chair" not recognized
+  
+  FAC_910:
+    additional_name_patterns:
+      - "^[A-Z][a-z]+ [a-z][a-z]+$"  # Allows lowercase last name (Firstname lastname)
+    notes: "CEO has improperly capitalized last name on website"
 
   FAC_837:
     additional_name_exclusions:

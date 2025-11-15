@@ -4,7 +4,9 @@ setwd("E:/ExecutiveSearchYaml/code/")
 source("pattern_based_scraper.R")
 source("get_hosptial_info.R")
 source("test_all_configured_hospitals.R")
-FAC<-979
+FAC<-910
+
+
 
 quick_test(FAC)
 
@@ -28,3 +30,16 @@ summarizeBaseLine <-merge(summarizeBaseLine,AllHospitals,by="FAC")
 
 summarizeBaseLine<-summarizeBaseLine %>%
   mutate(missing=Expected-n_exec)
+
+rm(list=ls())
+.rs.restartR()  # RStudio-specific restart command
+
+# Wait for restart, then:
+setwd("E:/ExecutiveSearchYaml/code/")
+source("pattern_based_scraper.R")
+source("get_hosptial_info.R") 
+source("quick_test_single.R")
+source("test_all_configured_hospitals.R")
+
+FAC <- 978
+quick_test(FAC)

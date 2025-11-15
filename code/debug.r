@@ -1,19 +1,20 @@
-# Test the title validation
-source("pattern_based_scraper.R")
+# Let's examine the actual page structure
+library(rvest)
+url <- "https://kingstonhsc.ca/about-khsc/senior-leadership-team"
+page <- read_html(url)
 
-# Get hospital info
-hospital <- NULL
-for(h in config$hospitals) {
-  if(h$FAC == "950") {
-    hospital <- h
-    break
-  }
-}
+# Find all names
+names <- page %>% html_elements(".field--name-title") %>% html_text2()
+cat("Found", length(names), "names:\n")
+print(names)
 
-# Test the title
-test_title <- "Redevelopment, Facilities & Retail Operations"
-cat("Testing title:", test_title, "\n")
+# Find all titles
+titles <- page %>% html_elements(".field--name-field-position") %>% html_text2()
+cat("\nFound", length(titles), "titles:\n")
+print(titles)
 
-# This function should exist in your scraper
-result <- is_executive_title(test_title, config, hospital)
-cat("Is executive title?", result, "\n")
+# Check if there's a container we should be using
+cat("\n=== Looking for containers ===\n")
+# The HTML shows a div.teaser-title-header - let's check that
+containers <- page %>% html_elements("div.teaser-title-header")
+cat("Found", length(containers), "teaser-title-header containers\n")
