@@ -835,7 +835,7 @@ hospitals:
     hospital_type: Other Hospital
     url: ''
     pattern: closed
-    expected_executives: 5
+    expected_executives: 4
     html_structure:
       combined_element: ''
       separator: ''
@@ -847,7 +847,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.hanoverhospital.on.ca/our-team
     pattern: h2_name_p_title
-    expected_executives: 3
+    expected_executives: 4
     html_structure:
       name_element: p
       title_element: p
@@ -856,7 +856,7 @@ hospitals:
         - name: Saskia MacMillan
           title: Vice President of Patient Care Service/CNE 
       notes: ' Missing person TITLE WITH A "/" IS LIKELY THE PROBLEM'
-    status: ok-mp
+    status: ok
 
 
   - FAC: '674'
@@ -1997,21 +1997,20 @@ hospitals:
       container: li.column
       notes: ''
     status: ok
+
   - FAC: '939'
     name: TORONTO HOLLAND BLOORVIEW KIDS
     hospital_type: Chronic/Rehab Hospital
     url: https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team
-    pattern: field_content_sequential
+    pattern: div_classes
     expected_executives: 9
     html_structure:
-      element_selector: .field-content
-      pattern_type: sequential_every_3
-      start_index: 3
-      missing_people:
-        - name: Golda Milo-Manson, MD, FRCPC
-          title: Vice-President, Medicine and Academic Affairs
-      notes: ''
-    status: ok-mp
+      container_class: view__row
+      name_class: views-field-title
+      title_class: views-field-field-job-title
+    notes: 'Names in .views-field-title, titles in .views-field-field-job-title, within .view__row containers'
+    status: ok
+    
   - FAC: '850'
     name: TORONTO RUNNYMEDE HC
     hospital_type: Chronic/Rehab Hospital
@@ -2458,7 +2457,12 @@ hospital_overrides:
   
   # Example: FAC 969 - Ontario Shores
   # Issue: "Physician-in-Chief and Research Chair" not recognized
-  
+
+  FAC_939:
+    additional_name_patterns:
+      - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+, [A-Z]{2}, [A-Z]{2,}$"  # "Golda Milo-Manson, MD, FRCPC"
+    notes: "Hyphenated last name with comma-separated credentials (MD, FRCPC)"
+
   FAC_910:
     additional_name_patterns:
       - "^[A-Z][a-z]+ [a-z][a-z]+$"  # Allows lowercase last name (Firstname lastname)

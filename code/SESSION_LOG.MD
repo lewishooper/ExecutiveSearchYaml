@@ -17,6 +17,24 @@
 
 ---
 ## Session History
+## Session Log  Nov 15,2025 @20;45
+Summary of What We Accomplished:
+FAC 939 - TORONTO HOLLAND BLOORVIEW KIDS ✓
+
+Changed pattern from field_content_sequential to div_classes
+Added hospital override for "Name, Credentials" format (Golda Milo-Manson, MD, FRCPC)
+Result: All 9 executives found successfully
+
+FAC 676 - HANOVER & DISTRICT ✓
+
+Used missing_people strategy for Saskia MacMillan (span tag issue)
+Removed artificial limit in h2_name_p_title pattern code
+Result: Now captures all people; managers filtered in post-processing
+
+Key Pattern Improvement:
+
+Removed expected_executives limit from h2_name_p_title pattern
+This change benefits ALL hospitals using this pattern going forward
 ## sessioon log Nov 15,2025 @12:30PM
 Summary of Major Accomplishments
 Bugs Fixed (Global Impact)

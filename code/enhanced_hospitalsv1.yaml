@@ -522,7 +522,7 @@ hospitals:
       name_class: "text-weight-bold"
       title_class: ""
       notes: "Captures 31 people including managers and board. First 5 are executives. Filter on back-end."
-    status: ok
+    status: ok-PP
 
 
   - FAC: '800'
@@ -1999,17 +1999,14 @@ hospitals:
     name: TORONTO HOLLAND BLOORVIEW KIDS
     hospital_type: Chronic/Rehab Hospital
     url: https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team
-    pattern: field_content_sequential
+    pattern: div_classes
     expected_executives: 9
     html_structure:
-      element_selector: .field-content
-      pattern_type: sequential_every_3
-      start_index: 3
-      missing_people:
-        - name: Golda Milo-Manson, MD, FRCPC
-          title: Vice-President, Medicine and Academic Affairs
-      notes: ''
-    status: ok-mp
+      container_class: view__row
+      name_class: views-field-title
+      title_class: views-field-field-job-title
+    notes: 'Names in .views-field-title, titles in .views-field-field-job-title, within .view__row containers'
+    status: ok
   - FAC: '850'
     name: TORONTO RUNNYMEDE HC
     hospital_type: Chronic/Rehab Hospital

@@ -702,12 +702,6 @@ return(unique_pairs)
       }
       
       # Limit to expected count if specified
-      if (!is.null(hospital_info$expected_executives)) {
-        max_count <- hospital_info$expected_executives
-        if (length(pairs) > max_count) {
-          pairs <- pairs[1:max_count]
-        }
-      }
       
       # Add any missing people specified in config
       if (!is.null(hospital_info$html_structure$missing_people)) {
