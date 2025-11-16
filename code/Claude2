@@ -1,9 +1,20 @@
-Today we will continue to review the hospitals with missing persons to see if we  can improve recognition.
-I ran the test_all_configured Hospitals and Identified several where the expected counts differ from the actual. Many of these were addressed as counting issues, and fixed in the enhanced_hospitals.yaml
-However there are some errors which have been fixing and to date:
-We have fixed all the number discrepancies in Cominbed_h2
-Today we are focused on finalizing the errors in div_classes both complete failure to find anything and 1-2  missing people. We have fixed 4 of the 6 complete failures and will work on the remaining 2 before we move to the 5 hospitals with 1-2 missing executives
+The purpose of the project is to extact the members of the Hospital executive leadership team from Ontario Hosptials (about 140)
+This data will be used to monitor turnover in the executive teams over time. The data set wil also be linke to the Ontario Salary survey data in the future
+The focus is on being as acurate as possible. 
+the project is using webscrapping tools only and will generate patterns that can be used as guides to extract specific hospitals
+
+Phase 1: Generic approach for ~80% of hospitals
+  phase 1a,  get 30 hospitals configured and make a go no go on methods.
+Phase 2: Configure the ~20% problematic hospitals individually
+Phase 3: Handle edge cases as they come up
+Phase 4: data cleanup and  setting this program up to maintain and update a database of Hospital executives in ontario hospitals
+ 
+We are currently in phase 4 of the project, and today we are contining to identify and correct errors in the output
+These fall into two general types.
+1) a complete failure to identify anyone 
 In those cases I find where there is an error that is intended to be pickedup or cleaned up in post processing I have marked the yamal status as ok-PP
+2) those edge cases where 1-2 executives listed on the web page are missing in the data. 
+
 
 In order to continue our debugging process
 
@@ -12,14 +23,21 @@ the FAC  to debug
 a description of the error. Or issue as I understand it. 
 the yaml code for that FAC
 a snippet of html code for the CEO
-and the results of the quicktest
+and the results of the quicktest. If there is a complete failure to idnetify anything from the page I may pass additional information from the helper$analyze_hopsital_structure
+
 The working assumption is that changes to either the pattern_based_scraper.R and the enhanced_hospitals.yaml will be done in one of two ways.
 1) The error correction is likely specific only to that hospital or has risks of untoward effects it will go into the # HOSPITAL-SPECIFIC OVERRIDES (Phase 2 Addition)
 2) but where possible and with minimum risk the changes should go into the general RECOGNITION CONFIGURATION (Phase 2 Addition) of the  yaml file. That way we may correct other errors with this change
- Does the above make sense?
+3) Our emphasis is using the yaml code as the source of truth for name and title verification.
  
+Please review the pattern_based_scraper.R and the enhanced_hospitals.yaml
 
-in terms of workflow process. The pattern_based_scrape.r and the enhanced_hospitals.yaml code in the knowlege repostiory is current
+In terms of workflow process. The pattern_based_scrape.r and the enhanced_hospitals.yaml code in the knowlege repostiory is current
 however, the working copies of both files are in my R environment.
+
 If we need to run code to debug please give me the code and I will run in my R environment
+
+Some hospitals list executives with board members, and other managers or directors. This is especially common in small hospial
+These extra names will be dealt with in post processing. 
 Please consult me before creating any supplemental documentation.
+

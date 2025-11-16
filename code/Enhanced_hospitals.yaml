@@ -366,7 +366,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.temiskaming-hospital.com/board-of-directors
     pattern: h2_name_p_title
-    expected_executives: 8
+    expected_executives: 6
     html_structure:
       name_element: h2
       title_element: p
@@ -855,7 +855,7 @@ hospitals:
       missing_people:
         - name: Saskia MacMillan
           title: Vice President of Patient Care Service/CNE 
-      notes: ' Missing person TITLE WITH A "/" IS LIKELY THE PROBLEM'
+      notes: ' Different html Structure for Saskia'
     status: ok
 
 
@@ -1039,7 +1039,10 @@ hospitals:
       name_element: "p"
       title_element: "p"
       reversed: true
-    notes: "Alternating p elements. Titles in <strong> tags come before names. Empty p element breaks pattern for Tom Dorland."
+      missing_people:
+        - name: "Tom Dorland"
+          title: "VP Diagnostic, Hospital Information Services"
+    notes: "Alternating p elements. Titles in <strong> tags come before names. Tom Dorland has extra p tag around image that breaks sequential pairing."
     status: "ok"
 
   - FAC: '647'
@@ -1762,12 +1765,11 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.nygh.on.ca/about-us/leadership-team/
     pattern: h2_name_p_title
-    expected_executives: 11
+    expected_executives: 10
     html_structure:
       name_element: h2
       title_element: p
-      notes: h2=Name, p=Title. Terri Stuart-McEwan has hyphenated name that needs
-        pattern fix
+      notes: h2=Name, p=Title. 
     status: ok
   - FAC: '777'
     name: Queensway Carleton Hospital
@@ -2274,6 +2276,11 @@ name_patterns:
     - ^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$
     - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
     - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
+    # ADD THESE NEW PATTERNS FOR ACCENTED HYPHENATED NAMES:
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-Z][a-z]+$                    # Marc-André Morency
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-Z][a-z]+$              # Dr. Marc-André Morency
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$      # Marie-Claire Beauchemin
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$ # Dr. Jean-Philippe Leblanc
   complex_credentials:
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\.[A-Z][a-z]+\.,? [A-Z]{2,}.*$
     - ^Dr\.? [A-Z]\. [A-Z][a-z]+ [A-Z][a-z]+$
@@ -2457,7 +2464,13 @@ hospital_overrides:
   
   # Example: FAC 969 - Ontario Shores
   # Issue: "Physician-in-Chief and Research Chair" not recognized
-
+ # FAC 800 - Hawkesbury & District General
+  # Issue: "Dr. Paul E. Beaulé" - middle initial with accented last name
+  FAC_800:
+    additional_name_patterns:
+      - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"
+    notes: "Dr. with middle initial and accented last name (Beaulé)"
+    
   FAC_939:
     additional_name_patterns:
       - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+, [A-Z]{2}, [A-Z]{2,}$"  # "Golda Milo-Manson, MD, FRCPC"
