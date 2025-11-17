@@ -1048,7 +1048,7 @@ hospitals:
     hospital_type: "Small Hospital"
     url: "https://www.drhc.on.ca/board"
     pattern: "list_items"
-    expected_executives: 7
+    expected_executives: 6
     html_structure:
       list_type: "ul"
       format: "combined"
@@ -2307,6 +2307,8 @@ name_patterns:
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
+    - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+ \([A-Z][a-z]+\)$
+    - ^[A-Z][a-z]+ [A-Z][a-z]+ \([A-Z][a-z]+\)$
   flexible:
     - ^Dr\.? [A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$

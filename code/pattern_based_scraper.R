@@ -828,6 +828,9 @@ return(unique_pairs)
   # ============================================================================
   # PATTERN 6: List items with separator
   # ============================================================================
+  # ============================================================================
+  # PATTERN 6: List items with separator Revised Nov 17 2025
+  # ============================================================================
   scrape_list_items <- function(page, hospital_info, config) {
     tryCatch({
       li_elements <- page %>% html_nodes("li") %>% html_text2()
@@ -843,8 +846,6 @@ return(unique_pairs)
         clean_li <- trimws(clean_li)
         
         # Build regex pattern for separator
-        # put in Claude fix 
-        # Build regex pattern for separator
         if (separator == " | ") {
           sep_pattern <- "\\s*\\|\\s*"
         } else if (separator == ", ") {
@@ -852,52 +853,30 @@ return(unique_pairs)
         } else if (separator == " - ") {
           sep_pattern <- "\\s*-\\s*"
         } else {
-          # Escape all regex special characters
-          sep_clean <- trimws(separator)
-          # Use fixed=TRUE instead of regex to avoid escaping issues
-          # Just mark where to split
-          sep_pattern <- sep_clean
+          # For any other separator, escape special regex chars and add flexible spacing
+          sep_clean <- gsub("([.|()\\^{}+$*?\\[\\]])", "\\\\\\1", trimws(separator))
+          sep_pattern <- paste0("\\s*", sep_clean, "\\s*")
         }
         
-        # Split using the pattern
-        # insert claude split 
-        parts <- strsplit(clean_li, sep_pattern, fixed = TRUE)[[1]]
+        # Split by separator
+        parts <- strsplit(clean_li, sep_pattern, perl = TRUE)[[1]]
         
-        if (length(parts) < 2) next
-        
-        # Extract name and title
-        potential_name <- trimws(parts[1])
-        
-        # Handle multiple separators: combine all parts after first as title
-        if (length(parts) > 2) {
-          potential_title <- paste(parts[2:length(parts)], collapse = trimws(separator))
-        } else {
-          potential_title <- trimws(parts[2])
-        }
-        
-        # Clean the extracted data
-        potential_name <- clean_text_data(potential_name)
-        potential_title <- clean_text_data(potential_title)
-        
-        # Skip empty or invalid
-        if (nchar(potential_name) < 3 || nchar(potential_title) < 3 ||
-            tolower(potential_title) == "email") {
-          next
-        }
-        
-        # Validate
-        name_valid <- is_executive_name(potential_name, config, hospital_info)
-        title_valid <- is_executive_title(potential_title, config, hospital_info)
-        
-        if (name_valid && title_valid) {
-          pairs[[length(pairs) + 1]] <- list(
-            name = potential_name,
-            title = potential_title
-          )
+        if (length(parts) >= 2) {
+          potential_name <- trimws(parts[1])
+          potential_title <- paste(parts[2:length(parts)], collapse = " ") %>% trimws()
+          
+          # Validate name and title
+          if (is_executive_name(potential_name, config, hospital_info) && 
+              is_executive_title(potential_title, config, hospital_info)) {
+            pairs[[length(pairs) + 1]] <- list(
+              name = clean_text_data(potential_name),
+              title = clean_text_data(potential_title)
+            )
+          }
         }
       }
       
-      # Add missing people
+      # Add missing_people support
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -910,7 +889,7 @@ return(unique_pairs)
       return(pairs)
       
     }, error = function(e) {
-      cat("ERROR in scrape_list_items:", e$message, "\n")
+      cat("  ERROR in scrape_list_items:", e$message, "\n")
       return(list())
     })
   }

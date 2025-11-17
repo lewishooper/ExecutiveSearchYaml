@@ -4,7 +4,7 @@ config <- yaml::read_yaml("enhanced_hospitals.yaml")
 source("pattern_based_scraper.R")
 source("get_hosptial_info.R")
 source("test_all_configured_hospitals.R")
-FAC<-651
+FAC<-790
 
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, "HollandBloorview", "https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team")
@@ -12,7 +12,7 @@ helper$analyze_hospital_structure(FAC, "HollandBloorview", "https://hollandbloor
 helper$test_hospital_config(FAC, Name, url, "table_rows")# - Test configuration (reads from YAML)\n")  
 
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
-quick_test_batch(c(928,684,824,979,751,699)) #complete Div_classes failures
+quick_test_batch(c(666,957,647,930,881)) #complete Div_classes failures
 
 
 summarizeBaseLine <- Nov152025%>%
