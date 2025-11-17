@@ -33,7 +33,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.nosh.ca/board-of-directors
     pattern: table_rows
-    expected_executives: 5
+    expected_executives: 13
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -162,7 +162,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.ottawahospital.on.ca/en/about-us/our-leadership-team/senior-management-team/
     pattern: h2_name_p_title
-    expected_executives: 21
+    expected_executives: 25
     html_structure:
       name_element: h5
       title_element: p
@@ -327,7 +327,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.redlakehospital.ca/leadershipteam?s=1
     pattern: h2_name_p_title
-    expected_executives: 11
+    expected_executives: 8
     html_structure:
       name_element: h2
       title_element: p
@@ -355,7 +355,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://lwha.ca/about/contact/
     pattern: p_with_bold_and_br
-    expected_executives: 4
+    expected_executives: 3
     html_structure:
      
     notes: found in contact sheet,1 missign person logged
@@ -380,7 +380,7 @@ hospitals:
     hospital_type: 'Large Community Hospital'
     url: https://www.wdmh.on.ca/ourleadershipteam
     pattern: p_with_bold_and_br
-    expected_executives: 4
+    expected_executives: 8
     html_structure:
       - ~
       - ~
@@ -619,7 +619,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.whgh.ca/senior-leadership-team/
     pattern: p_with_bold_and_br
-    expected_executives: 4
+    expected_executives: 5
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -723,7 +723,7 @@ hospitals:
   - FAC: "704"
     name: "Erie Shores Leamington"
     url: "https://erie.bluelemonmedia.com/boardofdirectors"
-    expected_executives: 15
+    expected_executives: 14
     
     pattern: "table_cells"
     html_structure:
@@ -822,7 +822,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.ndh.on.ca/board-of-directors/
     pattern: h2_name_p_title
-    expected_executives: 12
+    expected_executives: 7
     html_structure:
       name_element: h1
       title_element: h4
@@ -905,7 +905,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.geraldtondh.com/board-of-directors
     pattern: table_rows
-    expected_executives: 5
+    expected_executives: 12
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -1007,8 +1007,6 @@ hospitals:
         title: "Interim, Medical Director, Integrated Forensics Program"
 
 
-    
- 
 
   - FAC: '650'
     name: "ELLIOT LAKE ST JOSEPH'S"
@@ -1408,7 +1406,7 @@ hospitals:
     partnership:  Huron Perth Hospital association
     partnership_abbrev:  "HPHA"
     pattern: p_with_bold_and_br
-    expected_executives: 5
+    expected_executives: 6
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -1589,7 +1587,7 @@ hospitals:
     partnership: "Huron Perth Healthcare alliance"
     partnership_abbrev: "HPHA"
     pattern: p_with_bold_and_br
-    expected_executives: 5
+    expected_executives: 6
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -1677,7 +1675,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.cmh.org/contacts
     pattern: table_rows
-    expected_executives: 5
+    expected_executives: 16
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -2026,6 +2024,7 @@ hospitals:
       separator: ', '
     notes: need to strip out board chair
     status: ok
+    
   - FAC: '927'
     name: Windsor Hotel Dieu Grace
     hospital_type: Chronic/Rehab Hospital
@@ -2381,6 +2380,7 @@ recognition_config:
     # Secondary keywords (Associates, Assistants, Acting positions)
     secondary:
       - Associate
+      - Head, Department
       - Assistant
       - Interim
       - Acting

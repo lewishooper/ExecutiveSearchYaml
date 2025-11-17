@@ -4,10 +4,7 @@ config <- yaml::read_yaml("enhanced_hospitals.yaml")
 source("pattern_based_scraper.R")
 source("get_hosptial_info.R")
 source("test_all_configured_hospitals.R")
-FAC<-676
-
-
-
+FAC<-651
 
 quick_test(FAC)
 helper$analyze_hospital_structure(FAC, "HollandBloorview", "https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team")
@@ -42,3 +39,4 @@ source("test_all_configured_hospitals.R")
 
 FAC <- 978
 quick_test(FAC)
+

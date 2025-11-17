@@ -1,20 +1,42 @@
-   
-  - FAC: "592"
-    name: "NAPANEE LENNOX & ADDINGTON"
-    hospital_type: "Small Hospital"
-    url: "https://web.lacgh.napanee.on.ca/about/governance/"
-    pattern: combined_h2
-    expected_executives: 3
+ 
+
+
+  - FAC: '651'
+    name: "OTTAWA ROYAL OTTAWA (PSYCH)"
+    hospital_type: "Specialty Mental Health Hospital"
+    url: "https://www.theroyal.ca/about-royal/leadership/senior-leadership-team"
+    pattern: "manual_entry_required"
+    expected_executives: 13
     html_structure:
-       combined_element: "p"
-       separator: "-"
-       reversed: true          # ← Key!
-       notes: "Title:Name format"
+      notes: Java script issue
     status: "ok-MER"
     known_executives:
-    - name: "Mike Bell"
-      title: "President & CEO"
-    - name: "Kristen Rochon"
-      title: "Vice President, Patient & Resident Services and Chief Nursing Officer"
-    - name: "Dr. Kimberley Morrison"
-      title: "Chief of Medical Staff"
+      - name: "Cara Vaccarino"
+        title: "President and CEO"
+      - name: "Dr. Benoît Mulsant"
+        title: "Interim Psychiatrist-in-Chief and Chief of Staff"
+      - name: "Nyranne Martin"
+        title: "Chief Operating Officer"
+      - name: "Dr. Florence Dzierszinski"
+        title: "President & CEO, IMHR and VP of Research at The Royal"
+      - name: "Chris Ide"
+        title: "President & CEO, Foundation and VP, Brand & Marketing"
+      - name: "Linda Mohri"
+        title: "Senior VP, Patient Care Services"
+      - name: "Laura MacDonald"
+        title: "VP, People and Culture"
+      - name: "Carolyn Jodouin"
+        title: "VP, Finance"
+      - name: "Kristina McGeough"
+        title: "Executive Director"
+      - name: "Domenic Ielo"
+        title: "Executive Director and Interim Chief Nursing Executive"
+      - name: "Stephanie Carter"
+        title: "Executive Director"
+      - name: "Andrea MacLean"
+        title: "Director, Communications"
+      - name: "Dr. Floyd Wood"
+        title: "Interim, Medical Director, Integrated Forensics Program"
+
+
+    
