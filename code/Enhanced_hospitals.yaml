@@ -700,7 +700,7 @@ hospitals:
     name: "Erie Shores Leamington"
     url: "https://erie.bluelemonmedia.com/boardofdirectors"
     expected_executives: 14
-    
+    hospital_type: 'Small Hospital'
     pattern: "table_cells"
     html_structure:
       separator: "\n"
@@ -727,6 +727,7 @@ hospitals:
     name: "HORNEPAYNE COMMUNITY"
     url: "https://www.hornepaynecommunityhospital.ca/about-1"
     expected_executives: 4
+    hospital_type: 'Small Hospital'
     pattern: "div_container_multiclass"
     html_structure:
       container_selector: "[data-testid='mesh-container-content']"
@@ -1184,6 +1185,7 @@ hospitals:
   - FAC: "968"
     name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
     url: "https://www.mahc.ca/about-us/leadership/"
+    hospital_type: 'Large Community Hospital'
     pattern: "combined_h2"
     expected_executives: 17
     html_structure:
@@ -1219,6 +1221,7 @@ hospitals:
   - FAC: '967'
     name: CORNWALL COMMUNITY
     url: https://www.cornwallhospital.ca/en/SeniorAdmin
+    hospital_type: Large Community Hospital
     pattern: "combined_h2"
     expected_executives: 5
     html_structure:
