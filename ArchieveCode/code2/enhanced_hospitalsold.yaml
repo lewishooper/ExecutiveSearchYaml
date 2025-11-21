@@ -5,7 +5,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://unityhealth.to/about-unity-health/about-unity-health-toronto/leadership/
     pattern: div_classes
-    expected_executives: 17
+    expected_executives: 10
     html_structure:
       name_class: card-title
       title_class: card-subtitle
@@ -23,9 +23,12 @@ hospitals:
     html_structure:
       name_class: field--name-title
       title_class: field--name-field-position
-      container_class: teaser-title-header  # ADD THIS LINE
-      notes: ''
-    status: ok
+      missing_people:
+        - name: Valérie Gamache-O'Leary
+          title: Vice President and Chief Information Officer
+        
+      notes: missing_people
+    status: ok-mp
     
     
   - FAC: '977'
@@ -33,7 +36,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.nosh.ca/board-of-directors
     pattern: table_rows
-    expected_executives: 13
+    expected_executives: 5
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -88,8 +91,7 @@ hospitals:
     html_structure:
       name_class: "field--name-title"
       title_class: "field--name-field-role"
-      container_class: node__content
-    notes: 
+    notes: Fails to find title for Daniel Mueller...Physician-in-Chief and Research Chair of Personalized Medicine and Personalized Mental Health Care
     status: ok
     
 
@@ -120,14 +122,14 @@ hospitals:
       combined_element: "span.wixui-rich-text__text"
       separator: " - "
       notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
-    status: ok-PP
+    status: ok
 
   - FAC: '961'
     name: 'OTTAWA HEART INSTITUTE'
     hospital_type: 'Teaching Hospital'
     url: https://www.ottawaheart.ca/who-we-are/governance-and-leadership/our-management-team
     pattern: h2_name_p_title
-    expected_executives: 12
+    expected_executives: 11
     html_structure:
       name_element: h2
       title_element: h4
@@ -162,7 +164,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.ottawahospital.on.ca/en/about-us/our-leadership-team/senior-management-team/
     pattern: h2_name_p_title
-    expected_executives: 25
+    expected_executives: 21
     html_structure:
       name_element: h5
       title_element: p
@@ -197,15 +199,15 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.hamiltonhealthsciences.ca/about-us/our-organization/senior-leadership-team/
     pattern: div_classes
-    expected_executives: 18
+    expected_executives: 19
     html_structure:
        name_class: staff-name
        title_class: staff-title
        missing_people:
-       #  - name: Rochelle Reid
-       #     title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
+         - name: Rochelle Reid
+           title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
     notes: ~
-    status: ok
+    status: ok-mp
 
   - FAC: '938'
     name: 'DYSART ET AL HALIBURTON HEALTH SER'
@@ -235,7 +237,7 @@ hospitals:
   - FAC: '933'
     name: 'WINDSOR REGIONAL HOSPITAL'
     hospital_type: 'Large Community Hospital'
-    url: https://www.wrh.on.ca/ExecutiveCommittee
+    url: #https://www.wrh.on.ca/ExecutiveCommittee
     pattern: manual_entry_required
     expected_executives: 10
     html_structure:
@@ -273,7 +275,7 @@ hospitals:
     html_structure:
       name_class: leadership-block-name
       title_class: leadership-block-title
-      container_class: leadership-block 
+      container_class:
     notes: ~
     status: ok
     
@@ -327,7 +329,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.redlakehospital.ca/leadershipteam?s=1
     pattern: h2_name_p_title
-    expected_executives: 8
+    expected_executives: 11
     html_structure:
       name_element: h2
       title_element: p
@@ -355,7 +357,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://lwha.ca/about/contact/
     pattern: p_with_bold_and_br
-    expected_executives: 3
+    expected_executives: 4
     html_structure:
      
     notes: found in contact sheet,1 missign person logged
@@ -366,7 +368,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.temiskaming-hospital.com/board-of-directors
     pattern: h2_name_p_title
-    expected_executives: 6
+    expected_executives: 8
     html_structure:
       name_element: h2
       title_element: p
@@ -380,7 +382,7 @@ hospitals:
     hospital_type: 'Large Community Hospital'
     url: https://www.wdmh.on.ca/ourleadershipteam
     pattern: p_with_bold_and_br
-    expected_executives: 8
+    expected_executives: 4
     html_structure:
       - ~
       - ~
@@ -393,7 +395,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.wngh.ca/about-wngh/board/#gsc.tab=0
     pattern: list_items
-    expected_executives: 5
+    expected_executives: 7
     html_structure:
       list_type: ol
       format: combined
@@ -408,7 +410,7 @@ hospitals:
     hospital_type: 'Teaching Hospital'
     url: https://www.womenscollegehospital.ca/who-we-are/executive-team/
     pattern: div_classes
-    expected_executives: 10
+    expected_executives: 
     html_structure:
       name_class: card-title
       title_class: card-subtitle
@@ -480,6 +482,19 @@ hospitals:
         title: Vice President of Medical Staff
 
 
+  - FAC: '824'
+    name: 'Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL'
+    hospital_type: Small Hospital
+    partnership:  Rural Roads Health Services
+    url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
+    pattern: div_classes
+    expected_executives: 7
+    html_structure:
+      name_class: person-name
+      title_class: person-title
+      container_class: author-wrapper
+      notes: need to filter off board members
+    status: ok
     
     
   - FAC: '809'
@@ -579,23 +594,23 @@ hospitals:
       missing_people:
         - name: "Dr. Chantal D'Aoust-Bernard"
           title: "Chief-of-staff"
-        #- name: "Valérie Dubois Desroches"
-         # title: "Senior Vice-President, Patient Care"
-    
+        - name: "Valérie Dubois Desroches"
+          title: "Senior Vice-President, Patient Care"
+        - name: "Martin Sauvé"
+          title: "Director of Communications"
       notes: "Button elements with comma-separated name and title. Three executives with special characters added manually."
     status: ok-mp
-    
-    
+
   - FAC: '751'
     name: 'OTTAWA CHEO CTC'
     hospital_type: 'Specialty Children Hospital'
     url: https://www.cheo.on.ca/en/about-us/senior-leadership.aspx?_mid_=1829
-    pattern: h2_name_p_title
+    pattern: div_classes
     expected_executives: 15
     html_structure:
       name_element: h2
-      title_element: td[data-name='accParent']
-      notes: 'Table-based accordion with data-name attributes in factsheet containers'
+      container: div.factsheet__callout
+      notes: 'Table-based accordion with data-name attributes'
     status: ok
     
 
@@ -611,7 +626,7 @@ hospitals:
       title_class: staff-title
       container_class: staff-top
     notes: includes board names and titles
-    status: ok-pp
+    status: ok
 
 
   - FAC: '734'
@@ -619,7 +634,7 @@ hospitals:
     hospital_type: 'Small Hospital'
     url: https://www.whgh.ca/senior-leadership-team/
     pattern: p_with_bold_and_br
-    expected_executives: 5
+    expected_executives: 4
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -711,7 +726,6 @@ hospitals:
     partnership: Listowel Wingham Hospital Alliance
     url: https://lwha.ca/about/board/
     pattern: "manual_entry_required"
-    expected_executives: 5
     html_structure:
       notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
     status: "ok-MER"
@@ -723,7 +737,7 @@ hospitals:
   - FAC: "704"
     name: "Erie Shores Leamington"
     url: "https://erie.bluelemonmedia.com/boardofdirectors"
-    expected_executives: 14
+    expected_executives: 15
     
     pattern: "table_cells"
     html_structure:
@@ -757,8 +771,8 @@ hospitals:
       name_class: "font_5"
       title_class: "font_7"
       category_filter: ["​"]  # Filter out the zero-width space
-      notes: 
-    status: "ok"
+      notes: Need to filter out emails in the final version added to ok-mp for this reson
+    status: "ok-mp"
 
   - FAC: '686'
     name: 'WAWA LADY DUNN HC'
@@ -778,13 +792,13 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.micsgroup.com/governance/board-of-directors/
     pattern: "p_with_br_list_reversed"
-    expected_executives: 5
+    expected_executives: 4
     partnership: "MICS Group"
     html_structure:
       container_class: "elementor-icon-box-description"
       separator: " | "
       notes: "Title | Name format in single <p> with <br> separators"
-    status: "ok-pp"
+    status: "ok"
     
 
   - FAC: '684'
@@ -797,23 +811,10 @@ hospitals:
     html_structure:
       name_class: person-name
       title_class: person-title
-      container_class: person-author-wrapper  # FIXED
+      container_class: author-wrapper
       notes: need to filter off board members
-    status: ok-PP
+    status: ok
 
-  - FAC: '824'
-    name: 'Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL'
-    hospital_type: Small Hospital
-    partnership:  Rural Roads Health Services
-    url: https://www.ruralroadshealthservices.ca/about/board-of-directors/
-    pattern: div_classes
-    expected_executives: 7
-    html_structure:
-      name_class: person-name
-      title_class: person-title
-      container_class: person-author-wrapper  # FIXED
-      notes: need to filter off board members
-    status: ok-PP
 
 
     
@@ -822,7 +823,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.ndh.on.ca/board-of-directors/
     pattern: h2_name_p_title
-    expected_executives: 7
+    expected_executives: 12
     html_structure:
       name_element: h1
       title_element: h4
@@ -835,7 +836,7 @@ hospitals:
     hospital_type: Other Hospital
     url: ''
     pattern: closed
-    expected_executives: 4
+    expected_executives: 5
     html_structure:
       combined_element: ''
       separator: ''
@@ -847,7 +848,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.hanoverhospital.on.ca/our-team
     pattern: h2_name_p_title
-    expected_executives: 4
+    expected_executives: 3
     html_structure:
       name_element: p
       title_element: p
@@ -855,8 +856,8 @@ hospitals:
       missing_people:
         - name: Saskia MacMillan
           title: Vice President of Patient Care Service/CNE 
-      notes: ' Different html Structure for Saskia'
-    status: ok
+      notes: ' Missing person TITLE WITH A "/" IS LIKELY THE PROBLEM'
+    status: ok-mp
 
 
   - FAC: '674'
@@ -905,7 +906,7 @@ hospitals:
     hospital_type: Small Hospital
     url: https://www.geraldtondh.com/board-of-directors
     pattern: table_rows
-    expected_executives: 12
+    expected_executives: 5
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -925,7 +926,7 @@ hospitals:
       combined_element: "span.wixui-rich-text__text"
       separator: " - "
       notes: "Span elements with dash separator. CEO, Interim VP, Chief of Staff, President of Professional Staff. Board members filtered out by title validation."
-    status: ok-PP
+    status: ok
     
   - FAC: '655'
     name: Huron Health EXETER SOUTH HURON
@@ -966,7 +967,7 @@ hospitals:
       title_class: position
       container_class: member-name
       notes: Leadership page includes both executives and board members
-    status: ok-PP
+    status: ok
     
 
   - FAC: '651'
@@ -1007,6 +1008,8 @@ hospitals:
         title: "Interim, Medical Director, Integrated Forensics Program"
 
 
+    
+ 
 
   - FAC: '650'
     name: "ELLIOT LAKE ST JOSEPH'S"
@@ -1037,10 +1040,7 @@ hospitals:
       name_element: "p"
       title_element: "p"
       reversed: true
-      missing_people:
-        - name: "Tom Dorland"
-          title: "VP Diagnostic, Hospital Information Services"
-    notes: "Alternating p elements. Titles in <strong> tags come before names. Tom Dorland has extra p tag around image that breaks sequential pairing."
+    notes: "Alternating p elements. Titles in <strong> tags come before names. Empty p element breaks pattern for Tom Dorland."
     status: "ok"
 
   - FAC: '647'
@@ -1048,7 +1048,7 @@ hospitals:
     hospital_type: "Small Hospital"
     url: "https://www.drhc.on.ca/board"
     pattern: "list_items"
-    expected_executives: 6
+    expected_executives: 7
     html_structure:
       list_type: "ul"
       format: "combined"
@@ -1150,25 +1150,27 @@ hospitals:
     hospital_type: "Specialty Mental Health Hospital"
     url: "https://homewoodhealth.com/home/about-us/leadership/"
     pattern: "combined_h2"
-    expected_executives: 7
+    expected_executives: 8
     html_structure:
       combined_element: "h3"
       separator: ","
       notes: "Name and title combined in H3 elements with comma separator"
     status: "ok"
  
+   
   - FAC: '599'
-    name: ARNPRIOR & DISTRICT MEMORIAL
+    name: MRHA ARNPRIOR & DISTRICT MEMORIAL
     hospital_type: Small Hospital
-    url: https://www.arnpriorregionalhealth.ca/about-us/
-    pattern: div_classes
-    expected_executives: 6
+    url: https://www.mrha.ca/seniorteam
+    partnership: "Mississippi River Heath Alliance"
+    parternship_abbrev: "MRHA"
+    pattern: h2_name_h3_title
+    expected_executives: 7
     html_structure:
-      container_class: desc_wrapper
-      name_class: desc_wrappper_title
-      title_class: subtitle
-      notes: 
-    status: needs_testing
+      name_element: h2
+      title_element: h3
+      notes: ''
+    status: ok
 
 
   - FAC: '597'
@@ -1187,7 +1189,6 @@ hospitals:
     name: Middlesex Hospital Alliance NEWBURY FOUR COUNTIES HEALTH SERV.
     hospital_type: Small Hospital
     url: https://mhalliance.on.ca/about/administration/
-    partnership: Middlesex Hospital Alliance
     pattern: combined_h2
     expected_executives: 4
     html_structure:
@@ -1195,7 +1196,7 @@ hospitals:
       separator: ','
       notes: ''
   
-    status: ok-pp
+    status: ok
  
   - FAC: '592'
     name: "NAPANEE LENNOX & ADDINGTON"
@@ -1208,36 +1209,38 @@ hospitals:
       separator: " – "
       reversed: true
       missing_people:
-        #- name: Mr. Mike Bell
-         # title: President and CEO
-        # - name: Ms. Kristen Rochon
-          #title: Vice President, Patient & Resident Services and Chief Nursing Officer 
+        - name: Mr. Mike Bell
+          title: President and CEO
+        - name: Ms. Kristen Rochon
+          title: Vice President, Patient & Resident Services and Chief Nursing Officer 
+
+
       notes: "P elements with reversed format: Title – Name. Includes board members (President of Volunteer Services) to filter later."
-    status: ok-pp
+    status: ok-mp
     
     
   - FAC: "968"
     name: "HUNTSVILLE MUSKOKA ALGONQUIN HC"
     url: "https://www.mahc.ca/about-us/leadership/"
     pattern: "combined_h2"
-    expected_executives: 17
+    expected_executives: 5
     html_structure:
       combined_element: p
       separator: <br>
       reversed: False
       notes: "Names embedded in 'Email [Name]' links - unique structure. Some content may be JavaScript-loaded (Dr. Abdel-Razek visible on site but not in initial HTML fetch)."
-    status: ok-pp
+    status: ok-mp
     known_executives:
-    # - name: "Cheryl Harrison"
-     #  title: "President & Chief Executive Officer"
-     #- name: "Diane George"
-      # title: "Vice President, Integrated Care, Patient Services, Quality & Chief Nursing Executive"
-     #- name: "Alasdair Smith"
-      # title: "Vice President, Corporate Services & Chief Financial Officer"
-     #- name: "Mary Silverthorn"
-      # title: "Vice President, People, Communications, Stakeholder Relations & Chief Human Resources Officer"
-     #- name: "Dr. Khaled Abdel-Razek"
-      # title: "Chief of Staff"
+     - name: "Cheryl Harrison"
+       title: "President & Chief Executive Officer"
+     - name: "Diane George"
+       title: "Vice President, Integrated Care, Patient Services, Quality & Chief Nursing Executive"
+     - name: "Alasdair Smith"
+       title: "Vice President, Corporate Services & Chief Financial Officer"
+     - name: "Mary Silverthorn"
+       title: "Vice President, People, Communications, Stakeholder Relations & Chief Human Resources Officer"
+     - name: "Dr. Khaled Abdel-Razek"
+       title: "Chief of Staff"
 
   - FAC: "600"
     name: "ATIKOKAN GENERAL HOSPITAL"
@@ -1249,7 +1252,7 @@ hospitals:
      combined_element: "p"
      separator: " | "
      notes: "Page shows 'Board of Directors' but contains Senior Management Team. Jeremy Dickson has no title."
-    status: "ok-PP"
+    status: "ok"
     
   - FAC: '967'
     name: CORNWALL COMMUNITY
@@ -1313,15 +1316,12 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.brightshores.ca/about-us/executive-team/
     pattern: combined_h2
-    expected_executives: 8
+    expected_executives: 7
     html_structure:
       combined_element: p
       separator: ','
-      missing_people:
-      #  - name: Dr. Cornelius Van Zyl
-       #   title: Chief of Staff
       notes: Executive assistant dealt iwth in Post Need to deal with phone numbers
-    status: ok-PP
+    status: ok-mp 
   
     
   - FAC: '950'
@@ -1373,11 +1373,12 @@ hospitals:
       notes: "Title in secondary-heading class, name in heading class - reversed order"
     status: ok
   
+        
   - FAC: '928'
     name: PERTH SMITHS FALLS
     hospital_type: Large Community Hospital
     url: https://psfdh.on.ca/leadershipteam
-    pattern: combined_h2  # FIXED - was div_classes
+    pattern: div_classes
     expected_executives: 5
     html_structure:
       combined_element: p
@@ -1388,7 +1389,6 @@ hospitals:
   - FAC: '814'
     name: Middlesex Hosptial Alliance  STRATHROY MIDDLESEX GENERAL
     hospital_type: Large Community Hospital
-    partnership: Middlesex Hospital Alliance
     url: https://mhalliance.on.ca/about/administration/
     pattern: combined_h2
     expected_executives: 4
@@ -1396,7 +1396,7 @@ hospitals:
       combined_element: h3
       separator: ', '
       notes: 
-    status: ok-pp
+    status: ok
   - FAC: '813'
     name: HPHA STRATFORD GENERAL 
     hospital_type: Large Community Hospital
@@ -1404,7 +1404,7 @@ hospitals:
     partnership:  Huron Perth Hospital association
     partnership_abbrev:  "HPHA"
     pattern: p_with_bold_and_br
-    expected_executives: 6
+    expected_executives: 5
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -1423,7 +1423,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.prhc.on.ca/about-us/senior-leadership/
     pattern: combined_h2
-    expected_executives: 8
+    expected_executives: 9
     html_structure:
       combined_element: span
       separator: ','
@@ -1513,28 +1513,24 @@ hospitals:
     name: WRHN-KITCHENER ST MARY'S
     hospital_type: Large Community Hospital
     url: https://www.smgh.ca/about-us/our-leadership-team
-    partnership: Waterloo Regional Health Network
-    partnership_abbrev: WRHN
     pattern: div_classes
     expected_executives: 17
     html_structure:
       name_class: name
       title_class: position
-      container_class: member-name
+      container_class: staff-member
     status: ok
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
     url: https://www.grhosp.on.ca/about/senior-leadership-team
-    partnership: Waterloo Regional Health Network
-    partnership_abbrev: WRHN
     pattern: list_items
     expected_executives: 17
     html_structure:
       list_type: ul
       format: combined
       separator: ', '
-      notes: Different URLS for leadership even though they are the same people 
+      notes: Combined with St.Marys Kitchner, Has multiple commas in title
     status: ok
   - FAC: '665'
     name: GUELPH GENERAL
@@ -1551,7 +1547,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://cgmh.on.ca/team/senior-leadership-team
     pattern: div_classes
-    expected_executives: 9
+    expected_executives: 5
     html_structure:
       name_class: title
       title_class: job_title
@@ -1585,7 +1581,7 @@ hospitals:
     partnership: "Huron Perth Healthcare alliance"
     partnership_abbrev: "HPHA"
     pattern: p_with_bold_and_br
-    expected_executives: 6
+    expected_executives: 5
     html_structure:
       notes: Names in <strong> within <p>, titles after <br>
     status: ok
@@ -1673,7 +1669,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.cmh.org/contacts
     pattern: table_rows
-    expected_executives: 16
+    expected_executives: 5
     html_structure:
       structure_type: table
       name_location: td_column_1
@@ -1727,7 +1723,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.hrh.ca/who-we-are/accountability/governance-leadership/
     pattern: combined_h2
-    expected_executives: 11
+    expected_executives: 9
     html_structure:
       combined_element: h3
       separator: ' - '
@@ -1743,7 +1739,7 @@ hospitals:
       combined_element: h3
       separator: ', '
       notes: ''
-    status: ok-PP
+    status: ok
   - FAC: '905'
     name: OAK VALLEY HEALTH
     hospital_type: Large Community Hospital
@@ -1761,11 +1757,12 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.nygh.on.ca/about-us/leadership-team/
     pattern: h2_name_p_title
-    expected_executives: 10
+    expected_executives: 11
     html_structure:
       name_element: h2
       title_element: p
-      notes: h2=Name, p=Title. 
+      notes: h2=Name, p=Title. Terri Stuart-McEwan has hyphenated name that needs
+        pattern fix
     status: ok
   - FAC: '777'
     name: Queensway Carleton Hospital
@@ -1798,10 +1795,9 @@ hospitals:
     html_structure:
       name_class: staff-name
       title_class: staff-title
-      container_class: staff-info
+      container_class: staff-member
       notes: div class=staff-info
     status: ok
-    
   - FAC: '837'
     name: TORONTO HOSPITAL FOR SICK CHILDREN
     hospital_type: Specialty Children Hospital
@@ -1809,10 +1805,10 @@ hospitals:
     pattern: div_classes
     expected_executives: 14
     html_structure:
-      container_class: card-body  # Changed from 'card'
+      container_class: card
       name_class: card-title
       title_class: card-text
-    notes: Board members filtered via title exclusions
+      notes: Card 1 is news article. Board members included - clean in post.
     status: ok
   - FAC: '976'
     name: TORONTO SINAI HEALTH SYSTEM
@@ -1825,9 +1821,12 @@ hospitals:
       title_class: bio-token--position
       container_class: bio-token--inner
       missing_people:
-      #  - name: Dr. Anne-Claude Gingras
-       #   title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
-        #    Research for Sinai Health
+        - name: Louis de Melo
+          title: President and Chief Executive Officer (CEO), Sinai Health Foundation
+            and Executive Vice President, Academic Advancement, Sinai Health SYSTEM
+        - name: Dr. Anne-Claude Gingras
+          title: Director, Lunenfeld-Tanenbaum Research Institute, and Vice President,
+            Research for Sinai Health
       notes: ''
     status: ok-mp
   - FAC: '793'
@@ -1925,7 +1924,7 @@ hospitals:
     hospital_type: Large Community Hospital
     url: https://www.williamoslerhs.ca/en/who-we-are/leadership-team.aspx?_mid_=102146
     pattern: combined_h2
-    expected_executives: 17
+    expected_executives: 5
     html_structure:
       combined_element: h3
       separator: ', '
@@ -1936,17 +1935,16 @@ hospitals:
     hospital_type: Chronic/Rehab Hospital
     url: https://providencecare.ca/about-us/senior-leadership-team/
     pattern: div_classes
-    expected_executives: 12
     html_structure:
       name_class: mb-name
       title_class: mb-position
       container_class: mb-item
       notes: ''
       missing_people:
-      #  - name: Dr. Simon O'Brien
-       #   title: Chair, Medical Advisory Committee
-      #  - name: Tamás Zsolnay
-       #   title: President & CEO, University Hospitals Kingston Foundation
+        - name: Dr. Simon O'Brien
+          title: Chair, Medical Advisory Committee
+        - name: Tamás Zsolnay
+          title: President & CEO, University Hospitals Kingston Foundation
     status: ok-mp
   - FAC: '932'
     name: Elizabeth Bruyere Hospital
@@ -1995,20 +1993,21 @@ hospitals:
       container: li.column
       notes: ''
     status: ok
-
   - FAC: '939'
     name: TORONTO HOLLAND BLOORVIEW KIDS
     hospital_type: Chronic/Rehab Hospital
     url: https://hollandbloorview.ca/about-us/about-holland-bloorview/governance-and-leadership/hospital-executive-leadership-team
-    pattern: div_classes
+    pattern: field_content_sequential
     expected_executives: 9
     html_structure:
-      container_class: view__row
-      name_class: views-field-title
-      title_class: views-field-field-job-title
-    notes: 'Names in .views-field-title, titles in .views-field-field-job-title, within .view__row containers'
-    status: ok
-    
+      element_selector: .field-content
+      pattern_type: sequential_every_3
+      start_index: 3
+      missing_people:
+        - name: Golda Milo-Manson, MD, FRCPC
+          title: Vice-President, Medicine and Academic Affairs
+      notes: ''
+    status: ok-mp
   - FAC: '850'
     name: TORONTO RUNNYMEDE HC
     hospital_type: Chronic/Rehab Hospital
@@ -2022,7 +2021,6 @@ hospitals:
       separator: ', '
     notes: need to strip out board chair
     status: ok
-    
   - FAC: '927'
     name: Windsor Hotel Dieu Grace
     hospital_type: Chronic/Rehab Hospital
@@ -2077,9 +2075,9 @@ hospitals:
     pattern: combined_h2
     expected_executives: 6
     html_structure:
-      combined_element: div.text > p:first-of-type
+      combined_element: p
       separator: ','
-    notes: 'First paragraph in each bio contains Name, Title format'
+      notes: 'Format: Name, Title in P elements with comma separator'
     status: ok
 pattern_templates:
   h2_name_h3_title_example:
@@ -2195,7 +2193,6 @@ executive_titles:
     - Chief Executive Officer
     - CEO
     - President
-    - Secretary/President & CEO
     - Chief Medical Officer
     - CMO
     - Chief of Staff
@@ -2251,17 +2248,6 @@ name_patterns:
     - ^[A-Z][a-z]+ (van|de|del|von|di) [A-Z][a-z]+$
     - '^Sr\.? [A-Z][a-z]+ [A-Z][a-z]+$'
     - '^Sr\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$'
-    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z][a-z]+$
-    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
-    - ^(Mr|Ms|Mrs|Miss)\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
-        - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+$
-    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z]\. [A-Z][a-z]+$
-    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+ [A-Z][a-z]+$
-    - ^Email (Mr|Ms|Mrs|Miss|Dr|Sr)\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
-    - ^[A-Z][a-z]+ [A-Z][a-z]+,\s+(Senior\s+)?Vice\s+President$
-    - ^[A-Z][a-z]+ [A-Z][a-z]+,\s+(Senior\s+)?(Vice\s+)?President$
-    - ^[A-Z][a-z]+ [A-Z][a-z]+,.*$
-    
   with_credentials:
     - ^Dr\.? [A-Z][a-z]+ [A-Z]?\. [A-Z][a-z]+,? [A-Z]{2,}.*$
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
@@ -2273,11 +2259,6 @@ name_patterns:
     - ^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-zA-Z]+$
     - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+$
     - ^[A-Z][a-z]+-[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]{2,}.*$
-    # ADD THESE NEW PATTERNS FOR ACCENTED HYPHENATED NAMES:
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-Z][a-z]+$                    # Marc-André Morency
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-Z][a-z]+$              # Dr. Marc-André Morency
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$      # Marie-Claire Beauchemin
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$ # Dr. Jean-Philippe Leblanc
   complex_credentials:
     - ^[A-Z][a-z]+ [A-Z][a-z]+,? [A-Z]\.[A-Z][a-z]+\.,? [A-Z]{2,}.*$
     - ^Dr\.? [A-Z]\. [A-Z][a-z]+ [A-Z][a-z]+$
@@ -2288,25 +2269,21 @@ name_patterns:
     - ^[A-Z][a-z]+ O'[A-Z][a-z]+$
     - ^[A-Z][a-z]+ De[A-Z][a-z]+$
     - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+$
-    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$ 
+    - ^[A-Z][a-z]+ Van[A-Z][a-z]+$
     - ^[A-Z][a-z]+ La[A-Z][a-z]+$
     - ^Dr\.? [A-Z][a-z]+ van [A-Z][a-z]+$
   accented_names:
-    # Two-part names with accents
     - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    # French Canadian patterns (safe, structured)
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^[A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^Dr\. [A-Z][a-z]+ [A-Z]'[A-Z][a-z]+-[A-Z][a-z]+$
-    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]'[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
-   
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - ^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ]\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$
+    - '^Dr\.? [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
+    - '^[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+ [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+-[A-ZÀ-ÖØ-Þ]''[A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$'
   parenthetical_names:
     - ^Dr\.? [A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \([A-Z][a-z]+\) [A-Z][a-z]+$
-    - ^Dr\.? [A-Z][a-z]+ [A-Z][a-z]+ \([A-Z][a-z]+\)$
-    - ^[A-Z][a-z]+ [A-Z][a-z]+ \([A-Z][a-z]+\)$
   flexible:
     - ^Dr\.? [A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$
     - ^[A-Z][a-z]+ \\([A-Z][a-z]+\\) [A-Z][a-z]+$
@@ -2380,7 +2357,6 @@ recognition_config:
     # Secondary keywords (Associates, Assistants, Acting positions)
     secondary:
       - Associate
-      - Head, Department
       - Assistant
       - Interim
       - Acting
@@ -2430,7 +2406,10 @@ recognition_config:
     - "©"
     - "copyright"
     - "all rights reserved"
-     # Medical/Quality Reporting Terms:
+    - "terms of use"
+    - "privacy policy"
+    # medical/quality reporting
+    - "Public Reporting"
     - "Infection Prevention"
     - "C\\. Difficile"
     - "Blood Stream Infection"
@@ -2440,7 +2419,6 @@ recognition_config:
     - "Surgical Safety"
     - "Vancomycin-Resistant"
     - "Ventilator-Associated"
-  
   # Fuzzy Matching Configuration (Future enhancement)
   fuzzy_matching:
     enabled: false
@@ -2464,34 +2442,6 @@ hospital_overrides:
   
   # Example: FAC 969 - Ontario Shores
   # Issue: "Physician-in-Chief and Research Chair" not recognized
- # FAC 800 - Hawkesbury & District General
-  # Issue: "Dr. Paul E. Beaulé" - middle initial with accented last name
-  FAC_800:
-    additional_name_patterns:
-      - "^Dr\\.? [A-Z][a-z]+ [A-Z]\\. [A-ZÀ-ÖØ-Þ][a-zà-öø-ÿ]+$"
-    notes: "Dr. with middle initial and accented last name (Beaulé)"
-    
-  FAC_939:
-    additional_name_patterns:
-      - "^[A-Z][a-z]+ [A-Z][a-z]+-[A-Z][a-z]+, [A-Z]{2}, [A-Z]{2,}$"  # "Golda Milo-Manson, MD, FRCPC"
-    notes: "Hyphenated last name with comma-separated credentials (MD, FRCPC)"
-
-  FAC_910:
-    additional_name_patterns:
-      - "^[A-Z][a-z]+ [a-z][a-z]+$"  # Allows lowercase last name (Firstname lastname)
-    notes: "CEO has improperly capitalized last name on website"
-
-  FAC_837:
-    additional_name_exclusions:
-      - "^Dr\\. Kathy Boutis"
-      - "appointed new Chair"
-    additional_title_exclusions:
-      - "Board of Trustees"
-      - "joined the SickKids Board"
-      - "Founding Partner"
-      - "EdgePoint Investment Group"
-    notes: "Filters out news article at top and Board members"
-
   FAC_969:
     additional_title_keywords:
       - "Physician-in-Chief"
@@ -2526,7 +2476,6 @@ hospital_overrides:
       - "Senior Lead"
       - "Strategic Advisor"
     notes: "Non-standard title format with ampersand"
-  
   
   # Template for future overrides:
   # FAC_XXX:

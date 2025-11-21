@@ -1,9 +1,9 @@
 library(rvest)
-url <- "HOSPITAL_URL_HERE"
+url <- "https://www.arnpriorregionalhealth.ca/about-us/#senior-team"
 page <- read_html(url)
 
 # Test your suspected container class
-test_class <- "YOUR_CLASS_HERE"  # e.g., "team-member"
+test_class <- "desc_wrapper clearfix"  # e.g., "team-member"
 containers <- page %>% html_elements(paste0(".", test_class))
 
 cat("Found", length(containers), "containers\n\n")
@@ -25,3 +25,4 @@ for (i in 1:min(3, length(containers))) {
   cat("Name:", name, "\n")
   cat("Title:", title, "\n\n")
 }
+

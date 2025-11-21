@@ -1,4 +1,3 @@
-# Downloaded from Claude
 # pattern_based_scraper.R - Enhanced scraper with 14 pattern-based approaches
 # Save this in E:/ExecutiveSearchYaml/code/
 # UPDATED: Added missing_people support to Patterns 5 & 8, fixed Pattern 8 for FAC 777
@@ -11,166 +10,7 @@ library(rvest)
 library(dplyr)
 library(stringr)
 library(yaml)
-library(httr)
-# ============================================================================
-# ROBOTS.TXT CHECKING FUNCTIONS
-# ============================================================================
 
-# Global cache for robots.txt results (persists across scraping calls)
-.robots_cache <- new.env(parent = emptyenv())
-
-# Check if a URL is allowed by robots.txt
-check_robots_txt <- function(url, user_agent = "OntarioHospitalScraper/1.0") {
-  # Extract domain from URL
-  domain <- gsub("^(https?://[^/]+).*$", "\\1", url)
-  robots_url <- paste0(domain, "/robots.txt")
-  
-  # Check cache first
-  cache_key <- paste0(domain, "|", user_agent)
-  if (exists(cache_key, envir = .robots_cache)) {
-    cached <- get(cache_key, envir = .robots_cache)
-    return(cached)
-  }
-  
-  # Try to fetch robots.txt
-  result <- list(
-    allowed = TRUE,
-    status = "no_robotstxt",
-    crawl_delay = 0,
-    message = "No robots.txt found - assuming allowed"
-  )
-  
-  tryCatch({
-    response <- httr::GET(robots_url, httr::timeout(10))
-    
-    if (httr::status_code(response) == 200) {
-      content <- httr::content(response, "text", encoding = "UTF-8")
-      
-      # Parse robots.txt for our user agent (or *)
-      result <- parse_robots_txt(content, user_agent, url)
-      
-    } else if (httr::status_code(response) == 404) {
-      result$status <- "no_robotstxt"
-      result$message <- "No robots.txt (404) - assuming allowed"
-    } else {
-      result$status <- "error"
-      result$message <- paste0("robots.txt returned status ", httr::status_code(response))
-    }
-    
-  }, error = function(e) {
-    result$status <- "error"
-    result$message <- paste0("Error reading robots.txt: ", e$message)
-  })
-  
-  # Cache the result
-  assign(cache_key, result, envir = .robots_cache)
-  
-  return(result)
-}
-
-# Parse robots.txt content
-parse_robots_txt <- function(content, user_agent, url) {
-  lines <- strsplit(content, "\n")[[1]]
-  lines <- trimws(lines)
-  
-  # Remove comments and empty lines
-  lines <- lines[!grepl("^#", lines) & nchar(lines) > 0]
-  
-  # Track which user-agent section we're in
-  current_agent <- NULL
-  applies_to_us <- FALSE
-  disallow_rules <- character()
-  allow_rules <- character()
-  crawl_delay <- 0
-  
-  for (line in lines) {
-    # Check for User-agent directive
-    if (grepl("^User-agent:", line, ignore.case = TRUE)) {
-      agent <- sub("^User-agent:\\s*", "", line, ignore.case = TRUE)
-      agent <- trimws(agent)
-      current_agent <- agent
-      
-      # Does this section apply to us?
-      applies_to_us <- (agent == "*" || 
-                          grepl(user_agent, agent, ignore.case = TRUE) ||
-                          grepl("OntarioHospitalScraper", agent, ignore.case = TRUE))
-    }
-    
-    # If this section applies to us, parse rules
-    if (applies_to_us) {
-      if (grepl("^Disallow:", line, ignore.case = TRUE)) {
-        path <- sub("^Disallow:\\s*", "", line, ignore.case = TRUE)
-        path <- trimws(path)
-        if (nchar(path) > 0) {
-          disallow_rules <- c(disallow_rules, path)
-        }
-      }
-      
-      if (grepl("^Allow:", line, ignore.case = TRUE)) {
-        path <- sub("^Allow:\\s*", "", line, ignore.case = TRUE)
-        path <- trimws(path)
-        if (nchar(path) > 0) {
-          allow_rules <- c(allow_rules, path)
-        }
-      }
-      
-      if (grepl("^Crawl-delay:", line, ignore.case = TRUE)) {
-        delay <- sub("^Crawl-delay:\\s*", "", line, ignore.case = TRUE)
-        delay <- as.numeric(trimws(delay))
-        if (!is.na(delay)) {
-          crawl_delay <- delay
-        }
-      }
-    }
-  }
-  
-  # Check if URL path matches any rules
-  url_path <- gsub("^https?://[^/]+", "", url)
-  if (url_path == "") url_path <- "/"
-  
-  # Check allow rules first (they take precedence)
-  for (allow_rule in allow_rules) {
-    if (path_matches_rule(url_path, allow_rule)) {
-      return(list(
-        allowed = TRUE,
-        status = "allowed",
-        crawl_delay = crawl_delay,
-        message = paste0("Explicitly allowed by rule: ", allow_rule)
-      ))
-    }
-  }
-  
-  # Check disallow rules
-  for (disallow_rule in disallow_rules) {
-    if (path_matches_rule(url_path, disallow_rule)) {
-      return(list(
-        allowed = FALSE,
-        status = "disallowed",
-        crawl_delay = crawl_delay,
-        message = paste0("Blocked by rule: ", disallow_rule)
-      ))
-    }
-  }
-  
-  # No matching rules - allowed
-  return(list(
-    allowed = TRUE,
-    status = "allowed",
-    crawl_delay = crawl_delay,
-    message = "No matching disallow rules - allowed"
-  ))
-}
-
-# Check if a URL path matches a robots.txt rule
-path_matches_rule <- function(path, rule) {
-  # Handle wildcard * (matches any sequence)
-  # Convert robots.txt pattern to regex
-  rule_regex <- gsub("\\*", ".*", rule, fixed = TRUE)
-  rule_regex <- gsub("\\$", "$", rule_regex, fixed = TRUE)
-  rule_regex <- paste0("^", rule_regex)
-  
-  grepl(rule_regex, path)
-}
 PatternBasedScraper <- function() {
   
   # Load configuration data
@@ -248,26 +88,18 @@ PatternBasedScraper <- function() {
     }
     
     # Clean text first (but preserve hyphens in names)
-    # Clean text first (but preserve hyphens in names)
     clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
     clean_text <- trimws(clean_text)
     
-    # Normalize Unicode apostrophes to ASCII
-    clean_text <- gsub(intToUtf8(8217), "'", clean_text)  # Right single quotation mark (')
-    clean_text <- gsub(intToUtf8(8216), "'", clean_text)  # Left single quotation mark (')
-    clean_text <- gsub(intToUtf8(8220), '"', clean_text)  # Left double quotation mark (")
-    clean_text <- gsub(intToUtf8(8221), '"', clean_text)  # Right double quotation mark (")
-    
-    # Check against patterns  # added perl=TRUE
+    # Check against patterns
     matches_pattern <- any(sapply(name_patterns, function(p) {
       if (!is.null(p) && !is.na(p)) {
-        grepl(p, clean_text, perl = TRUE)  # <-- ADD perl=TRUE
+        grepl(p, clean_text)
       } else {
         FALSE
       }
     }))
-    
-
+#was an n here???
     
     # Get exclusions from config (no longer hardcoded)
     non_names <- config$recognition_config$name_exclusions
@@ -293,16 +125,9 @@ PatternBasedScraper <- function() {
     is_executive_title <- function(text, config, hospital_info = NULL) {
       if (is.na(text) || nchar(trimws(text)) < 3) return(FALSE)
       
-      # Clean text first (but preserve hyphens in names)
+      # Clean text first
       clean_text <- str_remove_all(text, "\\s*ext\\.?\\s*\\d+.*$")
-      clean_text <- trimws(clean_text)
-      
-      # Normalize Unicode apostrophes to ASCII
-      clean_text <- gsub(intToUtf8(8217), "'", clean_text)  # Right single quotation mark (')
-      clean_text <- gsub(intToUtf8(8216), "'", clean_text)  # Left single quotation mark (')
-      clean_text <- gsub(intToUtf8(8220), '"', clean_text)  # Left double quotation mark (")
-      clean_text <- gsub(intToUtf8(8221), '"', clean_text)  # Right double quotation mark (")
-      
+      clean_text <- str_remove_all(clean_text, "\\s*extension\\s*\\d+.*$")
       clean_text <- trimws(clean_text)
       
       # Get executive keywords from config (no longer hardcoded)
@@ -366,28 +191,6 @@ PatternBasedScraper <- function() {
     
     return(cleaned)
   }
-  
-  # ============================================================================
-  # DEDUPLICATION HELPER - Removes duplicate names (keeps first occurrence)
-  # ============================================================================
-  deduplicate_pairs <- function(pairs) {
-    if (length(pairs) == 0) return(pairs)
-    
-    unique_pairs <- list()
-    seen_names <- character(0)
-    
-    for (pair in pairs) {
-      if (!(pair$name %in% seen_names)) {
-        unique_pairs <- c(unique_pairs, list(pair))
-        seen_names <- c(seen_names, pair$name)
-      } else {
-        cat("  DEBUG: Removed duplicate name:", pair$name, "\n")
-      }
-    }
-    
-    return(unique_pairs)
-  }  
-  
 #Start changing patterns here?
   
   # ============================================================================
@@ -614,71 +417,112 @@ return(unique_pairs)
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
       # Get configuration for which elements to use
+      # new code from claude
+      # Get configuration for which elements to use
       name_element <- hospital_info$html_structure$name_element %||% "h2"
       title_element <- hospital_info$html_structure$title_element %||% "p"
-      container_class <- hospital_info$html_structure$container_class
-      reversed <- hospital_info$html_structure$reversed %||% FALSE
       
-      # Extract just the tag names
+      # NEW: Extract just the tag name for comparison (before any classes/IDs)
       name_tag <- gsub("\\..*$|#.*$|\\[.*$", "", name_element)
       title_tag <- gsub("\\..*$|#.*$|\\[.*$", "", title_element)
       
+      # NEW: Check if reversed order (title comes before name)
+      # Defaults to FALSE for backward compatibility
+      reversed <- hospital_info$html_structure$reversed %||% FALSE
+      
+      # NEW: If reversed, swap BOTH the full selectors and the tag names
+      if (reversed) {
+        temp <- name_element
+        name_element <- title_element
+        title_element <- temp
+        
+        temp_tag <- name_tag
+        name_tag <- title_tag
+        title_tag <- temp_tag
+      }
+      
+      # Build selector for elements we're looking for (use full selectors with classes)
+      selector <- paste(name_element, title_element, sep = ", ")
+      
+      all_elements <- page %>% html_nodes(selector)
+      
       pairs <- list()
       
-      # CONTAINER-BASED PAIRING (when container_class is specified)
-      if (!is.null(container_class) && container_class != "") {
-        containers <- page %>% html_nodes(paste0(".", container_class))
+      for (i in 1:(length(all_elements) - 1)) {
+        current_element <- all_elements[[i]]
+        next_element <- all_elements[[i + 1]]
         
-        for (container in containers) {
-          # Extract name and title from WITHIN this container only
-          name_nodes <- container %>% html_nodes(name_element)
-          title_nodes <- container %>% html_nodes(title_element)
+        # Check if current element is the name type and next is title type
+        #replace with new claude code
+        # Check if current element is the name type and next is title type
+        # Compare HTML tag names (not full selectors with classes)
+        current_is_name <- html_name(current_element) == name_tag
+        next_is_title <- html_name(next_element) == title_tag
+        if (current_is_name && next_is_title) {
+          current_text <- normalize_text(html_text(current_element, trim = TRUE))
+          next_text <- normalize_text(html_text(next_element, trim = TRUE))
           
-          if (length(name_nodes) > 0 && length(title_nodes) > 0) {
-            name_text <- name_nodes[[1]] %>% html_text2() %>% trimws()
-            title_text <- title_nodes[[1]] %>% html_text2() %>% trimws()
+          # NEW: Handle reversed order
+          if (reversed) {
+            # If reversed, current is actually title, next is actually name
+            name_text <- next_text
+            title_text <- current_text
+          } else {
+            # Normal order: current is name, next is title
+            name_text <- current_text
+            title_text <- next_text
+          }
+          
+          # Additional filter for pâ†’p pattern: name must contain <strong> or <a>
+          # Skip this check if reversed (since we swapped the elements)
+          if (name_element == "p" && title_element == "p" && !reversed) {
+            # Check if current element has strong or a tag
+            has_strong <- length(current_element %>% html_nodes("strong")) > 0
+            has_link <- length(current_element %>% html_nodes("a")) > 0
             
-            # Clean phone/fax numbers from titles
-            title_text <- gsub("Phone:.*$", "", title_text, ignore.case = TRUE)
-            title_text <- gsub("Tel:.*$", "", title_text, ignore.case = TRUE)
-            title_text <- gsub("Fax:.*$", "", title_text, ignore.case = TRUE)
-            title_text <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}.*$", "", title_text)
-            title_text <- trimws(title_text)
-            
-            # Validate both
-            if (is_executive_name(name_text, config, hospital_info) && 
-                is_executive_title(title_text, config, hospital_info)) {
-              pairs[[length(pairs) + 1]] <- list(
-                name = clean_text_data(name_text),
-                title = clean_text_data(title_text)
-              )
+            if (!has_strong && !has_link) {
+              next
             }
           }
-        }
-        
-        # CRITICAL FIX: Return immediately after processing containers
-        # This prevents falling through to sequential pairing logic
-        
-        # Add missing people if specified
-        if (!is.null(hospital_info$html_structure$missing_people)) {
-          for (missing in hospital_info$html_structure$missing_people) {
+          
+          # MODIFIED: Use name_text and title_text variables instead of current_text and next_text
+          if (is_executive_name(name_text, config, hospital_info) && 
+              is_executive_title(title_text, config, hospital_info)) {
+            
+            # Enhanced title cleaning for phone/fax numbers
+            cleaned_title <- title_text
+            cleaned_title <- gsub("Telephone:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("Fax:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}.*$", "", cleaned_title)
+            cleaned_title <- trimws(cleaned_title)
+            
             pairs[[length(pairs) + 1]] <- list(
-              name = missing$name,
-              title = missing$title
+              name = clean_text_data(name_text),
+              title = clean_text_data(cleaned_title)
             )
           }
         }
-        
-        return(pairs)  # ← CRITICAL: Stop here for container-based scraping
       }
       
-      # SEQUENTIAL PAIRING (only if no container_class specified)
-      # This code only runs when container_class is NULL/empty
-      name_elements <- page %>% html_nodes(name_element) %>% html_text2()
-      title_elements <- page %>% html_nodes(title_element) %>% html_text2()
+      # Limit to expected count if specified
+      if (!is.null(hospital_info$expected_executives)) {
+        max_count <- hospital_info$expected_executives
+        if (length(pairs) > max_count) {
+          pairs <- pairs[1:max_count]
+        }
+      }
       
-      # ... rest of sequential pairing logic ...
-      # (This should NOT run when container_class is specified)
+      # Add any missing people specified in config
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
       
     }, error = function(e) {
       cat("  ERROR:", e$message, "\n")
@@ -793,9 +637,6 @@ return(unique_pairs)
   # ============================================================================
   # PATTERN 6: List items with separator
   # ============================================================================
-  # ============================================================================
-  # PATTERN 6: List items with separator Revised Nov 17 2025
-  # ============================================================================
   scrape_list_items <- function(page, hospital_info, config) {
     tryCatch({
       li_elements <- page %>% html_nodes("li") %>% html_text2()
@@ -811,6 +652,8 @@ return(unique_pairs)
         clean_li <- trimws(clean_li)
         
         # Build regex pattern for separator
+        # put in Claude fix 
+        # Build regex pattern for separator
         if (separator == " | ") {
           sep_pattern <- "\\s*\\|\\s*"
         } else if (separator == ", ") {
@@ -818,30 +661,52 @@ return(unique_pairs)
         } else if (separator == " - ") {
           sep_pattern <- "\\s*-\\s*"
         } else {
-          # For any other separator, escape special regex chars and add flexible spacing
-          sep_clean <- gsub("([.|()\\^{}+$*?\\[\\]])", "\\\\\\1", trimws(separator))
-          sep_pattern <- paste0("\\s*", sep_clean, "\\s*")
+          # Escape all regex special characters
+          sep_clean <- trimws(separator)
+          # Use fixed=TRUE instead of regex to avoid escaping issues
+          # Just mark where to split
+          sep_pattern <- sep_clean
         }
         
-        # Split by separator
-        parts <- strsplit(clean_li, sep_pattern, perl = TRUE)[[1]]
+        # Split using the pattern
+        # insert claude split 
+        parts <- strsplit(clean_li, sep_pattern, fixed = TRUE)[[1]]
         
-        if (length(parts) >= 2) {
-          potential_name <- trimws(parts[1])
-          potential_title <- paste(parts[2:length(parts)], collapse = " ") %>% trimws()
-          
-          # Validate name and title
-          if (is_executive_name(potential_name, config, hospital_info) && 
-              is_executive_title(potential_title, config, hospital_info)) {
-            pairs[[length(pairs) + 1]] <- list(
-              name = clean_text_data(potential_name),
-              title = clean_text_data(potential_title)
-            )
-          }
+        if (length(parts) < 2) next
+        
+        # Extract name and title
+        potential_name <- trimws(parts[1])
+        
+        # Handle multiple separators: combine all parts after first as title
+        if (length(parts) > 2) {
+          potential_title <- paste(parts[2:length(parts)], collapse = trimws(separator))
+        } else {
+          potential_title <- trimws(parts[2])
+        }
+        
+        # Clean the extracted data
+        potential_name <- clean_text_data(potential_name)
+        potential_title <- clean_text_data(potential_title)
+        
+        # Skip empty or invalid
+        if (nchar(potential_name) < 3 || nchar(potential_title) < 3 ||
+            tolower(potential_title) == "email") {
+          next
+        }
+        
+        # Validate
+        name_valid <- is_executive_name(potential_name, config, hospital_info)
+        title_valid <- is_executive_title(potential_title, config, hospital_info)
+        
+        if (name_valid && title_valid) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = potential_name,
+            title = potential_title
+          )
         }
       }
       
-      # Add missing_people support
+      # Add missing people
       if (!is.null(hospital_info$html_structure$missing_people)) {
         for (missing in hospital_info$html_structure$missing_people) {
           pairs[[length(pairs) + 1]] <- list(
@@ -854,7 +719,7 @@ return(unique_pairs)
       return(pairs)
       
     }, error = function(e) {
-      cat("  ERROR in scrape_list_items:", e$message, "\n")
+      cat("ERROR in scrape_list_items:", e$message, "\n")
       return(list())
     })
   }
@@ -1817,78 +1682,48 @@ return(unique_pairs)
   # ============================================================================
   # MAIN SCRAPER FUNCTION
   # ============================================================================
-  # ============================================================================
-  # MAIN SCRAPER FUNCTION (with robots.txt checking)
-  # ============================================================================
   scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
     config <- load_config(config_file)
     
     cat("Scraping", hospital_info$name, "(FAC-", hospital_info$FAC, ")")
     cat(" - Pattern:", hospital_info$pattern, "\n")
     
-    # Initialize robots status
-    robots_status <- "unknown"
-    robots_message <- ""
-    
     tryCatch({
-      # Special handling for manual entry and closed sites - skip robots check
-      if (hospital_info$pattern %in% c("manual_entry_required", "closed")) {
+      # Special handling for manual entry - skip URL reading
+      if (hospital_info$pattern == "manual_entry_required") {
         pairs <- scrape_manual_entry(NULL, hospital_info, config)
-        robots_status <- "not_applicable"
-        robots_message <- "Manual entry or closed site"
-        
       } else {
-        # Check robots.txt before scraping
-        robots_check <- check_robots_txt(hospital_info$url)
-        robots_status <- robots_check$status
-        robots_message <- robots_check$message
+        # Normal scraping for all other patterns
+        page <- read_html(hospital_info$url)
         
-        cat("  Robots.txt:", robots_status, "-", robots_message, "\n")
         
-        # If disallowed, don't scrape
-        if (!robots_check$allowed) {
-          cat("  SKIPPED: Scraping disallowed by robots.txt\n")
-          pairs <- list()
-          
-        } else {
-          # Respect crawl-delay if specified
-          if (robots_check$crawl_delay > 0) {
-            cat("  Respecting crawl-delay:", robots_check$crawl_delay, "seconds\n")
-            Sys.sleep(robots_check$crawl_delay)
-          }
-          
-          # Normal scraping for all other patterns
-          page <- read_html(hospital_info$url)
-          
-          # Dispatch to appropriate pattern scraper
-          pairs <- switch(hospital_info$pattern,
-                          "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
-                          "combined_h2" = scrape_combined_h2(page, hospital_info, config),
-                          "table_rows" = scrape_table_rows(page, hospital_info, config),
-                          "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
-                          "div_classes" = scrape_div_classes(page, hospital_info, config),
-                          "list_items" = scrape_list_items(page, hospital_info, config),
-                          "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
-                          "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
-                          "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
-                          "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
-                          "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
-                          "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),
-                          "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
-                          "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
-                          "table_cells" = scrape_table_cells(page, hospital_info, config),
-                          "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
-                          "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
-                          "p_strong_combined" = scrape_p_strong_combined(page, hospital_info, config),
-                          # Default fallback 
-                          scrape_h2_name_h3_title(page, hospital_info, config)
-          )
-        }
         
-        # Deduplicate pairs
-        pairs <- deduplicate_pairs(pairs)
+        # Dispatch to appropriate pattern scraper
+        pairs <- switch(hospital_info$pattern,
+                        "h2_name_h3_title" = scrape_h2_name_h3_title(page, hospital_info, config),
+                        "combined_h2" = scrape_combined_h2(page, hospital_info, config),
+                        "table_rows" = scrape_table_rows(page, hospital_info, config),
+                        "h2_name_p_title" = scrape_h2_name_p_title(page, hospital_info, config),
+                        "div_classes" = scrape_div_classes(page, hospital_info, config),
+                        "list_items" = scrape_list_items(page, hospital_info, config),
+                        "boardcard_gallery" = scrape_boardcard_pattern(page, hospital_info, config),
+                        "custom_table_nested" = scrape_custom_table_nested(page, hospital_info, config),
+                        "field_content_sequential" = scrape_field_content_sequential(page, hospital_info, config),
+                        "nested_list_with_ids" = scrape_nested_list_with_ids(page, hospital_info, config),
+                        "qch_mixed_tables" = scrape_qch_mixed_tables(page, hospital_info, config),
+                        "p_with_bold_and_br" = scrape_p_with_bold_and_br(page, hospital_info, config),  # Pattern 12
+                        "manual_entry_required" = scrape_manual_entry(page, hospital_info, config),  # â† ADD THIS
+                        "h2_combined_complex" = scrape_h2_combined_complex(page, hospital_info, config),
+                        "div_container_multiclass" = scrape_div_container_multiclass(page, hospital_info, config),
+                        "table_cells" = scrape_table_cells(page, hospital_info, config),
+                        "p_with_br_list_reversed" = scrape_p_with_br_list_reversed(page, hospital_info, config),
+                        "table_data_name_accordion" = scrape_table_data_name_accordion(page, hospital_info, config),
+                        "p_strong_combined" = scrape_p_strong_combined(page, hospital_info, config),
+                        
+                        # Default fallback 
+                        scrape_h2_name_h3_title(page, hospital_info, config)
+        )
       }
-      
       # Create consistent output data frame
       if (length(pairs) > 0) {
         result_df <- data.frame(
@@ -1897,8 +1732,6 @@ return(unique_pairs)
           executive_name = sapply(pairs, function(p) p$name),
           executive_title = sapply(pairs, function(p) p$title),
           date_gathered = Sys.Date(),
-          robots_status = robots_status,
-          robots_message = robots_message,
           stringsAsFactors = FALSE
         )
         
@@ -1913,8 +1746,6 @@ return(unique_pairs)
           executive_name = NA,
           executive_title = NA,
           date_gathered = Sys.Date(),
-          robots_status = robots_status,
-          robots_message = robots_message,
           stringsAsFactors = FALSE
         ))
       }
@@ -1927,8 +1758,6 @@ return(unique_pairs)
         executive_name = NA,
         executive_title = NA,
         date_gathered = Sys.Date(),
-        robots_status = ifelse(robots_status == "unknown", "error", robots_status),
-        robots_message = ifelse(robots_status == "unknown", e$message, robots_message),
         error_message = e$message,
         stringsAsFactors = FALSE
       ))

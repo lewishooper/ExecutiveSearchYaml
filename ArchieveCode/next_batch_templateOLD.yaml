@@ -1,0 +1,46 @@
+# NEXT BATCH TEMPLATE - Generated on
+#2025-10-10 10:49:32
+# Instructions:
+#   1. Fill in the 'url' field with the leadership page URL (or verify existing URL)
+#   2. Update 'pattern' to match the HTML structure (see pattern guide)
+#   3. Set 'expected_executives' based on website inspection
+#   4. Update 'status' from 'needs_url' to 'needs_testing' once URL is added
+#   5. Add any notes about the hospital's structure
+#   6. For closed hospitals, see separate section at bottom
+
+# Common patterns:
+#   - h2_name_h3_title (names in h2, titles in h3)
+#   - combined_h2 (name and title together with separator)
+#   - div_classes (CSS class-based)
+#   - table_rows (table structure)
+#   - list_items (list with separators)
+
+hospitals:
+
+
+
+
+
+
+
+
+
+# ============================================================================
+# BATCH SUMMARY
+# ============================================================================
+# Total active hospitals in this batch: 30
+# Remaining after this batch: 87
+#
+# WORKFLOW:
+# 1. For each hospital, verify/find the leadership page URL
+# 2. Use: helper$analyze_hospital_structure(FAC, 'Name', 'URL')
+# 3. Update pattern, expected_executives, and html_structure
+# 4. Change status to 'needs_testing'
+# 5. Test with: quick_test(FAC)
+# 6. If successful, change status to 'configured' or 'ok'
+# 7. Copy completed entries to enhanced_hospitals.yaml
+# 8. Mark as done='y' in the master Excel file
+#
+# PATTERN REFERENCE:
+# See PATTERN_REGISTRY.md for detailed examples of all 11 patterns
+# ============================================================================
