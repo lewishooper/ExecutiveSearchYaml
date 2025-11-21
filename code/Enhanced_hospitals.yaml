@@ -279,19 +279,6 @@ hospitals:
     
 
 
-  - FAC: '908'
-    name: 'EHN Canada TORONTO BELLWOOD HEALTH SERVICES'
-    hospital_type: 'Other Hospital'
-    url: https://www.edgewoodhealthnetwork.com/about/
-    pattern: h2_name_p_title
-    expected_executives: 4
-    html_structure:
-      name_element: h3
-      title_element: div
-      container_class: member-content
-    notes: private
-    status: ok
-
 
   - FAC: '907'
     name: 'TIMMINS & DISTRICT GENERAL'
@@ -441,17 +428,6 @@ hospitals:
     
     status: ok
 
-  - FAC: '855'
-    name: 'THORNHILL SHOULDICE HOSPITAL'
-    hospital_type: 'Other Hospital'
-    url: ~
-    pattern: div_classes
-    expected_executives: 2
-    html_structure:
-      - ~
-      - ~
-    notes: Private hospital no board or executives listed
-    status: private
 
 
 
@@ -830,17 +806,6 @@ hospitals:
       notes: 
     status: ok
 
-  - FAC: '680'
-    name: TORONTO DON MILLS SURGICAL UNIT
-    hospital_type: Other Hospital
-    url: ''
-    pattern: closed
-    expected_executives: 4
-    html_structure:
-      combined_element: ''
-      separator: ''
-      notes:  NO LISTED EXECTUIVES PRIVATELY RUN
-    status: private
 
   - FAC: '676'
     name: HANOVER & DISTRICT
@@ -1556,28 +1521,7 @@ hospitals:
       name_class: title
       title_class: job_title
     status: ok
-  - FAC: '605'
-    name: TORONTO ST. JOSEPH'S INFIRMARY
-    hospital_type: Chronic/Rehab Hospital
-    url: TODO_ADD_LEADERSHIP_URL
-    pattern: h2_name_h3_title
-    expected_executives: 5
-    html_structure:
-      name_element: h2
-      title_element: h3
-      notes: ''
-    status: closed
-  - FAC: '613'
-    name: TORONTO WEST PARK
-    hospital_type: Chronic/Rehab Hospital
-    url: https://www.gghorg.ca/about-ggh/leadership-team/
-    pattern: combined_h2
-    expected_executives: 6
-    html_structure:
-      name_element: h2
-      title_element: h3
-      notes: ''
-    status: closed
+ 
   - FAC: '983'
     name: HURON PERTH HEALTHCARE ALLIANCE
     hospital_type: Large Community Hospital
