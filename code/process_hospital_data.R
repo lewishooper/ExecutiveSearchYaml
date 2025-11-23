@@ -340,16 +340,34 @@ is_volunteer <- function(title, keywords = NULL) {
     # ========================================================================
     # RULE 3: Chair patterns
     # ========================================================================
+    # ========================================================================
+    # RULE 3: Chair patterns
+    # ========================================================================
     if (grepl("chair", title_lower)) {
+      
+      # CHECK EMPLOYEE CHAIR PATTERNS FIRST (before board patterns)
+      # Medical/Operational Chair patterns (employees)
+      employee_chair_patterns <- c(
+        "medical advisory",  # Any chair + medical advisory = employee
+        "pharmacy",
+        "therapeutics",
+        "department"
+      )
+      
+      # If chair title contains any employee context words, it's an employee
+      if (any(sapply(employee_chair_patterns, function(word) grepl(word, title_lower)))) {
+        return(FALSE)
+      }
+      
       # "Chair" by itself = volunteer
       if (title_trimmed == "chair") {
         return(TRUE)
       }
       
-      # Board Chair patterns (volunteers)
+      # Board Chair patterns (volunteers) - only check these if not employee chair
       board_chair_patterns <- c(
         "board chair",
-        "\\bvice chair\\b",  # word boundary to avoid "vice chair of medical"
+        "\\bvice.?chair\\b",  # Catches both "vice-chair" and "vice chair"
         "first vice chair",
         "second vice chair",
         "past board chair",
@@ -361,36 +379,7 @@ is_volunteer <- function(title, keywords = NULL) {
       if (any(sapply(board_chair_patterns, function(pat) grepl(pat, title_lower)))) {
         return(TRUE)
       }
-      
-      # Medical/Operational Chair patterns (employees)
-      employee_chair_patterns <- c(
-        "chair of the medical advisory committee",
-        "chair.+medical advisory",
-        "chair.+pharmacy",
-        "chair.+therapeutics",
-        "chair.+department",
-        "department chair"
-      )
-      
-      if (any(sapply(employee_chair_patterns, function(pat) grepl(pat, title_lower)))) {
-        return(FALSE)
-      }
     }
-    
-    # ========================================================================
-    # RULE 4: Treasurer in board context = volunteer
-    # ========================================================================
-    if (grepl("treasurer", title_lower)) {
-      # If treasurer is combined with board or committee terms = volunteer
-      if (grepl("board|committee", title_lower)) {
-        return(TRUE)
-      }
-      # If treasurer is standalone = volunteer
-      if (title_trimmed == "treasurer") {
-        return(TRUE)
-      }
-    }
-    
     # ========================================================================
     # RULE 5: Board-only context (after employee override checked)
     # ========================================================================
@@ -501,15 +490,15 @@ assign_data_status <- function(data) {
       data_status = case_when(
         # Check for error messages first
         !is.na(error_message) ~ "failed",
-        # Check robots status
-        !is.na(robots_status) & robots_status == "blocked" ~ "robotstxt_blocked",
+        # Check robots status - ADD "disallowed" here
+        !is.na(robots_status) & robots_status %in% c("blocked", "disallowed") ~ "robotstxt_blocked",
         !is.na(robots_status) & robots_status == "javascript_required" ~ "javascript_blocked",
         !is.na(robots_status) & robots_status == "blocked_general" ~ "blocked",
         # Check for manual entry
         !is.na(pattern_used) & pattern_used == "manual_entry_required" ~ "manual_entry",
         # Check if data was actually found
         is.na(person_name) | is.na(executive_title) ~ "failed",
-        # Check for partial scrapes (could add hospital-specific logic here)
+        # Check for partial scrapes
         !is.na(robots_message) & grepl("partial", tolower(robots_message)) ~ "partial_scrape",
         # Otherwise, successfully scraped
         TRUE ~ "scraped"

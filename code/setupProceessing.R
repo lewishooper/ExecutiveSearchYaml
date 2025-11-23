@@ -1,6 +1,12 @@
 # Process most recent output
+
+
+#rm(list=ls())
+#source("session_startup.R")
+source("E:/ExecutiveSearchYaml/code/process_hospital_data.R")
+
 result <- process_hospital_data(
-  input_file = "E:/ExecutiveSearchYaml/output/hospital_executives_20251201.csv",
+  input_file = "E:/ExecutiveSearchYaml/output/AllHospitalsNov232025.csv",
   config_file = "enhanced_hospitals.yaml",
   output_folder = "E:/ExecutiveSearchYaml/processed"
 )
@@ -12,12 +18,11 @@ validation_sample <- validate_classification(
 )
 
 
+### REviews and tests
 
-result <- process_hospital_data(
-  input_file = "E:/ExecutiveSearchYaml/output/AllHospitalsNov202025.csv",
-  config_file = "enhanced_hospitals.yaml",
-  output_folder = "E:/ExecutiveSearchYaml/processed"
-)
-
-HospTypeProblems<-HospitalExecutives_Employees_2025_11_21 %>%
-  filter(hospital_type=="Unknown")
+PatternSummary<-test_summary_20251123_132650 %>%
+  group_by(Pattern,Status) %>%
+  select(Pattern,Status) %>%
+  mutate(Size=n())%>% unique() %>%
+  pivot_wider(names_from = "Status",values_from = "Size") %>%
+  mutate(completionRate=(COMPLETE-sum(NO_RESULTS,EXTRA,INCOMPLETE,ERROR,na.rm=TRUE))/COMPLETE)

@@ -613,15 +613,41 @@ return(unique_pairs)
   # ============================================================================
   scrape_h2_name_p_title <- function(page, hospital_info, config) {
     tryCatch({
-      # Get configuration for which elements to use
-      name_element <- hospital_info$html_structure$name_element %||% "h2"
-      title_element <- hospital_info$html_structure$title_element %||% "p"
-      container_class <- hospital_info$html_structure$container_class
-      reversed <- hospital_info$html_structure$reversed %||% FALSE
+      # Get configuration for which elements to use (using base R null handling)
+      name_element <- if (!is.null(hospital_info$html_structure$name_element)) {
+        hospital_info$html_structure$name_element
+      } else {
+        "h2"
+      }
       
-      # Extract just the tag names
+      title_element <- if (!is.null(hospital_info$html_structure$title_element)) {
+        hospital_info$html_structure$title_element
+      } else {
+        "p"
+      }
+      
+      container_class <- hospital_info$html_structure$container_class
+      
+      reversed <- if (!is.null(hospital_info$html_structure$reversed)) {
+        hospital_info$html_structure$reversed
+      } else {
+        FALSE
+      }
+      
+      # Extract just the tag names for comparison (before any classes/IDs)
       name_tag <- gsub("\\..*$|#.*$|\\[.*$", "", name_element)
       title_tag <- gsub("\\..*$|#.*$|\\[.*$", "", title_element)
+      
+      # If reversed, swap BOTH the full selectors and the tag names
+      if (reversed) {
+        temp <- name_element
+        name_element <- title_element
+        title_element <- temp
+        
+        temp_tag <- name_tag
+        name_tag <- title_tag
+        title_tag <- temp_tag
+      }
       
       pairs <- list()
       
@@ -630,7 +656,6 @@ return(unique_pairs)
         containers <- page %>% html_nodes(paste0(".", container_class))
         
         for (container in containers) {
-          # Extract name and title from WITHIN this container only
           name_nodes <- container %>% html_nodes(name_element)
           title_nodes <- container %>% html_nodes(title_element)
           
@@ -645,7 +670,6 @@ return(unique_pairs)
             title_text <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}.*$", "", title_text)
             title_text <- trimws(title_text)
             
-            # Validate both
             if (is_executive_name(name_text, config, hospital_info) && 
                 is_executive_title(title_text, config, hospital_info)) {
               pairs[[length(pairs) + 1]] <- list(
@@ -655,9 +679,6 @@ return(unique_pairs)
             }
           }
         }
-        
-        # CRITICAL FIX: Return immediately after processing containers
-        # This prevents falling through to sequential pairing logic
         
         # Add missing people if specified
         if (!is.null(hospital_info$html_structure$missing_people)) {
@@ -669,16 +690,73 @@ return(unique_pairs)
           }
         }
         
-        return(pairs)  # ← CRITICAL: Stop here for container-based scraping
+        return(pairs)
       }
       
-      # SEQUENTIAL PAIRING (only if no container_class specified)
-      # This code only runs when container_class is NULL/empty
-      name_elements <- page %>% html_nodes(name_element) %>% html_text2()
-      title_elements <- page %>% html_nodes(title_element) %>% html_text2()
+      # SEQUENTIAL PAIRING - RESTORED OLD LOGIC
+      # Build selector for BOTH elements, get them in document order
+      selector <- paste(name_element, title_element, sep = ", ")
+      all_elements <- page %>% html_nodes(selector)
       
-      # ... rest of sequential pairing logic ...
-      # (This should NOT run when container_class is specified)
+      for (i in 1:(length(all_elements) - 1)) {
+        current_element <- all_elements[[i]]
+        next_element <- all_elements[[i + 1]]
+        
+        # Check if current element is the name type and next is title type
+        current_is_name <- html_name(current_element) == name_tag
+        next_is_title <- html_name(next_element) == title_tag
+        
+        if (current_is_name && next_is_title) {
+          name_text <- normalize_text(html_text(current_element, trim = TRUE))
+          title_text <- normalize_text(html_text(next_element, trim = TRUE))
+          
+          # Handle reversed order
+          if (reversed) {
+            temp <- name_text
+            name_text <- title_text
+            title_text <- temp
+          }
+          
+          # Additional filter for p→p pattern: name must contain <strong> or <a>
+          if (name_tag == "p" && title_tag == "p" && !reversed) {
+            has_strong <- length(current_element %>% html_nodes("strong")) > 0
+            has_link <- length(current_element %>% html_nodes("a")) > 0
+            
+            if (!has_strong && !has_link) {
+              next
+            }
+          }
+          
+          if (is_executive_name(name_text, config, hospital_info) && 
+              is_executive_title(title_text, config, hospital_info)) {
+            
+            # Clean phone/fax numbers from titles
+            cleaned_title <- title_text
+            cleaned_title <- gsub("Telephone:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("Phone:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("Fax:.*$", "", cleaned_title, ignore.case = TRUE)
+            cleaned_title <- gsub("\\d{3}[-\\.\\s]?\\d{3}[-\\.\\s]?\\d{4}.*$", "", cleaned_title)
+            cleaned_title <- trimws(cleaned_title)
+            
+            pairs[[length(pairs) + 1]] <- list(
+              name = clean_text_data(name_text),
+              title = clean_text_data(cleaned_title)
+            )
+          }
+        }
+      }
+      
+      # Add missing people if specified
+      if (!is.null(hospital_info$html_structure$missing_people)) {
+        for (missing in hospital_info$html_structure$missing_people) {
+          pairs[[length(pairs) + 1]] <- list(
+            name = missing$name,
+            title = missing$title
+          )
+        }
+      }
+      
+      return(pairs)
       
     }, error = function(e) {
       cat("  ERROR:", e$message, "\n")

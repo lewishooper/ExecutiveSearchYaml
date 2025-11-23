@@ -6,18 +6,17 @@ source("get_hosptial_info.R")
 source("quick_test_single.R")
 source("test_all_configured_hospitals.R")
 source("hospital_configuration_helper.R")
-FAC<-599
+FAC<-663
+
 
 quick_test(FAC)
-helper$analyze_hospital_structure(599, "Arnprior", "https://www.arnpriorregionalhealth.ca/about-us/")
+
+helper$analyze_hospital_structure(676, "Hanover", "https://www.hanoverhospital.on.ca/our-team")
 
 helper$test_hospital_config(FAC, Name, url, "table_rows")# - Test configuration (reads from YAML)\n")  
 
 helper$generate_batch_config('file.csv')# - Generate config from CSV\n\n")
-quick_test_batch(c(
-  
-  
-)) #complete Div_classes failures
+quick_test_batch(c(655,648,646,611,965,962)) #complete Div_classes failures
 
 
 ### section on running full database extraction and comparing with baseline database

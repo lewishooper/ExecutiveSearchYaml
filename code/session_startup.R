@@ -1,7 +1,7 @@
 # session_startup.R - Start of session initialization
 # Run this at the beginning of each work session
 # Save in E:/ExecutiveSearchYaml/code/
-
+#rm(list=ls())
 cat("╔════════════════════════════════════════════════════════════════╗\n")
 cat("║           HOSPITAL SCRAPER PROJECT - SESSION STARTUP           ║\n")
 cat("╚════════════════════════════════════════════════════════════════╝\n\n")

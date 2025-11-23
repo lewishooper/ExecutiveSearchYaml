@@ -41,7 +41,6 @@ hospitals:
     notes: Peel off board members in final post processing
     status: ok
 
-
   - FAC: '973'
     name: 'MOOSE FACTORY WEENEEBAYKO AREA'
     hospital_type: 'Small Hospital'
@@ -49,8 +48,9 @@ hospitals:
     pattern: h2_name_p_title
     expected_executives: 6
     html_structure:
-       name_element: h2
-       title_element: p
+      name_element: h2
+      title_element: 'p strong'  # Title is inside <p><strong>
+      container_class: 'wp-block-group'  # Each exec in own container
     notes: ~
     status: ok
 
@@ -1109,7 +1109,7 @@ hospitals:
       title_element: "p"
       container_class:
       notes: uSE ANALYZER
-    status: ok
+    status: Not Reported
 
   - FAC: "601"
     name: "GUELPH HOMEWOOD"
@@ -1134,7 +1134,7 @@ hospitals:
       name_class: desc_wrappper_title
       title_class: subtitle
       notes: 
-    status: needs_testing
+    status: ok
 
 
   - FAC: '597'
