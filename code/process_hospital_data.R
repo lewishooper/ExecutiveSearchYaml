@@ -30,23 +30,35 @@ MAX_TITLE_LENGTH <- 100
 CREDENTIAL_PATTERNS <- c(
   # Medical
   "MD", "MBBS", "DO", "FRCPC", "FRCSC", "CCFP", "FACEP", "FACP", "FACS",
+  "MB", "ChB", "MRCP",  # <-- ADD THESE
+  
   # Nursing
   "RN", "BScN", "MScN", "MN", "NP", "CNS", "CCRN", "CNA", "LPN", "RPN",
+  "MHScN", "MHSc", "CCE",  # <-- ADD THESE
+  
   # Academic
   "PhD", "DPhil", "EdD", "DSc", "ScD", "MSc", "MSW", "MA", "MPA", "MHA",
   "MBA", "MEd", "MPhil", "BSc", "BA", "BBA", "BComm",
+  "Ph.D", "MPH", "BCom", "BHSci",  # <-- ADD THESE (note: both PhD and Ph.D for variations)
+  
   # Professional
   "CPA", "CGA", "CMA", "CA", "CFA", "CFP", "PMP", "CAPM", "CHRP", "CHRL", 
   "CHRE", "CIPD", "MCIPD", "CHE", "FACHE", "CPHR", "SHRM-SCP", "SHRM-CP",
   "FCPA", "FCMA", "MHS",
+  "GSC", "CET", "ABC", "FCCHL", "FCMBES",  # <-- ADD THESE
+  
   # Health Administration
   "FACHE", "CHE", "CHFP", "CMPE", "FACMPE",
+  
   # Allied Health
-  "OT", "PT", "PharmD", "RPh", "DDS", "DMD", "OD", "AuD","RRT",
+  "OT", "PT", "PharmD", "RPh", "DDS", "DMD", "OD", "AuD", "RRT",
+  
   # Legal
   "JD", "LLB", "LLM", "QC", "KC",
+  
   # Other
-  "PEng", "P.Eng", "PE", "CPSM", "CSP", "CSPO", "PMI-ACP"
+  "PEng", "P.Eng", "PE", "CPSM", "CSP", "CSPO", "PMI-ACP",
+  "FRSC"  # <-- ADD THIS (Fellow of Royal Society of Canada)
 )
 
 # ==============================================================================
@@ -415,7 +427,6 @@ is_volunteer <- function(title, keywords = NULL) {
 # ==============================================================================
 # HELPER: Check if position is priority (CEO or Board Chair only)
 # ==============================================================================
-
 is_priority_position <- function(title) {
   # Handle NA and empty values
   if (all(is.na(title))) return(rep(FALSE, length(title)))
@@ -426,6 +437,11 @@ is_priority_position <- function(title) {
     
     title_lower <- tolower(t)
     
+    # Exclude assistant positions FIRST
+    if (grepl("assistant", title_lower)) {
+      return(FALSE)
+    }
+    
     # Check for CEO
     is_ceo <- grepl("\\bchief executive officer\\b", title_lower) || 
       grepl("\\bceo\\b", title_lower)
@@ -433,7 +449,8 @@ is_priority_position <- function(title) {
     # Check for Board Chair
     is_board_chair <- grepl("\\bboard chair\\b", title_lower) ||
       grepl("\\bchair.+board\\b", title_lower) ||
-      grepl("\\bchairperson\\b", title_lower)
+      grepl("\\bchairperson\\b", title_lower) ||
+      grepl("^chair$", title_lower)  # Standalone "Chair"
     
     return(is_ceo || is_board_chair)
   }, USE.NAMES = FALSE)
@@ -551,6 +568,7 @@ generate_output_datasets <- function(data, output_date = Sys.Date()) {
       credentials,
       title = executive_title,
       collection_date = date_gathered,
+      priority_flag,
       data_status,
       source_url = url,
       pattern_used,
@@ -567,12 +585,12 @@ generate_output_datasets <- function(data, output_date = Sys.Date()) {
       credentials,
       title = executive_title,
       collection_date = date_gathered,
+      priority_flag,
       data_status,
       source_url = url,
       pattern_used,
       notes
     )
-  
   cat("  Employees dataset:", nrow(employees), "records\n")
   cat("  Volunteers dataset:", nrow(volunteers), "records\n")
   

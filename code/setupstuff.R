@@ -6,7 +6,7 @@ source("get_hosptial_info.R")
 source("quick_test_single.R")
 source("test_all_configured_hospitals.R")
 source("hospital_configuration_helper.R")
-FAC<-663
+FAC<-850
 
 
 quick_test(FAC)
