@@ -1,0 +1,126 @@
+hospital_name,fac_number,hospital_type,person_name,credentials,title,collection_date,data_status,source_url,pattern_used,notes
+TORONTO UNITY HEALTH TORONTO,980,Teaching Hospital,Nora Aufreiter,NA,Chair,2025-11-23,scraped,https://unityhealth.to/about-unity-health/about-unity-health-toronto/leadership/,div_classes,NA
+TORONTO UNITY HEALTH TORONTO,980,Teaching Hospital,Doug Guzman,NA,Vice-chair,2025-11-23,scraped,https://unityhealth.to/about-unity-health/about-unity-health-toronto/leadership/,div_classes,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Stephen Wilson,NA,Chair,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Jon Hall,NA,Vice Chair,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Michele Lajeunesse,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Mary Lynn Dingwell,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Shelly Livingston,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Neil McDonald,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Tonia Oldford,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Teresa Robert,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+TERRACE BAY NORTH OF SUPERIOR HC,977,Small Hospital,Robert Sliter,NA,Director,2025-11-23,scraped,https://www.nosh.ca/board-of-directors,table_rows,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Steve Parry,NA,Chair,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Gail Czukar,NA,First Vice-Chair,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Ernest Vaillancourt,NA,Second Vice-Chair,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Soumya Ghosh,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Trisha Hutzul,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Shawn Leis,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Anthea Ryan,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,Doris Shirriff,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+PENETANGUISHENE WAYPOINT,972,Specialty Mental Health Hospital,George Vadeboncoeur,NA,Director,2025-11-23,scraped,https://www.waypointcentre.ca/about-waypoint/leadership#our-senior-leadership-team,div_classes,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Tom Barlow,NA,"Board Chair, JEC Chair *",2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,David Reichart,NA,Board Vice Chair *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Gilles Madore,NA,Past Board Chair *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Ted Arnott,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Jennifer Krul,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Krystal Leonov,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Kevin Shanahan,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Richard Wright,NA,Director,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+MOUNT FOREST NORTH WELLINGTON HC,963,Small Hospital,Howard Dobson,NA,Director,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Irene Odell,NA,Board Chair,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Diana McNiven,NA,"Vice Chair, Quality/Governance & Planning Committee",2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Mark Bell,NA,"Treasurer, Chair Finance, Resources & Audit Committee",2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Kurtis Bishop,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Jennifer Dailloux,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Dr. Sharon Kaasalainen,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Dr. Donald Pierson,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Charlotte Snider,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Michael Tambosso,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+DYSART ET AL HALIBURTON HEALTH SER,938,Small Hospital,Dr. Clifford Ottaway,NA,Director,2025-11-23,scraped,https://www.hhhs.ca/about/board,p_strong_combined,NA
+NEW LISKEARD TEMISKAMING HOSPITAL,888,Small Hospital,Denise Balch,NA,CHAIR,2025-11-23,scraped,https://www.temiskaming-hospital.com/board-of-directors,h2_name_p_title,NA
+NEW LISKEARD TEMISKAMING HOSPITAL,888,Small Hospital,Sandra Perreault,NA,VICE CHAIR,2025-11-23,scraped,https://www.temiskaming-hospital.com/board-of-directors,h2_name_p_title,NA
+STURGEON FALLS WEST NIPISSING,881,Small Hospital,Barry Bertrand,NA,Chair,2025-11-23,scraped,https://www.wngh.ca/about-wngh/board/#gsc.tab=0,list_items,NA
+STURGEON FALLS WEST NIPISSING,881,Small Hospital,Jamie Restoule,NA,Vice-Chair,2025-11-23,scraped,https://www.wngh.ca/about-wngh/board/#gsc.tab=0,list_items,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Doug Elie,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Dr. Stuart Robertson,NA,Chair,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Louise Boyling,NA,Vice Chair,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Carole Larocque,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Francois Desjardins,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Dr. Genevieve Raby,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Gerard McDonald,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Gordon Peters,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Heidi Salib,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+ALEXANDRIA GLENGARRY,802,Small Hospital,Dr. Raynald Cardinal,NA,Director,2025-11-23,scraped,https://www.hgmh.on.ca/en/about-us-key/strategic-plan-leadership-and-board-of-directors#leadership-team,div_container_multiclass,NA
+NIPIGON DISTRICT MEMORIAL,739,Small Hospital,Jay Lucas,NA,Board Chair,2025-11-23,scraped,https://www.ndmh.ca/about-our-hospital,div_classes,NA
+NIPIGON DISTRICT MEMORIAL,739,Small Hospital,Ashley Davis,NA,Vice-Chair,2025-11-23,scraped,https://www.ndmh.ca/about-our-hospital,div_classes,NA
+NIPIGON DISTRICT MEMORIAL,739,Small Hospital,Deana Renaud,NA,Director,2025-11-23,scraped,https://www.ndmh.ca/about-our-hospital,div_classes,NA
+NIPIGON DISTRICT MEMORIAL,739,Small Hospital,Terri Lynn Elliott,NA,Director,2025-11-23,scraped,https://www.ndmh.ca/about-our-hospital,div_classes,NA
+Erie Shores Leamington,704,Small Hospital,Duffy Kniaziew,NA,Chair,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Amanda Sawatzky,NA,Vice-Chair,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Dr. Maxwell Abraham,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Jennifer Dawson,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Brian Gray,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Lynn Herdzik,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Tom Marineli,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Dan Murdock,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Heather Pratt,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Mark Read,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Mike St. Amant,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+Erie Shores Leamington,704,Small Hospital,Mike Wiens,NA,Director,2025-11-23,scraped,https://erie.bluelemonmedia.com/boardofdirectors,table_cells,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Chester Jobson,NA,Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Terry Rosko,NA,Vice-Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Mike Mazzetti,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Norm Koch,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Barry Ryan,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Mitch Moreau,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Nina Wallace,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+KIRKLAND & DISTRICT,696,Small Hospital,Sandy Austin,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+WAWA LADY DUNN HC,686,Small Hospital,Beverly Boyd,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+WAWA LADY DUNN HC,686,Small Hospital,Cindy Chiupka Jozin,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+WAWA LADY DUNN HC,686,Small Hospital,Jennifer Chandor-Hall,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+WAWA LADY DUNN HC,686,Small Hospital,Jennifer Gatz,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+WAWA LADY DUNN HC,686,Small Hospital,Liz Talian Clarke,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+WAWA LADY DUNN HC,686,Small Hospital,Lucille Case,NA,Director,2025-11-23,scraped,https://ldhc.com/About-Us/Board-of-Directors,h2_name_p_title,NA
+Rural Roads Health servcies INGERSOLL ALEXANDRA,684,Small Hospital,Carrie Lewis,NA,Board Chair,2025-11-23,scraped,https://www.ruralroadshealthservices.ca/about/board-of-directors/,div_classes,NA
+Rural Roads Health servcies INGERSOLL ALEXANDRA,684,Small Hospital,Tanya Pirie,NA,Vice Chair,2025-11-23,scraped,https://www.ruralroadshealthservices.ca/about/board-of-directors/,div_classes,NA
+Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL,824,Small Hospital,Carrie Lewis,NA,Board Chair,2025-11-23,scraped,https://www.ruralroadshealthservices.ca/about/board-of-directors/,div_classes,NA
+Rural Roads Health Services TILLSONBURG DISTRICT MEMORIAL,824,Small Hospital,Tanya Pirie,NA,Vice Chair,2025-11-23,scraped,https://www.ruralroadshealthservices.ca/about/board-of-directors/,div_classes,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Eric Pietsch,NA,Chair,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Terry Popowich,NA,Vice Chair,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Ann Loker,NA,Director,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Ron Melhuish,NA,Director,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Mike Davis,NA,Director,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Elaine Mannisto,NA,Director,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+GERALDTON DISTRICT HOSPITAL,662,Small Hospital,Donna Pelletier,NA,Director,2025-11-23,scraped,https://www.geraldtondh.com/board-of-directors,table_rows,NA
+WHCA Grove community hospital,656,Small Hospital,Tom Barlow,NA,"Board Chair, JEC Chair *",2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,David Reichart,NA,Board Vice Chair *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Gilles Madore,NA,Past Board Chair *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Ted Arnott,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Jennifer Krul,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Krystal Leonov,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Kevin Shanahan,NA,Director *,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Richard Wright,NA,Director,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+WHCA Grove community hospital,656,Small Hospital,Howard Dobson,NA,Director,2025-11-23,scraped,https://gmch.whca.ca/board-of-directors,combined_h2,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Chester Jobson,NA,Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Terry Rosko,NA,Vice-Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Mike Mazzetti,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Norm Koch,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Barry Ryan,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Mitch Moreau,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Nina Wallace,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River ENGLEHART & DISTRICT,653,Small Hospital,Sandy Austin,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+DRYDEN REGIONAL HEALTH CENTRE,647,Small Hospital,Vanessa Simpson,NA,Chair,2025-11-23,scraped,https://www.drhc.on.ca/board,list_items,NA
+DRYDEN REGIONAL HEALTH CENTRE,647,Small Hospital,Brian Callewaert,NA,Vice Chair,2025-11-23,scraped,https://www.drhc.on.ca/board,list_items,NA
+NAPANEE LENNOX & ADDINGTON,592,Small Hospital,Ms. Laurie French,NA,Chair,2025-11-23,scraped,https://web.lacgh.napanee.on.ca/about/governance/,combined_h2,NA
+NAPANEE LENNOX & ADDINGTON,592,Small Hospital,Ms. Rosaleen Cutler,NA,Vice Chair,2025-11-23,scraped,https://web.lacgh.napanee.on.ca/about/governance/,combined_h2,NA
+ATIKOKAN GENERAL HOSPITAL,600,Small Hospital,Beth Fairfield,NA,Board Chair,2025-11-23,scraped,https://aghospital.on.ca/about/board-of-directors/,combined_h2,NA
+ATIKOKAN GENERAL HOSPITAL,600,Small Hospital,Sally Burns,NA,Board Vice Chair/Town Rep,2025-11-23,scraped,https://aghospital.on.ca/about/board-of-directors/,combined_h2,NA
+Blanche River Health,982,Large Community Hospital,Chester Jobson,NA,Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Terry Rosko,NA,Vice-Chair,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Mike Mazzetti,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Norm Koch,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Barry Ryan,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Mitch Moreau,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Nina Wallace,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
+Blanche River Health,982,Large Community Hospital,Sandy Austin,NA,Director,2025-11-23,scraped,https://www.blancheriverhealth.ca/about-us/leadership,div_classes,NA
