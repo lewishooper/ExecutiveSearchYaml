@@ -141,7 +141,7 @@ hospitals:
         - name: Erika MacPhee, RN, MHScN
           title: Vice President, Clinical Operations
     notes: missing people
-    status: ok-mp
+    status: Dec 2025ok-mp
 
 
 
@@ -202,9 +202,7 @@ hospitals:
     html_structure:
        name_class: staff-name
        title_class: staff-title
-       missing_people:
-       #  - name: Rochelle Reid
-       #     title: Senior Lead & Strategic Advisor, Equity,Diversity,and Inclusion
+      
     notes: ~
     status: ok
 
@@ -261,7 +259,7 @@ hospitals:
         title: "Vice President of Women and Children, Inpatient Surgery, Peri-Operative and Ambulatory Surgical Services"
       - name: "Margo Reilly"
         title: "Executive Director of the Windsor Family Health Team"
-    notes: Returns 403 Forbidden - site blocks automated requests
+    notes:  Dec 2025
     status: ok-blocked
 
 
@@ -439,7 +437,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 6
     html_structure:
-      notes: "NAMES SOURCED FROM JPEG ON GOVERNANCE PAGE"
+    notes: "Dec 2025 NAMES SOURCED FROM JPEG ON GOVERNANCE PAGE"
     status: ok-MER
     known_executives:
       - name: Cheryl O'Flaherty
@@ -447,7 +445,6 @@ hospitals:
       - name: Gillian Nattress
         title: Vice President Patient Services and Chief Nursing Officer
       - name: Alison Wesley-James
-      
         title:  VP Operations and Capital Planning
       - name: Dr. Sean Moore, 
         title: Chief of Staff
@@ -515,7 +512,7 @@ hospitals:
           title: Vice President/Chief Nursing Executive, Patient Care, Quality & Clinical Services
         - name: Kimberley Harbord
           title: Vice President, Finance, Performance & Information
-      notes: "Inconsistent structure - 2 execs in H2, 2 in P tags. Phone/fax cleanup needed."
+      notes: "dec 2025 Inconsistent structure - 2 execs in H2, 2 in P tags. Phone/fax cleanup needed."
     status: ok-mp
 
   - FAC: '784'
@@ -649,8 +646,8 @@ hospitals:
     url: https://www.mh.on.ca/organizationalstructure
     pattern: "manual_entry_required"
     expected_executives: 5
-    html_structure:
-      notes: "Mixed format - CEO is Name–Title, others are Title–Name in <strong> tags"
+    html_structure: 
+      notes: "Mixed format - CEO is Name–Title, others are Title–Name in <strong> tags" # Dec2025
     status: "ok-MER"
     known_executives:
       - name: "Annie Janveau"
@@ -663,7 +660,10 @@ hospitals:
         title: "Director of Finance"
       - name: "Teresa Malakoff"
         title: "Support Services Manager/Privacy Officer"
- 
+      - name:  "Julie Macintyre"
+        title:  "Exectuive Assistant"
+      - name: "Martha Ladouceur"
+        title: "Nurse Manager"
     
 
   - FAC: '714'
@@ -673,12 +673,12 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 1
     html_structure:
-    known_executives:
-        - name: Roy Butler
-          title: President and CEO
+  #  known_executives:
+   #     - name: Roy Butler
+  #        title: President and CEO
      
     notes: Only shows CEO
-    status: "no executive team shown"
+    status: "no executive team shown" #Dec 2025
     
     
     
@@ -690,7 +690,7 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 1
     html_structure:
-      notes: On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
+      notes: Dec 2025On Board Page, but differnt style "Title|Name" but each entry seperated by <br>
     status: "ok-MER"
     known_executives:
       - name: "Esther Millar"
@@ -838,7 +838,7 @@ hospitals:
        name_element: p
        title_element: p
        reversed: false
-       notes: Needs Review got 14 out of 15, Manually added the cEO
+       notes: Dec 2025 Needs Review got 14 out of 15, Manually added the cEO
        missing_people:
         - name: Dr. Mike Heenan
           title: President and chief executive officer, St. Joseph's Health System
@@ -945,33 +945,33 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 13
     html_structure:
-      notes: Java script issue
+      notes:  Dec 2025 Java script issue Dec 2025
     status: "ok-MER"
     known_executives:
       - name: "Cara Vaccarino"
         title: "President and CEO"
-      - name: "Dr. Benoît Mulsant"
-        title: "Interim Psychiatrist-in-Chief and Chief of Staff"
-      - name: "Nyranne Martin"
-        title: "Chief Operating Officer"
       - name: "Dr. Florence Dzierszinski"
-        title: "President & CEO, IMHR and VP of Research at The Royal"
+        title: "President & CEO, IMHR and VP of Research at The Royal"  
       - name: "Chris Ide"
         title: "President & CEO, Foundation and VP, Brand & Marketing"
-      - name: "Linda Mohri"
-        title: "Senior VP, Patient Care Services"
-      - name: "Laura MacDonald"
-        title: "VP, People and Culture"
-      - name: "Carolyn Jodouin"
-        title: "VP, Finance"
-      - name: "Kristina McGeough"
+      - name: "Stephanie Carter"
         title: "Executive Director"
       - name: "Domenic Ielo"
         title: "Executive Director and Interim Chief Nursing Executive"
-      - name: "Stephanie Carter"
-        title: "Executive Director"
+      - name:  "Carolyn Jodouin"
+        title: "Vice-President, Finance"
+      - name: "Laura MacDonald"
+        title: "VP, People and Culture"
       - name: "Andrea MacLean"
         title: "Director, Communications"
+      - name: "Nyranne Martin"
+        title: "Chief Operating Officer"
+      - name: "Kristina McGeough"
+        title: "Executive Director"
+      - name: "Linda Mohri"
+        title: "Senior VP, Patient Care Services"
+      - name: "Dr. Benoît Mulsant"
+        title: "Interim Psychiatrist-in-Chief and Chief of Staff"
       - name: "Dr. Floyd Wood"
         title: "Interim, Medical Director, Integrated Forensics Program"
 
@@ -984,7 +984,7 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 4
     html_structure:
-      notes: "Board page with figcaption elements containing names and titles separated by <br>. Mix of 11 board members and 4 executives. No existing pattern supports figcaption with plain text names. Executives manually extracted from Ex-Officio section."
+      notes: "Dec 2025 Board page with figcaption elements containing names and titles separated by <br>. Mix of 11 board members and 4 executives. No existing pattern supports figcaption with plain text names. Executives manually extracted from Ex-Officio section."
     status: "ok-MER"
     known_executives:
       - name: "Kelli-Ann Lemieux"
@@ -1009,7 +1009,7 @@ hospitals:
       missing_people:
         - name: "Tom Dorland"
           title: "VP Diagnostic, Hospital Information Services"
-    notes: "Alternating p elements. Titles in <strong> tags come before names. Tom Dorland has extra p tag around image that breaks sequential pairing."
+    notes: "Dec 2025 Alternating p elements. Titles in <strong> tags come before names. Tom Dorland has extra p tag around image that breaks sequential pairing."
     status: "ok"
 
   - FAC: '647'
@@ -1075,7 +1075,7 @@ hospitals:
     pattern: "manual_entry_required"
     expected_executives: 3
     html_structure:
-      notes: "Board page with executives mixed in. Co-CEOs structure. No clear HTML patterns."
+      notes: "Dec 2025 Board page with executives mixed in. Co-CEOs structure. No clear HTML patterns."
     status: "ok-MER"
     known_executives:
       - name: "Natasha Comte"
@@ -1243,7 +1243,7 @@ hospitals:
     expected_executives: 6
     html_structure:
       notes: Site blocks automated scraping - connection refused in R
-    status: ok-blocked
+    status:  Dec 2025 ok-blocked
     known_executives:
       - name: Paula Reaume-Zimmer
         title: President & CEO
@@ -1308,6 +1308,7 @@ hospitals:
       missing_people:
         - name: Al Coady
           title: Senior Vice President Redevelopment, Facilities & Retail Operations
+    notes: Dec 2025
     status: ok-mp
   - FAC: '940'
     name: COBOURG NORTHUMBERLAND HILLS
@@ -1407,7 +1408,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 5
     html_structure:
-      notes: Titles embedded in prose paragraphs - not extractable by standard patterns
+      notes: Dec 2025 Titles embedded in prose paragraphs - not extractable by standard patterns
     status: ok-MER
     known_executives:
       - name: Sabine Mersmann
@@ -1458,6 +1459,7 @@ hospitals:
           title: Chief of Staff
         - name: Linda Gravel
           title: Vice President, Clinical Services and Chief Nursing Executive
+    notes: Dec 2025
     status: ok-mp
   - FAC: '718'
     name: BURLINGTON JOSEPH BRANT HOSPITAL
@@ -1548,7 +1550,7 @@ hospitals:
     expected_executives: 5
     html_structure:
       notes: Content loaded by JavaScript - cannot be scr
-    status: ok-blocked
+    status: ok-blocked Dec 2025
     known_executives:
       - name: Paul Heinrich
         title: President & CEO
@@ -1567,7 +1569,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 8
     html_structure:
-      notes: Website blocks automated scraping - HTTP 403 Forbidden
+      notes: Dec 2025 Website blocks automated scraping - HTTP 403 Forbidden
     status: ok-blocked
     known_executives:
       - name: Adam Topp
@@ -1659,7 +1661,7 @@ hospitals:
           title: Vice President, Research and Innovation
         - name: Dr. Dan Cass B.Sc., MD, MSc, FRCPC
           title: Executive Vice President and Chief Medical Executive
-      notes: ''
+      notes: 'Dec 2025'
     status: ok-mp
   - FAC: '935'
     name: Thunder Bay Regional Health Sciences Centre
@@ -1806,7 +1808,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 31
     html_structure:
-      notes: Content loaded by JavaScript - cannot be scraped with rvest
+      notes: Dec 2025 Content loaded by JavaScript - cannot be scraped with rvest
     status: ok-blocked
     known_executives:
       - name: Dr. Kevin Smith
@@ -1821,8 +1823,8 @@ hospitals:
         title: Vice President, Medical Affairs
       - name: Darlene Dasent
         title: Executive Vice President & Chief Financial Officer
-      - name: Doug Earle
-        title: CEO, West Park Healthcare Centre Foundation
+      #- name: Doug Earle
+      #  title: CEO, West Park Healthcare Centre Foundation
       - name: Marnie Escaf
         title: Vice President, Clinical
       - name: Thomas Forbes
@@ -1969,11 +1971,14 @@ hospitals:
     known_executives:
       - name: Connie Dejak
         title: President and Chief Executive Officer
+        
+      - name: Dr. Patrick Skalenda
+        title: Chief of Medical Staff
       - name: Karimah Alidina
         title: Chief Nursing Executive
       - name: Ivo Chopnikolov
         title: Chief Financial Officer
-    notes: Manual entry - executives list mixed with board structure, list_items pattern couldn't isolate correctly
+    notes: Dec 2025 Manual entry - executives list mixed with board structure, list_items pattern couldn't isolate correctly
     status: ok-MER
     
   - FAC: '927'
@@ -1983,8 +1988,7 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 6
     html_structure:
-      notes: Website blocks automated scraping - may need manual entry or contact
-        hospital
+      notes: Dec 2025
     status: ok-blocked
     known_executives:
       - name: Bill Marra
