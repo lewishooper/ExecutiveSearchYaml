@@ -6,12 +6,12 @@ source("get_hosptial_info.R")
 source("quick_test_single.R")
 source("test_all_configured_hospitals.R")
 source("hospital_configuration_helper.R")
-FAC<-850
+FAC<-611
 
 
 quick_test(FAC)
 
-helper$analyze_hospital_structure(676, "Hanover", "https://www.hanoverhospital.on.ca/our-team")
+helper$analyze_hospital_structure(611, "NSHN", "https://www.nshn.care/senior-leadership-team")
 
 helper$test_hospital_config(FAC, Name, url, "table_rows")# - Test configuration (reads from YAML)\n")  
 

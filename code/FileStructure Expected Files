@@ -1,0 +1,18 @@
+File structure
+```
+
+---
+  
+  ## Files That Will Be Created
+  
+  After running this script, you'll have these new files in your `processed` directory:
+```
+E:/ExecutiveSearchYaml/processed/
+  ├── HospitalExecutives_Employees_2025-12-01.csv          (existing)
+  ├── HospitalExecutives_Volunteers_2025-12-01.csv         (existing)
+  ├── HospitalExecutives_Employees_2026-01-01.csv          (existing)
+  ├── HospitalExecutives_Volunteers_2026-01-01.csv         (existing)
+  ├── PersonnelMaster_2025-12-01.csv                       (NEW - baseline)
+  ├── PersonnelMaster_2026-01-01.csv                       (NEW - updated)
+  ├── PersonnelMovement_2026-01.csv                        (NEW - movements detected)
+  └── HospitalComparison_Summary_2026-01.csv        

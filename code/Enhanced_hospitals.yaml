@@ -1108,10 +1108,12 @@ hospitals:
     pattern: h2_name_p_title
     expected_executives: 4
     html_structure:
-      name_element: "h2"
-      title_element: "p"
-      container_class:
-      notes: uSE ANALYZER
+      name_element: h6
+      title_element: p
+      reversed: true
+     # name_class: desc_wrappper_title
+      #title_class: wixui-rich-text__text
+      notes: 
     status: Not Reported
 
   - FAC: "601"
