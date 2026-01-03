@@ -8,3 +8,8 @@ cat("Employees appearing at multiple hospitals:", nrow(employee_multi), "\n")
 if(nrow(employee_multi) > 0) {
   print(employee_multi[, c("person_name", "hospital_name", "title")])
 }
+
+
+source("E:/ExecutiveSearchYaml/code/monthly_executive_collection.R")
+result <- run_monthly_collection()
+

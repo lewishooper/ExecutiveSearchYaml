@@ -505,9 +505,7 @@ assign_data_status <- function(data) {
   data <- data %>%
     mutate(
       data_status = case_when(
-        # Check for error messages first
-        !is.na(error_message) ~ "failed",
-        # Check robots status - ADD "disallowed" here
+        # Check robots status - removed error_message check
         !is.na(robots_status) & robots_status %in% c("blocked", "disallowed") ~ "robotstxt_blocked",
         !is.na(robots_status) & robots_status == "javascript_required" ~ "javascript_blocked",
         !is.na(robots_status) & robots_status == "blocked_general" ~ "blocked",
