@@ -10,6 +10,162 @@ library(stringr)
 library(stringdist)
 library(lubridate)
 
+# ==============================================================================
+# DIAGNOSTIC FUNCTIONS - Add to master_reference_functions.R
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# DIAGNOSTIC 1: Detect Whole-Hospital Departure Issues
+# ------------------------------------------------------------------------------
+
+diagnose_hospital_failures <- function(comparison_results, threshold = 0.5) {
+  #
+  # Identify hospitals where >50% of staff appear to have departed
+  # This usually indicates scraper failure, not actual turnover
+  #
+  
+  hospital_issues <- comparison_results$hospital_summary %>%
+    mutate(
+      total_dec = retained_count + departed_count,
+      departure_rate = ifelse(total_dec > 0, departed_count / total_dec, 0)
+    ) %>%
+    filter(departure_rate >= threshold) %>%
+    arrange(desc(departure_rate))
+  
+  if (nrow(hospital_issues) > 0) {
+    cat("\n⚠️  ALERT: Hospitals with abnormally high departure rates:\n")
+    cat("   (Likely scraper failures or data quality issues)\n\n")
+    
+    print(hospital_issues %>% 
+            select(hospital_name, hospital_fac, retained_count, 
+                   departed_count, new_count, departure_rate))
+    
+    cat("\n")
+    return(hospital_issues)
+  } else {
+    cat("✓ No whole-hospital departure issues detected\n")
+    return(data.frame())
+  }
+}
+
+# ------------------------------------------------------------------------------
+# DIAGNOSTIC 2: Detect Individual Name Matching Failures
+# ------------------------------------------------------------------------------
+
+diagnose_name_matching_failures <- function(dec_data, jan_data, 
+                                            personnel_master, threshold = 0.90) {
+  #
+  # Find people marked as departed who might actually be in Jan data
+  # Uses fuzzy matching within same hospital to catch typos
+  #
+  
+  # Get people marked as missing
+  departed <- personnel_master %>%
+    filter(status == "missing_1_month")
+  
+  if (nrow(departed) == 0) {
+    cat("No departed people to check\n")
+    return(data.frame())
+  }
+  
+  cat(sprintf("\nChecking %d departed people for potential matches...\n", nrow(departed)))
+  
+  potential_matches <- data.frame()
+  
+  for (i in 1:nrow(departed)) {
+    dep_name <- departed$person_name[i]
+    dep_hospital <- departed$current_hospital_fac[i]
+    dep_person_id <- departed$person_id[i]
+    
+    # Get January data for same hospital
+    jan_hospital <- jan_data %>% 
+      filter(fac_number == dep_hospital)
+    
+    if (nrow(jan_hospital) == 0) next
+    
+    # Fuzzy match against Jan data at same hospital
+    for (j in 1:nrow(jan_hospital)) {
+      jan_name <- jan_hospital$person_name[j]
+      
+      if (is.na(dep_name) || is.na(jan_name)) next
+      if (dep_name == "" || jan_name == "") next
+      
+      # Normalize and compare
+      dep_norm <- toupper(str_trim(dep_name))
+      jan_norm <- toupper(str_trim(jan_name))
+      
+      similarity <- stringsim(dep_norm, jan_norm, method = "jw")
+      
+      if (!is.na(similarity) && similarity >= threshold) {
+        potential_matches <- bind_rows(potential_matches, data.frame(
+          person_id = dep_person_id,
+          dec_name = dep_name,
+          jan_name = jan_name,
+          hospital_fac = dep_hospital,
+          hospital_name = departed$current_hospital[i],
+          similarity = similarity,
+          exact_match = (dep_name == jan_name),
+          stringsAsFactors = FALSE
+        ))
+      }
+    }
+  }
+  
+  if (nrow(potential_matches) > 0) {
+    cat(sprintf("\n⚠️  Found %d potential name matching failures:\n", nrow(potential_matches)))
+    potential_matches <- potential_matches %>% arrange(desc(similarity))
+    print(potential_matches)
+    cat("\n")
+    return(potential_matches)
+  } else {
+    cat("✓ No obvious name matching failures detected\n")
+    return(data.frame())
+  }
+}
+
+# ------------------------------------------------------------------------------
+# DIAGNOSTIC 3: Check for NA/Blank Names
+# ------------------------------------------------------------------------------
+
+diagnose_data_quality <- function(dec_data, jan_data) {
+  #
+  # Identify data quality issues: NA names, blank entries, etc.
+  #
+  
+  cat("\n=== DATA QUALITY CHECK ===\n")
+  
+  # Check December
+  dec_issues <- dec_data %>%
+    filter(is.na(person_name) | person_name == "" | 
+             is.na(hospital_name) | hospital_name == "")
+  
+  if (nrow(dec_issues) > 0) {
+    cat(sprintf("⚠️  December: %d rows with NA/blank names or hospitals\n", nrow(dec_issues)))
+  } else {
+    cat("✓ December: No NA/blank name issues\n")
+  }
+  
+  # Check January
+  jan_issues <- jan_data %>%
+    filter(is.na(person_name) | person_name == "" | 
+             is.na(hospital_name) | hospital_name == "")
+  
+  if (nrow(jan_issues) > 0) {
+    cat(sprintf("⚠️  January: %d rows with NA/blank names or hospitals\n", nrow(jan_issues)))
+  } else {
+    cat("✓ January: No NA/blank name issues\n")
+  }
+  
+  return(list(
+    dec_issues = dec_issues,
+    jan_issues = jan_issues
+  ))
+}
+
+
+
+
+
 # ------------------------------------------------------------------------------
 # FUNCTION 1: Initialize Personnel Master from December Baseline
 # ------------------------------------------------------------------------------
@@ -290,6 +446,9 @@ detect_simple_movements <- function(departures, new_arrivals, threshold = 0.85) 
 # ------------------------------------------------------------------------------
 # FUNCTION 5: Update Personnel Master with January Data
 # ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+# FUNCTION 5: Update Personnel Master with January Data (Fixed NA handling)
+# ------------------------------------------------------------------------------
 
 update_personnel_master <- function(personnel_master, comparison_results, 
                                     movements, run_date) {
@@ -311,8 +470,9 @@ update_personnel_master <- function(personnel_master, comparison_results,
         updated_master$status[idx] <- "active"
         updated_master$months_missing[idx] <- 0
         
-        # Update title if changed
-        if (comparison_results$retained$title_changed[i]) {
+        # Update title if changed (with NA check)
+        title_changed <- comparison_results$retained$title_changed[i]
+        if (!is.na(title_changed) && title_changed == TRUE) {
           updated_master$current_title[idx] <- comparison_results$retained$title_jan[i]
         }
       }
@@ -351,8 +511,15 @@ update_personnel_master <- function(personnel_master, comparison_results,
   }
   
   # 4. Add NEW people (assign new person_ids)
-  new_people_to_add <- comparison_results$new_arrivals %>%
-    anti_join(movements, by = c("person_name", "fac_number" = "to_hospital_fac"))
+  # 4. Add NEW people (assign new person_ids)
+  # Handle case where movements might be empty
+  if (nrow(movements) > 0) {
+    new_people_to_add <- comparison_results$new_arrivals %>%
+      anti_join(movements, by = c("person_name", "fac_number" = "to_hospital_fac"))
+  } else {
+    # No movements detected, so all new arrivals are truly new
+    new_people_to_add <- comparison_results$new_arrivals
+  }
   
   if (nrow(new_people_to_add) > 0) {
     # Generate new person_ids
@@ -393,7 +560,6 @@ update_personnel_master <- function(personnel_master, comparison_results,
   
   return(updated_master)
 }
-
 # ------------------------------------------------------------------------------
 # FUNCTION 6: Generate Summary Reports
 # ------------------------------------------------------------------------------

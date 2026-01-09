@@ -1,12 +1,16 @@
 #rm(list=ls())
-setwd("E:/ExecutiveSearchYaml/code/")
-config <- yaml::read_yaml("enhanced_hospitals.yaml")
-source("pattern_based_scraper.R")
-source("get_hosptial_info.R")
-source("quick_test_single.R")
-source("test_all_configured_hospitals.R")
-source("hospital_configuration_helper.R")
-FAC<-611
+project_root <- "E:/ExecutiveSearchYaml"
+if (getwd() != project_root) {
+  setwd(project_root)
+}
+config <- yaml::read_yaml("code/enhanced_hospitals.yaml")
+source("code/pattern_based_scraper.R")
+source("code/get_hosptial_info.R")
+source("code/quick_test_single.R")
+source("code/test_all_configured_hospitals.R")
+source("code/hospital_configuration_helper.R")
+FAC<-714
+
 
 
 quick_test(FAC)
@@ -51,3 +55,9 @@ FindBadTitle<- Nov172025 %>%
   mutate(nameLength=str_length(executive_name)) %>%
   mutate(titleLength=str_length(executive_title)) %>%
   filter(titleLength>=1000)
+##
+## find Manual entry finder
+
+# From your R console in project directory:
+source("E:/ExecutiveSearchYaml/code/count_manual_entry_hospitals.R")
+source("E:/ExecutiveSearchYaml/code/setup_environment.R")

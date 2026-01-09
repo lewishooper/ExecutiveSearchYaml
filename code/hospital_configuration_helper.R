@@ -423,8 +423,8 @@ HospitalConfigHelper <- function() {
     cat("Pattern:", pattern, "\n\n")
     
     # Source the scraper
-    if (file.exists("pattern_based_scraper.R")) {
-      source("pattern_based_scraper.R")
+    if (file.exists("code/pattern_based_scraper.R")) {
+      source("code/pattern_based_scraper.R")
     } else {
       cat("ERROR: pattern_based_scraper.R not found\n")
       return(NULL)

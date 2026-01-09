@@ -1,7 +1,7 @@
 # ==============================================================================
 # TEST SCRIPT: Dec → Jan Comparison
 # ==============================================================================
-getwd
+
 # Source the functions
 source("code/master_reference_functions.R")
 
@@ -92,4 +92,6 @@ if (nrow(comparison$hospital_summary) > 0) {
 }
 
 cat("\n=== COMPLETE ===\n")
-       (NEW - hospital summary)
+getwd()
+diagnose_dec_jan.R
+source("code/diagnose_dec_jan.R")

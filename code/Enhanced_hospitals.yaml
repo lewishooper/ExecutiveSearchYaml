@@ -463,12 +463,11 @@ hospitals:
     pattern: manual_entry_required
     expected_executives: 1
     html_structure:
-      notes: "No leadership page on website. CEO info found on Accessibility page."
+    notes: "No leadership page on website. CEO info found on Accessibility page."
     status: no executive team shown
     known_executives:
-      
-
-
+      - name:  Melonie Loubert
+        title:  Chief Executive Officer
   - FAC: '802'
     name: 'ALEXANDRIA GLENGARRY'
     hospital_type: 'Small Hospital'
@@ -669,16 +668,16 @@ hospitals:
   - FAC: '714'
     name: LONDON ST JOSEPHS
     hospital_type: 'Teaching Hospital'
-    url: https://www.sjhc.london.on.ca/about-us/about-st-josephs-health-care-london/leadership-team
+    url: https://www.sjhc.london.on.ca/board-directors
     pattern: manual_entry_required
     expected_executives: 1
     html_structure:
-  #  known_executives:
-   #     - name: Roy Butler
-  #        title: President and CEO
+    known_executives:
+        - name: Roy Butler
+          title: President and CEO
      
-    notes: Only shows CEO
-    status: "no executive team shown" #Dec 2025
+    notes: Need ability to Parse text for title 
+    status: " ok"
     
     
     
@@ -1488,16 +1487,16 @@ hospitals:
   - FAC: '699'
     name: WRHN-KITCHENER ST MARY'S
     hospital_type: Large Community Hospital
-    url: https://www.smgh.ca/about-us/our-leadership-team
+    url: https://www.grhosp.on.ca/about/senior-leadership-team
     partnership: Waterloo Regional Health Network
     partnership_abbrev: WRHN
-    pattern: div_classes
-    expected_executives: 16
+    pattern: list_items
+    expected_executives: 17
     html_structure:
-      name_class: name
-      title_class: position
-      container_class: member-name
-    status: ok
+      list_type: ul
+      format: combined
+      separator: ', '
+      notes: Different FAC but merged hospital 
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
@@ -1726,10 +1725,11 @@ hospitals:
     name: Queensway Carleton Hospital
     hospital_type: Large Community Hospital
     url: https://www.qch.on.ca/Leadership
-    pattern: qch_mixed_tables
-    expected_executives: 9
+    pattern: h2_name_p_title
+    expected_executives: 29
     html_structure:
-      notes: ''
+      name_element: h3
+      title_element: span
     status: ok
   - FAC: '606'
     name: BARRIE ROYAL VICTORIA REG HC

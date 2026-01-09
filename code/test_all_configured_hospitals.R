@@ -1,18 +1,17 @@
 # test_all_configured_hospitals.R - Comprehensive testing of all configured hospitals
 # Save this in E:/ExecutiveSearchYaml/code/
 #rm(list=ls())
-setwd("E:/ExecutiveSearchYaml/code/")
 
 library(yaml)
 library(dplyr)
 library(knitr)
-source("pattern_based_scraper.R")
+source("code/pattern_based_scraper.R")
 
 # ============================================================================
 # COMPREHENSIVE HOSPITAL TESTING SUITE
 # ============================================================================
 
-test_all_configured_hospitals <- function(config_file = "enhanced_hospitals.yaml",
+test_all_configured_hospitals <- function(config_file = "code/enhanced_hospitals.yaml",
                                           output_folder = "E:/ExecutiveSearchYaml/output") {
   
   cat("╔════════════════════════════════════════════════════════════════════╗\n")
@@ -337,7 +336,7 @@ test_all_configured_hospitals <- function(config_file = "enhanced_hospitals.yaml
 # QUICK STATUS CHECK (faster, no scraping)
 # ============================================================================
 
-check_configuration_status <- function(config_file = "enhanced_hospitals.yaml") {
+check_configuration_status <- function(config_file = "code/enhanced_hospitals.yaml") {
   
   cat("═══════════════════════════════════════════════════════════════════\n")
   cat("              CONFIGURATION STATUS CHECK                            \n")

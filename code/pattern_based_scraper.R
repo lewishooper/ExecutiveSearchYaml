@@ -3,7 +3,10 @@
 # Save this in E:/ExecutiveSearchYaml/code/
 # UPDATED: Added missing_people support to Patterns 5 & 8, fixed Pattern 8 for FAC 777
 # updated to add new patterns
-
+project_root <- "E:/ExecutiveSearchYaml"
+if (getwd() != project_root) {
+  setwd(project_root)
+}
 ###############
 ##############
 #   TEST sytem replacing html_text2() with html_text2()
@@ -174,7 +177,7 @@ path_matches_rule <- function(path, rule) {
 PatternBasedScraper <- function() {
   
   # Load configuration data
-  load_config <- function(config_file = "enhanced_hospitals.yaml") {
+  load_config <- function(config_file = "code/enhanced_hospitals.yaml") {
     config <- yaml::read_yaml(config_file)
     return(config)
   }
@@ -1898,7 +1901,7 @@ return(unique_pairs)
   # ============================================================================
   # MAIN SCRAPER FUNCTION (with robots.txt checking)
   # ============================================================================
-  scrape_hospital <- function(hospital_info, config_file = "enhanced_hospitals.yaml") {
+  scrape_hospital <- function(hospital_info, config_file = "code/enhanced_hospitals.yaml") {
     config <- load_config(config_file)
     
     cat("Scraping", hospital_info$name, "(FAC-", hospital_info$FAC, ")")
@@ -2016,7 +2019,7 @@ return(unique_pairs)
   # ============================================================================
   # BATCH PROCESSING
   # ============================================================================
-  scrape_batch <- function(hospitals_list, config_file = "enhanced_hospitals.yaml", 
+  scrape_batch <- function(hospitals_list, config_file = "code/enhanced_hospitals.yaml", 
                            output_folder = "E:/ExecutiveSearchYaml/output") {
     
     all_results <- list()
@@ -2055,7 +2058,7 @@ return(unique_pairs)
   # ============================================================================
   # TEST FUNCTION
   # ============================================================================
-  test_hospital <- function(fac, name, url, pattern = "h2_name_h3_title", config_file = "enhanced_hospitals.yaml") {
+  test_hospital <- function(fac, name, url, pattern = "h2_name_h3_title", config_file = "code/enhanced_hospitals.yaml") {
     
     hospital_info <- list(
       FAC = sprintf("%03d", as.numeric(fac)),
