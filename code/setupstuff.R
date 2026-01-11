@@ -61,3 +61,10 @@ FindBadTitle<- Nov172025 %>%
 # From your R console in project directory:
 source("E:/ExecutiveSearchYaml/code/count_manual_entry_hospitals.R")
 source("E:/ExecutiveSearchYaml/code/setup_environment.R")
+
+source("E:/ExecutiveSearchYaml/code/screenshot_capture_function_v2.R")
+result<-test_screenshot_capture()
+source("E:/ExecutiveSearchYaml/code/api_extraction_function.R")
+test_api_extraction()
+
+source("E:/ExecutiveSearchYaml/code/test_full_pipeline.R")

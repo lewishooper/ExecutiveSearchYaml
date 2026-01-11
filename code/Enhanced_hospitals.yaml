@@ -1405,7 +1405,7 @@ hospitals:
   - FAC: '763'
     name: PEMBROKE REGIONAL
     hospital_type: Large Community Hospital
-    url: https://www.pemreghos.org/slt?m=1
+    url: https://www.pemreghos.org/slt
     pattern: manual_entry_required
     expected_executives: 5
     html_structure:
@@ -1546,7 +1546,7 @@ hospitals:
   - FAC: '974'
     name: NORTH BAY NORTH BAY REGIONAL HC
     hospital_type: Large Community Hospital
-    url: https://nbrhc.on.ca/about-nbrhc/senior-leadership-team/
+    url: https://nbrhc.on.ca/about-nbrhc/senior-leadership/
     pattern: manual_entry_required
     expected_executives: 5
     html_structure:
