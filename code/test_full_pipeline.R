@@ -13,7 +13,7 @@ cat("║   FULL PIPELINE TEST: SCREENSHOT → API → VALIDATE   ║\n")
 cat("╚════════════════════════════════════════════════╝\n")
 
 # Test hospital: Toronto Mount Sinai
-test_url <-  "http://www.lwdh.on.ca/index.php/information/boardroom.html"
+test_url <-  " https://www.pemreghos.org/slt"
 test_hospital <- "Kenora"
 test_fac <- "826"
 
