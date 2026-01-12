@@ -26,7 +26,8 @@ cat("╚════════════════════════
 # =============================================================================
 # CONFIGURATION
 # =============================================================================
-
+# Input file for Hospitals to be captured
+hospitals_to_capture<-readRDS("E:/ExecutiveSearchYaml/temp/hospitals_to_capture.rds")
 # Output directory for screenshots
 screenshot_dir <- "E:/ExecutiveSearchYaml/temp/screenshots"
 date_tag <- format(Sys.Date(), "%Y%m%d")
@@ -44,29 +45,6 @@ if (!dir.exists(screenshot_dir)) {
 # OPTION 1: Load from YAML (recommended for production)
 # This would read from your enhanced_hospitals.yaml where pattern = "manual_entry_required"
 
-# OPTION 2: Define manually for testing (use this for now)
-hospitals_to_capture <- data.frame(
-  FAC = c("927", "966", "974", "933", "826", "714", "763"),
-  name = c(
-    "Toronto Mount Sinai",
-    "Sarnia Bluewater Health",
-    "North Bay Regional Health Centre",
-    "Windsor Regional Hospital",
-    "Kenora Lake of the Woods",
-    "London St Josephs",
-    "Pembroke Regional"
-  ),
-  url = c(
-    "https://www.sinaihealth.ca/about/leadership/",
-    "https://www.bluewaterhealth.ca/about/leadership",
-    "https://www.nbrhc.on.ca/about-us/leadership-team",
-    "https://www.wrh.on.ca/AboutUs_Leadership.aspx",
-    "https://lwdh.on.ca/about-us/leadership-team/",
-    "https://www.sjhc.london.on.ca/about-us/leadership",
-    "https://www.prh.email/about/leadership-team/"
-  ),
-  stringsAsFactors = FALSE
-)
 
 cat("Hospitals to capture:", nrow(hospitals_to_capture), "\n\n")
 
@@ -256,19 +234,19 @@ Failed Captures: %d
 REVIEW EACH FILE:
 ─────────────────────────────────────────────────────────────────
 ", date_tag, nrow(hospitals_to_capture), successful, failed)
-
 for (r in capture_results) {
   checklist_content <- paste0(checklist_content, sprintf("
 [ ] FAC-%s: %s
+    URL: %s
     File: FAC-%s_%s.png
     Status: %s
     %s
     Notes: _____________________________________________
-", r$FAC, r$name, r$FAC, date_tag, 
-   ifelse(r$success, "AUTO-CAPTURED", "NEEDS MANUAL CAPTURE"),
-   ifelse(r$success, 
-          sprintf("Size: %.1f KB", r$file_size / 1024),
-          sprintf("Error: %s", r$error_message))))
+", r$FAC, r$name, r$url, r$FAC, date_tag, 
+                                                         ifelse(r$success, "AUTO-CAPTURED", "NEEDS MANUAL CAPTURE"),
+                                                         ifelse(r$success, 
+                                                                sprintf("Size: %.1f KB", r$file_size / 1024),
+                                                                sprintf("Error: %s", r$error_message))))
 }
 
 checklist_content <- paste0(checklist_content, "

@@ -2,6 +2,12 @@
 # Run this at the beginning of each work session
 # Save in E:/ExecutiveSearchYaml/code/
 #rm(list=ls())
+#rm(list=ls())
+project_root <- "E:/ExecutiveSearchYaml"
+if (getwd() != project_root) {
+  setwd(project_root)
+}
+
 cat("╔════════════════════════════════════════════════════════════════╗\n")
 cat("║           HOSPITAL SCRAPER PROJECT - SESSION STARTUP           ║\n")
 cat("╚════════════════════════════════════════════════════════════════╝\n\n")
@@ -11,7 +17,7 @@ session_start_time <- Sys.time()
 cat("Session started:", format(session_start_time, "%Y-%m-%d %H:%M:%S"), "\n\n")
 
 # Set working directory
-setwd("E:/ExecutiveSearchYaml/code/")
+#setwd("E:/ExecutiveSearchYaml/code/")
 cat("✓ Working directory set\n")
 
 # Load required libraries
@@ -29,9 +35,9 @@ cat("✓ All libraries loaded\n")
 # Source all required scripts
 cat("\nLoading project scripts...\n")
 scripts <- c(
-  "pattern_based_scraper.R",
-  "hospital_configuration_helper.R",
-  "quick_test_single.R"
+  "code/pattern_based_scraper.R",
+  "code/hospital_configuration_helper.R",
+  "code/quick_test_single.R"
 )
 
 for (script in scripts) {
@@ -46,9 +52,9 @@ for (script in scripts) {
 # Check for key files
 cat("\nChecking key files...\n")
 key_files <- c(
-  "enhanced_hospitals.yaml",
-  "next_batch_template.yaml",
-  "SESSION_LOG.md"
+  "code/enhanced_hospitals.yaml",
+  "code/next_batch_template.yaml",
+  "code/SESSION_LOG.md"
 )
 
 for (file in key_files) {
@@ -90,8 +96,8 @@ if (file.exists("enhanced_hospitals.yaml")) {
 
 # Check next batch status
 cat("\n───────────────────────────────────────────────────────────────\n")
-if (file.exists("next_batch_template.yaml")) {
-  batch_config <- yaml::read_yaml("next_batch_template.yaml")
+if (file.exists("code/next_batch_template.yaml")) {
+  batch_config <- yaml::read_yaml("code/next_batch_template.yaml")
   if (!is.null(batch_config$hospitals)) {
     batch_total <- length(batch_config$hospitals)
     
@@ -125,7 +131,7 @@ cat("  quick_test(FAC)                      # Test single hospital\n")
 cat("  source('session_shutdown.R')         # End session checklist\n\n")
 
 cat("NEXT STEPS:\n")
-if (file.exists("next_batch_template.yaml")) {
+if (file.exists("code/next_batch_template.yaml")) {
   cat("  1. Open next_batch_template.yaml\n")
   cat("  2. Pick next hospital to configure\n")
   cat("  3. Run helper$analyze_hospital_structure(FAC, 'Name', 'URL')\n")
@@ -142,3 +148,4 @@ cat("✓ Startup complete! Ready to work.\n\n")
 
 # Store start time in global environment for shutdown script
 .session_start <<- session_start_time
+
