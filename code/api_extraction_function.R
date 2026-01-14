@@ -23,28 +23,32 @@ library(base64enc)
 
 # Structured prompt for Claude API to extract executives from screenshot
 EXECUTIVE_EXTRACTION_PROMPT <- '
-You are analyzing a hospital leadership webpage screenshot. Your task is to extract ALL executives and leadership team members visible in this image.
+You are analyzing a hospital leadership webpage screenshot. Your task is to extract ALL people and their titles visible in this image.
 
 CRITICAL: Return ONLY a JSON array. No preamble, no explanation, no markdown code fences, no extra text.
 
 Required JSON format:
 [
-  {"name": "FirstName LastName", "title": "Chief Executive Officer"},
-  {"name": "FirstName LastName", "title": "Vice President, Patient Care"}
+  {"name": "Dr. John Smith, MD, MBA", "title": "Chief Executive Officer"},
+  {"name": "Sarah Johnson, RN", "title": "Vice President, Patient Care, PhD"},
+  {"name": "Robert Brown", "title": "Board Chair"}
 ]
 
 EXTRACTION RULES:
-1. Include ONLY people with executive/leadership titles (CEO, President, VP, Chief, Director, etc.)
-2. Extract the FULL name exactly as written (include middle initials if shown)
-3. Extract the COMPLETE title including department/area if shown
-4. If credentials are shown (MD, PhD, RN, etc.), include them after the name
-5. Do NOT include:
-   - Board members (unless also employed executives)
-   - Contact information (emails, phone numbers)
-   - Administrative assistants
-   - Support staff
-6. If you see someone listed as both board member AND executive, include them (they are employed)
-7. If uncertain whether someone is an executive, EXCLUDE them (be conservative)
+1. Include ALL people shown on this leadership/executive page with any title or role
+2. Extract the FULL name exactly as written (include middle initials, Dr., etc.)
+3. Extract the COMPLETE title including any department/area information shown
+4. CRITICAL - Credentials handling:
+   - Credentials (MD, PhD, RN, MBA, etc.) may appear with the NAME, with the TITLE, or BOTH
+   - Include credentials WHEREVER they appear in the original
+   - Examples:
+     * Name has credentials: "Dr. Jane Doe, MD, MBA" + Title: "Chief Executive Officer"
+     * Title has credentials: Name: "Jane Doe" + Title: "Chief Executive Officer, MD, MBA"
+     * Both have credentials: "Dr. Jane Doe, MD" + "Chief Medical Officer, FRCPC"
+   - Extract exactly as shown - do not move or reorganize credentials
+5. Do NOT extract contact information (email addresses, phone numbers, office locations)
+6. Include board members, administrative assistants, and all staff shown on the page
+7. Be INCLUSIVE - if someone is listed on this leadership page, extract them
 
 IMPORTANT: Return ONLY the JSON array with NO additional text before or after.
 '
@@ -267,7 +271,7 @@ extract_executives_from_screenshot <- function(
       
       # Success!
       if (verbose) {
-        cat(sprintf("[%s] ✓ SUCCESS!\n", format(Sys.time(), "%H:%M:%S")))
+        cat(sprintf("[%s] âœ“ SUCCESS!\n", format(Sys.time(), "%H:%M:%S")))
         cat("  Executives extracted:", nrow(executives_df), "\n")
         cat("  Estimated cost: $", sprintf("%.4f", estimated_cost), "\n\n")
       }
@@ -285,7 +289,7 @@ extract_executives_from_screenshot <- function(
       # Log error
       error_msg <- e$message
       if (verbose) {
-        cat(sprintf("[%s] ✗ ERROR: %s\n", 
+        cat(sprintf("[%s] âœ— ERROR: %s\n", 
                    format(Sys.time(), "%H:%M:%S"),
                    error_msg))
       }
@@ -296,7 +300,7 @@ extract_executives_from_screenshot <- function(
       # If this was the last attempt, keep the error
       if (attempt == max_retries) {
         if (verbose) {
-          cat("\n✗ All retry attempts failed\n")
+          cat("\nâœ— All retry attempts failed\n")
           cat("Final error:", error_msg, "\n\n")
         }
       }
@@ -419,12 +423,12 @@ test_api_extraction <- function() {
   # Check API key
   api_key <- Sys.getenv("ANTHROPIC_API_KEY")
   if (api_key == "") {
-    cat("✗ ERROR: ANTHROPIC_API_KEY not set\n")
+    cat("âœ— ERROR: ANTHROPIC_API_KEY not set\n")
     cat("Please set your API key and restart R\n\n")
     return(invisible(FALSE))
   }
   
-  cat("✓ API key found\n\n")
+  cat("âœ“ API key found\n\n")
   
   # Test 1: Capture screenshot first
   cat("STEP 1: Capturing test screenshot\n")
@@ -444,12 +448,12 @@ test_api_extraction <- function() {
   )
   
   if (!screenshot_result$success) {
-    cat("\n✗ Screenshot capture failed\n")
+    cat("\nâœ— Screenshot capture failed\n")
     cat("Error:", screenshot_result$error_message, "\n\n")
     return(invisible(FALSE))
   }
   
-  cat("\n✓ Screenshot captured successfully\n\n")
+  cat("\nâœ“ Screenshot captured successfully\n\n")
   
   # Test 2: Extract executives
   cat("STEP 2: Extracting executives via API\n")
@@ -461,7 +465,7 @@ test_api_extraction <- function() {
   )
   
   if (!extraction_result$success) {
-    cat("\n✗ API extraction failed\n")
+    cat("\nâœ— API extraction failed\n")
     cat("Error:", extraction_result$error_message, "\n\n")
     return(invisible(FALSE))
   }
@@ -481,7 +485,7 @@ test_api_extraction <- function() {
   cat("\n========================================\n")
   cat("TEST COMPLETE\n")
   cat("========================================\n")
-  cat("✓ API extraction is working!\n\n")
+  cat("âœ“ API extraction is working!\n\n")
   
   return(invisible(extraction_result))
 }
@@ -530,7 +534,7 @@ if (FALSE) {
 # END OF SCRIPT
 # =============================================================================
 
-cat("\n✓ API extraction function loaded successfully!\n")
+cat("\nâœ“ API extraction function loaded successfully!\n")
 cat("\nQuick Start:\n")
 cat("  result <- extract_executives_from_screenshot(screenshot_file = '...')\n")
 cat("\nRun test:\n")

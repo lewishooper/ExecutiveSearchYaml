@@ -2022,11 +2022,24 @@ return(unique_pairs)
   scrape_batch <- function(hospitals_list, config_file = "code/enhanced_hospitals.yaml", 
                            output_folder = "E:/ExecutiveSearchYaml/output") {
     
+    
+    ## fix TO DROP api SCRAPING HOSPITALS. 
     all_results <- list()
+    skipped_count <- 0
     
     for (i in seq_along(hospitals_list)) {
+      hospital <- hospitals_list[[i]]
+      
+      # Skip hospitals that use api_screenshot method
+      if (!is.null(hospital$pattern) && hospital$pattern == "api_screenshot") {
+        cat(sprintf("[%d/%d] SKIPPED: %s (FAC-%s) - uses api_screenshot\n", 
+                    i, length(hospitals_list), hospital$name, hospital$FAC))
+        skipped_count <- skipped_count + 1
+        next
+      }
+      
       cat(sprintf("[%d/%d] ", i, length(hospitals_list)))
-      result <- scrape_hospital(hospitals_list[[i]], config_file)
+      result <- scrape_hospital(hospital, config_file)
       all_results[[i]] <- result
       
       Sys.sleep(1)  # Rate limiting
@@ -2042,6 +2055,7 @@ return(unique_pairs)
     
     # Summary
     cat("\n=== SCRAPING SUMMARY ===\n")
+    cat("Skipped (api_screenshot):", skipped_count, "\n")
     total_records <- nrow(final_results)
     valid_records <- sum(!is.na(final_results$executive_name))
     hospitals_with_data <- length(unique(final_results$hospital_name[!is.na(final_results$executive_name)]))
@@ -2049,7 +2063,8 @@ return(unique_pairs)
     cat("Total records:", total_records, "\n")
     cat("Valid records:", valid_records, "\n") 
     cat("Success rate:", round(valid_records / total_records * 100, 1), "%\n")
-    cat("Hospitals with data:", hospitals_with_data, "out of", length(hospitals_list), "\n")
+    cat("Hospitals processed:", length(hospitals_list) - skipped_count, "\n")
+    cat("Hospitals with data:", hospitals_with_data, "\n")
     cat("Output file:", basename(output_file), "\n")
     
     return(final_results)

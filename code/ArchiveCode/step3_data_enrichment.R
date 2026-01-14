@@ -10,7 +10,7 @@
 # Author: Skip (with Claude assistance)
 # Date: January 9, 2026
 # Version: 1.0
-#
+#rm(list=ls())
 # =============================================================================
 
 library(yaml)
@@ -29,7 +29,7 @@ processed_dir <- "E:/ExecutiveSearchYaml/processed"
 date_tag <- format(Sys.Date(), "%Y%m%d")
 
 # YAML file location
-yaml_file <- "E:/ExecutiveSearchYaml/enhanced_hospitals.yaml"
+yaml_file <- "E:/ExecutiveSearchYaml/code/enhanced_hospitals.yaml"
 
 # Output directory (for final enriched data)
 output_dir <- "E:/ExecutiveSearchYaml/output"
@@ -56,6 +56,7 @@ if (!file.exists(executives_file)) {
 }
 
 executives <- read.csv(executives_file, stringsAsFactors = FALSE)
+
 cat(sprintf("✓ Loaded %d executives from Step 2\n", nrow(executives)))
 
 # Load YAML hospital metadata
@@ -80,9 +81,8 @@ hospital_metadata <- do.call(rbind, lapply(yaml_data$hospitals, function(h) {
   data.frame(
     FAC = h$FAC,
     hospital_name = ifelse(is.null(h$name), NA, h$name),
-    city = ifelse(is.null(h$city), NA, h$city),
-    type = ifelse(is.null(h$type), NA, h$type),
-    url = ifelse(is.null(h$url), NA, h$url),
+    hospital_type = ifelse(is.null(h$hospital_type), NA, h$hospital_type),
+    source_url = ifelse(is.null(h$url), NA, h$url),
     pattern = ifelse(is.null(h$pattern), NA, h$pattern),
     data_status = ifelse(is.null(h$data_status), NA, h$data_status),
     stringsAsFactors = FALSE
@@ -108,12 +108,8 @@ enriched_executives <- merge(
 )
 
 # Reorder columns for readability
-enriched_executives <- enriched_executives[, c(
-  "FAC", "hospital_name", "city", "type",
-  "name", "title",
-  "date_captured", "source_file",
-  "url", "pattern", "data_status"
-)]
+enriched_executives <- enriched_executives %>%
+  select(FAC,hospital_name,hospital_type,name,title,date_captured,source_file,source_url,pattern,data_status)
 
 # Check for missing metadata
 missing_metadata <- enriched_executives[is.na(enriched_executives$hospital_name), ]

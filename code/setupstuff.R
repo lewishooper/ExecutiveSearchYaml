@@ -70,4 +70,6 @@ test_api_extraction()
 source("E:/ExecutiveSearchYaml/code/test_full_pipeline.R")
 source("E:/ExecutiveSearchYaml/code/step1_screenshot_capture.R")
 source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
+source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 
+list.files("E:/ExecutiveSearchYaml/output", pattern = "hospital_executives")

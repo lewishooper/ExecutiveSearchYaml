@@ -1,14 +1,21 @@
 # =============================================================================
-# STEP 2: BATCH API EXTRACTION FROM SCREENSHOTS
-# Hybrid Approach - Extract Executives from Verified Screenshots
+# STEP 2: BATCH API EXTRACTION FROM SCREENSHOTS (REVISED)
+# Modified Approach A - Output Standardized Raw Format
 # =============================================================================
 #
-# Purpose: Process all screenshots in folder through Claude API
-#          Extract executive names and titles, return consolidated data frame
+# Purpose: Process screenshots through Claude API and output standardized raw
+#          format that matches pattern_based_scraper.R output for easy merging
 #
 # Author: Skip (with Claude assistance)
-# Date: January 9, 2026
-# Version: 1.0
+# Date: January 13, 2026
+# Version: 2.0
+#
+# Key Changes from v1.0:
+#   - Loads YAML to enrich with hospital metadata
+#   - Outputs standardized raw format matching pattern scraper
+#   - Adds data_source tracking field
+#   - Saves to output/ folder (not processed/)
+#   - Column names match pattern scraper conventions
 #
 # =============================================================================
 
@@ -16,14 +23,15 @@ library(httr)
 library(jsonlite)
 library(base64enc)
 library(dplyr)
+library(yaml)
 
 # Load functions
 source("E:/ExecutiveSearchYaml/code/api_extraction_function.R")
 source("E:/ExecutiveSearchYaml/code/validation_function.R")
 
 cat("\n╔════════════════════════════════════════════════╗\n")
-cat("║   STEP 2: BATCH API EXTRACTION                 ║\n")
-cat("║   (Process Verified Screenshots)               ║\n")
+cat("║   STEP 2: BATCH API EXTRACTION (REVISED)       ║\n")
+cat("║   (Output Standardized Raw Format)             ║\n")
 cat("╚════════════════════════════════════════════════╝\n\n")
 
 # =============================================================================
@@ -34,8 +42,11 @@ cat("╚════════════════════════
 screenshot_dir <- "E:/ExecutiveSearchYaml/temp/screenshots"
 date_tag <- format(Sys.Date(), "%Y%m%d")
 
-# Output directory for results
-output_dir <- "E:/ExecutiveSearchYaml/processed"
+# YAML configuration file
+yaml_file <- "E:/ExecutiveSearchYaml/code/enhanced_hospitals.yaml"
+
+# Output directory for RAW data (matches pattern scraper)
+output_dir <- "E:/ExecutiveSearchYaml/output"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
@@ -48,7 +59,39 @@ if (api_key == "") {
 
 cat("✓ API key found\n")
 cat("✓ Screenshot directory:", screenshot_dir, "\n")
+cat("✓ YAML config:", yaml_file, "\n")
 cat("✓ Output directory:", output_dir, "\n\n")
+
+# =============================================================================
+# LOAD YAML CONFIGURATION FOR HOSPITAL METADATA
+# =============================================================================
+
+cat("Loading hospital configuration...\n")
+cat("═════════════════════════════════════════════════\n")
+
+# Read YAML
+if (!file.exists(yaml_file)) {
+  stop("ERROR: YAML configuration file not found: ", yaml_file)
+}
+
+yaml_config <- read_yaml(yaml_file)
+hospitals_list <- yaml_config$hospitals
+
+cat(sprintf("✓ Loaded %d hospitals from YAML\n", length(hospitals_list)))
+
+# Create FAC lookup table for metadata enrichment
+fac_lookup <- do.call(rbind, lapply(hospitals_list, function(h) {
+  data.frame(
+    FAC = sprintf("%03d", as.numeric(h$FAC)),
+    hospital_name = h$name,
+    hospital_type = ifelse(!is.null(h$hospital_type), h$hospital_type, NA),
+    source_url = h$url,
+    pattern = ifelse(!is.null(h$pattern), h$pattern, "unknown"),
+    stringsAsFactors = FALSE
+  )
+}))
+
+cat(sprintf("✓ Created FAC lookup table with %d hospitals\n\n", nrow(fac_lookup)))
 
 # =============================================================================
 # SCAN SCREENSHOT FOLDER
@@ -81,6 +124,7 @@ parse_screenshot_filename <- function(filepath) {
   
   if (length(fac_match) > 0) {
     fac <- sub("FAC-", "", fac_match)
+    fac <- sprintf("%03d", as.numeric(fac))  # Standardize to 3 digits
   } else {
     fac <- NA
   }
@@ -105,9 +149,11 @@ cat("FILES TO PROCESS:\n")
 cat("═════════════════════════════════════════════════\n")
 for (i in seq_along(file_info)) {
   info <- file_info[[i]]
-  cat(sprintf("%2d. FAC-%s: %s (%.1f KB)\n",
-             i, info$fac, info$filename,
-             file.size(info$filepath) / 1024))
+  hospital_info <- fac_lookup[fac_lookup$FAC == info$fac, ]
+  hospital_name <- if (nrow(hospital_info) > 0) hospital_info$hospital_name[1] else "Unknown"
+  
+  cat(sprintf("%2d. FAC-%s: %s\n", i, info$fac, hospital_name))
+  cat(sprintf("    File: %s (%.1f KB)\n", info$filename, file.size(info$filepath) / 1024))
 }
 cat("\n")
 
@@ -129,7 +175,7 @@ cat("Processing screenshots...\n")
 cat("═════════════════════════════════════════════════\n\n")
 
 extraction_results <- list()
-all_executives <- list()
+all_executives_raw <- list()
 start_time <- Sys.time()
 
 for (i in seq_along(file_info)) {
@@ -140,10 +186,23 @@ for (i in seq_along(file_info)) {
   cat("─────────────────────────────────────────────────\n")
   cat(sprintf("File: %s\n", info$filename))
   
+  # Look up hospital metadata from YAML
+  hospital_meta <- fac_lookup[fac_lookup$FAC == info$fac, ]
+  
+  if (nrow(hospital_meta) == 0) {
+    cat(sprintf("⚠ WARNING: FAC-%s not found in YAML configuration\n", info$fac))
+    cat("Skipping this hospital\n\n")
+    next
+  }
+  
+  hospital_meta <- hospital_meta[1, ]  # Take first match
+  cat(sprintf("Hospital: %s\n", hospital_meta$hospital_name))
+  
   # Extract executives via API
   result <- extract_executives_from_screenshot(
     screenshot_file = info$filepath,
-    verbose = FALSE  # Minimal output during batch
+    verbose = FALSE,  # Minimal output during batch
+    max_retries = 3   # Increased retries
   )
   
   # Store result
@@ -154,24 +213,54 @@ for (i in seq_along(file_info)) {
   
   # Report status
   if (result$success) {
-    cat(sprintf("✓ Extracted %d executives\n", nrow(result$executives)))
+    cat(sprintf("✓ Extracted %d people\n", nrow(result$executives)))
     cat(sprintf("  Cost: $%.4f\n", result$api_cost_estimate))
     
-    # Add FAC to executives data
-    result$executives$FAC <- info$fac
-    result$executives$date_captured <- info$date_captured
-    result$executives$source_file <- info$filename
+    # Enrich with hospital metadata and standardize format
+    # Match pattern_based_scraper.R output structure
+    raw_records <- data.frame(
+      FAC = info$fac,
+      hospital_name = hospital_meta$hospital_name,
+      hospital_type = hospital_meta$hospital_type,
+      executive_name = result$executives$name,
+      executive_title = result$executives$title,
+      date_gathered = as.Date(info$date_captured, format = "%Y%m%d"),
+      source_url = hospital_meta$source_url,
+      pattern_used = "api_screenshot",
+      data_source = "api_screenshot",
+      robots_status = "ok",  # Screenshots bypass robots.txt
+      robots_message = NA,
+      stringsAsFactors = FALSE
+    )
     
-    all_executives[[i]] <- result$executives
+    all_executives_raw[[i]] <- raw_records
   } else {
     cat(sprintf("✗ Extraction failed: %s\n", result$error_message))
+    
+    # Create failure record
+    failure_record <- data.frame(
+      FAC = info$fac,
+      hospital_name = hospital_meta$hospital_name,
+      hospital_type = hospital_meta$hospital_type,
+      executive_name = NA,
+      executive_title = NA,
+      date_gathered = as.Date(info$date_captured, format = "%Y%m%d"),
+      source_url = hospital_meta$source_url,
+      pattern_used = "api_screenshot",
+      data_source = "api_screenshot",
+      robots_status = "error",
+      robots_message = result$error_message,
+      stringsAsFactors = FALSE
+    )
+    
+    all_executives_raw[[i]] <- failure_record
   }
   
   cat("\n")
   
-  # Brief pause between API calls
+  # Pause between API calls to avoid rate limiting
   if (i < length(file_info)) {
-    Sys.sleep(2)
+    Sys.sleep(3)  # Increased from 2 to 3 seconds
   }
 }
 
@@ -179,28 +268,32 @@ end_time <- Sys.time()
 total_time <- as.numeric(difftime(end_time, start_time, units = "secs"))
 
 # =============================================================================
-# CONSOLIDATE RESULTS
+# CONSOLIDATE RESULTS INTO STANDARDIZED RAW FORMAT
 # =============================================================================
 
 cat("═════════════════════════════════════════════════\n")
 cat("Consolidating results...\n")
 cat("═════════════════════════════════════════════════\n\n")
 
-# Combine all executives into single data frame
-if (length(all_executives) > 0) {
-  consolidated_executives <- do.call(rbind, all_executives)
+# Combine all records into single data frame
+if (length(all_executives_raw) > 0) {
+  consolidated_raw <- do.call(rbind, all_executives_raw)
   
-  # Reorder columns
-  consolidated_executives <- consolidated_executives[, c(
-    "FAC", "name", "title", "date_captured", "source_file"
+  # Ensure consistent column order (match pattern_based_scraper.R)
+  consolidated_raw <- consolidated_raw[, c(
+    "FAC", "hospital_name", "hospital_type", "executive_name", 
+    "executive_title", "date_gathered", "source_url", "pattern_used",
+    "data_source", "robots_status", "robots_message"
   )]
   
-  cat(sprintf("Total executives extracted: %d\n", nrow(consolidated_executives)))
-  cat(sprintf("Across %d hospitals\n\n", length(unique(consolidated_executives$FAC))))
+  cat(sprintf("Total records: %d\n", nrow(consolidated_raw)))
+  cat(sprintf("Valid records (with names): %d\n", sum(!is.na(consolidated_raw$executive_name))))
+  cat(sprintf("Failed records: %d\n", sum(is.na(consolidated_raw$executive_name))))
+  cat(sprintf("Across %d hospitals\n\n", length(unique(consolidated_raw$FAC))))
   
 } else {
-  consolidated_executives <- data.frame()
-  cat("No executives extracted\n\n")
+  consolidated_raw <- data.frame()
+  cat("No records extracted\n\n")
 }
 
 # =============================================================================
@@ -212,18 +305,19 @@ cat("║         API EXTRACTION SUMMARY                 ║\n")
 cat("╚════════════════════════════════════════════════╝\n\n")
 
 # Create summary by hospital
-summary_by_hospital <- do.call(rbind, lapply(extraction_results, function(r) {
-  data.frame(
-    FAC = r$fac,
-    Status = ifelse(r$success, "✓", "✗"),
-    Executives = ifelse(r$success, nrow(r$executives), NA),
-    Cost = ifelse(r$success, sprintf("$%.4f", r$api_cost_estimate), NA),
-    Error = ifelse(!r$success, substr(r$error_message, 1, 40), ""),
-    stringsAsFactors = FALSE
-  )
-}))
-
-print(summary_by_hospital, row.names = FALSE)
+if (nrow(consolidated_raw) > 0) {
+  summary_by_hospital <- consolidated_raw %>%
+    group_by(FAC, hospital_name) %>%
+    summarize(
+      records = n(),
+      valid = sum(!is.na(executive_name)),
+      status = ifelse(any(is.na(executive_name)), "partial/failed", "success"),
+      .groups = "drop"
+    ) %>%
+    as.data.frame()
+  
+  print(summary_by_hospital, row.names = FALSE)
+}
 
 cat("\n")
 cat("OVERALL STATISTICS\n")
@@ -240,41 +334,48 @@ cat(sprintf("Successful:            %d (%.0f%%)\n",
            successful, successful / length(extraction_results) * 100))
 cat(sprintf("Failed:                %d (%.0f%%)\n",
            failed, failed / length(extraction_results) * 100))
-cat(sprintf("Total Executives:      %d\n", nrow(consolidated_executives)))
+cat(sprintf("Total Records:         %d\n", nrow(consolidated_raw)))
+cat(sprintf("Valid Records:         %d\n", sum(!is.na(consolidated_raw$executive_name))))
 cat(sprintf("Avg per Hospital:      %.1f\n", 
-           nrow(consolidated_executives) / successful))
+           sum(!is.na(consolidated_raw$executive_name)) / successful))
 cat(sprintf("Total API Cost:        $%.4f\n", total_cost))
 cat(sprintf("Processing Time:       %.1f seconds\n", total_time))
 
 cat("\n")
 
 # =============================================================================
-# SAVE RESULTS
+# SAVE RESULTS IN STANDARDIZED RAW FORMAT
 # =============================================================================
 
 cat("Saving results...\n")
 cat("═════════════════════════════════════════════════\n")
 
-# Save consolidated executives
+# Save standardized raw data (matches pattern_based_scraper output)
 output_file <- file.path(
   output_dir,
-  sprintf("executives_extracted_%s.csv", date_tag)
+  sprintf("api_executives_%s.csv", date_tag)
 )
-write.csv(consolidated_executives, output_file, row.names = FALSE)
-cat(sprintf("✓ Executives saved: %s\n", output_file))
+write.csv(consolidated_raw, output_file, row.names = FALSE)
+cat(sprintf("✓ Raw data saved: %s\n", basename(output_file)))
+cat(sprintf("  Format: Standardized raw (ready to merge with pattern scraper)\n"))
+cat(sprintf("  Columns: FAC, hospital_name, hospital_type, executive_name, executive_title,\n"))
+cat(sprintf("           date_gathered, source_url, pattern_used, data_source,\n"))
+cat(sprintf("           robots_status, robots_message\n"))
 
 # Save extraction summary
 summary_file <- file.path(
   output_dir,
-  sprintf("extraction_summary_%s.csv", date_tag)
+  sprintf("api_extraction_summary_%s.csv", date_tag)
 )
-write.csv(summary_by_hospital, summary_file, row.names = FALSE)
-cat(sprintf("✓ Summary saved: %s\n", summary_file))
+if (exists("summary_by_hospital") && nrow(summary_by_hospital) > 0) {
+  write.csv(summary_by_hospital, summary_file, row.names = FALSE)
+  cat(sprintf("✓ Summary saved: %s\n", basename(summary_file)))
+}
 
 # Save detailed log (JSON format for debugging)
 log_file <- file.path(
   output_dir,
-  sprintf("extraction_log_%s.json", date_tag)
+  sprintf("api_extraction_log_%s.json", date_tag)
 )
 
 log_data <- lapply(extraction_results, function(r) {
@@ -290,113 +391,22 @@ log_data <- lapply(extraction_results, function(r) {
 })
 
 write(toJSON(log_data, pretty = TRUE, auto_unbox = TRUE), log_file)
-cat(sprintf("✓ Detailed log saved: %s\n\n", log_file))
+cat(sprintf("✓ Detailed log saved: %s\n\n", basename(log_file)))
 
 # =============================================================================
 # DISPLAY SAMPLE OF EXTRACTED DATA
 # =============================================================================
 
-if (nrow(consolidated_executives) > 0) {
-  cat("SAMPLE OF EXTRACTED EXECUTIVES (First 10):\n")
+if (nrow(consolidated_raw) > 0) {
+  cat("SAMPLE OF EXTRACTED DATA (First 10 valid records):\n")
   cat("═════════════════════════════════════════════════\n")
-  sample_rows <- min(10, nrow(consolidated_executives))
-  print(head(consolidated_executives, sample_rows))
+  valid_records <- consolidated_raw[!is.na(consolidated_raw$executive_name), ]
+  sample_rows <- min(10, nrow(valid_records))
+  if (sample_rows > 0) {
+    print(head(valid_records[, c("FAC", "hospital_name", "executive_name", "executive_title")], sample_rows))
+  }
   cat("\n")
 }
-
-# =============================================================================
-# VALIDATION SUMMARY (Optional)
-# =============================================================================
-
-if (nrow(consolidated_executives) > 0) {
-  cat("QUALITY VALIDATION SUMMARY:\n")
-  cat("═════════════════════════════════════════════════\n")
-  
-  # Run validation on each hospital's data
-  validation_summary <- list()
-  
-  for (fac in unique(consolidated_executives$FAC)) {
-    hospital_execs <- consolidated_executives[consolidated_executives$FAC == fac, ]
-    
-    validation <- validate_extracted_executives(
-      executives_df = hospital_execs[, c("name", "title")],
-      hospital_name = paste("FAC", fac),
-      verbose = FALSE
-    )
-    
-    validation_summary[[fac]] <- list(
-      fac = fac,
-      count = nrow(hospital_execs),
-      quality_score = validation$quality_score,
-      valid_records = validation$summary$valid_records,
-      issues = length(validation$issues),
-      warnings = length(validation$warnings)
-    )
-  }
-  
-  # Create validation summary table
-  validation_df <- do.call(rbind, lapply(validation_summary, function(v) {
-    data.frame(
-      FAC = v$fac,
-      Count = v$count,
-      Valid = v$valid_records,
-      Quality = sprintf("%.0f", v$quality_score),
-      Issues = v$issues,
-      Warnings = v$warnings,
-      stringsAsFactors = FALSE
-    )
-  }))
-  
-  print(validation_df, row.names = FALSE)
-  
-  avg_quality <- mean(sapply(validation_summary, function(v) v$quality_score))
-  cat(sprintf("\nAverage Quality Score: %.0f / 100\n", avg_quality))
-  
-  # Save validation summary
-  validation_file <- file.path(
-    output_dir,
-    sprintf("validation_summary_%s.csv", date_tag)
-  )
-  write.csv(validation_df, validation_file, row.names = FALSE)
-  cat(sprintf("✓ Validation summary saved: %s\n", validation_file))
-  
-  # Save detailed validation reasons for flagged records
-  flagged_records <- list()
-  for (fac in names(validation_summary)) {
-    v <- validation_summary[[fac]]
-    if (v$issues > 0 || v$warnings > 0) {
-      # Get the validation details for this hospital
-      hospital_execs <- consolidated_executives[consolidated_executives$FAC == fac, ]
-      hospital_validation <- validate_extracted_executives(
-        executives_df = hospital_execs[, c("name", "title")],
-        hospital_name = paste("FAC", fac),
-        verbose = FALSE
-      )
-      
-      # Extract records with issues
-      details <- hospital_validation$validation_details
-      flagged <- details[!details$name_valid | !details$title_valid | 
-                        !details$has_executive_keyword | details$has_exclude_pattern, ]
-      
-      if (nrow(flagged) > 0) {
-        flagged$FAC <- fac
-        flagged_records[[fac]] <- flagged
-      }
-    }
-  }
-  
-  if (length(flagged_records) > 0) {
-    flagged_df <- do.call(rbind, flagged_records)
-    flagged_file <- file.path(
-      output_dir,
-      sprintf("validation_flagged_records_%s.csv", date_tag)
-    )
-    write.csv(flagged_df, flagged_file, row.names = FALSE)
-    cat(sprintf("✓ Flagged records saved: %s\n", flagged_file))
-  }
-}
-
-cat("\n")
 
 # =============================================================================
 # FINAL STATUS
@@ -406,30 +416,32 @@ cat("╔════════════════════════
 cat("║              EXTRACTION COMPLETE               ║\n")
 cat("╚════════════════════════════════════════════════╝\n\n")
 
-if (failed == 0 && avg_quality >= 80) {
-  cat("✓ EXCELLENT: All extractions successful with high quality!\n")
-  cat("✓ Data is ready for integration into your system.\n")
-} else if (failed <= length(extraction_results) * 0.2 && avg_quality >= 70) {
+if (failed == 0) {
+  cat("✓ EXCELLENT: All extractions successful!\n")
+  cat("✓ Data is in standardized raw format.\n")
+  cat("✓ Ready to merge with pattern_based_scraper output.\n")
+} else if (failed <= length(extraction_results) * 0.2) {
   cat("✓ GOOD: Most extractions successful.\n")
-  cat("⚠ Review failed extractions and quality issues.\n")
+  cat("⚠ Review failed extractions in log file.\n")
 } else {
-  cat("⚠ NEEDS REVIEW: Some extractions had issues.\n")
-  cat("⚠ Review detailed logs before using data.\n")
+  cat("⚠ NEEDS REVIEW: Multiple extractions failed.\n")
+  cat("⚠ Review detailed logs before merging.\n")
 }
 
 cat("\n")
 cat("OUTPUT FILES:\n")
-cat(sprintf("  - Executives: %s\n", basename(output_file)))
+cat(sprintf("  - Raw data: %s\n", basename(output_file)))
 cat(sprintf("  - Summary: %s\n", basename(summary_file)))
-cat(sprintf("  - Validation: %s\n", basename(validation_file)))
-cat(sprintf("  - Detailed log: %s\n", basename(log_file)))
+cat(sprintf("  - Log: %s\n", basename(log_file)))
+
+cat("\nNEXT STEP:\n")
+cat("  Run append_raw_data.R to merge with pattern_based_scraper output\n")
 
 cat("\n✓ Step 2 complete!\n\n")
 
 # Return consolidated data for further analysis
 invisible(list(
-  executives = consolidated_executives,
-  summary = summary_by_hospital,
-  validation = validation_df,
+  raw_data = consolidated_raw,
+  summary = if (exists("summary_by_hospital")) summary_by_hospital else NULL,
   results = extraction_results
 ))

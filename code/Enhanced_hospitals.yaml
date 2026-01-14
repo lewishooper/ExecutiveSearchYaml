@@ -1697,7 +1697,7 @@ hospitals:
     html_structure:
       notes: Complex H2 elements with names, credentials, and titles all combined
   
-FAC: '947'
+  - FAC: '947'
     name: TORONTO UNIVERSITY HEALTH NETWORK
     hospital_type: Teaching Hospital
     url: https://www.uhn.ca/corporate/AboutUHN/Governance_Leadership/Pages/Our_Leaders.aspx
