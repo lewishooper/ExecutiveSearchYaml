@@ -73,3 +73,7 @@ source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 
 list.files("E:/ExecutiveSearchYaml/output", pattern = "hospital_executives")
+source("E:/ExecutiveSearchYaml/code/monthly_executive_collection.R")
+run_monthly_collection()
+source("E:/ExecutiveSearchYaml/code/pattern_based_scraper.r")
+run_pattern_scraping()

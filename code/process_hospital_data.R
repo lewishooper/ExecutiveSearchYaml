@@ -6,7 +6,10 @@
 # ==============================================================================
 # SETUP AND DEPENDENCIES
 # ==============================================================================
-
+project_root <- "E:/ExecutiveSearchYaml"
+if (getwd() != project_root) {
+  setwd(project_root)
+}
 library(tidyverse)
 library(lubridate)
 library(stringr)
@@ -15,9 +18,9 @@ library(yaml)
 # ==============================================================================
 # CONFIGURATION
 # ==============================================================================
-
+source("E:/ExecutiveSearchYaml/code/logging_functions.R")
 # File paths
-DEFAULT_CONFIG_FILE <- "enhanced_hospitals.yaml"
+DEFAULT_CONFIG_FILE <- "E:/ExecutiveSearchYaml/code/enhanced_hospitals.yaml"
 DEFAULT_OUTPUT_FOLDER <- "E:/ExecutiveSearchYaml/output"
 DEFAULT_PROCESSED_FOLDER <- "E:/ExecutiveSearchYaml/processed"
 
@@ -745,7 +748,7 @@ validate_classification <- function(processed_data, sample_size = 100) {
 # Example 1: Process most recent scraping output
 # result <- process_hospital_data(
 #   input_file = "E:/ExecutiveSearchYaml/output/hospital_executives_20251201.csv",
-#   config_file = "enhanced_hospitals.yaml",
+#   config_file = "E:/ExecutiveSearchYaml/code/enhanced_hospitals.yaml",
 #   output_folder = "E:/ExecutiveSearchYaml/processed"
 # )
 

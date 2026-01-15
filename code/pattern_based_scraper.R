@@ -18,7 +18,7 @@ library(httr)
 # ============================================================================
 # ROBOTS.TXT CHECKING FUNCTIONS
 # ============================================================================
-
+source("E:/ExecutiveSearchYaml/code/logging_functions.R")
 # Global cache for robots.txt results (persists across scraping calls)
 .robots_cache <- new.env(parent = emptyenv())
 
@@ -2093,4 +2093,161 @@ return(unique_pairs)
     test_hospital = test_hospital,
     load_config = load_config
   ))
+}
+
+# ============================================================================
+# PRODUCTION SCRAPING FUNCTION (with logging support)
+# ============================================================================
+
+#' Run production scraping for all configured hospitals
+#' 
+#' This function scrapes all hospitals with patterns != "api_screenshot"
+#' and saves the output to the standard monthly file format.
+#' Integrates with the logging infrastructure.
+#' 
+#' @param collection_date Date for this collection run (default: today)
+#' @param output_dir Directory to save output file (default: E:/ExecutiveSearchYaml/output)
+#' @param config_file Path to YAML configuration (default: enhanced_hospitals.yaml)
+#' @param log_file Path to log file (optional, for logging integration)
+#' @return Path to created output file
+run_pattern_scraping <- function(collection_date = Sys.Date(),
+                                 output_dir = "E:/ExecutiveSearchYaml/output",
+                                 config_file = "E:/ExecutiveSearchYaml/code/enhanced_hospitals.yaml",
+                                 log_file = NULL) {
+  
+  # Source logging functions if not already loaded
+  if (!exists("log_message")) {
+    source("E:/ExecutiveSearchYaml/code/logging_functions.R")
+  }
+  
+  log_section("PATTERN-BASED HOSPITAL SCRAPING", log_file)
+  
+  step_start <- Sys.time()
+  
+  # Format dates
+  date_yyyymmdd <- format(as.Date(collection_date), "%Y%m%d")
+  date_iso <- format(as.Date(collection_date), "%Y-%m-%d")
+  
+  log_message(paste("Collection date:", date_iso), log_file)
+  log_message(paste("Config file:", config_file), log_file)
+  log_message("", log_file)
+  
+  # Validate config file exists
+  if (!file.exists(config_file)) {
+    log_error(paste("Configuration file not found:", config_file), log_file, TRUE)
+  }
+  
+  # Load configuration
+  config <- yaml::read_yaml(config_file)
+  hospitals <- config$hospitals
+  
+  # Filter: exclude api_screenshot hospitals
+  hospitals_to_scrape <- Filter(function(h) {
+    pattern <- h$html_structure$pattern %||% h$pattern %||% "unknown"
+    pattern != "api_screenshot"
+  }, hospitals)
+  
+  log_message(paste("Total hospitals in config:", length(hospitals)), log_file)
+  log_message(paste("Hospitals to scrape (excluding api_screenshot):", length(hospitals_to_scrape)), log_file)
+  log_message("", log_file)
+  
+  # Initialize scraper
+  scraper <- PatternBasedScraper()
+  
+  # Initialize results tracking
+  all_results <- data.frame()
+  success_count <- 0
+  error_count <- 0
+  skipped_count <- 0
+  
+  # Scrape each hospital
+  for (i in seq_along(hospitals_to_scrape)) {
+    hospital <- hospitals_to_scrape[[i]]
+    
+    log_message(sprintf("[%d/%d] %s (FAC-%s)", 
+                        i, length(hospitals_to_scrape), 
+                        hospital$name, hospital$FAC), log_file)
+    
+    # Scrape hospital
+    result <- tryCatch({
+      scraper$scrape_hospital(hospital)
+    }, error = function(e) {
+      log_warning(paste("  Error scraping hospital:", e$message), log_file)
+      error_count <<- error_count + 1
+      
+      # Return empty result with error info
+      data.frame(
+        FAC = hospital$FAC,
+        hospital_name = hospital$name,
+        executive_name = NA,
+        executive_title = NA,
+        date_gathered = date_iso,
+        robots_status = "error",
+        robots_message = e$message,
+        stringsAsFactors = FALSE
+      )
+    })
+    
+    # Analyze results
+    if (nrow(result) > 0) {
+      valid_count <- sum(!is.na(result$executive_name) & result$executive_name != "")
+      
+      if (valid_count > 0) {
+        log_message(sprintf("  ✓ Found %d executives", valid_count), log_file)
+        success_count <- success_count + 1
+      } else {
+        # Check if it was skipped due to robots.txt
+        if (any(result$robots_status == "disallowed")) {
+          log_message("  ⊗ Skipped (robots.txt disallowed)", log_file)
+          skipped_count <- skipped_count + 1
+        } else {
+          log_warning("  ⚠ No results found", log_file)
+        }
+      }
+    } else {
+      log_warning("  ⚠ No data returned", log_file)
+    }
+    
+    # Append to results
+    all_results <- rbind(all_results, result)
+    
+    # Brief pause to be polite to servers
+    Sys.sleep(0.5)
+  }
+  
+  # Ensure output directory exists
+  if (!dir.exists(output_dir)) {
+    log_message(paste("Creating output directory:", output_dir), log_file)
+    dir.create(output_dir, recursive = TRUE)
+  }
+  
+  # Save output file
+  output_file <- file.path(output_dir, paste0("hospital_executives_", date_yyyymmdd, ".csv"))
+  write.csv(all_results, output_file, row.names = FALSE)
+  
+  # Verify file was created
+  if (!file.exists(output_file)) {
+    log_error("Failed to create output file", log_file, TRUE)
+  }
+  
+  # Calculate statistics
+  total_executives <- sum(!is.na(all_results$executive_name) & all_results$executive_name != "")
+  
+  # Summary
+  log_message("", log_file)
+  log_section("SCRAPING COMPLETE", log_file)
+  
+  log_record_counts(list(
+    "Hospitals processed" = length(hospitals_to_scrape),
+    "Successful scrapes" = success_count,
+    "Skipped (robots.txt)" = skipped_count,
+    "Errors" = error_count,
+    "Total executives found" = total_executives
+  ), log_file)
+  
+  log_message("", log_file)
+  log_message(paste("Output file:", basename(output_file)), log_file)
+  log_duration(step_start, log_file = log_file)
+  
+  return(output_file)
 }

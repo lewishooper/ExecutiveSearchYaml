@@ -21,7 +21,7 @@
 
 library(dplyr)
 library(readr)
-
+source("E:/ExecutiveSearchYaml/code/logging_functions.R")
 cat("\n╔════════════════════════════════════════════════╗\n")
 cat("║   APPEND RAW DATA - MERGE SCRAPER OUTPUTS      ║\n")
 cat("╚════════════════════════════════════════════════╝\n\n")

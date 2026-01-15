@@ -17,7 +17,7 @@ library(dplyr)
 
 # Load screenshot function
 source("E:/ExecutiveSearchYaml/code/screenshot_capture_function_v2.R")
-
+source("E:/ExecutiveSearchYaml/code/logging_functions.R")
 cat("\n╔════════════════════════════════════════════════╗\n")
 cat("║   STEP 1: BATCH SCREENSHOT CAPTURE             ║\n")
 cat("║   (Manual Review Workflow)                     ║\n")

@@ -26,6 +26,7 @@ library(dplyr)
 library(yaml)
 
 # Load functions
+source("E:/ExecutiveSearchYaml/code/logging_functions.R")
 source("E:/ExecutiveSearchYaml/code/api_extraction_function.R")
 source("E:/ExecutiveSearchYaml/code/validation_function.R")
 
