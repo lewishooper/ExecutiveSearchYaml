@@ -1391,16 +1391,16 @@ hospitals:
     name: WRHN-KITCHENER ST MARY'S
     hospital_type: Large Community Hospital
     url: https://www.wrhn.ca/about-us/leadership
-    data_status: "pattern_based_scraper"
     partnership: Waterloo Regional Health Network
     partnership_abbrev: WRHN
-    pattern: list_items
+    data_status: "pattern_based_scraper"
+    pattern: h2_name_p_title
     expected_executives: 17
     html_structure:
-      list_type: ul
-      format: combined
-      separator: ', '
+      name_element: h5
+      title_element: p
       notes: Different FAC but merged hospital 
+      
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
@@ -1411,8 +1411,9 @@ hospitals:
     pattern: h2_name_p_title
     expected_executives: 17
     html_structure:
-      name_class: h5
-      title_class: p
+      name_element: h5
+      title_element: p
+      notes: Different FAC but merged hospital 
      
   - FAC: '665'
     name: GUELPH GENERAL

@@ -20,3 +20,27 @@ There were failures in the january run. Please advise as to whether we sould att
 Pembroke unknown cause
 WRHN  two hospital had a change in url which is now fixed.
 Not signficant enough to change the work.
+
+
+June 17
+
+
+We need to develop methods to bring in hospitals who fail during the monthly run. 
+
+Yesterday we had three hospitals fail.
+The two WHRN hospital partners have the same exectuives but previously reported them through the two hospitals Lets figure out the method(s) to get them back in line. They have collapsed the leadership  to one url but also changed the underying HTLM Strucuture so we need to troubleshoot the process
+
+For the WHRN hospitals please review the pattern_based_scraper.r files.
+ The other failure was pembrook which uses the API method 
+
+
+ For the API hospitals (pembrook)  we will need a method to just check one hospital. It may be in the step2API process. It needs a process where I can send just one hospital
+ For the API hospitals please review the step2_api_extraction.R files
+
+
+
+Once these two issues are solved we need a method to add them back into the flow. 
+
+
+
+

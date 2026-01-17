@@ -15,7 +15,7 @@ FAC<-930
 
 quick_test(FAC)
 
-helper$analyze_hospital_structure(611, "NSHN", "https://www.nshn.care/senior-leadership-team")
+helper$analyze_hospital_structure(699, "whrn", "https://www.nshn.care/senior-leadership-team")
 
 helper$test_hospital_config(FAC, Name, url, "table_rows")# - Test configuration (reads from YAML)\n")  
 
@@ -75,5 +75,5 @@ source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 list.files("E:/ExecutiveSearchYaml/output", pattern = "hospital_executives")
 source("E:/ExecutiveSearchYaml/code/monthly_executive_collection.R")
 run_monthly_collection()
-source("E:/ExecutiveSearchYaml/code/pattern_based_scraper.r")
-run_pattern_scraping()
+file.copy("E:/ExecutiveSearchYaml/output/combined_raw_20260115.csv",
+          "E:/ExecutiveSearchYaml/output/combined_raw_20260115_ORIGINAL_BACKUP.csv")
