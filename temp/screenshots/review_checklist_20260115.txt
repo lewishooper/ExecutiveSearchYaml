@@ -1,0 +1,163 @@
+
+SCREENSHOT REVIEW CHECKLIST - 20260115
+═══════════════════════════════════════════════════════════════
+
+Total Screenshots: 20
+Successful Captures: 20
+Failed Captures: 0
+
+REVIEW EACH FILE:
+─────────────────────────────────────────────────────────────────
+
+[ ] FAC-971: SUDBURY ST.JOSEPHS CONTINUING CARE
+    URL: https://www.sjsudbury.com/index.php/st-josephs-health-centre/our-leaders-sjhc/
+    File: FAC-971_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 316.2 KB
+    Notes: _____________________________________________
+
+[ ] FAC-933: WINDSOR REGIONAL HOSPITAL
+    URL: https://www.wrh.on.ca/ExecutiveCommittee
+    File: FAC-933_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 55.0 KB
+    Notes: _____________________________________________
+
+[ ] FAC-854: TORONTO SA GRACE
+    URL: https://www.torontograce.org/about-tghc/senior-management-team/
+    File: FAC-854_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 561.8 KB
+    Notes: _____________________________________________
+
+[ ] FAC-826: KENORA LAKE OF THE WOODS
+    URL: http://www.lwdh.on.ca/index.php/programs-and-services/administration.html
+    File: FAC-826_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 72.1 KB
+    Notes: _____________________________________________
+
+[ ] FAC-723: MATHESON BINGHAM MEMORIAL
+    URL: https://www.micsgroup.com/governance/board-of-directors/
+    File: FAC-723_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 822.2 KB
+    Notes: _____________________________________________
+
+[ ] FAC-719: MANITOUWADGE SANTE MANITOUWADGE
+    URL: https://www.mh.on.ca/organizationalstructure
+    File: FAC-719_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 161.9 KB
+    Notes: _____________________________________________
+
+[ ] FAC-685: MICS Group IROQUOIS FALLS ANSON GENERAL
+    URL: https://www.micsgroup.com/governance/board-of-directors/
+    File: FAC-685_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 892.5 KB
+    Notes: _____________________________________________
+
+[ ] FAC-681: HEARST NOTRE DAME
+    URL: https://www.ndh.on.ca/board-of-directors/
+    File: FAC-681_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 607.4 KB
+    Notes: _____________________________________________
+
+[ ] FAC-651: OTTAWA ROYAL OTTAWA (PSYCH)
+    URL: https://www.theroyal.ca/about-royal/leadership/senior-leadership-team
+    File: FAC-651_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 1172.1 KB
+    Notes: _____________________________________________
+
+[ ] FAC-650: ELLIOT LAKE ST JOSEPH'S
+    URL: https://sjghel.ca/about/governance-board/
+    File: FAC-650_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 471.4 KB
+    Notes: _____________________________________________
+
+[ ] FAC-638: MICS GROUP COCHRANE LADY MINTO
+    URL: https://www.micsgroup.com/governance/board-of-directors/
+    File: FAC-638_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 892.5 KB
+    Notes: _____________________________________________
+
+[ ] FAC-627: CHAPLEAU SER DE SANTÉ DE CHAPLEAU
+    URL: https://www.sschs.ca/general/board.html
+    File: FAC-627_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 370.7 KB
+    Notes: _____________________________________________
+
+[ ] FAC-611: BLIND RIVER NORTH SHORE HN
+    URL: https://www.nshn.care/senior-leadership-team
+    File: FAC-611_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 450.6 KB
+    Notes: _____________________________________________
+
+[ ] FAC-966: SARNIA BLUEWATER HEALTH
+    URL: https://www.bluewaterhealth.ca/executive-team
+    File: FAC-966_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 55.7 KB
+    Notes: _____________________________________________
+
+[ ] FAC-763: PEMBROKE REGIONAL
+    URL: https://www.pemreghos.org/slt
+    File: FAC-763_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 591.6 KB
+    Notes: _____________________________________________
+
+[ ] FAC-736: NEWMARKET SOUTHLAKE REGIONAL
+    URL: https://southlake.ca/about-southlake/leadership-team/
+    File: FAC-736_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 1425.8 KB
+    Notes: _____________________________________________
+
+[ ] FAC-974: NORTH BAY NORTH BAY REGIONAL HC
+    URL: https://nbrhc.on.ca/about-nbrhc/senior-leadership/
+    File: FAC-974_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 568.5 KB
+    Notes: _____________________________________________
+
+[ ] FAC-981: CHATHAM CHATHAM-KENT HEALTH ALLIANC
+    URL: https://www.ckha.on.ca/senior-team/
+    File: FAC-981_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 55.3 KB
+    Notes: _____________________________________________
+
+[ ] FAC-941: Humber River Hospital
+    URL: https://www.hrh.ca/who-we-are/accountability/governance-leadership/
+    File: FAC-941_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 650.5 KB
+    Notes: _____________________________________________
+
+[ ] FAC-927: Windsor Hotel Dieu Grace
+    URL: https://www.hdgh.org/leadership
+    File: FAC-927_20260115.png
+    Status: AUTO-CAPTURED
+    Size: 55.0 KB
+    Notes: _____________________________________________
+
+─────────────────────────────────────────────────────────────────
+
+COMPLETION CHECKLIST:
+[ ] All screenshots reviewed
+[ ] All failed captures replaced with manual screenshots
+[ ] All poor quality screenshots replaced
+[ ] All files follow naming convention: FAC-XXX_YYYYMMDD.png
+[ ] Ready to run STEP 2: API extraction
+
+Date Reviewed: _______________
+Reviewed By: _______________
+

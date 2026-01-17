@@ -1,0 +1,22 @@
+Claude Instructions 
+Jan 16 2025
+
+Please review the following files which are in the project repository
+master_reference_functions.R
+Phase3_Next_steps.md
+
+Please provide a list of the Diagnostic and other functions in the master_reference_functions in R.
+
+we have the december 1 data base 
+
+We had created the Jan 1 but stopped progressing on this phase due to errors and incomplete data.
+And we do have a personnelMaster_2025-12-01. 
+
+The January data hase been recreated/finalzied, and is  now avaialable. and we need to restart the phase 3 process.
+Based on the Phase3_next_steps.md.
+Please create a checklist of next steps for the pahse 3 process.
+
+There were failures in the january run. Please advise as to whether we sould attempt to correct this before initing phase 3 or if we should build a post hoc recovery process. as monthly failures will likely be common
+Pembroke unknown cause
+WRHN  two hospital had a change in url which is now fixed.
+Not signficant enough to change the work.

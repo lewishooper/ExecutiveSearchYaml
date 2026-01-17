@@ -248,10 +248,12 @@ compare_hospital_months <- function(hospital_fac, dec_data, jan_data,
   departed_names <- setdiff(dec_names, jan_names)
   
   # Build result sets
+  # Build result sets - initialize with title_changed column
   retained <- jan_hospital %>% 
     filter(person_name %in% retained_names) %>%
     left_join(master_hospital %>% select(person_name, person_id), 
-              by = "person_name")
+              by = "person_name") %>%
+    mutate(title_changed = FALSE)  # Initialize as FALSE for all
   
   # Check for title changes in retained people
   if (nrow(retained) > 0) {
@@ -290,6 +292,8 @@ compare_all_hospitals <- function(dec_employees, dec_volunteers,
   #
   # Run comparison for every hospital
   #
+  # dedup names
+
   
   # Combine employees and volunteers for each month
   dec_all <- bind_rows(
@@ -310,6 +314,16 @@ compare_all_hospitals <- function(dec_employees, dec_volunteers,
   all_departed <- data.frame()
   
   hospital_summary <- data.frame()
+  
+  dec_all <- dec_all %>%
+    group_by(fac_number, person_name) %>%
+    slice(1) %>%  # Keep first occurrence only
+    ungroup()
+  
+  jan_all <- jan_all %>%
+    group_by(fac_number, person_name) %>%
+    slice(1) %>%
+    ungroup()
   
   for (fac in hospitals) {
     result <- compare_hospital_months(fac, dec_all, jan_all, personnel_master)
@@ -452,9 +466,16 @@ detect_simple_movements <- function(departures, new_arrivals, threshold = 0.85) 
 
 update_personnel_master <- function(personnel_master, comparison_results, 
                                     movements, run_date) {
-  #
   # Update the master file based on Jan comparison
   #
+  
+  # Convert date columns to Date objects if they're not already
+  if (!inherits(personnel_master$first_seen, "Date")) {
+    personnel_master$first_seen <- as.Date(personnel_master$first_seen)
+  }
+  if (!inherits(personnel_master$last_seen, "Date")) {
+    personnel_master$last_seen <- as.Date(personnel_master$last_seen)
+  }
   
   updated_master <- personnel_master
   
@@ -615,4 +636,35 @@ generate_summary_report <- function(comparison_results, movements,
   print(status_summary)
   cat("\n")
 }
+# ------------------------------------------------------------------------------
+# HELPER FUNCTION: Load Phase 3 Data
+# ------------------------------------------------------------------------------
 
+load_phase3_data <- function(base_path = "E:/ExecutiveSearchYaml/processed") {
+  #
+  # Load all required Phase 3 data with proper type conversions
+  #
+  
+  dec_employees <- read.csv(file.path(base_path, "HospitalExecutives_Employees_2025-12-01.csv"),
+                            stringsAsFactors = FALSE)
+  dec_volunteers <- read.csv(file.path(base_path, "HospitalExecutives_Volunteers_2025-12-01.csv"),
+                             stringsAsFactors = FALSE)
+  jan_employees <- read.csv(file.path(base_path, "HospitalExecutives_Employees_2026-01-01.csv"),
+                            stringsAsFactors = FALSE)
+  jan_volunteers <- read.csv(file.path(base_path, "HospitalExecutives_Volunteers_2026-01-01.csv"),
+                             stringsAsFactors = FALSE)
+  personnel_master <- read.csv(file.path(base_path, "PersonnelMaster_2025-12-01.csv"),
+                               stringsAsFactors = FALSE)
+  
+  # Convert date columns
+  personnel_master$first_seen <- as.Date(personnel_master$first_seen)
+  personnel_master$last_seen <- as.Date(personnel_master$last_seen)
+  
+  return(list(
+    dec_employees = dec_employees,
+    dec_volunteers = dec_volunteers,
+    jan_employees = jan_employees,
+    jan_volunteers = jan_volunteers,
+    personnel_master = personnel_master
+  ))
+}

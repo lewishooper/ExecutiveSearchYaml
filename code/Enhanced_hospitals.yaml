@@ -137,8 +137,6 @@ hospitals:
       name_element: h2
       title_element: h4
       missing_people:
-        - name: "Katey Rayner PhD"
-          title: Chief Scientific Officer  Vice President, Research
         - name: Bernard McDonald, MD, PhD, FRCPC
           title: Division Head, Cardiac Anesthesiology University of Ottawa Heart Institute Assistant Professor, University of Ottawa
         - name: Pierre Voisine, MD, FRCSC
@@ -1392,7 +1390,7 @@ hospitals:
   - FAC: '699'
     name: WRHN-KITCHENER ST MARY'S
     hospital_type: Large Community Hospital
-    url: https://www.grhosp.on.ca/about/senior-leadership-team
+    url: https://www.wrhn.ca/about-us/leadership
     data_status: "pattern_based_scraper"
     partnership: Waterloo Regional Health Network
     partnership_abbrev: WRHN
@@ -1406,17 +1404,15 @@ hospitals:
   - FAC: '930'
     name: WRHN-KITCHENER GRAND RIVER
     hospital_type: Large Community Hospital
-    url: https://www.grhosp.on.ca/about/senior-leadership-team
+    url: https://www.wrhn.ca/about-us/leadership
     partnership: Waterloo Regional Health Network
     partnership_abbrev: WRHN
     data_status: "pattern_based_scraper"
-    pattern: list_items
+    pattern: h2_name_p_title
     expected_executives: 17
     html_structure:
-      list_type: ul
-      format: combined
-      separator: ', '
-      notes: Moved to combined URL
+      name_class: h5
+      title_class: p
      
   - FAC: '665'
     name: GUELPH GENERAL
@@ -1720,8 +1716,6 @@ hospitals:
         title: Vice President, Medical Affairs
       - name: Darlene Dasent
         title: Executive Vice President & Chief Financial Officer
-      - name: Doug Earle
-        title: CEO, West Park Healthcare Centre Foundation
       - name: Marnie Escaf
         title: Vice President, Clinical
       - name: Thomas Forbes

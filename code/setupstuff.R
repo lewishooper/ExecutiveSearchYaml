@@ -9,7 +9,7 @@ source("code/get_hosptial_info.R")
 source("code/quick_test_single.R")
 source("code/test_all_configured_hospitals.R")
 source("code/hospital_configuration_helper.R")
-FAC<-714
+FAC<-930
 
 
 

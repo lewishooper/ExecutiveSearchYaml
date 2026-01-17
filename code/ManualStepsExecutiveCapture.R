@@ -30,7 +30,10 @@ source("E:/ExecutiveSearchYaml/code/append_raw_data.R")
 #output  E:/ExecutiveSearchYaml/output/combined_raw_YYYYMMDD.csv
 
 source("E:/ExecutiveSearchYaml/code/process_hospital_data.R")
-process_hospital_data()
+## NOTE  you wil need to update the file name...
+result <- process_hospital_data(
+  input_file = "E:/ExecutiveSearchYaml/output/combined_raw_20260115.csv"
+)
 #Output -->  E:/ExecutiveSearchYaml/processed/HospitalExecutives_Employees_YYYY-MM-DD.csv
 # and -->E:/ExecutiveSearchYaml/processed/HospitalExecutives_Volunteers_YYYY-MM-DD.csv
 
