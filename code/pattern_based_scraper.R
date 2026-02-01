@@ -1980,6 +1980,7 @@ return(unique_pairs)
           date_gathered = Sys.Date(),
           robots_status = robots_status,
           robots_message = robots_message,
+          error_message = NA,  # <-- ADD THIS LINE
           stringsAsFactors = FALSE
         )
         
@@ -1996,6 +1997,7 @@ return(unique_pairs)
           date_gathered = Sys.Date(),
           robots_status = robots_status,
           robots_message = robots_message,
+          error_message = NA,# <-- ADD THIS LINE
           stringsAsFactors = FALSE
         ))
       }
@@ -2184,6 +2186,8 @@ run_pattern_scraping <- function(collection_date = Sys.Date(),
         date_gathered = date_iso,
         robots_status = "error",
         robots_message = e$message,
+        error_message = e$message,  # <-- ADD THIS LINE
+        #error_message = NA,  # <-- ADD THIS LINE
         stringsAsFactors = FALSE
       )
     })
