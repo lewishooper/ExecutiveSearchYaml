@@ -22,6 +22,7 @@ source("E:/ExecutiveSearchYaml/code/step1_screenshot_capture.R")
 
 source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 
+
 #runs Self
 
 #outputE:/ExecutiveSearchYaml/output/api_executives_YYYYMMDD.csv
