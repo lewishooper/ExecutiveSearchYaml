@@ -216,7 +216,35 @@ for (i in seq_along(file_info)) {
   if (result$success) {
     cat(sprintf("✓ Extracted %d people\n", nrow(result$executives)))
     cat(sprintf("  Cost: $%.4f\n", result$api_cost_estimate))
-    
+    cat(sprintf("  Columns returned: %s\n", paste(names(result$executives), collapse=", ")))
+    cat(sprintf("  name length: %d, title length: %d\n", 
+                length(result$executives$name), length(result$executives$title)))
+    # ---- ADD THIS GUARD ----
+    if (is.null(result$executives) || 
+        nrow(result$executives) == 0 ||
+        is.null(result$executives$name) ||
+        length(result$executives$name) == 0) {
+      cat("⚠ API succeeded but found no executives — treating as empty record\n")
+      raw_records <- data.frame(
+        FAC = info$fac,
+        hospital_name = hospital_meta$hospital_name,
+        hospital_type = hospital_meta$hospital_type,
+        executive_name = NA_character_,
+        executive_title = NA_character_,
+        date_gathered = as.Date(info$date_captured, format = "%Y%m%d"),
+        source_url = hospital_meta$source_url,
+        pattern_used = "api_screenshot",
+        data_source = "api_screenshot",
+        robots_status = "ok",
+        robots_message = "API success but zero executives returned",
+        stringsAsFactors = FALSE
+      )
+      all_executives_raw[[i]] <- raw_records
+      cat("\n")
+      if (i < length(file_info)) Sys.sleep(3)
+      next
+    }
+    # ---- END GUARD ----  
     # Enrich with hospital metadata and standardize format
     # Match pattern_based_scraper.R output structure
     raw_records <- data.frame(
@@ -250,7 +278,8 @@ for (i in seq_along(file_info)) {
       pattern_used = "api_screenshot",
       data_source = "api_screenshot",
       robots_status = "error",
-      robots_message = result$error_message,
+      robots_message = if (!is.null(result$error_message) && length(result$error_message) > 0) 
+        as.character(result$error_message[1]) else NA_character_,
       stringsAsFactors = FALSE
     )
     
