@@ -21,14 +21,13 @@ source("E:/ExecutiveSearchYaml/code/step1_screenshot_capture.R")
 
 ## Compare screenshots with prior and check for changes.  There are usually several
 ## check if changes and copy replace faulty Screenshots.
+#1/7/2026 done
+
 
 source("E:/ExecutiveSearchYaml/code/step2_api_extraction.R")
 
-
-
-
 #runs Self
-
+#rember to hit enter in console
 #outputE:/ExecutiveSearchYaml/output/api_executives_YYYYMMDD.csv
 #### May2 needed adjustments
 source("E:/ExecutiveSearchYaml/code/append_raw_data.R")
@@ -37,8 +36,10 @@ source("E:/ExecutiveSearchYaml/code/append_raw_data.R")
 
 source("E:/ExecutiveSearchYaml/code/process_hospital_data.R")
 ## NOTE  you wil need to update the file name...
+#01/07/2026
 result <- process_hospital_data(
-  input_file = "E:/ExecutiveSearchYaml/output/combined_raw_20260601.csv"
+  input_file = "E:/ExecutiveSearchYaml/output/combined_raw_20260801.csv"
+  #Date changed 01/07/2026   ... to  "E:/ExecutiveSearchYaml/output/combined_raw_20260701.csv"
 )
 #Output -->  E:/ExecutiveSearchYaml/processed/HospitalExecutives_Employees_YYYY-MM-DD.csv
 # and -->E:/ExecutiveSearchYaml/processed/HospitalExecutives_Volunteers_YYYY-MM-DD.csv
